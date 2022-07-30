@@ -5,6 +5,7 @@ public class ConnectionWall : MonoBehaviour
     private const string openAnimatorBool = "Open";
 
     [SerializeField] private Transform passagePoint;
+    [SerializeField] private Transform outsidePoint;
     [SerializeField] private GameObject door;
 
     private Animator doorAnimator;
@@ -13,6 +14,8 @@ public class ConnectionWall : MonoBehaviour
     private bool fixedUpdateDone = false;
 
     public Vector3 PassagePointPosition { get => passagePoint.position; }
+
+    public Vector3 OutsidePoint { get => outsidePoint.position; }
 
     public bool RemoveAfterGeneration { get; set; }
 

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LevelGenerator
   - Door
+  - ResourcesPanel
+  - MainCanvas
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Door Wall
   - Wall
   - Window
-  - Not Obstacle
+  - Player
   - 
   - 
   - 

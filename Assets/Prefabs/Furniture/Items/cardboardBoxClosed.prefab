@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1965182349481385795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 450304622800973218}
+  m_Layer: 0
+  m_Name: Target Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &450304622800973218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965182349481385795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5377467420267799226}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4749972197869369344
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +47,8 @@ GameObject:
   - component: {fileID: -2743931427414498562}
   - component: {fileID: -8974199638555865700}
   - component: {fileID: 1964214969393060977}
+  - component: {fileID: 8712579050021293104}
+  - component: {fileID: 6953925311596877626}
   m_Layer: 0
   m_Name: cardboardBoxClosed
   m_TagString: Untagged
@@ -34,7 +67,8 @@ Transform:
   m_LocalPosition: {x: -66.815186, y: 0, z: 40.668617}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 450304622800973218}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,3 +192,34 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 1.0630001, y: 1.4050001, z: 1.0630001}
   m_TimeToStationary: 0.5
+--- !u!114 &8712579050021293104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4749972197869369344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff141d60de3f144abb6f46a1443cf9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedResources: 00000000
+  arriveDistance: 4
+  objectAfterLooting: {fileID: 3451337342296124685, guid: 8e933886bd9dfd94397944fe226dad25, type: 3}
+  movingObjects: []
+  endLocalPositions: []
+  endLocalRotations: []
+--- !u!114 &6953925311596877626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4749972197869369344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10c478848024fb4eaf3a915bc9218b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerPoint: {fileID: 450304622800973218}

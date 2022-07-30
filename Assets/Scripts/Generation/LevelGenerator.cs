@@ -178,7 +178,7 @@ public class LevelGenerator : MonoBehaviour
                 else
                 {
                     ++currentFrontDoorsCount;
-                    player.position = new Vector3(connectionWall.PassagePointPosition.x, connectionWall.PassagePointPosition.y, connectionWall.PassagePointPosition.z + 5f);
+                    player.position = connectionWall.OutsidePoint;
                 }
             }
             else

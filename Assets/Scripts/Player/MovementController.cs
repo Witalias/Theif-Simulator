@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
     private const string stopJumpAnimatorTrigger = "Stop Jump";
 
     [SerializeField] private float manuallyMovingSpeed = 5f;
+    [SerializeField] private LayerMask playerMask;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -19,6 +20,13 @@ public class MovementController : MonoBehaviour
     public void GoToObject(Vector3 point, Lootable obj)
     {
         targetObject = obj;
+        var distance = Vector3.Distance(transform.position, new Vector3(point.x, transform.position.y, point.z));
+        if (distance <= obj.ArriveDistance)
+        {
+            LootTargetObject();
+            return;
+        }
+
         isMoving = true;
         animator.SetBool(runAnimatorBool, true);
         agent.enabled = true;
@@ -34,13 +42,16 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
-        if (targetObject != null && transform.position == agent.destination)
+        if (targetObject != null)
         {
-            transform.rotation = Quaternion.FromToRotation(transform.position, targetObject.transform.position);
-            targetObject.TakeLoot();
-            targetObject = null;
-            isMoving = false;
-            animator.SetBool(runAnimatorBool, false);
+            var currentDistance = Vector3.Distance(transform.position, agent.destination);
+            if (currentDistance <= targetObject.ArriveDistance)
+            {
+                LootTargetObject();
+                isMoving = false;
+                agent.enabled = false;
+                animator.SetBool(runAnimatorBool, false);
+            }
         }
     }
 
@@ -66,5 +77,11 @@ public class MovementController : MonoBehaviour
             isMoving = false;
             animator.SetBool(runAnimatorBool, false);
         }
+    }
+
+    private void LootTargetObject()
+    {
+        targetObject.TakeLoot();
+        targetObject = null;
     }
 }

@@ -1,5 +1,7 @@
 public enum Tags
 {
     LevelGenerator,
-    Player
+    Player,
+    ResourcesPanel,
+    MainCanvas
 }
