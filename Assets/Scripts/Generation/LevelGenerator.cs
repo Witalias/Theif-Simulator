@@ -11,6 +11,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private NavMeshRebaker navMeshRebaker;
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject fogPrefab;
     [SerializeField] private LayerMask roomMask;
     [SerializeField] private LayerMask doorWallMask;
     [SerializeField] private LayerMask wallMask;
@@ -106,6 +107,7 @@ public class LevelGenerator : MonoBehaviour
 
                 successRoomGenerated = true;
                 lastUsedConnectionWall = connectionWalls[i];
+                CreateFog(room);
 
                 yield break;
             }
@@ -204,5 +206,12 @@ public class LevelGenerator : MonoBehaviour
             if (colliders.Length > 1)
                 Destroy(colliders[1].gameObject);
         }
+    }
+
+    private void CreateFog(Room room)
+    {
+        var fogs = room.GetFogs();
+        foreach (var fog in fogs)
+            fog.SetActive(GameSettings.Instanse.Fog);
     }
 }

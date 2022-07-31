@@ -6,6 +6,7 @@ public class Room : MonoBehaviour
     [SerializeField] private CenteredPoint[] windows;
     [SerializeField] private CenteredPoint[] walls;
     [SerializeField] private CenteredPoint[] cornerTiles;
+    [SerializeField] private GameObject[] fogs;
 
     public ConnectionWall[] GetConnectionWalls() => connectionWalls;
 
@@ -14,5 +15,7 @@ public class Room : MonoBehaviour
     public CenteredPoint[] GetWalls() => walls;
 
     public CenteredPoint[] GetCornerTiles() => cornerTiles;
+
+    public GameObject[] GetFogs() => fogs;
 
 }
