@@ -1146,6 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73b2c78a89771046973cebafc7a140c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePlayer: 0
   roomsCount: 10
   frontDoorsCount: 2
   startPoint: {fileID: 1887709244}
@@ -5110,7 +5111,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9072336791799328883, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
 --- !u!1001 &4191411291168584963
 PrefabInstance:
@@ -6873,6 +6875,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1993429244136543331, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: climbSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5764222128491727568, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6899,15 +6905,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

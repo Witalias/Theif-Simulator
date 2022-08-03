@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Window : MonoBehaviour
 {
+    [SerializeField] private Transform bottomPoint;
+    
     private TriggerZone triggerZone;
     private MovementController movementController;
-    private CenteredPoint centeredPoint;
 
     public bool Opened { get; private set; } = false;
 
@@ -17,7 +18,6 @@ public class Window : MonoBehaviour
     private void Awake()
     {
         triggerZone = GetComponent<TriggerZone>();
-        centeredPoint = GetComponent<CenteredPoint>();
     }
 
     private void Start()
@@ -30,7 +30,10 @@ public class Window : MonoBehaviour
         if (triggerZone.Triggered && Input.GetKeyDown(Controls.Instanse.GetKey(ActionControls.OpenClose)))
         {
             if (Opened)
-                movementController.JumpThroughWindow(centeredPoint.CenterPoint);
+            {
+                movementController.JumpThroughWindow(bottomPoint.position);
+                triggerZone.Triggered = false;
+            }
             else
                 Open();
         }

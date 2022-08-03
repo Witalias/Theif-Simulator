@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour
 {
     private const float checkRadius = 0.5f;
 
+    [SerializeField] private bool movePlayer = true;
     [SerializeField] private int roomsCount = 5;
     [SerializeField] private int frontDoorsCount = 1;
     [SerializeField] private Transform startPoint;
@@ -179,8 +180,8 @@ public class LevelGenerator : MonoBehaviour
                 }
                 else
                 {
+                    StartCoroutine(MovePlayer(connectionWall));
                     ++currentFrontDoorsCount;
-                    player.position = connectionWall.OutsidePoint;
                 }
             }
             else
@@ -213,5 +214,12 @@ public class LevelGenerator : MonoBehaviour
         var fogs = room.GetFogs();
         foreach (var fog in fogs)
             fog.SetActive(GameSettings.Instanse.Fog);
+    }
+
+    private IEnumerator MovePlayer(ConnectionWall toWall)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (movePlayer)
+            player.position = toWall.OutsidePoint;
     }
 }

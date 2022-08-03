@@ -1,19 +1,23 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class MovementController : MonoBehaviour
 {
     private const string runAnimatorBool = "Run";
     private const string jumpAnimatorTrigger = "Jump";
     private const string stopJumpAnimatorTrigger = "Stop Jump";
+    private const float climbDetectionDistance = 0.1f;
 
     [SerializeField] private float manuallyMovingSpeed = 5f;
+    [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private LayerMask playerMask;
 
     private NavMeshAgent agent;
     private Animator animator;
-    private Animation anim;
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
+    private PathTrajectory pathTrajectory;
     private Lootable targetObject;
 
     private bool isMoving = false;
@@ -49,14 +53,33 @@ public class MovementController : MonoBehaviour
 
         Busy = true;
         animator.SetTrigger(jumpAnimatorTrigger);
+        capsuleCollider.enabled = false;
+
+        void actionAfter()
+        {
+            Busy = false;
+            animator.SetTrigger(stopJumpAnimatorTrigger);
+            capsuleCollider.enabled = true;
+        }
+
+        var direction = new Vector3(targetPoint.x, transform.position.y, targetPoint.z) - transform.position;
+        transform.rotation = Quaternion.LookRotation(direction);
+        var path = new Queue<Vector3>(new List<Vector3>
+        {
+            transform.position,
+            targetPoint,
+            transform.position + direction * 2.5f
+        });
+        pathTrajectory.Go(transform, path, climbSpeed, false, actionAfter, climbDetectionDistance);
     }
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        anim = GetComponent<Animation>();
         rb = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        pathTrajectory = GetComponent<PathTrajectory>();
     }
 
     private void Update()
@@ -82,6 +105,7 @@ public class MovementController : MonoBehaviour
             if (agent.enabled) agent.ResetPath();
             agent.enabled = false;
             targetObject = null;
+            if (!pathTrajectory.Finished) return;
             rb.AddForce(manuallyMovingSpeed * Time.deltaTime * movementVector, ForceMode.Impulse);
             rb.MoveRotation(Quaternion.LookRotation(movementVector));
 

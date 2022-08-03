@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TriggerZone : MonoBehaviour
 {
-    public bool Triggered { get; private set; } = false;
+    public bool Triggered { get; set; } = false;
 
     private void OnTriggerEnter(Collider other)
     {

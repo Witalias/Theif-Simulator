@@ -84,6 +84,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6514590902445434260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3700117118885320812}
+  m_Layer: 9
+  m_Name: Bottom Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3700117118885320812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514590902445434260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9195660585855722850}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7061325739020136922
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +160,6 @@ GameObject:
   - component: {fileID: 8409970677946784112}
   - component: {fileID: 4769174196473144710}
   - component: {fileID: 1594794686183677212}
-  - component: {fileID: 915502174640774754}
   - component: {fileID: 1823839311939891454}
   - component: {fileID: 1157593654726943899}
   - component: {fileID: 7007927688604149932}
@@ -154,6 +184,7 @@ Transform:
   m_Children:
   - {fileID: 1678926029049541344}
   - {fileID: 7494092234908300887}
+  - {fileID: 3700117118885320812}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -254,18 +285,6 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   endLocalRotations:
   - {x: 0, y: 120, z: 0}
---- !u!114 &915502174640774754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8419017955920969688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2be7cd80de3f91e488eb7d48263e9bca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1823839311939891454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -303,3 +322,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2594df2c5843dcb46a119e8fc8b9fc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bottomPoint: {fileID: 3700117118885320812}

@@ -1323,6 +1323,7 @@ GameObject:
   - component: {fileID: 922727250244075302}
   - component: {fileID: 2255301506877604002}
   - component: {fileID: 1305434430}
+  - component: {fileID: 2134120180737514993}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1381,6 +1382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manuallyMovingSpeed: 500
+  climbSpeed: 3
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -1451,6 +1453,18 @@ MonoBehaviour:
   searchRayStart: {fileID: 1408646102}
   searchingInterval: 0.1
   searchingDistance: 10
+--- !u!114 &2134120180737514993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764222128491727568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30eaa959282e9064c8639c7b30779acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5764222128491727570
 GameObject:
   m_ObjectHideFlags: 0
