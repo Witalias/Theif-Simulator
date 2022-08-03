@@ -3,25 +3,12 @@ using System.Linq;
 
 public class Lootable : MonoBehaviour
 {
-    private const float movingSpeed = 10f;
-
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private float arriveDistance = 2f;
 
-    [Tooltip("Оставьте пустым, если объект не будет заменён другим после обыска")]
-    [SerializeField] private GameObject objectAfterLooting;
-
-    [SerializeField] private Transform[] movingObjects;
-
-    [Tooltip("Оставьте нули, если объект не нужно перемещать")]
-    [SerializeField] private Vector3[] endLocalPositions;
-
-    [Tooltip("Оставьте нули, если объект не нужно вращать")]
-    [SerializeField] private Vector3[] endLocalRotations;
-
     private MovementController movementController;
+    private MovingFurnitureElements movingFurnitureElements;
 
-    private bool moveChildObjects = false;
     private bool empty = false;
 
     public float ArriveDistance { get => arriveDistance; }
@@ -54,29 +41,17 @@ public class Lootable : MonoBehaviour
 
         RemoveIllumination();
 
-        if (objectAfterLooting == null)
-            MoveChildObjects();
-        else
-            ReplaceObject();
+        movingFurnitureElements.Move();
+    }
+
+    private void Awake()
+    {
+        movingFurnitureElements = GetComponent<MovingFurnitureElements>();
     }
 
     private void Start()
     {
         movementController = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-    }
-
-    private void Update()
-    {
-        if (moveChildObjects)
-        {
-            for (var i = 0; i < movingObjects.Length; ++i)
-            {
-                if (endLocalPositions[i] != Vector3.zero)
-                    movingObjects[i].localPosition = Vector3.Lerp(movingObjects[i].localPosition, endLocalPositions[i], Time.deltaTime * movingSpeed);
-                if (endLocalRotations[i] != Vector3.zero)
-                    movingObjects[i].localRotation = Quaternion.Lerp(movingObjects[i].localRotation, Quaternion.Euler(endLocalRotations[i]), Time.deltaTime * movingSpeed);
-            }
-        }
     }
 
     private void OnMouseDown()
@@ -89,20 +64,6 @@ public class Lootable : MonoBehaviour
             else
                 movementController.GoToObject(centeredPoint.CenterPoint, this);
         }
-    }
-
-    private void MoveChildObjects()
-    {
-        if (movingObjects.Length == 0 || endLocalPositions.Length == 0 || endLocalRotations.Length == 0)
-            return;
-
-        moveChildObjects = true;
-    }
-
-    private void ReplaceObject()
-    {
-        Instantiate(objectAfterLooting, transform.position, transform.rotation, transform.parent);
-        Destroy(gameObject);
     }
 
     private void RemoveIllumination()

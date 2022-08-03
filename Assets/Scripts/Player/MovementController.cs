@@ -12,10 +12,13 @@ public class MovementController : MonoBehaviour
 
     private NavMeshAgent agent;
     private Animator animator;
+    private Animation anim;
     private Rigidbody rb;
     private Lootable targetObject;
 
     private bool isMoving = false;
+
+    public bool Busy { get; set; } = false;
 
     public void GoToObject(Vector3 point, Lootable obj)
     {
@@ -33,10 +36,26 @@ public class MovementController : MonoBehaviour
         agent.SetDestination(point);
     }
 
+    public void StopJumpAnimation()
+    {
+        animator.SetTrigger(stopJumpAnimatorTrigger);
+        Busy = false;
+    }
+
+    public void JumpThroughWindow(Vector3 targetPoint)
+    {
+        if (Busy)
+            return;
+
+        Busy = true;
+        animator.SetTrigger(jumpAnimatorTrigger);
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        anim = GetComponent<Animation>();
         rb = GetComponent<Rigidbody>();
     }
 

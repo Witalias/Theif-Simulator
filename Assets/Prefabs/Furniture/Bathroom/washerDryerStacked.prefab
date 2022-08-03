@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8806078180910252493}
   - component: {fileID: 3504632955884967016}
   - component: {fileID: 1304216268720982468}
+  - component: {fileID: 1916335746601903267}
   m_Layer: 0
   m_Name: washerDryerStacked
   m_TagString: Untagged
@@ -148,16 +149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containedResources: 0000000002000000
   arriveDistance: 2
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 4938371522591291793}
-  - {fileID: 9143753295003040699}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: 0, y: 120, z: 0}
-  - {x: -90, y: 120, z: 0}
 --- !u!114 &1304216268720982468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +162,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 4087565597218286803}
+--- !u!114 &1916335746601903267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2515827462774482371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectAfterLooting: {fileID: 0}
+  movingObjects:
+  - {fileID: 4938371522591291793}
+  - {fileID: 9143753295003040699}
+  endLocalPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  endLocalRotations:
+  - {x: 0, y: 120, z: 0}
+  - {x: -90, y: 120, z: 0}
 --- !u!1 &4533631027351221985
 GameObject:
   m_ObjectHideFlags: 0

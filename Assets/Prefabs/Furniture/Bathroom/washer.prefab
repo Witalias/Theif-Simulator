@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4425671037319446825}
   - component: {fileID: 7707222786244163210}
   - component: {fileID: 4865891682690968219}
+  - component: {fileID: 2544020706529980203}
   m_Layer: 0
   m_Name: washer
   m_TagString: Untagged
@@ -148,13 +149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containedResources: 0000000002000000
   arriveDistance: 2
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 4464000101135236}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: -90, y: 120, z: 0}
 --- !u!114 &4865891682690968219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +162,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 3287816253429285046}
+--- !u!114 &2544020706529980203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4171969984948857869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectAfterLooting: {fileID: 0}
+  movingObjects:
+  - {fileID: 4464000101135236}
+  endLocalPositions:
+  - {x: 0, y: 0, z: 0}
+  endLocalRotations:
+  - {x: -90, y: 120, z: 0}
 --- !u!1 &6150306202527793104
 GameObject:
   m_ObjectHideFlags: 0

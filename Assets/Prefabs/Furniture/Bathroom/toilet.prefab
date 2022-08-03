@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2163776283190950134}
   - component: {fileID: 1156306559817592000}
   - component: {fileID: 2681032107760342245}
+  - component: {fileID: 557624051888299070}
   m_Layer: 0
   m_Name: toilet
   m_TagString: Untagged
@@ -161,13 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containedResources: 02000000
   arriveDistance: 2
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 8967571778309339629}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: 0, y: 0, z: 90}
 --- !u!114 &2681032107760342245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +175,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 669061048376933542}
+--- !u!114 &557624051888299070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3368142697785405320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectAfterLooting: {fileID: 0}
+  movingObjects:
+  - {fileID: 8967571778309339629}
+  endLocalPositions:
+  - {x: 0, y: 0, z: 0}
+  endLocalRotations:
+  - {x: 0, y: 0, z: 90}
 --- !u!1 &5327170909756930066
 GameObject:
   m_ObjectHideFlags: 0

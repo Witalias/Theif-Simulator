@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 1964214969393060977}
   - component: {fileID: 8712579050021293104}
   - component: {fileID: 6953925311596877626}
+  - component: {fileID: 7605064270868867372}
   m_Layer: 0
   m_Name: cardboardBoxClosed
   m_TagString: Untagged
@@ -206,10 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containedResources: 00000000
   arriveDistance: 4
-  objectAfterLooting: {fileID: 3451337342296124685, guid: 8e933886bd9dfd94397944fe226dad25, type: 3}
-  movingObjects: []
-  endLocalPositions: []
-  endLocalRotations: []
 --- !u!114 &6953925311596877626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,3 +220,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 450304622800973218}
+--- !u!114 &7605064270868867372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4749972197869369344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectAfterLooting: {fileID: 3451337342296124685, guid: 8e933886bd9dfd94397944fe226dad25, type: 3}
+  movingObjects: []
+  endLocalPositions: []
+  endLocalRotations: []
