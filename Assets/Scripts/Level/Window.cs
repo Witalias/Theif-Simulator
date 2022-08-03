@@ -32,7 +32,7 @@ public class Window : MonoBehaviour
             if (Opened)
             {
                 movementController.JumpThroughWindow(bottomPoint.position);
-                triggerZone.Triggered = false;
+                triggerZone.RemoveTrigger();
             }
             else
                 Open();

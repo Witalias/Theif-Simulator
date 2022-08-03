@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newResourceAnimationPrefab: {fileID: 3968714428361785677, guid: 188ce89e10a5c224b835ecabf425d2d5, type: 3}
+  hotkeyPrefab: {fileID: 2639714983690925403, guid: 41cc745d4026d404e99408b6bd788838, type: 3}
   appleIcon: {fileID: 21300000, guid: f01f25c056358a248aad9fe60031abbb, type: 3}
   waterIcon: {fileID: 21300000, guid: 7f9f429b46318ed4a944f7eca63bb536, type: 3}
   moneyIcon: {fileID: 21300000, guid: 366fc414c474dea468fb06f75f78dc64, type: 3}
