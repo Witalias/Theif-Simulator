@@ -18,25 +18,20 @@ public class Lootable : MonoBehaviour
         empty = true;
 
         var settings = GameSettings.Instanse;
-        var chances = new[]
+        var findingChances = new[]
         {   
             settings.ChanceOfFinidngMainResource, 
-            settings.ChanceOfFindingMoney 
+            settings.ChanceOfFindingMoney,
+            settings.ChanceOfFindingEquipment
         };
-        var randomNumber = Random.Range(0f, chances.Sum());
-        var currentNumber = 0f;
-        for (var i = 0; i < chances.Length; ++i)
+
+        var randomIndex = Randomizator.GetRandomIndexByChances(findingChances);
+        var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons };
+        switch (randomIndex)
         {
-            currentNumber += chances[i];
-            if (randomNumber <= currentNumber)
-            {
-                switch (i)
-                {
-                    case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)]); break;
-                    case 1: TakeResource(ResourceType.Money); break;
-                }
-                break;
-            }
+            case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)]); break;
+            case 1: TakeResource(ResourceType.Money); break;
+            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons }[Randomizator.GetRandomIndexByChances(equipmentChances)]); break;
         }
 
         RemoveIllumination();

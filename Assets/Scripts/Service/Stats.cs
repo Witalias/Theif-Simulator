@@ -32,7 +32,9 @@ public class Stats : MonoBehaviour
             [ResourceType.Food] = 50f,
             [ResourceType.Water] = 50f,
             [ResourceType.Money] = 0f,
-            [ResourceType.Fuel] = 10f
+            [ResourceType.Fuel] = 10f,
+            [ResourceType.MasterKeys] = 0f,
+            [ResourceType.TierIrons] = 0f
         };
     }
 

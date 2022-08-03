@@ -16,10 +16,17 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private Vector2 amountFoodFound;
     [SerializeField] private Vector2 amountWaterFound;
     [SerializeField] private Vector2 amountMoneyFound;
+    [SerializeField] private Vector2 amountMasterKeyFound;
+    [SerializeField] private Vector2 amountTierIronFound;
 
-    [Header("Chances")]
+    [Header("Finding chances")]
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMoney;
     [SerializeField] [Range(0f, 100f)] private float chanceOfFinidngMainResource;
+    [SerializeField] [Range(0f, 100f)] private float chanceOfFindingEquipment;
+
+    [Header("Equipment chances")]
+    [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMasterKeys;
+    [SerializeField] [Range(0f, 100f)] private float chanceOfFindingTierIrons;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
 
@@ -29,16 +36,15 @@ public class GameSettings : MonoBehaviour
 
     public Color IlluminationColor { get => illuminationColor; }
 
-    public Vector2 AmountFuelFound { get => amountFuelFound; }
-
-    public Vector2 AmountFoodFound { get => amountFoodFound; }
-
-    public Vector2 AmountWaterFound { get => amountWaterFound; }
-
     public float ChanceOfFindingMoney { get => chanceOfFindingMoney; }
 
     public float ChanceOfFinidngMainResource { get => chanceOfFinidngMainResource; }
 
+    public float ChanceOfFindingEquipment { get => chanceOfFindingEquipment; }
+
+    public float ChanceOfFindingMasterKeys { get => chanceOfFindingMasterKeys; }
+
+    public float ChanceOfFindingTierIrons { get => chanceOfFindingTierIrons; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
@@ -56,7 +62,9 @@ public class GameSettings : MonoBehaviour
             [ResourceType.Food] = amountFoodFound,
             [ResourceType.Fuel] = amountFuelFound,
             [ResourceType.Money] = amountMoneyFound,
-            [ResourceType.Water] = amountWaterFound
+            [ResourceType.Water] = amountWaterFound,
+            [ResourceType.MasterKeys] = amountMasterKeyFound,
+            [ResourceType.TierIrons] = amountTierIronFound
         };
     }
 }

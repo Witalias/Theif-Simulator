@@ -14,6 +14,8 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite waterIcon;
     [SerializeField] private Sprite moneyIcon;
     [SerializeField] private Sprite fuelIcon;
+    [SerializeField] private Sprite masterKeyIcon;
+    [SerializeField] private Sprite tierIronIcon;
 
     private Dictionary<ResourceType, Sprite> resourceSprites;
 
@@ -43,7 +45,9 @@ public class GameStorage : MonoBehaviour
             [ResourceType.Food] = appleIcon,
             [ResourceType.Fuel] = fuelIcon,
             [ResourceType.Money] = moneyIcon,
-            [ResourceType.Water] = waterIcon
+            [ResourceType.Water] = waterIcon,
+            [ResourceType.MasterKeys] = masterKeyIcon,
+            [ResourceType.TierIrons] = tierIronIcon
         };
     }
 }
