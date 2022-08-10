@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 5580855263741441306}
   - component: {fileID: 5761318778022076477}
   - component: {fileID: 6906538411650778209}
+  - component: {fileID: 4688160916242837588}
+  - component: {fileID: 5960425350501433598}
   m_Layer: 9
   m_Name: wallWindowSlide
   m_TagString: Untagged
@@ -179,6 +181,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomPoint: {fileID: 8616169418108477044}
+--- !u!114 &4688160916242837588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2497860735682962248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2deb533a5115d419ff60afded4ecc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleType: 1
+  equipmentList: 000000000100000003000000
+--- !u!114 &5960425350501433598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2497860735682962248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bdd5caa8a35a443825f137446e2581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locked: 0
 --- !u!1 &3646195755349858099
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class MovementController : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private PathTrajectory pathTrajectory;
     private Lootable targetObject;
+    private WaitingAndAction waitingAndAction;
 
     private bool isMoving = false;
 
@@ -26,6 +27,10 @@ public class MovementController : MonoBehaviour
 
     public void GoToObject(Vector3 point, Lootable obj)
     {
+        if (obj == targetObject)
+            return;
+
+        AbortSearching();
         targetObject = obj;
         var distance = Vector3.Distance(transform.position, new Vector3(point.x, transform.position.y, point.z));
         if (distance <= obj.ArriveDistance)
@@ -82,6 +87,11 @@ public class MovementController : MonoBehaviour
         pathTrajectory = GetComponent<PathTrajectory>();
     }
 
+    private void Start()
+    {
+        waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
+    }
+
     private void Update()
     {
         if (targetObject != null)
@@ -102,10 +112,14 @@ public class MovementController : MonoBehaviour
         var movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         if (movementVector != Vector3.zero)
         {
+            AbortSearching();
+
             if (agent.enabled) agent.ResetPath();
             agent.enabled = false;
             targetObject = null;
+
             if (!pathTrajectory.Finished) return;
+
             rb.AddForce(manuallyMovingSpeed * Time.deltaTime * movementVector, ForceMode.Impulse);
             rb.MoveRotation(Quaternion.LookRotation(movementVector));
 
@@ -124,7 +138,17 @@ public class MovementController : MonoBehaviour
 
     private void LootTargetObject()
     {
-        targetObject.TakeLoot();
-        targetObject = null;
+        targetObject.TakeLoot(() => targetObject = null);
+    }
+
+    private void AbortSearching()
+    {
+        waitingAndAction.Abort();
+        if (targetObject != null)
+        {
+            var targetIllumination = targetObject.GetComponent<Illumination>();
+            if (targetIllumination != null)
+                targetIllumination.Enabled = true;
+        }
     }
 }

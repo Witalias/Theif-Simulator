@@ -5,6 +5,7 @@ public class GameSettings : MonoBehaviour
 {
     public static GameSettings Instanse { get; private set; } = null;
 
+    [SerializeField] private Language language = Language.Russian;
     [SerializeField] private Color illuminationColor;
 
     [Header("Testing")]
@@ -30,11 +31,13 @@ public class GameSettings : MonoBehaviour
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
 
+    public Language Language { get => language; set => language = value; }
+
+    public Color IlluminationColor { get => illuminationColor; }
+
     public bool Fog { get => fog; }
 
     public float FogYPosition { get => fogYPosition; }
-
-    public Color IlluminationColor { get => illuminationColor; }
 
     public float ChanceOfFindingMoney { get => chanceOfFindingMoney; }
 

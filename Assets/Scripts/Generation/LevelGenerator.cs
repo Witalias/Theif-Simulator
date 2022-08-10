@@ -9,6 +9,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private bool movePlayer = true;
     [SerializeField] private int roomsCount = 5;
     [SerializeField] private int frontDoorsCount = 1;
+    [SerializeField] private int lockedDoorsAndWindowsCount = 3;
     [SerializeField] private Transform startPoint;
     [SerializeField] private NavMeshRebaker navMeshRebaker;
     [SerializeField] private Transform player;
@@ -23,6 +24,7 @@ public class LevelGenerator : MonoBehaviour
     private bool generated = false;
     private int currentRoomsCount = 0;
     private int currentFrontDoorsCount = 0;
+    private int currentLockedDoorsAndWindowsCount = 0;
     private readonly Queue<Vector3> positionsForNextRoom = new Queue<Vector3>();
     private readonly List<ConnectionWall> allConnectionWalls = new List<ConnectionWall>();
     private readonly List<CenteredPoint> allWindows = new List<CenteredPoint>();
@@ -136,13 +138,20 @@ public class LevelGenerator : MonoBehaviour
         DeleteExcessDoorWalls(allConnectionWalls);
         DeleteExcessWalls(allWalls);
 
-
-        foreach (var connectionWall in allConnectionWalls)
+        for (var i = allConnectionWalls.Count - 1; i >= 0; --i)
         {
-            if (connectionWall == null) continue;
-            connectionWall.RotateDoor(120);
-            connectionWall.Delete();
+            if (allConnectionWalls[i] == null)
+                continue;
+
+            if (allConnectionWalls[i].RemoveAfterGeneration)
+            {
+                allConnectionWalls[i].Delete();
+                allConnectionWalls.RemoveAt(i);
+            }
+            else
+                allConnectionWalls[i].RotateDoor(120);
         }
+        LockRandomDoorsAndWindows();
 
         yield return new WaitForSeconds(0.01f);
         navMeshRebaker.Bake();
@@ -158,54 +167,65 @@ public class LevelGenerator : MonoBehaviour
 
     private void DeleteExcessDoorWalls(List<ConnectionWall> allConnectionWalls)
     {
-        foreach (var connectionWall in allConnectionWalls)
+        for (var i = allConnectionWalls.Count - 1; i >= 0; --i)
         {
-            var doorWallsColliders = Physics.OverlapSphere(connectionWall.PassagePointPosition, checkRadius, doorWallMask);
+            var doorWallsColliders = Physics.OverlapSphere(allConnectionWalls[i].PassagePointPosition, checkRadius, doorWallMask);
             if (doorWallsColliders.Length > 1)
             {
                 var connectionWall1 = doorWallsColliders[0].GetComponent<ConnectionWall>();
                 var connectionWall2 = doorWallsColliders[1].GetComponent<ConnectionWall>();
                 if (!connectionWall1.RemoveAfterGeneration && !connectionWall2.RemoveAfterGeneration)
+                {
                     connectionWall1.RemoveAfterGeneration = true;
+                }
                 continue;
             }
 
-            var wallsColliders = Physics.OverlapSphere(connectionWall.PassagePointPosition, checkRadius, wallMask);
+            var wallsColliders = Physics.OverlapSphere(allConnectionWalls[i].PassagePointPosition, checkRadius, wallMask);
             if (wallsColliders.Length == 0)
             {
                 if (currentFrontDoorsCount >= frontDoorsCount)
                 {
-                    Instantiate(windows[Random.Range(0, windows.Length)], connectionWall.transform.position, connectionWall.transform.rotation);
-                    Destroy(connectionWall.gameObject);
+                    var window = Instantiate(windows[Random.Range(0, windows.Length)], allConnectionWalls[i].transform.position, allConnectionWalls[i].transform.rotation);
+                    allWindows.Add(window.GetComponent<CenteredPoint>());
+                    Destroy(allConnectionWalls[i].gameObject);
                 }
                 else
                 {
-                    StartCoroutine(MovePlayer(connectionWall));
+                    StartCoroutine(MovePlayer(allConnectionWalls[i]));
                     ++currentFrontDoorsCount;
                 }
             }
             else
-                Destroy(connectionWall.gameObject);
+            {
+                Destroy(allConnectionWalls[i].gameObject);
+            }
         }
     }
 
     private void DeleteExcessWindows(List<CenteredPoint> allWindows)
     {
-        foreach (var window in allWindows)
+        for (var i = allWindows.Count - 1; i >= 0; --i)
         {
-            var wallsColliders = Physics.OverlapSphere(window.CenterPoint, checkRadius, wallMask);
+            var wallsColliders = Physics.OverlapSphere(allWindows[i].CenterPoint, checkRadius, wallMask);
             if (wallsColliders.Length > 0)
-                Destroy(window.gameObject);
+            {
+                Destroy(allWindows[i].gameObject);
+                allWindows.RemoveAt(i);
+            }
         }
     }
 
     private void DeleteExcessWalls(List<CenteredPoint> allWalls)
     {
-        foreach (var wall in allWalls)
+        for (var i = allWalls.Count - 1; i >= 0; --i)
         {
-            var colliders = Physics.OverlapSphere(wall.CenterPoint, checkRadius, wallMask);
+            var colliders = Physics.OverlapSphere(allWalls[i].CenterPoint, checkRadius, wallMask);
             if (colliders.Length > 1)
+            {
                 Destroy(colliders[1].gameObject);
+                allWalls.RemoveAt(i);
+            }
         }
     }
 
@@ -221,5 +241,16 @@ public class LevelGenerator : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (movePlayer)
             player.position = toWall.OutsidePoint;
+    }
+
+    private void LockRandomDoorsAndWindows()
+    {
+        while (currentLockedDoorsAndWindowsCount < lockedDoorsAndWindowsCount && allWindows.Count > 0)
+        {
+            var randomWindow = allWindows[Random.Range(0, allWindows.Count)];
+            allWindows.Remove(randomWindow);
+            randomWindow.GetComponent<Lockable>().Locked = true;
+            ++currentLockedDoorsAndWindowsCount;
+        }
     }
 }

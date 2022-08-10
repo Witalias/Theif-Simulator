@@ -8,6 +8,8 @@ public class GameStorage : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private NewResourceAnimation newResourceAnimationPrefab;
     [SerializeField] private UIHotkey hotkeyPrefab;
+    [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
+    [SerializeField] private WaitingAndAction waitingAndActionPrefab;
 
     [Header("Sprites")]
     [SerializeField] private Sprite appleIcon;
@@ -22,6 +24,10 @@ public class GameStorage : MonoBehaviour
     public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
 
     public GameObject HotkeyPrefab { get => hotkeyPrefab.gameObject; }
+
+    public GameObject ActionMenuButtonPrefab { get => actionMenuButtonPrefab.gameObject; }
+
+    public GameObject WaitingAndActionPrefab { get => waitingAndActionPrefab.gameObject; }
 
     public Transform MainCanvas { get; private set; }
 

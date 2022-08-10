@@ -5,18 +5,18 @@ public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private float arriveDistance = 2f;
+    [SerializeField] private float lootingTime = 2f;
 
     private MovementController movementController;
     private MovingFurnitureElements movingFurnitureElements;
+    private WaitingAndAction waitingAndAction;
 
     private bool empty = false;
 
     public float ArriveDistance { get => arriveDistance; }
 
-    public void TakeLoot()
+    public void TakeLoot(System.Action extraAction = null)
     {
-        empty = true;
-
         var settings = GameSettings.Instanse;
         var findingChances = new[]
         {   
@@ -29,14 +29,10 @@ public class Lootable : MonoBehaviour
         var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons };
         switch (randomIndex)
         {
-            case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)]); break;
-            case 1: TakeResource(ResourceType.Money); break;
-            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons }[Randomizator.GetRandomIndexByChances(equipmentChances)]); break;
+            case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)], extraAction); break;
+            case 1: TakeResource(ResourceType.Money, extraAction); break;
+            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons }[Randomizator.GetRandomIndexByChances(equipmentChances)], extraAction); break;
         }
-
-        RemoveIllumination();
-
-        movingFurnitureElements.Move();
     }
 
     private void Awake()
@@ -47,6 +43,7 @@ public class Lootable : MonoBehaviour
     private void Start()
     {
         movementController = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        waitingAndAction = GameStorage.Instanse.WaitingAndActionPrefab.GetComponent<WaitingAndAction>();
     }
 
     private void OnMouseDown()
@@ -71,12 +68,20 @@ public class Lootable : MonoBehaviour
         }
     }
 
-    private void TakeResource(ResourceType type)
+    private void TakeResource(ResourceType type, System.Action extraAction)
     {
         var gap = GameSettings.Instanse.GetAmountResourceFound(type);
         var count = Random.Range(gap.x, gap.y);
-        Stats.Instanse.AddResource(type, count);
-        PlayResourceAnimation(type, (int)count);
+        RemoveIllumination();
+        void Action()
+        {
+            empty = true;
+            movingFurnitureElements.Move();
+            Stats.Instanse.AddResource(type, count);
+            PlayResourceAnimation(type, (int)count);
+            extraAction?.Invoke();
+        }
+        waitingAndAction.WaitAndExecute(lootingTime, Action);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count)

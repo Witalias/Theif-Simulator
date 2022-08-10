@@ -12,20 +12,32 @@ public class TriggerZone : MonoBehaviour
     {
         Triggered = true;
         if (action != ActionControls.None)
-        {
-            hotkey = Instantiate(
-                GameStorage.Instanse.HotkeyPrefab,
-                Camera.main.WorldToScreenPoint(transform.position),
-                Quaternion.identity, GameStorage.Instanse.MainCanvas).GetComponent<UIHotkey>();
-            hotkey.SetKey(Controls.Instanse.GetKey(action));
-            hotkey.Show();
-        }
+            ShowHotkey();
     }
 
     public void RemoveTrigger()
     {
         Triggered = false;
         if (action != ActionControls.None)
+            HideHotkey();
+    }
+
+    public void ShowHotkey()
+    {
+        if (hotkey != null)
+            return;
+
+        hotkey = Instantiate(
+            GameStorage.Instanse.HotkeyPrefab,
+            Camera.main.WorldToScreenPoint(transform.position),
+            Quaternion.identity, GameStorage.Instanse.MainCanvas).GetComponent<UIHotkey>();
+        hotkey.SetKey(Controls.Instanse.GetKey(action));
+        hotkey.Show();
+    }
+
+    public void HideHotkey()
+    {
+        if (hotkey != null)
             hotkey.Hide();
     }
 

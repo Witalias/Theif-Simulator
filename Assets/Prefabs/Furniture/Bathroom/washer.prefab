@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containedResources: 0000000002000000
   arriveDistance: 2
+  lootingTime: 3
 --- !u!114 &4865891682690968219
 MonoBehaviour:
   m_ObjectHideFlags: 0

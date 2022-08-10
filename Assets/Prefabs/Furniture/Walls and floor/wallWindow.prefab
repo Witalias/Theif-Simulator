@@ -163,6 +163,8 @@ GameObject:
   - component: {fileID: 1823839311939891454}
   - component: {fileID: 1157593654726943899}
   - component: {fileID: 7007927688604149932}
+  - component: {fileID: 3983576209181806847}
+  - component: {fileID: 8459615515055134079}
   m_Layer: 9
   m_Name: wallWindow
   m_TagString: Untagged
@@ -284,7 +286,7 @@ MonoBehaviour:
   endLocalPositions:
   - {x: 0, y: 0, z: 0}
   endLocalRotations:
-  - {x: 0, y: 120, z: 0}
+  - {x: 0, y: -120, z: 0}
 --- !u!65 &1823839311939891454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -324,3 +326,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomPoint: {fileID: 3700117118885320812}
+--- !u!114 &3983576209181806847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419017955920969688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2deb533a5115d419ff60afded4ecc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleType: 1
+  equipmentList: 000000000100000003000000
+--- !u!114 &8459615515055134079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419017955920969688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bdd5caa8a35a443825f137446e2581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locked: 0

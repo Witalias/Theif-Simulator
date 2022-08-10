@@ -3,5 +3,6 @@ public enum Tags
     LevelGenerator,
     Player,
     ResourcesPanel,
-    MainCanvas
+    MainCanvas,
+    TimeCircle
 }
