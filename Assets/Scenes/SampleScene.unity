@@ -2118,10 +2118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73b2c78a89771046973cebafc7a140c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePlayer: 0
+  movePlayer: 1
   roomsCount: 10
   frontDoorsCount: 2
-  lockedDoorsAndWindowsCount: 3
+  lockedDoorsAndWindowsCount: 6
   startPoint: {fileID: 1887709244}
   navMeshRebaker: {fileID: 839289795}
   player: {fileID: 906010541}
@@ -6118,6 +6118,10 @@ PrefabInstance:
     - target: {fileID: 2390981504547309335, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404029336739490603, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
+      propertyPath: locked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5169703534812645838, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
       propertyPath: m_Name

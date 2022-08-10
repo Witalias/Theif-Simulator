@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3068885394056901198}
   - component: {fileID: 5432286149503531347}
   - component: {fileID: 3657250847598526360}
+  - component: {fileID: 4884892670440574428}
+  - component: {fileID: 6266388963299102989}
   m_Layer: 7
   m_Name: wallDoorway
   m_TagString: Untagged
@@ -174,6 +176,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: 1
+--- !u!114 &4884892670440574428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743471952935465036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bdd5caa8a35a443825f137446e2581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locked: 0
+--- !u!114 &6266388963299102989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743471952935465036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2deb533a5115d419ff60afded4ecc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleType: 0
+  equipmentList: 000000000100000003000000
 --- !u!1 &2823913008306980610
 GameObject:
   m_ObjectHideFlags: 0

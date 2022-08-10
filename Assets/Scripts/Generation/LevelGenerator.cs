@@ -245,11 +245,16 @@ public class LevelGenerator : MonoBehaviour
 
     private void LockRandomDoorsAndWindows()
     {
-        while (currentLockedDoorsAndWindowsCount < lockedDoorsAndWindowsCount && allWindows.Count > 0)
+        while (currentLockedDoorsAndWindowsCount < lockedDoorsAndWindowsCount && allWindows.Count > 0 && allConnectionWalls.Count > 0)
         {
             var randomWindow = allWindows[Random.Range(0, allWindows.Count)];
             allWindows.Remove(randomWindow);
             randomWindow.GetComponent<Lockable>().Locked = true;
+
+            var randomDoor = allConnectionWalls[Random.Range(0, allConnectionWalls.Count)];
+            allConnectionWalls.Remove(randomDoor);
+            randomDoor.GetComponent<Lockable>().Locked = true;
+
             ++currentLockedDoorsAndWindowsCount;
         }
     }

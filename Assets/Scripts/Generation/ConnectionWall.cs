@@ -11,6 +11,7 @@ public class ConnectionWall : MonoBehaviour
     private Animator doorAnimator;
     private LevelGenerator generator;
     private TriggerZone triggerZone;
+    private Lockable lockable;
 
     private bool triggered = false;
     private bool fixedUpdateDone = false;
@@ -36,22 +37,22 @@ public class ConnectionWall : MonoBehaviour
     private void Awake()
     {
         triggerZone = GetComponent<TriggerZone>();
+        lockable = GetComponent<Lockable>();
     }
 
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
-    }
 
-    private void Update()
-    {
-        if (triggerZone.Triggered && Input.GetKeyDown(Controls.Instanse.GetKey(ActionControls.OpenClose)))
+        void AfterOpeningEvent()
         {
             CheckPresenceDoorAnimator();
             triggered = true;
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
         }
+
+        lockable.SetEvents(null, AfterOpeningEvent);
     }
 
     private void FixedUpdate()
@@ -61,6 +62,7 @@ public class ConnectionWall : MonoBehaviour
             CheckPresenceDoorAnimator();
             doorAnimator.enabled = true;
             fixedUpdateDone = true;
+            lockable.Open();
         }
     }
 

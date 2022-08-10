@@ -23,6 +23,15 @@ public class Lockable : MonoBehaviour
         afterOpeningEvent = afterOpen;
     }
 
+    public void Open()
+    {
+        if (Locked)
+            return;
+
+        Opened = true;
+        openEvent?.Invoke();
+    }
+
     private void Awake()
     {
         triggerZone = GetComponent<TriggerZone>();
@@ -69,14 +78,5 @@ public class Lockable : MonoBehaviour
                 StartCoroutine(actionMenu.Close());
             waitingAndAction.Abort();
         }
-    }
-
-    private void Open()
-    {
-        if (Locked)
-            return;
-
-        Opened = true;
-        openEvent?.Invoke();
     }
 }

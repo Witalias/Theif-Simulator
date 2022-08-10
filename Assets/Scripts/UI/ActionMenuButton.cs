@@ -43,21 +43,34 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         equipmentStats = Stats.Instanse.GetEquipmentStats(equipmentType);
 
         var hackingTime = 1f;
+        void ActionAfterWaitingForDoorOrWindow()
+        {
+            target.GetComponent<Lockable>().Locked = false;
+            target.GetComponent<TriggerZone>().SetTrigger();
+            Stats.Instanse.AddResource(equipmentType, -1);
+        }
+
         switch (obstacleType)
         {
-            case Obstacle.Door: hackingTime = equipmentStats.HackingTimeDoor; break;
+            case Obstacle.Door: clickAction = () =>
+            {
+                void ActionAfterWaiting()
+                {
+                    ActionAfterWaitingForDoorOrWindow();
+                    target.GetComponent<Lockable>().Open();
+                }
+                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDoor, ActionAfterWaiting);
+            };
+                hackingTime = equipmentStats.HackingTimeDoor;
+                break;
+
             case Obstacle.Window: clickAction = () =>
             {
-                void ActionAfterWaiting() 
-                {
-                    target.GetComponent<Lockable>().Locked = false;
-                    target.GetComponent<TriggerZone>().SetTrigger();
-                    Stats.Instanse.AddResource(equipmentType, -1);
-                }
-                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaiting);
+                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow);
             };
                 hackingTime = equipmentStats.HackingTimeWindow;
                 break;
+
             case Obstacle.Device: hackingTime = equipmentStats.HackingTimeDevice; break;
         }
 
