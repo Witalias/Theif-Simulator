@@ -10,6 +10,7 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private UIHotkey hotkeyPrefab;
     [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
     [SerializeField] private WaitingAndAction waitingAndActionPrefab;
+    [SerializeField] private QuestionMark questionMarkPrefab;
 
     [Header("Sprites")]
     [SerializeField] private Sprite appleIcon;
@@ -28,6 +29,8 @@ public class GameStorage : MonoBehaviour
     public GameObject ActionMenuButtonPrefab { get => actionMenuButtonPrefab.gameObject; }
 
     public GameObject WaitingAndActionPrefab { get => waitingAndActionPrefab.gameObject; }
+
+    public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
 
     public Transform MainCanvas { get; private set; }
 

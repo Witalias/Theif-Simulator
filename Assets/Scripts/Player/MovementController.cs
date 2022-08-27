@@ -12,6 +12,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float manuallyMovingSpeed = 5f;
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private LayerMask playerMask;
+    [SerializeField] private Transform questionAppearancePoint;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -24,6 +25,8 @@ public class MovementController : MonoBehaviour
     private bool isMoving = false;
 
     public bool Busy { get; set; } = false;
+
+    public Vector3 QuestionAppearancePoint { get => questionAppearancePoint.position; }
 
     public void GoToObject(Vector3 point, Lootable obj)
     {
