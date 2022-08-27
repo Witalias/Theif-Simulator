@@ -21,6 +21,16 @@ public class EnemyAI : MonoBehaviour
     private bool inProcessDetection = false;
     private bool worried = false;
 
+    public void SetTargetPoint()
+    {
+        if (worried)
+            return;
+
+        worried = true;
+        CreateQuestionMark();
+        StartCoroutine(DetectTarget());
+    }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -39,10 +49,7 @@ public class EnemyAI : MonoBehaviour
                 inProcessDetection = true;
                 Stop();
 
-                if (questionMark != null)
-                    Destroy(questionMark.gameObject);
-
-                questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.QuestionAppearancePoint, Quaternion.Euler(90, 0, 0)).transform;
+                CreateQuestionMark();
                 StartCoroutine(DetectTarget());
             }
         }
@@ -56,6 +63,14 @@ public class EnemyAI : MonoBehaviour
             worried = false;
             Destroy(questionMark.gameObject);
         }
+    }
+
+    private void CreateQuestionMark()
+    {
+        if (questionMark != null)
+            Destroy(questionMark.gameObject);
+
+        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.QuestionAppearancePoint, Quaternion.Euler(90, 0, 0)).transform;
     }
 
     private IEnumerator DetectTarget()

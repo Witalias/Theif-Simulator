@@ -20,6 +20,9 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite masterKeyIcon;
     [SerializeField] private Sprite tierIronIcon;
 
+    [Header("Layer Masks")]
+    [SerializeField] private LayerMask enemyMask;
+
     private Dictionary<ResourceType, Sprite> resourceSprites;
 
     public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
@@ -33,6 +36,8 @@ public class GameStorage : MonoBehaviour
     public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
 
     public Transform MainCanvas { get; private set; }
+
+    public LayerMask EnemyMask { get => enemyMask; }
 
     public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
 

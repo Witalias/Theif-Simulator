@@ -8,6 +8,9 @@ public class ConnectionWall : MonoBehaviour
     [SerializeField] private Transform outsidePoint;
     [SerializeField] private GameObject door;
 
+    [Header("Testing")]
+    [SerializeField] private float hearingRadius;
+
     private Animator doorAnimator;
     private LevelGenerator generator;
     private TriggerZone triggerZone;
@@ -15,6 +18,7 @@ public class ConnectionWall : MonoBehaviour
 
     private bool triggered = false;
     private bool fixedUpdateDone = false;
+    private Transform player;
 
     public Vector3 PassagePointPosition { get => passagePoint.position; }
 
@@ -43,6 +47,7 @@ public class ConnectionWall : MonoBehaviour
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
+        player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
 
         void AfterOpeningEvent()
         {
@@ -50,6 +55,17 @@ public class ConnectionWall : MonoBehaviour
             triggered = true;
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
+
+            var enemies = Physics.OverlapSphere(player.position, 
+                GameSettings.Instanse.HearingRadiusAfterOpeningDoor, 
+                GameStorage.Instanse.EnemyMask);
+
+            foreach (var enemy in enemies)
+            {
+                var enemyAI = enemy.GetComponent<EnemyAI>();
+                if (enemyAI != null)
+                    enemyAI.SetTargetPoint();
+            }
         }
 
         lockable.SetEvents(null, AfterOpeningEvent);
@@ -66,13 +82,28 @@ public class ConnectionWall : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (!triggered && other.GetComponent<EnemyAI>() != null)
+        {
+            triggered = true;
+            doorAnimator.SetBool(openAnimatorBool, true);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        if (triggered && other.CompareTag(Tags.Player.ToString()))
+        if (triggered && (other.GetComponent<MovementController>() != null || other.GetComponent<EnemyAI>() != null))
         {
             triggered = false;
             doorAnimator.SetBool(openAnimatorBool, false);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(passagePoint.position, hearingRadius);
     }
 
     private void CheckPresenceDoorAnimator()

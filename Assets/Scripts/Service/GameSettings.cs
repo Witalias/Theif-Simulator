@@ -10,7 +10,6 @@ public class GameSettings : MonoBehaviour
 
     [Header("Testing")]
     [SerializeField] private bool fog = true;
-    [SerializeField] private float fogYPosition = 12.49f;
 
     [Header("Number of resources found (from/to)")]
     [SerializeField] private Vector2 amountFuelFound;
@@ -29,6 +28,9 @@ public class GameSettings : MonoBehaviour
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMasterKeys;
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingTierIrons;
 
+    [Header("Gameplay")]
+    [SerializeField] private float hearingRadiusAfterOpeningDoor = 5f;
+
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
 
     public Language Language { get => language; set => language = value; }
@@ -36,8 +38,6 @@ public class GameSettings : MonoBehaviour
     public Color IlluminationColor { get => illuminationColor; }
 
     public bool Fog { get => fog; }
-
-    public float FogYPosition { get => fogYPosition; }
 
     public float ChanceOfFindingMoney { get => chanceOfFindingMoney; }
 
@@ -48,6 +48,8 @@ public class GameSettings : MonoBehaviour
     public float ChanceOfFindingMasterKeys { get => chanceOfFindingMasterKeys; }
 
     public float ChanceOfFindingTierIrons { get => chanceOfFindingTierIrons; }
+
+    public float HearingRadiusAfterOpeningDoor { get => hearingRadiusAfterOpeningDoor; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
