@@ -29,11 +29,14 @@ public class LevelGenerator : MonoBehaviour
     private readonly List<ConnectionWall> allConnectionWalls = new List<ConnectionWall>();
     private readonly List<CenteredPoint> allWindows = new List<CenteredPoint>();
     private readonly List<CenteredPoint> allWalls = new List<CenteredPoint>();
+    private readonly List<Transform> patrolPoints = new List<Transform>();
 
     private bool successRoomGenerated = false;
     private ConnectionWall lastUsedConnectionWall = null;
 
     public bool Generated { get => generated; }
+
+    public Transform GetRandomPatrolPoint() => patrolPoints[Random.Range(0, patrolPoints.Count)];
 
     private void Start()
     {
@@ -66,9 +69,7 @@ public class LevelGenerator : MonoBehaviour
                 room.GetComponent<BoxCollider>().enabled = true;
 
                 var connectionWalls = new List<ConnectionWall>(room.GetConnectionWalls());
-                allConnectionWalls.AddRange(connectionWalls);
-                allWindows.AddRange(room.GetWindows());
-                allWalls.AddRange(room.GetWalls());
+                ComplementRoomElements(room);
 
                 if (++currentRoomsCount < roomsCount)
                 {
@@ -128,6 +129,14 @@ public class LevelGenerator : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    private void ComplementRoomElements(Room room)
+    {
+        allConnectionWalls.AddRange(room.GetConnectionWalls());
+        allWindows.AddRange(room.GetWindows());
+        allWalls.AddRange(room.GetWalls());
+        patrolPoints.AddRange(room.GetPatrolPoints());
     }
 
     private IEnumerator FinishGeneration()

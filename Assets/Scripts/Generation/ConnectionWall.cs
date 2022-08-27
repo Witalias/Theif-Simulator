@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(TriggerZone))]
+[RequireComponent(typeof(Lockable))]
 public class ConnectionWall : MonoBehaviour
 {
     private const string openAnimatorBool = "Open";
@@ -87,7 +89,8 @@ public class ConnectionWall : MonoBehaviour
         if (!triggered && other.GetComponent<EnemyAI>() != null)
         {
             triggered = true;
-            doorAnimator.SetBool(openAnimatorBool, true);
+            if (doorAnimator != null)
+                doorAnimator.SetBool(openAnimatorBool, true);
         }
     }
 
@@ -96,7 +99,8 @@ public class ConnectionWall : MonoBehaviour
         if (triggered && (other.GetComponent<MovementController>() != null || other.GetComponent<EnemyAI>() != null))
         {
             triggered = false;
-            doorAnimator.SetBool(openAnimatorBool, false);
+            if (doorAnimator != null)
+                doorAnimator.SetBool(openAnimatorBool, false);
         }
     }
 

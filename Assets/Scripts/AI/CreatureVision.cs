@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class CreatureVision : MonoBehaviour
 {
     [SerializeField] [Range(0, 360)] private float viewAngle = 90f;
@@ -9,7 +8,7 @@ public class CreatureVision : MonoBehaviour
     [SerializeField] private float detectionDistance = 3f;
     [SerializeField] private Transform enemyEye;
 
-    private Transform target;
+    private MovementController target;
     //private NavMeshAgent agent;
     //private float rotationSpeed;
     //private Transform agentTransform;
@@ -19,7 +18,7 @@ public class CreatureVision : MonoBehaviour
     private void Start()
     {
         //agent = GetComponent<NavMeshAgent>();
-        target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
+        target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
         //agent.updateRotation = false;
         //rotationSpeed = agent.angularSpeed;
         //agentTransform = agent.transform;
@@ -27,17 +26,17 @@ public class CreatureVision : MonoBehaviour
 
     private void Update()
     {
-        var distanceToPlayer = Vector3.Distance(target.position, transform.position);
+        var distanceToPlayer = Vector3.Distance(target.transform.position, transform.position);
         SeesTarget = distanceToPlayer <= detectionDistance || IsInView();
         DrawViewState();
     }
 
     private bool IsInView() // true если цель видна
     {
-        var realAngle = Vector3.Angle(enemyEye.forward, target.position - enemyEye.position);
-        if (Physics.Raycast(enemyEye.transform.position, target.position - enemyEye.position, out RaycastHit hit, viewDistance))
+        var realAngle = Vector3.Angle(enemyEye.forward, target.QuestionAppearancePoint.position - enemyEye.position);
+        if (Physics.Raycast(enemyEye.transform.position, target.QuestionAppearancePoint.position - enemyEye.position, out RaycastHit hit, viewDistance))
         {
-            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, target.position) <= viewDistance && hit.transform == target.transform)
+            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, target.QuestionAppearancePoint.position) <= viewDistance && hit.transform == target.transform)
                 return true;
         }
         return false;

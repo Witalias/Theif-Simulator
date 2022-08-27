@@ -11,15 +11,20 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float detectionTime = 1.5f;
     [SerializeField] private float detectionRadius = 1f;
+    [SerializeField] private float minStayingTime = 1f;
+    [SerializeField] private float maxStayingTime = 10f;
 
     private Animator animator;
     private NavMeshAgent agent;
     private CreatureVision vision;
     private MovementController player;
+    private LevelGenerator generator;
 
     private Transform questionMark = null;
+    private Transform targetPatrolPoint = null;
     private bool inProcessDetection = false;
     private bool worried = false;
+    private bool isPatrolling = false;
 
     public void SetTargetPoint()
     {
@@ -27,6 +32,8 @@ public class EnemyAI : MonoBehaviour
             return;
 
         worried = true;
+        isPatrolling = false;
+        Stop();
         CreateQuestionMark();
         StartCoroutine(DetectTarget());
     }
@@ -36,7 +43,12 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<CreatureVision>();
+    }
+
+    private void Start()
+    {
         player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
     }
 
     private void Update()
@@ -44,6 +56,7 @@ public class EnemyAI : MonoBehaviour
         if (vision.SeesTarget)
         {
             worried = true;
+            isPatrolling = false;
             if (!inProcessDetection)
             {
                 inProcessDetection = true;
@@ -54,8 +67,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (questionMark != null && Vector3.Distance(
-            transform.position, 
+        if (questionMark != null && Vector3.Distance(transform.position, 
             new Vector3(questionMark.transform.position.x, transform.position.y, questionMark.transform.position.z)
             ) <= detectionRadius)
         {
@@ -63,6 +75,16 @@ public class EnemyAI : MonoBehaviour
             worried = false;
             Destroy(questionMark.gameObject);
         }
+
+        if (isPatrolling && targetPatrolPoint != null && Vector3.Distance(transform.position,
+            new Vector3(targetPatrolPoint.position.x, transform.position.y, targetPatrolPoint.position.z)) <= detectionRadius)
+        {
+            Stop();
+            targetPatrolPoint = null;
+            StartCoroutine(Wait());
+        }
+
+        Patrol();
     }
 
     private void CreateQuestionMark()
@@ -70,7 +92,7 @@ public class EnemyAI : MonoBehaviour
         if (questionMark != null)
             Destroy(questionMark.gameObject);
 
-        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.QuestionAppearancePoint, Quaternion.Euler(90, 0, 0)).transform;
+        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.QuestionAppearancePoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }
 
     private IEnumerator DetectTarget()
@@ -85,6 +107,22 @@ public class EnemyAI : MonoBehaviour
         {
             Run(questionMark.position);
         }
+    }
+
+    private void Patrol()
+    {
+        if (worried || isPatrolling || !generator.Generated)
+            return;
+
+        isPatrolling = true;
+        targetPatrolPoint = generator.GetRandomPatrolPoint();
+        Run(targetPatrolPoint.position);
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(Random.Range(minStayingTime, maxStayingTime));
+        isPatrolling = false;
     }
 
     private void Run(Vector3 toPosition)

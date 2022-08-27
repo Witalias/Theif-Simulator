@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 8669048186366563205}
   - component: {fileID: 8945742338110560703}
   - component: {fileID: 4265090100130291390}
+  - component: {fileID: 4659569460230070355}
   m_Layer: 0
   m_Name: dryer
   m_TagString: Untagged
@@ -295,3 +296,19 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   endLocalRotations:
   - {x: 0, y: 120, z: 0}
+--- !u!208 &4659569460230070355
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220449990883242710}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.95, y: 2.3500001, z: 1.7500001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 1.95, y: 2.3500001, z: 1.7500001}
+  m_TimeToStationary: 0.5

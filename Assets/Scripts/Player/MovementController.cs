@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(PathTrajectory))]
 public class MovementController : MonoBehaviour
 {
     private const string runAnimatorBool = "Run";
@@ -26,7 +31,7 @@ public class MovementController : MonoBehaviour
 
     public bool Busy { get; set; } = false;
 
-    public Vector3 QuestionAppearancePoint { get => questionAppearancePoint.position; }
+    public Transform QuestionAppearancePoint { get => questionAppearancePoint; }
 
     public void GoToObject(Vector3 point, Lootable obj)
     {
