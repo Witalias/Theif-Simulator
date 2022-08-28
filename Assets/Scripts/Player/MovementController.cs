@@ -17,7 +17,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float manuallyMovingSpeed = 5f;
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private LayerMask playerMask;
-    [SerializeField] private Transform questionAppearancePoint;
+    [SerializeField] private Transform centerPoint;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour
 
     public bool Busy { get; set; } = false;
 
-    public Transform QuestionAppearancePoint { get => questionAppearancePoint; }
+    public Transform CenterPoint { get => centerPoint; }
 
     public void GoToObject(Vector3 point, Lootable obj)
     {

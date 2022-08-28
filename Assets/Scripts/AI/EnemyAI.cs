@@ -97,7 +97,7 @@ public class EnemyAI : MonoBehaviour
         if (questionMark != null)
             Destroy(questionMark.gameObject);
 
-        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.QuestionAppearancePoint.position, Quaternion.Euler(90, 0, 0)).transform;
+        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }
 
     private IEnumerator DetectTarget()

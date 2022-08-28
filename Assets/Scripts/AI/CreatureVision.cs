@@ -33,10 +33,10 @@ public class CreatureVision : MonoBehaviour
 
     private bool IsInView() // true если цель видна
     {
-        var realAngle = Vector3.Angle(enemyEye.forward, target.QuestionAppearancePoint.position - enemyEye.position);
-        if (Physics.Raycast(enemyEye.transform.position, target.QuestionAppearancePoint.position - enemyEye.position, out RaycastHit hit, viewDistance))
+        var realAngle = Vector3.Angle(enemyEye.forward, target.CenterPoint.position - enemyEye.position);
+        if (Physics.Raycast(enemyEye.transform.position, target.CenterPoint.position - enemyEye.position, out RaycastHit hit, viewDistance))
         {
-            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, target.QuestionAppearancePoint.position) <= viewDistance && hit.transform == target.transform)
+            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, target.CenterPoint.position) <= viewDistance && hit.transform == target.transform)
                 return true;
         }
         return false;
