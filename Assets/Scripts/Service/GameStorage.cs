@@ -11,6 +11,7 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
     [SerializeField] private WaitingAndAction waitingAndActionPrefab;
     [SerializeField] private QuestionMark questionMarkPrefab;
+    [SerializeField] private EnemyAI[] enemyPrefabs;
 
     [Header("Sprites")]
     [SerializeField] private Sprite appleIcon;
@@ -40,6 +41,8 @@ public class GameStorage : MonoBehaviour
     public LayerMask EnemyMask { get => enemyMask; }
 
     public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
+
+    public GameObject GetRandomEnemyPrefab() => enemyPrefabs[Random.Range(0, enemyPrefabs.Length)].gameObject;
 
     private void Awake()
     {

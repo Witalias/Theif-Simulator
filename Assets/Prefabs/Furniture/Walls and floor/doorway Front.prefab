@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6569561813857822554}
   - component: {fileID: 5417070136688299440}
   - component: {fileID: 4162015781214146206}
+  - component: {fileID: 2248234401411107947}
   m_Layer: 0
   m_Name: doorway Front
   m_TagString: Door
@@ -84,6 +85,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!208 &2248234401411107947
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324925879025689999}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.31, y: 4.54, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 2.5, y: 4.5, z: 0.42}
+  m_TimeToStationary: 0.5
 --- !u!1 &1703753897915425870
 GameObject:
   m_ObjectHideFlags: 0

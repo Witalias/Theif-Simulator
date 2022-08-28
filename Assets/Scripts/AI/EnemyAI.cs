@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour
 
     private Transform questionMark = null;
     private Transform targetPatrolPoint = null;
+    private Coroutine waitCoroutine = null;
     private bool inProcessDetection = false;
     private bool worried = false;
     private bool isPatrolling = false;
@@ -57,6 +58,10 @@ public class EnemyAI : MonoBehaviour
         {
             worried = true;
             isPatrolling = false;
+
+            if (waitCoroutine != null)
+                StopCoroutine(Wait());
+
             if (!inProcessDetection)
             {
                 inProcessDetection = true;
@@ -72,8 +77,8 @@ public class EnemyAI : MonoBehaviour
             ) <= detectionRadius)
         {
             Stop();
-            worried = false;
             Destroy(questionMark.gameObject);
+            waitCoroutine = StartCoroutine(Wait());
         }
 
         if (isPatrolling && targetPatrolPoint != null && Vector3.Distance(transform.position,
@@ -81,7 +86,7 @@ public class EnemyAI : MonoBehaviour
         {
             Stop();
             targetPatrolPoint = null;
-            StartCoroutine(Wait());
+            waitCoroutine = StartCoroutine(Wait());
         }
 
         Patrol();
@@ -123,6 +128,7 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minStayingTime, maxStayingTime));
         isPatrolling = false;
+        worried = false;
     }
 
     private void Run(Vector3 toPosition)

@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad27008ac65f7c4c8f92b90288072e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTime: 1.5
+  detectionTime: 1
   detectionRadius: 2
   minStayingTime: 1
   maxStayingTime: 10
@@ -437,9 +437,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb055f690190bc418c97d816fada60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 110
-  viewDistance: 20
-  detectionDistance: 3
+  viewAngle: 150
+  viewDistance: 30
+  detectionDistance: 5
   enemyEye: {fileID: 2102709877049460062}
 --- !u!4 &6080330519455056559 stripped
 Transform:

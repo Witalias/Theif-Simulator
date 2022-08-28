@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int roomsCount = 5;
     [SerializeField] private int frontDoorsCount = 1;
     [SerializeField] private int lockedDoorsAndWindowsCount = 3;
+    [SerializeField] private int enemiesCount = 1;
     [SerializeField] private Transform startPoint;
     [SerializeField] private NavMeshRebaker navMeshRebaker;
     [SerializeField] private Transform player;
@@ -161,6 +162,7 @@ public class LevelGenerator : MonoBehaviour
                 allConnectionWalls[i].RotateDoor(120);
         }
         LockRandomDoorsAndWindows();
+        CreateEnemies();
 
         yield return new WaitForSeconds(0.01f);
         navMeshRebaker.Bake();
@@ -270,6 +272,15 @@ public class LevelGenerator : MonoBehaviour
                     break;
             }
             ++currentLockedDoorsAndWindowsCount;
+        }
+    }
+
+    private void CreateEnemies()
+    {
+        for (var i = 0; i < enemiesCount; ++i)
+        {
+            var spawnPosition = GetRandomPatrolPoint().position;
+            Instantiate(GameStorage.Instanse.GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
         }
     }
 }
