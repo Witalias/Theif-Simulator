@@ -5,6 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(CreatureVision))]
+[RequireComponent(typeof(Noisy))]
 public class EnemyAI : MonoBehaviour
 {
     private const string runAnimatorBool = "Run";
@@ -17,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
     private CreatureVision vision;
+    private Noisy noisy;
     private MovementController player;
     private LevelGenerator generator;
 
@@ -44,6 +46,7 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<CreatureVision>();
+        noisy = GetComponent<Noisy>();
     }
 
     private void Start()
@@ -107,6 +110,7 @@ public class EnemyAI : MonoBehaviour
         if (vision.SeesTarget)
         {
             Debug.Log("Target is detected!");
+            noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
         }
         else
         {

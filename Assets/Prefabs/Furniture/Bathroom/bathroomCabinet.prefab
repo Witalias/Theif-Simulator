@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2638748750665497328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.25, y: -2.19, z: -1}
+  m_LocalPosition: {x: 3.25, y: 1.42, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 973280544591112298}
   - component: {fileID: 5499814155920546893}
   - component: {fileID: 1371761053448987063}
+  - component: {fileID: 8991673146115552576}
   m_Layer: 0
   m_Name: bathroomCabinet
   m_TagString: Untagged
@@ -279,6 +280,18 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   endLocalRotations:
   - {x: 0, y: 120, z: 0}
+--- !u!114 &8991673146115552576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823825812295369487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d9ea6bba93069418c87c38be63f3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8733364521099150398
 PrefabInstance:
   m_ObjectHideFlags: 0

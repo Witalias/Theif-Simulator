@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Linq;
 
+[RequireComponent(typeof(MovingFurnitureElements))]
+[RequireComponent(typeof(Noisy))]
 public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
@@ -10,6 +12,7 @@ public class Lootable : MonoBehaviour
     private MovementController movementController;
     private MovingFurnitureElements movingFurnitureElements;
     private WaitingAndAction waitingAndAction;
+    private Noisy noisy;
 
     private bool empty = false;
 
@@ -90,7 +93,7 @@ public class Lootable : MonoBehaviour
             PlayResourceAnimation(type, (int)count);
             extraAction?.Invoke();
         }
-        waitingAndAction.WaitAndExecute(lootingTime, Action);
+        waitingAndAction.WaitAndExecute(lootingTime, Action, true, GameSettings.Instanse.HearingRadiusDuringLoot);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count)

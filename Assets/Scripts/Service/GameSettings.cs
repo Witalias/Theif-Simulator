@@ -32,9 +32,9 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private float hearingRadiusQuietly;
     [SerializeField] private float hearingRadiusLoudly;
     [SerializeField] private float hearingRadiusVeryLoudly;
-
-    [Header("Gameplay")]
     [SerializeField] private float hearingRadiusAfterOpeningDoor = 5f;
+    [SerializeField] private float hearingRadiusDuringLoot;
+    [SerializeField] private float hearingRadiusDuringEnemyScream;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
@@ -56,6 +56,10 @@ public class GameSettings : MonoBehaviour
     public float ChanceOfFindingTierIrons { get => chanceOfFindingTierIrons; }
 
     public float HearingRadiusAfterOpeningDoor { get => hearingRadiusAfterOpeningDoor; }
+
+    public float HearingRadiusDuringLoot { get => hearingRadiusDuringLoot; }
+
+    public float HearingRadiusDuringEnemyScream { get => hearingRadiusDuringEnemyScream; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
@@ -98,5 +102,14 @@ public class GameSettings : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, hearingRadiusVeryLoudly);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusDuringLoot);
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusAfterOpeningDoor);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusDuringEnemyScream);
     }
 }

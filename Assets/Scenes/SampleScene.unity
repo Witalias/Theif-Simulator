@@ -242,6 +242,8 @@ MonoBehaviour:
   hearingRadiusLoudly: 20
   hearingRadiusVeryLoudly: 40
   hearingRadiusAfterOpeningDoor: 17
+  hearingRadiusDuringLoot: 12
+  hearingRadiusDuringEnemyScream: 30
 --- !u!4 &158996468
 Transform:
   m_ObjectHideFlags: 0

@@ -21,12 +21,12 @@ public class WaitingAndAction : MonoBehaviour
     private float reachedTime = 1f;
     private float currentTime = 0f;
     private bool noisyAction = false;
+    private float noiseRadius = 0f;
     private Action action;
-    private LoudnessType loudnessType;
 
     public bool InProgress { get; private set; } = false;
 
-    public void WaitAndExecute(float time, Action action, bool noisy = false, LoudnessType loudnessType = LoudnessType.Quietly)
+    public void WaitAndExecute(float time, Action action, bool noisy = false, float noiseRadius = 0f)
     {
         if (action == null || InProgress)
             return;
@@ -36,7 +36,7 @@ public class WaitingAndAction : MonoBehaviour
 
         reachedTime = time;
         this.action = action;
-        this.loudnessType = loudnessType;
+        this.noiseRadius = noiseRadius;
         noisyAction = noisy;
         InProgress = true;
 
@@ -76,7 +76,7 @@ public class WaitingAndAction : MonoBehaviour
         fill.fillAmount = currentTime / reachedTime;
 
         if (noisyAction)
-            noisy.Noise(GameSettings.Instanse.GetHearingRadius(loudnessType));
+            noisy.Noise(noiseRadius);
 
         waitingCoroutine = StartCoroutine(AddTick());
     }

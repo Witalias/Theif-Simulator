@@ -11,9 +11,6 @@ public class ConnectionWall : MonoBehaviour
     [SerializeField] private Transform outsidePoint;
     [SerializeField] private GameObject door;
 
-    [Header("Testing")]
-    [SerializeField] private float hearingRadius;
-
     private Animator doorAnimator;
     private LevelGenerator generator;
     private TriggerZone triggerZone;
@@ -93,12 +90,6 @@ public class ConnectionWall : MonoBehaviour
             if (doorAnimator != null)
                 doorAnimator.SetBool(openAnimatorBool, false);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(passagePoint.position, hearingRadius);
     }
 
     private void CheckPresenceDoorAnimator()
