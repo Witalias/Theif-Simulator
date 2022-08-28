@@ -48,7 +48,6 @@ public class Lootable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //var layer = 1 << 7 | 1 << 8 | 1 << 9; // Door Wall, Wall, Window
         var centeredPoint = GetComponent<CenteredPoint>();
         if (!empty && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
         {

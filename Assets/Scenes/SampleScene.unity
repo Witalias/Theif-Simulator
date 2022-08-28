@@ -238,6 +238,9 @@ MonoBehaviour:
   chanceOfFindingEquipment: 10
   chanceOfFindingMasterKeys: 65
   chanceOfFindingTierIrons: 35
+  hearingRadiusQuietly: 5
+  hearingRadiusLoudly: 20
+  hearingRadiusVeryLoudly: 40
   hearingRadiusAfterOpeningDoor: 17
 --- !u!4 &158996468
 Transform:
@@ -1143,6 +1146,7 @@ GameObject:
   - component: {fileID: 1090647832}
   - component: {fileID: 1090647834}
   - component: {fileID: 1090647835}
+  - component: {fileID: 1090647836}
   m_Layer: 5
   m_Name: Time Circle
   m_TagString: TimeCircle
@@ -1239,6 +1243,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1090647836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090647830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d9ea6bba93069418c87c38be63f3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1251698395
 PrefabInstance:
   m_ObjectHideFlags: 0

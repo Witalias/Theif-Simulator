@@ -28,10 +28,16 @@ public class GameSettings : MonoBehaviour
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMasterKeys;
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingTierIrons;
 
+    [Header("Hearing Radiuses")]
+    [SerializeField] private float hearingRadiusQuietly;
+    [SerializeField] private float hearingRadiusLoudly;
+    [SerializeField] private float hearingRadiusVeryLoudly;
+
     [Header("Gameplay")]
     [SerializeField] private float hearingRadiusAfterOpeningDoor = 5f;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
+    private Dictionary<LoudnessType, float> hearingRadiuses;
 
     public Language Language { get => language; set => language = value; }
 
@@ -53,6 +59,8 @@ public class GameSettings : MonoBehaviour
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
+    public float GetHearingRadius(LoudnessType type) => hearingRadiuses[type];
+
     private void Awake()
     {
         if (Instanse == null)
@@ -71,5 +79,24 @@ public class GameSettings : MonoBehaviour
             [ResourceType.MasterKeys] = amountMasterKeyFound,
             [ResourceType.TierIrons] = amountTierIronFound
         };
+
+        hearingRadiuses = new Dictionary<LoudnessType, float>
+        {
+            [LoudnessType.Quietly] = hearingRadiusQuietly,
+            [LoudnessType.Loudly] = hearingRadiusLoudly,
+            [LoudnessType.VeryLoudly] = hearingRadiusVeryLoudly
+        };
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusQuietly);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusLoudly);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusVeryLoudly);
     }
 }

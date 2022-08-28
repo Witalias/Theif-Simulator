@@ -59,14 +59,14 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                     ActionAfterWaitingForDoorOrWindow();
                     target.GetComponent<Lockable>().Open();
                 }
-                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDoor, ActionAfterWaiting);
+                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDoor, ActionAfterWaiting, true, equipmentStats.LoudnessType);
             };
                 hackingTime = equipmentStats.HackingTimeDoor;
                 break;
 
             case Obstacle.Window: clickAction = () =>
             {
-                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow);
+                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, true, equipmentStats.LoudnessType);
             };
                 hackingTime = equipmentStats.HackingTimeWindow;
                 break;

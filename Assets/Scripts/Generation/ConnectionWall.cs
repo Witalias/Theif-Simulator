@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(TriggerZone))]
 [RequireComponent(typeof(Lockable))]
+[RequireComponent(typeof(Noisy))]
 public class ConnectionWall : MonoBehaviour
 {
     private const string openAnimatorBool = "Open";
@@ -17,10 +18,10 @@ public class ConnectionWall : MonoBehaviour
     private LevelGenerator generator;
     private TriggerZone triggerZone;
     private Lockable lockable;
+    private Noisy noisy;
 
     private bool triggered = false;
     private bool fixedUpdateDone = false;
-    private Transform player;
 
     public Vector3 PassagePointPosition { get => passagePoint.position; }
 
@@ -44,12 +45,12 @@ public class ConnectionWall : MonoBehaviour
     {
         triggerZone = GetComponent<TriggerZone>();
         lockable = GetComponent<Lockable>();
+        noisy = GetComponent<Noisy>();
     }
 
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
-        player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
 
         void AfterOpeningEvent()
         {
@@ -57,17 +58,7 @@ public class ConnectionWall : MonoBehaviour
             triggered = true;
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
-
-            var enemies = Physics.OverlapSphere(player.position, 
-                GameSettings.Instanse.HearingRadiusAfterOpeningDoor, 
-                GameStorage.Instanse.EnemyMask);
-
-            foreach (var enemy in enemies)
-            {
-                var enemyAI = enemy.GetComponent<EnemyAI>();
-                if (enemyAI != null)
-                    enemyAI.SetTargetPoint();
-            }
+            noisy.Noise(GameSettings.Instanse.HearingRadiusAfterOpeningDoor);
         }
 
         lockable.SetEvents(null, AfterOpeningEvent);
