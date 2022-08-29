@@ -18,7 +18,8 @@ public class Controls : MonoBehaviour
 
         controlKeys = new Dictionary<ActionControls, KeyCode>
         {
-            [ActionControls.OpenClose] = KeyCode.E
+            [ActionControls.OpenClose] = KeyCode.E,
+            [ActionControls.Noise] = KeyCode.Q
         };
     }
 }

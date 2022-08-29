@@ -1,23 +1,49 @@
 using UnityEngine;
+using System.Collections;
 
 public class Noisy : MonoBehaviour
 {
-    private Transform player;
+    private const float noiseEffectsDelay = 3f;
+
+    private Transform playerPoint;
+    private Transform playerCenterPoint;
+    private GameObject noiseEffect = null;
+
+    private bool noiseEffectPlayed = true;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
+        playerPoint = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
+        playerCenterPoint = playerPoint.GetComponent<MovementController>().CenterPoint;
     }
 
     public void Noise(float radius)
     {
-        var enemies = Physics.OverlapSphere(player.position, radius, GameStorage.Instanse.EnemyMask);
+        if (noiseEffect == null && noiseEffectPlayed)
+        {
+            noiseEffectPlayed = false;
+            CreateNoiseEffect(radius);
+            StartCoroutine(StartDelay());
+        }
 
+        var enemies = Physics.OverlapSphere(playerPoint.position, radius, GameStorage.Instanse.EnemyMask);
         foreach (var enemy in enemies)
         {
             var enemyAI = enemy.GetComponent<EnemyAI>();
             if (enemyAI != null)
                 enemyAI.SetTargetPoint();
         }
+    }
+
+    private void CreateNoiseEffect(float radius)
+    {
+        noiseEffect = Instantiate(GameStorage.Instanse.NoiseEffectPrefab, playerCenterPoint.position, Quaternion.Euler(90, 0, 0));
+        noiseEffect.GetComponent<NoiseEffect>().Play(radius);
+    }
+
+    private IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(noiseEffectsDelay);
+        noiseEffectPlayed = true;
     }
 }

@@ -31,7 +31,7 @@ public static class Translation
             [EquipmentType.Arms] = "Arms",
             [EquipmentType.Gadget] = "Gadget",
             [EquipmentType.MasterKey] = "Master key",
-            [EquipmentType.TierIron] = "Tier Iron"
+            [EquipmentType.TierIron] = "Crowbar"
         },
         [Language.Russian] = new Dictionary<EquipmentType, string>
         {
@@ -42,9 +42,42 @@ public static class Translation
         }
     };
 
+    private readonly static Dictionary<Language, string> noiseName = new Dictionary<Language, string>
+    {
+        [Language.English] = "Noise",
+        [Language.Russian] = "Пошуметь"
+    };
+
+    private readonly static Dictionary<Language, Dictionary<ResourceType, string>> resourceNames = new Dictionary<Language, Dictionary<ResourceType, string>>
+    {
+        [Language.English] = new Dictionary<ResourceType, string>
+        {
+            [ResourceType.Food] = "Food",
+            [ResourceType.Fuel] = "Fuel",
+            [ResourceType.MasterKeys] = "Master keys",
+            [ResourceType.Money] = "Money",
+            [ResourceType.TierIrons] = "Crowbars",
+            [ResourceType.Water] = "Water"
+        },
+        [Language.Russian] = new Dictionary<ResourceType, string>
+        {
+            [ResourceType.Food] = "Еда",
+            [ResourceType.Fuel] = "Топливо",
+            [ResourceType.MasterKeys] = "Отмычки",
+            [ResourceType.Money] = "Монеты",
+            [ResourceType.TierIrons] = "Лом",
+            [ResourceType.Water] = "Вода"
+        }
+    };
+
     public static string Get(LoudnessType type) => loudnessTypeNames[GameSettings.Instanse.Language][type];
 
     public static string Get(EquipmentType type) => equipmentTypeNames[GameSettings.Instanse.Language][type];
 
+    public static string Get(ResourceType type) => resourceNames[GameSettings.Instanse.Language][type];
+
     public static string GetSecondsAbbreviation() => secondsAbbreviations[GameSettings.Instanse.Language];
+
+    public static string GetNoiseName() => noiseName[GameSettings.Instanse.Language];
+
 }

@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float detectionRadius = 1f;
     [SerializeField] private float minStayingTime = 1f;
     [SerializeField] private float maxStayingTime = 10f;
+    [SerializeField] private float patrolCheckingTime = 20f;
 
     private Animator animator;
     private NavMeshAgent agent;
@@ -25,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     private Transform questionMark = null;
     private Transform targetPatrolPoint = null;
     private Coroutine waitCoroutine = null;
+    private Coroutine checkPatrolCoroutine = null;
     private bool inProcessDetection = false;
     private bool worried = false;
     private bool isPatrolling = false;
@@ -62,9 +64,6 @@ public class EnemyAI : MonoBehaviour
             worried = true;
             isPatrolling = false;
 
-            if (waitCoroutine != null)
-                StopCoroutine(Wait());
-
             if (!inProcessDetection)
             {
                 inProcessDetection = true;
@@ -90,6 +89,7 @@ public class EnemyAI : MonoBehaviour
             Stop();
             targetPatrolPoint = null;
             waitCoroutine = StartCoroutine(Wait());
+            StopCoroutine(checkPatrolCoroutine);
         }
 
         Patrol();
@@ -99,6 +99,13 @@ public class EnemyAI : MonoBehaviour
     {
         if (questionMark != null)
             Destroy(questionMark.gameObject);
+
+        if (waitCoroutine != null)
+            StopCoroutine(Wait());
+
+        if (checkPatrolCoroutine != null)
+            StopCoroutine(checkPatrolCoroutine);
+        checkPatrolCoroutine = StartCoroutine(CheckPatrol());
 
         questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }
@@ -126,6 +133,7 @@ public class EnemyAI : MonoBehaviour
         isPatrolling = true;
         targetPatrolPoint = generator.GetRandomPatrolPoint();
         Run(targetPatrolPoint.position);
+        checkPatrolCoroutine = StartCoroutine(CheckPatrol());
     }
 
     private IEnumerator Wait()
@@ -133,6 +141,17 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(minStayingTime, maxStayingTime));
         isPatrolling = false;
         worried = false;
+    }
+
+    private IEnumerator CheckPatrol()
+    {
+        yield return new WaitForSeconds(patrolCheckingTime);
+        Stop();
+
+        if (questionMark != null && !inProcessDetection)
+            Destroy(questionMark.gameObject);
+
+        waitCoroutine = StartCoroutine(Wait());
     }
 
     private void Run(Vector3 toPosition)

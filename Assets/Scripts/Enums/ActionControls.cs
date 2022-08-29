@@ -1,5 +1,6 @@
 public enum ActionControls
 {
     None,
-    OpenClose
+    OpenClose,
+    Noise
 }

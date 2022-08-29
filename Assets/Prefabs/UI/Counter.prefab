@@ -400,6 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueText: {fileID: 4552677581827752024}
+  title: {fileID: 1181496022400959277}
 --- !u!1 &6442184411100313717
 GameObject:
   m_ObjectHideFlags: 0

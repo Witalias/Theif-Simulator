@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 8398909275979397663}
   valueText: {fileID: 4021860862355824833}
+  title: {fileID: 3349296402893005428}
 --- !u!1 &1592511307251374614
 GameObject:
   m_ObjectHideFlags: 0

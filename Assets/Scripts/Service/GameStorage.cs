@@ -11,6 +11,7 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
     [SerializeField] private WaitingAndAction waitingAndActionPrefab;
     [SerializeField] private QuestionMark questionMarkPrefab;
+    [SerializeField] private NoiseEffect noiseEffectPrefab;
     [SerializeField] private EnemyAI[] enemyPrefabs;
 
     [Header("Sprites")]
@@ -35,6 +36,8 @@ public class GameStorage : MonoBehaviour
     public GameObject WaitingAndActionPrefab { get => waitingAndActionPrefab.gameObject; }
 
     public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
+
+    public GameObject NoiseEffectPrefab { get => noiseEffectPrefab.gameObject; }
 
     public Transform MainCanvas { get; private set; }
 

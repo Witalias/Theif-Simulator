@@ -35,6 +35,7 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private float hearingRadiusAfterOpeningDoor = 5f;
     [SerializeField] private float hearingRadiusDuringLoot;
     [SerializeField] private float hearingRadiusDuringEnemyScream;
+    [SerializeField] private float hearingRadiusAfterPlayerNoise;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
@@ -60,6 +61,8 @@ public class GameSettings : MonoBehaviour
     public float HearingRadiusDuringLoot { get => hearingRadiusDuringLoot; }
 
     public float HearingRadiusDuringEnemyScream { get => hearingRadiusDuringEnemyScream; }
+
+    public float HearingRadiusAfterPlayerNoise { get => hearingRadiusAfterPlayerNoise; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
@@ -111,5 +114,8 @@ public class GameSettings : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, hearingRadiusDuringEnemyScream);
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, hearingRadiusAfterPlayerNoise);
     }
 }
