@@ -55,7 +55,8 @@ public class Stats : MonoBehaviour
             [ResourceType.Money] = 0f,
             [ResourceType.Fuel] = 10f,
             [ResourceType.MasterKeys] = 0f,
-            [ResourceType.TierIrons] = 0f
+            [ResourceType.TierIrons] = 0f,
+            [ResourceType.Gadgets] = 0f
         };
 
         equipment = new Dictionary<EquipmentType, EquipmentStats>
@@ -81,6 +82,7 @@ public class Stats : MonoBehaviour
         {
             EquipmentType.MasterKey => ResourceType.MasterKeys,
             EquipmentType.TierIron => ResourceType.TierIrons,
+            EquipmentType.Gadget => ResourceType.Gadgets,
             _ => throw new Exception($"The resource {type} does not exist"),
         };
     }

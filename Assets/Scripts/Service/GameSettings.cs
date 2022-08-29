@@ -18,6 +18,7 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private Vector2 amountMoneyFound;
     [SerializeField] private Vector2 amountMasterKeyFound;
     [SerializeField] private Vector2 amountTierIronFound;
+    [SerializeField] private Vector2 amountGadgetFound;
 
     [Header("Finding chances")]
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMoney;
@@ -27,6 +28,7 @@ public class GameSettings : MonoBehaviour
     [Header("Equipment chances")]
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingMasterKeys;
     [SerializeField] [Range(0f, 100f)] private float chanceOfFindingTierIrons;
+    [SerializeField] [Range(0f, 100f)] private float chanceOfFindingGadgets;
 
     [Header("Hearing Radiuses")]
     [SerializeField] private float hearingRadiusQuietly;
@@ -56,6 +58,8 @@ public class GameSettings : MonoBehaviour
 
     public float ChanceOfFindingTierIrons { get => chanceOfFindingTierIrons; }
 
+    public float ChanceOfFindingGadgets { get => chanceOfFindingGadgets; }
+
     public float HearingRadiusAfterOpeningDoor { get => hearingRadiusAfterOpeningDoor; }
 
     public float HearingRadiusDuringLoot { get => hearingRadiusDuringLoot; }
@@ -84,7 +88,8 @@ public class GameSettings : MonoBehaviour
             [ResourceType.Money] = amountMoneyFound,
             [ResourceType.Water] = amountWaterFound,
             [ResourceType.MasterKeys] = amountMasterKeyFound,
-            [ResourceType.TierIrons] = amountTierIronFound
+            [ResourceType.TierIrons] = amountTierIronFound,
+            [ResourceType.Gadgets] = amountGadgetFound
         };
 
         hearingRadiuses = new Dictionary<LoudnessType, float>

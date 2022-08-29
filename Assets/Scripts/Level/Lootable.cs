@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
-[RequireComponent(typeof(Noisy))]
+[RequireComponent(typeof(CenteredPoint))]
 public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
@@ -12,7 +12,7 @@ public class Lootable : MonoBehaviour
     private MovementController movementController;
     private MovingFurnitureElements movingFurnitureElements;
     private WaitingAndAction waitingAndAction;
-    private Noisy noisy;
+    private CenteredPoint centeredPoint;
 
     private bool empty = false;
 
@@ -34,13 +34,14 @@ public class Lootable : MonoBehaviour
         {
             case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)], extraAction); break;
             case 1: TakeResource(ResourceType.Money, extraAction); break;
-            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons }[Randomizator.GetRandomIndexByChances(equipmentChances)], extraAction); break;
+            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets }[Randomizator.GetRandomIndexByChances(equipmentChances)], extraAction); break;
         }
     }
 
     private void Awake()
     {
         movingFurnitureElements = GetComponent<MovingFurnitureElements>();
+        centeredPoint = GetComponent<CenteredPoint>();
     }
 
     private void Start()
@@ -51,7 +52,6 @@ public class Lootable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        var centeredPoint = GetComponent<CenteredPoint>();
         if (!empty && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
         {
             if (hit.collider.GetComponent<MovementController>() == null)
@@ -62,6 +62,11 @@ public class Lootable : MonoBehaviour
             else
                 movementController.GoToObject(centeredPoint.CenterPoint, this);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(centeredPoint.CenterPoint, arriveDistance);
     }
 
     //private void Update()

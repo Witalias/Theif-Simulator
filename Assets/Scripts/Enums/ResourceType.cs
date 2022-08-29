@@ -5,5 +5,6 @@ public enum ResourceType
     Water,
     Money,
     MasterKeys,
-    TierIrons
+    TierIrons,
+    Gadgets
 }

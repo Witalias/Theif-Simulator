@@ -9,6 +9,7 @@ public class ResourcesPanel : MonoBehaviour
     [SerializeField] private UICounter fuelCounter;
     [SerializeField] private UICounter masterKeysCounter;
     [SerializeField] private UICounter tierIronsCounter;
+    [SerializeField] private UICounter gadgetsCounter;
     [SerializeField] private UIHotkey noiseHotkey;
     [SerializeField] private TextMeshProUGUI noiseText;
 
@@ -22,6 +23,7 @@ public class ResourcesPanel : MonoBehaviour
             case ResourceType.Fuel: fuelCounter.SetValue(value); break;
             case ResourceType.MasterKeys: masterKeysCounter.SetValue(value); break;
             case ResourceType.TierIrons: tierIronsCounter.SetValue(value); break;
+            case ResourceType.Gadgets: gadgetsCounter.SetValue(value); break;
         }
     }
 
@@ -33,6 +35,7 @@ public class ResourcesPanel : MonoBehaviour
         fuelCounter.SetTitle(Translation.Get(ResourceType.Fuel));
         masterKeysCounter.SetTitle(Translation.Get(ResourceType.MasterKeys));
         tierIronsCounter.SetTitle(Translation.Get(ResourceType.TierIrons));
+        gadgetsCounter.SetTitle(Translation.Get(ResourceType.Gadgets));
 
         noiseHotkey.SetKey(Controls.Instanse.GetKey(ActionControls.Noise));
         noiseText.text = Translation.GetNoiseName();

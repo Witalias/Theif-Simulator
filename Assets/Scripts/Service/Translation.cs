@@ -57,7 +57,8 @@ public static class Translation
             [ResourceType.MasterKeys] = "Master keys",
             [ResourceType.Money] = "Money",
             [ResourceType.TierIrons] = "Crowbars",
-            [ResourceType.Water] = "Water"
+            [ResourceType.Water] = "Water",
+            [ResourceType.Gadgets] = "Gadgets"
         },
         [Language.Russian] = new Dictionary<ResourceType, string>
         {
@@ -66,7 +67,8 @@ public static class Translation
             [ResourceType.MasterKeys] = "Отмычки",
             [ResourceType.Money] = "Монеты",
             [ResourceType.TierIrons] = "Лом",
-            [ResourceType.Water] = "Вода"
+            [ResourceType.Water] = "Вода",
+            [ResourceType.Gadgets] = "Гаджеты"
         }
     };
 
