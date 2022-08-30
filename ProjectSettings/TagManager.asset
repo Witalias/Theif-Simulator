@@ -8,6 +8,9 @@ TagManager:
   - Door
   - ResourcesPanel
   - MainCanvas
+  - VisibilityScale
+  - MessageQueue
+  - TimeCircle
   layers:
   - Default
   - TransparentFX

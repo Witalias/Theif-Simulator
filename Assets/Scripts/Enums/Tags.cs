@@ -5,5 +5,6 @@ public enum Tags
     ResourcesPanel,
     MainCanvas,
     TimeCircle,
-    VisibilityScale
+    VisibilityScale,
+    MessageQueue
 }

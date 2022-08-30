@@ -20,6 +20,7 @@ public class VisibilityScale : MonoBehaviour
     [SerializeField] private TextMeshProUGUI message;
 
     private Animation messageAnimation;
+    private MessageQueue messageQueue;
 
     private Color scaleInitColor;
     private int level = 0;
@@ -48,6 +49,7 @@ public class VisibilityScale : MonoBehaviour
 
     private void Start()
     {
+        messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
         title.text = Translation.GetVisibilityName();
         SetLevel(0);
         StartCoroutine(Add());
@@ -79,6 +81,9 @@ public class VisibilityScale : MonoBehaviour
 
     private void SetLevel(int value)
     {
+        if (value > level)
+            messageQueue.Add(new MainMessage(null, $"{Translation.GetVisibilityLevelName()} {value}", ""));
+
         level = value;
         levelNumber.text = value.ToString();
     }

@@ -78,6 +78,12 @@ public static class Translation
         [Language.Russian] = "Заметность"
     };
 
+    private readonly static Dictionary<Language, string> visibilityLevelNames = new Dictionary<Language, string>
+    {
+        [Language.English] = "Visibility level",
+        [Language.Russian] = "Уровень заметности"
+    };
+
     public static string Get(LoudnessType type) => loudnessTypeNames[GameSettings.Instanse.Language][type];
 
     public static string Get(EquipmentType type) => equipmentTypeNames[GameSettings.Instanse.Language][type];
@@ -89,5 +95,7 @@ public static class Translation
     public static string GetNoiseName() => noiseName[GameSettings.Instanse.Language];
 
     public static string GetVisibilityName() => visibilityNames[GameSettings.Instanse.Language];
+
+    public static string GetVisibilityLevelName() => visibilityLevelNames[GameSettings.Instanse.Language];
 
 }
