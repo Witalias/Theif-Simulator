@@ -4,5 +4,6 @@ public enum Tags
     Player,
     ResourcesPanel,
     MainCanvas,
-    TimeCircle
+    TimeCircle,
+    VisibilityScale
 }

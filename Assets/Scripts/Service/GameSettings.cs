@@ -39,6 +39,10 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private float hearingRadiusDuringEnemyScream;
     [SerializeField] private float hearingRadiusAfterPlayerNoise;
 
+    [Header("Visibility Values")]
+    [SerializeField] [Range(0f, 5f)] private float visibilityValueSuspicion;
+    [SerializeField] [Range(0f, 5f)] private float visibilityValueDetection;
+
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
 
@@ -67,6 +71,10 @@ public class GameSettings : MonoBehaviour
     public float HearingRadiusDuringEnemyScream { get => hearingRadiusDuringEnemyScream; }
 
     public float HearingRadiusAfterPlayerNoise { get => hearingRadiusAfterPlayerNoise; }
+
+    public float VisibilityValueSuspicion { get => visibilityValueSuspicion; }
+
+    public float VisibilityValueDetection { get => visibilityValueDetection; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 

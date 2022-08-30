@@ -5,6 +5,7 @@ using System.Collections;
 public class ActionMenu : MonoBehaviour
 {
     private const float timeBetweenButtons = 0.1f;
+    private const float distanceBetweenButtons = 120f;
 
     [SerializeField] private Obstacle obstacleType;
     [SerializeField] private EquipmentType[] equipmentList;
@@ -25,11 +26,12 @@ public class ActionMenu : MonoBehaviour
         busy = true;
         Opened = true;
         var storage = GameStorage.Instanse;
+        var scaleFactor = storage.MainCanvas.GetComponent<Canvas>().scaleFactor;
         var initButtonPosition = mainCamera.WorldToScreenPoint(transform.position);
 
         for (var i = 0; i < equipmentList.Length; ++i)
         {
-            var correctButtonPosition = new Vector3(initButtonPosition.x, initButtonPosition.y + i * ActionMenuButton.Height * ActionMenuButton.Scale, initButtonPosition.z);
+            var correctButtonPosition = new Vector3(initButtonPosition.x, initButtonPosition.y + i * ActionMenuButton.Height * ActionMenuButton.Scale * scaleFactor, initButtonPosition.z);
             var button = Instantiate(storage.ActionMenuButtonPrefab, correctButtonPosition, Quaternion.identity, storage.MainCanvas);
             var buttonScript = button.GetComponent<ActionMenuButton>();
             buttons.Add(buttonScript);

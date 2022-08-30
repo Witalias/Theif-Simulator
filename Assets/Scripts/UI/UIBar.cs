@@ -8,6 +8,8 @@ public class UIBar : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private TextMeshProUGUI title;
 
+    public bool Filled { get => bar.fillAmount >= 0.99f; }
+
     /// <param name="value">От 0 до 100</param>
     public void SetValue(float value)
     {
@@ -17,5 +19,11 @@ public class UIBar : MonoBehaviour
             valueText.text = $"{(int)value} %";
     }
 
-    public void SetTitle(string value) => title.text = value;
+    public void SetTitle(string value)
+    {
+        if (title == null)
+            return;
+
+        title.text = value;
+    }
 }

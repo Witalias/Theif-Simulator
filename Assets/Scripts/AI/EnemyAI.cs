@@ -20,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private CreatureVision vision;
     private Noisy noisy;
+    private VisibilityScale visibilityScale;
     private MovementController player;
     private LevelGenerator generator;
 
@@ -55,6 +56,7 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
+        visibilityScale = GameObject.FindGameObjectWithTag(Tags.VisibilityScale.ToString()).GetComponent<VisibilityScale>();
     }
 
     private void Update()
@@ -68,7 +70,6 @@ public class EnemyAI : MonoBehaviour
             {
                 inProcessDetection = true;
                 Stop();
-
                 CreateQuestionMark();
                 StartCoroutine(DetectTarget());
             }
@@ -80,6 +81,7 @@ public class EnemyAI : MonoBehaviour
         {
             Stop();
             Destroy(questionMark.gameObject);
+            StopCoroutine(checkPatrolCoroutine);
             waitCoroutine = StartCoroutine(Wait());
         }
 
@@ -107,6 +109,8 @@ public class EnemyAI : MonoBehaviour
             StopCoroutine(checkPatrolCoroutine);
         checkPatrolCoroutine = StartCoroutine(CheckPatrol());
 
+        visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
+
         questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }
 
@@ -116,7 +120,7 @@ public class EnemyAI : MonoBehaviour
         inProcessDetection = false;
         if (vision.SeesTarget)
         {
-            Debug.Log("Target is detected!");
+            visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
             noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
         }
         else
