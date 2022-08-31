@@ -11,6 +11,7 @@ TagManager:
   - VisibilityScale
   - MessageQueue
   - TimeCircle
+  - VisibilityEvents
   layers:
   - Default
   - TransparentFX

@@ -9,19 +9,16 @@ public class CreatureVision : MonoBehaviour
     [SerializeField] private Transform enemyEye;
 
     private MovementController target;
-    //private NavMeshAgent agent;
-    //private float rotationSpeed;
-    //private Transform agentTransform;
 
     public bool SeesTarget { get; private set; }
 
+    public float ViewAngle { get => viewAngle; set => viewAngle = value; }
+
+    public float ViewDistance { get => viewDistance; set => viewDistance = value; }
+
     private void Start()
     {
-        //agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-        //agent.updateRotation = false;
-        //rotationSpeed = agent.angularSpeed;
-        //agentTransform = agent.transform;
     }
 
     private void Update()
@@ -41,24 +38,6 @@ public class CreatureVision : MonoBehaviour
         }
         return false;
     }
-    //private void RotateToTarget() // поворачивает в стороно цели со скоростью rotationSpeed
-    //{
-    //    Vector3 lookVector = target.position - agentTransform.position;
-    //    lookVector.y = 0;
-    //    if (lookVector == Vector3.zero) return;
-    //    agentTransform.rotation = Quaternion.RotateTowards
-    //        (
-    //            agentTransform.rotation,
-    //            Quaternion.LookRotation(lookVector, Vector3.up),
-    //            rotationSpeed * Time.deltaTime
-    //        );
-
-    //}
-
-    //private void MoveToTarget()
-    //{
-    //    agent.SetDestination(target.position);
-    //}
 
     private void DrawViewState()
     {

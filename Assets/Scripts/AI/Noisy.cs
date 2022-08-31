@@ -17,7 +17,7 @@ public class Noisy : MonoBehaviour
         playerCenterPoint = playerPoint.GetComponent<MovementController>().CenterPoint;
     }
 
-    public void Noise(float radius)
+    public void Noise(float radius, bool intentional = false)
     {
         if (noiseEffect == null && noiseEffectPlayed)
         {
@@ -25,6 +25,9 @@ public class Noisy : MonoBehaviour
             CreateNoiseEffect(radius);
             StartCoroutine(StartDelay());
         }
+
+        if (GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise && intentional)
+            return;
 
         var enemies = Physics.OverlapSphere(playerPoint.position, radius, GameStorage.Instanse.EnemyMask);
         foreach (var enemy in enemies)

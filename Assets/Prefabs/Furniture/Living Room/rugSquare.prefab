@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1254363528895322060}
   - component: {fileID: 2794412575273375849}
   - component: {fileID: 81988552226581667}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: rugSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}

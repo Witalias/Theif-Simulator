@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8656633013471868660}
   - component: {fileID: 5732328374750673233}
   - component: {fileID: 7523726075322895771}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: rugRound
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,6 +13,6 @@ public class NoiseSource : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(Controls.Instanse.GetKey(ActionControls.Noise)))
-            noisy.Noise(GameSettings.Instanse.HearingRadiusAfterPlayerNoise);
+            noisy.Noise(GameSettings.Instanse.HearingRadiusAfterPlayerNoise, true);
     }
 }

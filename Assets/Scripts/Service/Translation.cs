@@ -84,11 +84,47 @@ public static class Translation
         [Language.Russian] = "Уровень заметности"
     };
 
+    private readonly static Dictionary<Language, Dictionary<VisibilityEventType, string>> visibilityEventMessages = new Dictionary<Language, Dictionary<VisibilityEventType, string>>
+    {
+        [Language.English] = new Dictionary<VisibilityEventType, string>
+        {
+            [VisibilityEventType.DoubleLocks] = "Residents put double locks on all locked doors and windows!",
+            [VisibilityEventType.ExtraResident] = "A new resident has arrived at the house!",
+            [VisibilityEventType.IncreasedRangeAndViewAngle] = "Residents are excited, their range and viewing angle are increased!",
+            [VisibilityEventType.IncreasedSpeed] = "Residents are excited and walk faster!",
+            [VisibilityEventType.LockDoorsAndWindows] = "Residents locked some doors and windows in the house!",
+            [VisibilityEventType.NewPoliceman] = "A new policeman has arrived!",
+            [VisibilityEventType.NoReactionToNoise] = "Residents no longer react to intentionally made noise!",
+            [VisibilityEventType.Police] = "Residents called the police!",
+            [VisibilityEventType.SequrityCameras] = "Residents installed security cameras in the house!",
+            [VisibilityEventType.SoundDetectors] = "Residents installed sound detectors in the house!",
+            [VisibilityEventType.Traps] = "Residents put traps on some furniture!",
+            [VisibilityEventType.MoreIncreasedSpeed] = "Residents are excited and walk EVEN FASTER!"
+        },
+        [Language.Russian] = new Dictionary<VisibilityEventType, string>
+        {
+            [VisibilityEventType.DoubleLocks] = "Жильцы установили двойные замки на все запертые двери и окна!",
+            [VisibilityEventType.ExtraResident] = "В дом прибыл ещё один жилец!",
+            [VisibilityEventType.IncreasedRangeAndViewAngle] = "Жильцы взволнованы, их дальность и угол обзора увеличены!",
+            [VisibilityEventType.IncreasedSpeed] = "Жильцы взволнованы и ходят быстрее!",
+            [VisibilityEventType.LockDoorsAndWindows] = "Жильцы заперли некоторые двери и окна в доме!",
+            [VisibilityEventType.NewPoliceman] = "Прибыл ещё один полицейский!",
+            [VisibilityEventType.NoReactionToNoise] = "Жильцы больше не реагируют на намеренно издаваемый шум!",
+            [VisibilityEventType.Police] = "Жильцы вызвали полицию!",
+            [VisibilityEventType.SequrityCameras] = "Жильцы установили камеры наблюдения в доме!",
+            [VisibilityEventType.SoundDetectors] = "Жильцы установили звуковые датчики в доме!",
+            [VisibilityEventType.Traps] = "Жильцы установили ловушки на некоторые предметы мебели!",
+            [VisibilityEventType.MoreIncreasedSpeed] = "Жильцы взволнованы и ходят ЕЩЁ БЫСТРЕЕ!"
+        }
+    };
+
     public static string Get(LoudnessType type) => loudnessTypeNames[GameSettings.Instanse.Language][type];
 
     public static string Get(EquipmentType type) => equipmentTypeNames[GameSettings.Instanse.Language][type];
 
     public static string Get(ResourceType type) => resourceNames[GameSettings.Instanse.Language][type];
+
+    public static string Get(VisibilityEventType type) => visibilityEventMessages[GameSettings.Instanse.Language][type];
 
     public static string GetSecondsAbbreviation() => secondsAbbreviations[GameSettings.Instanse.Language];
 

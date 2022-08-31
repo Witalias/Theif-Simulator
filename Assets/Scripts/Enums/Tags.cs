@@ -6,5 +6,6 @@ public enum Tags
     MainCanvas,
     TimeCircle,
     VisibilityScale,
-    MessageQueue
+    MessageQueue,
+    VisibilityEvents
 }

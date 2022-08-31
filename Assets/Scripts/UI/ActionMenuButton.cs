@@ -42,7 +42,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
     {
         equipmentStats = Stats.Instanse.GetEquipmentStats(equipmentType);
 
-        var hackingTime = 1f;
+        var hackingTime = 0f;
         void ActionAfterWaitingForDoorOrWindow()
         {
             target.GetComponent<Lockable>().Locked = false;
@@ -50,25 +50,30 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
             Stats.Instanse.AddResource(equipmentType, -1);
         }
 
+        if (GameSettings.Instanse.DoubleLocks)
+            hackingTime = GameSettings.Instanse.GetIncreaseInHackingTime(equipmentStats.Type);
+
         switch (obstacleType)
         {
-            case Obstacle.Door: clickAction = () =>
-            {
-                void ActionAfterWaiting()
+            case Obstacle.Door:
+                hackingTime += equipmentStats.HackingTimeDoor;
+                clickAction = () =>
                 {
-                    ActionAfterWaitingForDoorOrWindow();
-                    target.GetComponent<Lockable>().Open();
-                }
-                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDoor, ActionAfterWaiting, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
-            };
-                hackingTime = equipmentStats.HackingTimeDoor;
+                    void ActionAfterWaiting()
+                    {
+                        ActionAfterWaitingForDoorOrWindow();
+                        target.GetComponent<Lockable>().Open();
+                    }
+                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                };
                 break;
 
-            case Obstacle.Window: clickAction = () =>
-            {
-                waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
-            };
-                hackingTime = equipmentStats.HackingTimeWindow;
+            case Obstacle.Window:
+                hackingTime += equipmentStats.HackingTimeWindow;
+                clickAction = () =>
+                {
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                };
                 break;
 
             case Obstacle.Device: hackingTime = equipmentStats.HackingTimeDevice; break;

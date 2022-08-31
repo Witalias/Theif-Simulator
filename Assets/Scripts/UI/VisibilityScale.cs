@@ -12,6 +12,7 @@ public class VisibilityScale : MonoBehaviour
 
     [SerializeField] private float barsSpeed = 10f;
     [SerializeField] private float increaseValueInSecond = 0.05f;
+    [SerializeField] private int maxLevel = 7;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI levelNumber;
     [SerializeField] private UIBar mainBar;
@@ -21,6 +22,8 @@ public class VisibilityScale : MonoBehaviour
 
     private Animation messageAnimation;
     private MessageQueue messageQueue;
+    private LevelGenerator generator;
+    private VisibilityEventsList visibilityEvents;
 
     private Color scaleInitColor;
     private int level = 0;
@@ -32,6 +35,9 @@ public class VisibilityScale : MonoBehaviour
     /// <param name="value">From 0.0 to 5.0</param>
     public void Add(float value)
     {
+        if (level >= maxLevel)
+            return;
+
         if (value > 5f)
             value = 5f;
 
@@ -50,6 +56,8 @@ public class VisibilityScale : MonoBehaviour
     private void Start()
     {
         messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
+        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
+        visibilityEvents = GameObject.FindGameObjectWithTag(Tags.VisibilityEvents.ToString()).GetComponent<VisibilityEventsList>();
         title.text = Translation.GetVisibilityName();
         SetLevel(0);
         StartCoroutine(Add());
@@ -75,14 +83,16 @@ public class VisibilityScale : MonoBehaviour
             mainBarValue = 0f;
             mainBarValueReached -= 1f;
             SetLevel(level + 1);
-            Debug.Log("New visibility level " + level);
         }
     }
 
     private void SetLevel(int value)
     {
         if (value > level)
-            messageQueue.Add(new MainMessage(null, $"{Translation.GetVisibilityLevelName()} {value}", ""));
+        {
+            visibilityEvents.StartRandomEvent(out Sprite icon, out string message);
+            messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {value}", message));
+        }
 
         level = value;
         levelNumber.text = value.ToString();
@@ -104,7 +114,8 @@ public class VisibilityScale : MonoBehaviour
     private IEnumerator Add()
     {
         yield return new WaitForSeconds(0.01f);
-        extraBarValueReached += increaseValueInSecond * 0.01f;
+        if (generator.Generated && level < maxLevel)
+            extraBarValueReached += increaseValueInSecond * 0.01f;
         StartCoroutine(Add());
     }
 

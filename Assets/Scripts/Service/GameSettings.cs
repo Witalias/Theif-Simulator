@@ -8,9 +8,6 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private Language language = Language.Russian;
     [SerializeField] private Color illuminationColor;
 
-    [Header("Testing")]
-    [SerializeField] private bool fog = true;
-
     [Header("Number of resources found (from/to)")]
     [SerializeField] private Vector2 amountFuelFound;
     [SerializeField] private Vector2 amountFoodFound;
@@ -42,15 +39,25 @@ public class GameSettings : MonoBehaviour
     [Header("Visibility Values")]
     [SerializeField] [Range(0f, 5f)] private float visibilityValueSuspicion;
     [SerializeField] [Range(0f, 5f)] private float visibilityValueDetection;
+    [SerializeField] private float increaseInResidentSpeed = 2f;
+    [SerializeField] private float increaseInResidentViewAngle = 30f;
+    [SerializeField] private float increaseInResidentViewDistance = 10f;
+    [SerializeField] private float increaseInHackingTimeWithArms = 10f;
+    [SerializeField] private float increaseInHackingTimeWithMasterKey = 6f;
+    [SerializeField] private float increaseInHackingTimeWithTierIron = 3f;
+    [SerializeField] private float increaseInHackingTimeWithGadget = 0f;
+
+    [Header("Visibility Bolleans")]
+    [SerializeField] private bool noResidentsReactionOnIntentionalNoise = false;
+    [SerializeField] private bool doubleLocks = false;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
+    private Dictionary<EquipmentType, float> increasesInHackingTimes;
 
     public Language Language { get => language; set => language = value; }
 
     public Color IlluminationColor { get => illuminationColor; }
-
-    public bool Fog { get => fog; }
 
     public float ChanceOfFindingMoney { get => chanceOfFindingMoney; }
 
@@ -76,9 +83,21 @@ public class GameSettings : MonoBehaviour
 
     public float VisibilityValueDetection { get => visibilityValueDetection; }
 
+    public float IncreaseInResidentSpeed { get => increaseInResidentSpeed; }
+
+    public float IncreaseInResidentViewAngle { get => increaseInResidentViewAngle; }
+
+    public float IncreaseInResidentViewDistance { get => increaseInResidentViewDistance; }
+
+    public bool NoResidentsReactionOnIntentionalNoise { get => noResidentsReactionOnIntentionalNoise; set => noResidentsReactionOnIntentionalNoise = value; }
+
+    public bool DoubleLocks { get => doubleLocks; set => doubleLocks = value; }
+
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 
     public float GetHearingRadius(LoudnessType type) => hearingRadiuses[type];
+
+    public float GetIncreaseInHackingTime(EquipmentType type) => increasesInHackingTimes[type];
 
     private void Awake()
     {
@@ -105,6 +124,14 @@ public class GameSettings : MonoBehaviour
             [LoudnessType.Quietly] = hearingRadiusQuietly,
             [LoudnessType.Loudly] = hearingRadiusLoudly,
             [LoudnessType.VeryLoudly] = hearingRadiusVeryLoudly
+        };
+
+        increasesInHackingTimes = new Dictionary<EquipmentType, float>
+        {
+            [EquipmentType.Arms] = increaseInHackingTimeWithArms,
+            [EquipmentType.MasterKey] = increaseInHackingTimeWithMasterKey,
+            [EquipmentType.TierIron] = increaseInHackingTimeWithTierIron,
+            [EquipmentType.Gadget] = increaseInHackingTimeWithGadget
         };
     }
 

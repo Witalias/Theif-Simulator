@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.AI;
 
 public class LevelGenerator : MonoBehaviour
 {
     private const float checkRadius = 0.5f;
 
     [SerializeField] private bool movePlayer = true;
+    [SerializeField] private bool fog = true;
     [SerializeField] private int roomsCount = 5;
     [SerializeField] private int frontDoorsCount = 1;
     [SerializeField] private int lockedDoorsAndWindowsCount = 3;
@@ -22,22 +24,71 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject[] windows;
     [SerializeField] private GameObject[] walls;
 
-    private bool generated = false;
     private int currentRoomsCount = 0;
     private int currentFrontDoorsCount = 0;
-    private int currentLockedDoorsAndWindowsCount = 0;
     private readonly Queue<Vector3> positionsForNextRoom = new Queue<Vector3>();
     private readonly List<ConnectionWall> allConnectionWalls = new List<ConnectionWall>();
     private readonly List<CenteredPoint> allWindows = new List<CenteredPoint>();
     private readonly List<CenteredPoint> allWalls = new List<CenteredPoint>();
     private readonly List<Transform> patrolPoints = new List<Transform>();
+    private readonly List<GameObject> enemies = new List<GameObject>();
 
     private bool successRoomGenerated = false;
     private ConnectionWall lastUsedConnectionWall = null;
 
-    public bool Generated { get => generated; }
+    public bool Generated { get; private set; }
 
     public Transform GetRandomPatrolPoint() => patrolPoints[Random.Range(0, patrolPoints.Count)];
+
+    public void LockRandomDoorsAndWindows(int count)
+    {
+        for (var i = 0; i < count && allWindows.Count > 0 && allConnectionWalls.Count > 0; ++i)
+        {
+            switch (Random.Range(1, 3))
+            {
+                case 1:
+                    var randomWindow = allWindows[Random.Range(0, allWindows.Count)];
+                    allWindows.Remove(randomWindow);
+                    randomWindow.GetComponent<Lockable>().Locked = true;
+                    break;
+                default:
+                    var randomDoor = allConnectionWalls[Random.Range(0, allConnectionWalls.Count)];
+                    allConnectionWalls.Remove(randomDoor);
+                    randomDoor.GetComponent<Lockable>().Locked = true;
+                    break;
+            }
+        }
+    }
+
+    public void IncreaseEnemiesSpeed(float value)
+    {
+        foreach (var enemy in enemies)
+        {
+            var agent = enemy.GetComponent<NavMeshAgent>();
+            if (agent != null)
+                agent.speed += GameSettings.Instanse.IncreaseInResidentSpeed;
+        }
+    }
+
+    public void IncreaseEnemiesViewAngle(float value)
+    {
+        foreach (var enemy in enemies)
+        {
+            var vision = enemy.GetComponent<CreatureVision>();
+            if (vision != null)
+                vision.ViewAngle += GameSettings.Instanse.IncreaseInResidentViewAngle;
+        }
+    }
+
+    public void IncreaseEnemiesViewDistance(float value)
+    {
+        foreach (var enemy in enemies)
+        {
+            var vision = enemy.GetComponent<CreatureVision>();
+            if (vision != null)
+                vision.ViewDistance += GameSettings.Instanse.IncreaseInResidentViewDistance;
+        }
+    }
 
     private void Start()
     {
@@ -161,7 +212,7 @@ public class LevelGenerator : MonoBehaviour
             else
                 allConnectionWalls[i].RotateDoor(120);
         }
-        LockRandomDoorsAndWindows();
+        LockRandomDoorsAndWindows(lockedDoorsAndWindowsCount);
         CreateEnemies();
 
         yield return new WaitForSeconds(0.01f);
@@ -173,7 +224,7 @@ public class LevelGenerator : MonoBehaviour
             connectionWall.RotateDoor(0);
         }
 
-        generated = true;
+        Generated = true;
     }
 
     private void DeleteExcessDoorWalls(List<ConnectionWall> allConnectionWalls)
@@ -244,7 +295,7 @@ public class LevelGenerator : MonoBehaviour
     {
         var fogs = room.GetFogs();
         foreach (var fog in fogs)
-            fog.SetActive(GameSettings.Instanse.Fog);
+            fog.SetActive(fog);
     }
 
     private IEnumerator MovePlayer(ConnectionWall toWall)
@@ -254,33 +305,13 @@ public class LevelGenerator : MonoBehaviour
             player.position = toWall.OutsidePoint;
     }
 
-    private void LockRandomDoorsAndWindows()
-    {
-        while (currentLockedDoorsAndWindowsCount < lockedDoorsAndWindowsCount && allWindows.Count > 0 && allConnectionWalls.Count > 0)
-        {
-            switch (Random.Range(1, 3))
-            {
-                case 1:
-                    var randomWindow = allWindows[Random.Range(0, allWindows.Count)];
-                    allWindows.Remove(randomWindow);
-                    randomWindow.GetComponent<Lockable>().Locked = true;
-                    break;
-                default:
-                    var randomDoor = allConnectionWalls[Random.Range(0, allConnectionWalls.Count)];
-                    allConnectionWalls.Remove(randomDoor);
-                    randomDoor.GetComponent<Lockable>().Locked = true;
-                    break;
-            }
-            ++currentLockedDoorsAndWindowsCount;
-        }
-    }
-
     private void CreateEnemies()
     {
         for (var i = 0; i < enemiesCount; ++i)
         {
             var spawnPosition = GetRandomPatrolPoint().position;
-            Instantiate(GameStorage.Instanse.GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
+            var enemy = Instantiate(GameStorage.Instanse.GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
+            enemies.Add(enemy);
         }
     }
 }
