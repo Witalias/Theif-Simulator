@@ -1013,8 +1013,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319307299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 359.2, y: 0.5, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1809,6 +1809,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1875,7 +1876,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 344, y: 50, z: 23}
+  m_LocalPosition: {x: 22.5, y: 50, z: 23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1894,11 +1895,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92ca79b6fafde34cacd083886f1ef23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharpness: 10
+  wheelSharpness: 10
+  boundsSharpness: 1
   minY: 25
   maxY: 100
   scrollSpeed: 10000
   movementController: {fileID: 30854327}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c4a44dc032dee4e8dacf41f8f08833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upLimit: 400
+  bottomLimit: -400
+  leftLimit: -380
+  rightLimit: 400
 --- !u!1 &965867711
 GameObject:
   m_ObjectHideFlags: 0
@@ -4031,8 +4049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73b2c78a89771046973cebafc7a140c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePlayer: 1
-  fog: 1
+  movePlayer: 0
+  enableFog: 1
   roomsCount: 10
   frontDoorsCount: 2
   lockedDoorsAndWindowsCount: 6
@@ -4132,7 +4150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887709243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 350, y: 0.51, z: 0}
+  m_LocalPosition: {x: 0, y: 0.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4409,7 +4427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071323009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.119321, y: -1.3332381, z: 17.356482}
+  m_LocalPosition: {x: -633, y: -1.3332381, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8101,7 +8119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2390981504547309335, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 136.5
+      value: -259
       objectReference: {fileID: 0}
     - target: {fileID: 2390981504547309335, guid: 0eb1a4aafb978d74b837720edc3829cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9953,7 +9971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 153.5
+      value: -331
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11229,7 +11247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2158443014462819200, guid: 028e6e0efca26364e9be9c229442dd85, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 136
+      value: -259.5
       objectReference: {fileID: 0}
     - target: {fileID: 2158443014462819200, guid: 028e6e0efca26364e9be9c229442dd85, type: 3}
       propertyPath: m_LocalPosition.y

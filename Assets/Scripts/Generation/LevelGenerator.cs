@@ -8,7 +8,7 @@ public class LevelGenerator : MonoBehaviour
     private const float checkRadius = 0.5f;
 
     [SerializeField] private bool movePlayer = true;
-    [SerializeField] private bool fog = true;
+    [SerializeField] private bool enableFog = true;
     [SerializeField] private int roomsCount = 5;
     [SerializeField] private int frontDoorsCount = 1;
     [SerializeField] private int lockedDoorsAndWindowsCount = 3;
@@ -295,7 +295,7 @@ public class LevelGenerator : MonoBehaviour
     {
         var fogs = room.GetFogs();
         foreach (var fog in fogs)
-            fog.SetActive(fog);
+            fog.SetActive(enableFog);
     }
 
     private IEnumerator MovePlayer(ConnectionWall toWall)

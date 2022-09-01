@@ -41,7 +41,7 @@ public class VisibilityEventsList : MonoBehaviour
 
         switch (randomEvent.Type)
         {
-            case VisibilityEventType.MoreIncreasedSpeed:
+            case VisibilityEventType.IncreasedSpeed:
                 currentEvents.Add(new VisibilityEvent(VisibilityEventType.MoreIncreasedSpeed, speed, () =>
                     generator.IncreaseEnemiesSpeed(GameSettings.Instanse.IncreaseInResidentSpeed * 0.5f)));
                 break;
