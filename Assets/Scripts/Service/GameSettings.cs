@@ -46,10 +46,12 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private float increaseInHackingTimeWithMasterKey = 6f;
     [SerializeField] private float increaseInHackingTimeWithTierIron = 3f;
     [SerializeField] private float increaseInHackingTimeWithGadget = 0f;
+    [SerializeField] private float hearingRadiusMultiplier = 1.25f;
 
     [Header("Visibility Bolleans")]
     [SerializeField] private bool noResidentsReactionOnIntentionalNoise = false;
     [SerializeField] private bool doubleLocks = false;
+    [SerializeField] private bool increasedHearingRadius = false;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
@@ -89,9 +91,13 @@ public class GameSettings : MonoBehaviour
 
     public float IncreaseInResidentViewDistance { get => increaseInResidentViewDistance; }
 
+    public float HearingRadiusMultiplier { get => hearingRadiusMultiplier; }
+
     public bool NoResidentsReactionOnIntentionalNoise { get => noResidentsReactionOnIntentionalNoise; set => noResidentsReactionOnIntentionalNoise = value; }
 
     public bool DoubleLocks { get => doubleLocks; set => doubleLocks = value; }
+
+    public bool IncreasedHearingRadius { get => increasedHearingRadius; set => increasedHearingRadius = value; }
 
     public Vector2 GetAmountResourceFound(ResourceType type) => amountsResourcesFound[type];
 

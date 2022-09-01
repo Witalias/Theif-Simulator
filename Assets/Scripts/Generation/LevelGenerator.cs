@@ -53,12 +53,14 @@ public class LevelGenerator : MonoBehaviour
                 case 1:
                     var randomWindow = allWindows[Random.Range(0, allWindows.Count)];
                     allWindows.Remove(randomWindow);
-                    randomWindow.GetComponent<Lockable>().Locked = true;
+                    if (randomWindow != null)
+                        randomWindow.GetComponent<Lockable>().Locked = true;
                     break;
                 default:
                     var randomDoor = allConnectionWalls[Random.Range(0, allConnectionWalls.Count)];
                     allConnectionWalls.Remove(randomDoor);
-                    randomDoor.GetComponent<Lockable>().Locked = true;
+                    if (randomDoor != null)
+                        randomDoor.GetComponent<Lockable>().Locked = true;
                     break;
             }
         }

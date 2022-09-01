@@ -99,7 +99,8 @@ public static class Translation
             [VisibilityEventType.SequrityCameras] = "Residents installed security cameras in the house!",
             [VisibilityEventType.SoundDetectors] = "Residents installed sound detectors in the house!",
             [VisibilityEventType.Traps] = "Residents put traps on some furniture!",
-            [VisibilityEventType.MoreIncreasedSpeed] = "Residents are excited and walk EVEN FASTER!"
+            [VisibilityEventType.MoreIncreasedSpeed] = "Residents are excited and walk EVEN FASTER!",
+            [VisibilityEventType.IncreasedHearingRadius] = "Residents are on the alert and now listen to every rustle!"
         },
         [Language.Russian] = new Dictionary<VisibilityEventType, string>
         {
@@ -114,7 +115,8 @@ public static class Translation
             [VisibilityEventType.SequrityCameras] = "Жильцы установили камеры наблюдения в доме!",
             [VisibilityEventType.SoundDetectors] = "Жильцы установили звуковые датчики в доме!",
             [VisibilityEventType.Traps] = "Жильцы установили ловушки на некоторые предметы мебели!",
-            [VisibilityEventType.MoreIncreasedSpeed] = "Жильцы взволнованы и ходят ЕЩЁ БЫСТРЕЕ!"
+            [VisibilityEventType.MoreIncreasedSpeed] = "Жильцы взволнованы и ходят ЕЩЁ БЫСТРЕЕ!",
+            [VisibilityEventType.IncreasedHearingRadius] = "Жильцы настороже и теперь прислушиваются к каждому шороху!"
         }
     };
 

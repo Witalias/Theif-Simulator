@@ -9,6 +9,8 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour
 {
     private const string walkAnimatorBool = "Walk";
+    private const string reactToNoiseAnimatorTrigger = "React To Noise";
+    private const string scaryAnimatorTrigger = "Scary";
 
     [SerializeField] private bool policeman = false;
     [SerializeField] private float detectionTime = 1.5f;
@@ -38,11 +40,7 @@ public class EnemyAI : MonoBehaviour
         if (worried)
             return;
 
-        worried = true;
-        isPatrolling = false;
-        Stop();
-        CreateQuestionMark();
-        StartCoroutine(DetectTarget());
+        TryDetectTarget();
     }
 
     private void Awake()
@@ -51,6 +49,9 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<CreatureVision>();
         noisy = GetComponent<Noisy>();
+
+        if (policeman)
+            detectionTime = 0f;
     }
 
     private void Start()
@@ -62,18 +63,10 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (vision.SeesTarget)
+        if (vision.SeesTarget && !inProcessDetection)
         {
-            worried = true;
-            isPatrolling = false;
-
-            if (!inProcessDetection)
-            {
-                inProcessDetection = true;
-                Stop();
-                CreateQuestionMark();
-                StartCoroutine(DetectTarget());
-            }
+            inProcessDetection = true;
+            TryDetectTarget();
         }
 
         if (questionMark != null && Vector3.Distance(transform.position, 
@@ -84,8 +77,8 @@ public class EnemyAI : MonoBehaviour
             Destroy(questionMark.gameObject);
             StopCoroutine(checkPatrolCoroutine);
             isPatrolling = true;
-            waitCoroutine = StartCoroutine(Wait());
             worried = false;
+            waitCoroutine = StartCoroutine(Wait());
         }
 
         if (isPatrolling && targetPatrolPoint != null && Vector3.Distance(transform.position,
@@ -98,6 +91,20 @@ public class EnemyAI : MonoBehaviour
         }
 
         Patrol();
+    }
+
+    private void TryDetectTarget()
+    {
+        worried = true;
+        isPatrolling = false;
+
+        if (!policeman)
+        {
+            Stop();
+            animator.SetTrigger(reactToNoiseAnimatorTrigger);
+        }
+        CreateQuestionMark();
+        StartCoroutine(DetectTarget());
     }
 
     private void CreateQuestionMark()
@@ -120,12 +127,21 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator DetectTarget()
     {
         yield return new WaitForSeconds(detectionTime);
+
         inProcessDetection = false;
+
         if (vision.SeesTarget)
         {
-            visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
             noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
             noisy.AttractPolicemans();
+
+            if (policeman && questionMark != null)
+                Run(questionMark.position);
+            else
+            {
+                animator.SetTrigger(scaryAnimatorTrigger);
+                visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
+            }
         }
         else
         {
@@ -150,6 +166,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(minStayingTime, maxStayingTime));
         isPatrolling = false;
         worried = false;
+        inProcessDetection = false;
     }
 
     private IEnumerator CheckPatrol()

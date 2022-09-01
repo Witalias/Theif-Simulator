@@ -399,7 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad27008ac65f7c4c8f92b90288072e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTime: 1
+  policeman: 0
+  detectionTime: 1.5
   detectionRadius: 2
   minStayingTime: 1
   maxStayingTime: 10

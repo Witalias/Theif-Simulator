@@ -14,6 +14,9 @@ public class Noisy : MonoBehaviour
 
     public void Noise(float radius, bool intentional = false)
     {
+        if (GameSettings.Instanse.IncreasedHearingRadius)
+            radius *= GameSettings.Instanse.HearingRadiusMultiplier;
+
         if (noiseEffect == null && noiseEffectPlayed)
         {
             noiseEffectPlayed = false;

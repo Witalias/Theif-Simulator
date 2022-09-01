@@ -77,7 +77,9 @@ public class VisibilityEventsList : MonoBehaviour
             new VisibilityEvent(VisibilityEventType.NoReactionToNoise, signal, () =>
                 GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise = true),
             new VisibilityEvent(VisibilityEventType.ExtraResident, suitcase, () =>
-                generator.CreateEnemy(1))
+                generator.CreateEnemy(1)),
+            new VisibilityEvent(VisibilityEventType.IncreasedHearingRadius, signal, () =>
+                GameSettings.Instanse.IncreasedHearingRadius = true)
         };
         currentEvents = new List<VisibilityEvent>(events);
 

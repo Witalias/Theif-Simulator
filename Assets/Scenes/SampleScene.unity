@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5125de940c9f24f940a4c64ebde16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visibilityLevelsForPoliceman: 030000000500000007000000
+  visibilityLevelsForPoliceman: 030000000600000009000000
   padlock: {fileID: 21300000, guid: ce4bd1527b97ab54f8ca4daad388a86e, type: 3}
   signal: {fileID: 21300000, guid: 75816a0f2662a3d44839da37b715f8d8, type: 3}
   speed: {fileID: 21300000, guid: 4fa08d16059ba7448af67c62f7bd2045, type: 3}
@@ -867,8 +867,10 @@ MonoBehaviour:
   increaseInHackingTimeWithMasterKey: 6
   increaseInHackingTimeWithTierIron: 3
   increaseInHackingTimeWithGadget: 0
+  hearingRadiusMultiplier: 1.25
   noResidentsReactionOnIntentionalNoise: 0
   doubleLocks: 0
+  increasedHearingRadius: 0
 --- !u!4 &158996468
 Transform:
   m_ObjectHideFlags: 0
@@ -1143,7 +1145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barsSpeed: 5
   increaseValueInSecond: 0.03
-  maxLevel: 7
+  maxLevel: 10
   title: {fileID: 427542693}
   levelNumber: {fileID: 1454698242}
   mainBar: {fileID: 145788790}

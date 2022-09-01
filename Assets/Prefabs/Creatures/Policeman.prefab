@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   policeman: 1
-  detectionTime: 1.5
+  detectionTime: 1
   detectionRadius: 2
   minStayingTime: 0.5
   maxStayingTime: 1.5

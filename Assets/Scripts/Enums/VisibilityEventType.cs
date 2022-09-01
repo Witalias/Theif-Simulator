@@ -11,5 +11,6 @@ public enum VisibilityEventType
     DoubleLocks,
     Traps,
     Police,
-    NewPoliceman
+    NewPoliceman,
+    IncreasedHearingRadius
 }
