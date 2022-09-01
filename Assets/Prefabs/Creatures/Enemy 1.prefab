@@ -438,8 +438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb055f690190bc418c97d816fada60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 150
-  viewDistance: 50
+  viewAngle: 120
+  viewDistance: 30
   detectionDistance: 5
   enemyEye: {fileID: 2102709877049460062}
 --- !u!114 &3874533585369543092

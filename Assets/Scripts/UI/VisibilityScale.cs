@@ -21,7 +21,6 @@ public class VisibilityScale : MonoBehaviour
     [SerializeField] private TextMeshProUGUI message;
 
     private Animation messageAnimation;
-    private MessageQueue messageQueue;
     private LevelGenerator generator;
     private VisibilityEventsList visibilityEvents;
 
@@ -55,7 +54,6 @@ public class VisibilityScale : MonoBehaviour
 
     private void Start()
     {
-        messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
         visibilityEvents = GameObject.FindGameObjectWithTag(Tags.VisibilityEvents.ToString()).GetComponent<VisibilityEventsList>();
         title.text = Translation.GetVisibilityName();
@@ -89,10 +87,7 @@ public class VisibilityScale : MonoBehaviour
     private void SetLevel(int value)
     {
         if (value > level)
-        {
-            visibilityEvents.StartRandomEvent(out Sprite icon, out string message);
-            messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {value}", message));
-        }
+            visibilityEvents.StartEvent(value);
 
         level = value;
         levelNumber.text = value.ToString();

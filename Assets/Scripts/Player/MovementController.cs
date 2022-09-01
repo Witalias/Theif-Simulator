@@ -26,6 +26,7 @@ public class MovementController : MonoBehaviour
     private PathTrajectory pathTrajectory;
     private Lootable targetObject;
     private WaitingAndAction waitingAndAction;
+    private LevelGenerator generator;
 
     private bool isMoving = false;
 
@@ -98,6 +99,7 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
+        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
     }
 
     private void Update()
@@ -117,6 +119,9 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!generator.Generated)
+            return;
+
         var movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         if (movementVector != Vector3.zero)
         {

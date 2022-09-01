@@ -33,11 +33,14 @@ public class LevelGenerator : MonoBehaviour
     private readonly List<CenteredPoint> allWalls = new List<CenteredPoint>();
     private readonly List<Transform> patrolPoints = new List<Transform>();
     private readonly List<GameObject> enemies = new List<GameObject>();
+    private readonly List<EnemyAI> policemans = new List<EnemyAI>();
 
     private bool successRoomGenerated = false;
     private ConnectionWall lastUsedConnectionWall = null;
 
     public bool Generated { get; private set; }
+
+    public List<EnemyAI> GetPolicemans() => policemans;
 
     public Transform GetRandomPatrolPoint() => patrolPoints[Random.Range(0, patrolPoints.Count)];
 
@@ -98,6 +101,17 @@ public class LevelGenerator : MonoBehaviour
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
             var enemy = Instantiate(GameStorage.Instanse.GetRandomEnemyPrefab(), spawnPoint.position, Quaternion.identity);
             enemies.Add(enemy);
+        }
+    }
+
+    public void CreatePoliceman(int count)
+    {
+        for (var i = 0; i < count; ++i)
+        {
+            var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            var policeman = Instantiate(GameStorage.Instanse.PolicemanPrefab, spawnPoint.position, Quaternion.identity);
+            enemies.Add(policeman);
+            policemans.Add(policeman.GetComponent<EnemyAI>());
         }
     }
 

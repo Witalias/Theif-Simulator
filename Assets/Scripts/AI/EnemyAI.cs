@@ -8,10 +8,11 @@ using System.Collections;
 [RequireComponent(typeof(Noisy))]
 public class EnemyAI : MonoBehaviour
 {
-    private const string runAnimatorBool = "Run";
+    private const string walkAnimatorBool = "Walk";
 
+    [SerializeField] private bool policeman = false;
     [SerializeField] private float detectionTime = 1.5f;
-    [SerializeField] private float detectionRadius = 1f;
+    [SerializeField] private float detectionRadius = 2f;
     [SerializeField] private float minStayingTime = 1f;
     [SerializeField] private float maxStayingTime = 10f;
     [SerializeField] private float patrolCheckingTime = 20f;
@@ -82,7 +83,9 @@ public class EnemyAI : MonoBehaviour
             Stop();
             Destroy(questionMark.gameObject);
             StopCoroutine(checkPatrolCoroutine);
+            isPatrolling = true;
             waitCoroutine = StartCoroutine(Wait());
+            worried = false;
         }
 
         if (isPatrolling && targetPatrolPoint != null && Vector3.Distance(transform.position,
@@ -103,7 +106,7 @@ public class EnemyAI : MonoBehaviour
             Destroy(questionMark.gameObject);
 
         if (waitCoroutine != null)
-            StopCoroutine(Wait());
+            StopCoroutine(waitCoroutine);
 
         if (checkPatrolCoroutine != null)
             StopCoroutine(checkPatrolCoroutine);
@@ -122,10 +125,12 @@ public class EnemyAI : MonoBehaviour
         {
             visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
             noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
+            noisy.AttractPolicemans();
         }
         else
         {
-            Run(questionMark.position);
+            if (questionMark != null)
+                Run(questionMark.position);
         }
     }
 
@@ -161,13 +166,13 @@ public class EnemyAI : MonoBehaviour
     private void Run(Vector3 toPosition)
     {
         agent.SetDestination(toPosition);
-        animator.SetBool(runAnimatorBool, true);
+        animator.SetBool(walkAnimatorBool, true);
     }
 
     private void Stop()
     {
         agent.isStopped = true;
         agent.ResetPath();
-        animator.SetBool(runAnimatorBool, false);
+        animator.SetBool(walkAnimatorBool, false);
     }
 }

@@ -4,6 +4,8 @@ using System;
 
 public class VisibilityEventsList : MonoBehaviour
 {
+    [SerializeField] private int[] visibilityLevelsForPoliceman;
+
     [Header("Icons")]
     [SerializeField] private Sprite padlock;
     [SerializeField] private Sprite signal;
@@ -18,26 +20,31 @@ public class VisibilityEventsList : MonoBehaviour
     [SerializeField] private Vector2 furnitureWithTrapsCount = new Vector2(2, 4);
 
     private LevelGenerator generator;
+    private MessageQueue messageQueue;
 
     private List<VisibilityEvent> events;
     private List<VisibilityEvent> currentEvents;
+    private VisibilityEvent callPoliceEvent;
+    private VisibilityEvent newPolicemanEvent;
+    private bool policeCalled = false;
 
     public Vector2 LockedDoorsAndWindowsCount { get => lockedDoorsAndWindowsCount; set => lockedDoorsAndWindowsCount = value; }
 
     public Vector2 FurnitureWithTrapsCount { get => furnitureWithTrapsCount; set => furnitureWithTrapsCount = value; }
 
-    public void StartRandomEvent(out Sprite icon, out string message)
+    public void StartEvent(int visibilityLevel)
     {
-        if (currentEvents.Count == 0)
+        if (Array.Exists(visibilityLevelsForPoliceman, element => element == visibilityLevel))
         {
-            icon = null;
-            message = "";
+            CallPolice(visibilityLevel);
             return;
         }
+
+        if (currentEvents.Count == 0)
+            return;
+
         var randomEvent = currentEvents[UnityEngine.Random.Range(0, currentEvents.Count)];
-        icon = randomEvent.Icon;
-        message = randomEvent.Message;
-        randomEvent.Action?.Invoke();
+        ExecuteEvent(randomEvent, visibilityLevel);
 
         switch (randomEvent.Type)
         {
@@ -52,6 +59,7 @@ public class VisibilityEventsList : MonoBehaviour
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
+        messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
 
         events = new List<VisibilityEvent>
         {
@@ -72,6 +80,35 @@ public class VisibilityEventsList : MonoBehaviour
                 generator.CreateEnemy(1))
         };
         currentEvents = new List<VisibilityEvent>(events);
+
+        void AddPoliceman()
+        {
+            generator.CreatePoliceman(1);
+        }
+        callPoliceEvent = new VisibilityEvent(VisibilityEventType.Police, policeBadge, AddPoliceman);
+        newPolicemanEvent = new VisibilityEvent(VisibilityEventType.NewPoliceman, policeBadge, AddPoliceman);
+    }
+
+    private void CallPolice(int visibilityLevel)
+    {
+        if (policeCalled)
+            ExecuteEvent(newPolicemanEvent, visibilityLevel);
+        else
+        {
+            policeCalled = true;
+            ExecuteEvent(callPoliceEvent, visibilityLevel);
+        }
+    }
+
+    private void ExecuteEvent(VisibilityEvent ev, int visibilityLevel)
+    {
+        ev.Action?.Invoke();
+        ShowMessage(ev.Icon, visibilityLevel, ev.Message);
+    }
+
+    private void ShowMessage(Sprite icon, int visibilityLevel, string message)
+    {
+        messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {visibilityLevel}", message));
     }
 }
 
