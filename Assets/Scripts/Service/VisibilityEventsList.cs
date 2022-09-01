@@ -67,9 +67,10 @@ public class VisibilityEventsList : MonoBehaviour
             new VisibilityEvent(VisibilityEventType.DoubleLocks, padlock, () =>
                 GameSettings.Instanse.DoubleLocks = true),
             new VisibilityEvent(VisibilityEventType.NoReactionToNoise, signal, () =>
-                GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise = true)
+                GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise = true),
+            new VisibilityEvent(VisibilityEventType.ExtraResident, suitcase, () =>
+                generator.CreateEnemy(1))
         };
-
         currentEvents = new List<VisibilityEvent>(events);
     }
 }

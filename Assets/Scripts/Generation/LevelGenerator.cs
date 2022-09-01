@@ -23,6 +23,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Room[] roomTemplates;
     [SerializeField] private GameObject[] windows;
     [SerializeField] private GameObject[] walls;
+    [SerializeField] private Transform[] spawnPoints;
 
     private int currentRoomsCount = 0;
     private int currentFrontDoorsCount = 0;
@@ -87,6 +88,16 @@ public class LevelGenerator : MonoBehaviour
             var vision = enemy.GetComponent<CreatureVision>();
             if (vision != null)
                 vision.ViewDistance += GameSettings.Instanse.IncreaseInResidentViewDistance;
+        }
+    }
+
+    public void CreateEnemy(int count)
+    {
+        for (var i = 0; i < count; ++i)
+        {
+            var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            var enemy = Instantiate(GameStorage.Instanse.GetRandomEnemyPrefab(), spawnPoint.position, Quaternion.identity);
+            enemies.Add(enemy);
         }
     }
 
