@@ -19,6 +19,7 @@ public class Window : MonoBehaviour
         void OpenEvent()
         {
             GetComponent<MovingFurnitureElements>().Move();
+            SoundManager.Instanse.Play(Sound.WindowOpen);
         }
 
         void AfterOpeningEvent()

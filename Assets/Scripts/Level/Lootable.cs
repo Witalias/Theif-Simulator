@@ -3,9 +3,11 @@ using System.Linq;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
 [RequireComponent(typeof(CenteredPoint))]
+[RequireComponent(typeof(AudioSource))]
 public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
+    [SerializeField] private Sound sound;
     [SerializeField] private float arriveDistance = 2f;
     [SerializeField] private float lootingTime = 2f;
 
@@ -13,6 +15,7 @@ public class Lootable : MonoBehaviour
     private MovingFurnitureElements movingFurnitureElements;
     private WaitingAndAction waitingAndAction;
     private CenteredPoint centeredPoint;
+    //private AudioSource audioSource;
 
     private bool empty = false;
 
@@ -42,6 +45,7 @@ public class Lootable : MonoBehaviour
     {
         movingFurnitureElements = GetComponent<MovingFurnitureElements>();
         centeredPoint = GetComponent<CenteredPoint>();
+        //audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -69,12 +73,6 @@ public class Lootable : MonoBehaviour
         Gizmos.DrawWireSphere(centeredPoint.CenterPoint, arriveDistance);
     }
 
-    //private void Update()
-    //{
-    //    var centeredPoint = GetComponent<CenteredPoint>();
-    //    Debug.DrawRay(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint);
-    //}
-
     private void RemoveIllumination()
     {
         var illumination = GetComponent<Illumination>();
@@ -90,6 +88,7 @@ public class Lootable : MonoBehaviour
         var gap = GameSettings.Instanse.GetAmountResourceFound(type);
         var count = Random.Range(gap.x, gap.y);
         RemoveIllumination();
+        SoundManager.Instanse.Play(sound);
         void Action()
         {
             empty = true;
@@ -97,8 +96,9 @@ public class Lootable : MonoBehaviour
             Stats.Instanse.AddResource(type, count);
             PlayResourceAnimation(type, (int)count);
             extraAction?.Invoke();
+            SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(type));
         }
-        waitingAndAction.WaitAndExecute(lootingTime, Action, true, GameSettings.Instanse.HearingRadiusDuringLoot);
+        waitingAndAction.WaitAndExecute(lootingTime, Action, sound, GameSettings.Instanse.HearingRadiusDuringLoot);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count)

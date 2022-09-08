@@ -56,6 +56,7 @@ public class GameSettings : MonoBehaviour
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
     private Dictionary<LoudnessType, float> hearingRadiuses;
     private Dictionary<EquipmentType, float> increasesInHackingTimes;
+    private float initialHearingRadiusAfterOpeningDoor;
 
     public Language Language { get => language; set => language = value; }
 
@@ -73,7 +74,7 @@ public class GameSettings : MonoBehaviour
 
     public float ChanceOfFindingGadgets { get => chanceOfFindingGadgets; }
 
-    public float HearingRadiusAfterOpeningDoor { get => hearingRadiusAfterOpeningDoor; }
+    public float HearingRadiusAfterOpeningDoor { get => hearingRadiusAfterOpeningDoor; private set => hearingRadiusAfterOpeningDoor = value; }
 
     public float HearingRadiusDuringLoot { get => hearingRadiusDuringLoot; }
 
@@ -105,6 +106,8 @@ public class GameSettings : MonoBehaviour
 
     public float GetIncreaseInHackingTime(EquipmentType type) => increasesInHackingTimes[type];
 
+    public void AddHearingRadiusAfterOpeningDoor(float valueInPercents) => hearingRadiusAfterOpeningDoor += initialHearingRadiusAfterOpeningDoor * valueInPercents / 100f;
+
     private void Awake()
     {
         if (Instanse == null)
@@ -113,6 +116,8 @@ public class GameSettings : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        initialHearingRadiusAfterOpeningDoor = hearingRadiusAfterOpeningDoor;
 
         amountsResourcesFound = new Dictionary<ResourceType, Vector2>
         {

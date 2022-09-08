@@ -6,13 +6,15 @@ using System.Collections;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(CreatureVision))]
 [RequireComponent(typeof(Noisy))]
+[RequireComponent(typeof(AudioSource))]
 public class EnemyAI : MonoBehaviour
 {
     private const string walkAnimatorBool = "Walk";
     private const string reactToNoiseAnimatorTrigger = "React To Noise";
     private const string scaryAnimatorTrigger = "Scary";
 
-    [SerializeField] private bool policeman = false;
+    [SerializeField] private bool isPoliceman = false;
+    [SerializeField] private bool isWoman = false;
     [SerializeField] private float detectionTime = 1.5f;
     [SerializeField] private float detectionRadius = 2f;
     [SerializeField] private float minStayingTime = 1f;
@@ -26,6 +28,7 @@ public class EnemyAI : MonoBehaviour
     private VisibilityScale visibilityScale;
     private MovementController player;
     private LevelGenerator generator;
+    private AudioSource audioSource;
 
     private Transform questionMark = null;
     private Transform targetPatrolPoint = null;
@@ -49,8 +52,9 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<CreatureVision>();
         noisy = GetComponent<Noisy>();
+        audioSource = GetComponent<AudioSource>();
 
-        if (policeman)
+        if (isPoliceman)
             detectionTime = 0f;
     }
 
@@ -78,6 +82,7 @@ public class EnemyAI : MonoBehaviour
             StopCoroutine(checkPatrolCoroutine);
             isPatrolling = true;
             worried = false;
+            PlayNotFindSound();
             waitCoroutine = StartCoroutine(Wait());
         }
 
@@ -97,8 +102,9 @@ public class EnemyAI : MonoBehaviour
     {
         worried = true;
         isPatrolling = false;
+        PlaySuspectSound();
 
-        if (!policeman)
+        if (!isPoliceman)
         {
             Stop();
             animator.SetTrigger(reactToNoiseAnimatorTrigger);
@@ -132,15 +138,16 @@ public class EnemyAI : MonoBehaviour
 
         if (vision.SeesTarget)
         {
-            noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
             noisy.AttractPolicemans();
 
-            if (policeman && questionMark != null)
+            if (isPoliceman && questionMark != null)
                 Run(questionMark.position);
             else
             {
+                noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
                 animator.SetTrigger(scaryAnimatorTrigger);
                 visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
+                PlayScreamSound();
             }
         }
         else
@@ -191,5 +198,29 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = true;
         agent.ResetPath();
         animator.SetBool(walkAnimatorBool, false);
+    }
+
+    private void PlaySuspectSound()
+    {
+        if (isWoman)
+            SoundManager.Instanse.Play(Sound.SuspectWoman, audioSource);
+        else
+            SoundManager.Instanse.Play(Sound.SuspectMan, audioSource);
+    }
+
+    private void PlayNotFindSound()
+    {
+        if (isWoman)
+            SoundManager.Instanse.Play(Sound.NotFindWoman, audioSource);
+        else
+            SoundManager.Instanse.Play(Sound.NotFindMan, audioSource);
+    }
+
+    private void PlayScreamSound()
+    {
+        if (isWoman)
+            SoundManager.Instanse.Play(Sound.ScreamWoman, audioSource);
+        else
+            SoundManager.Instanse.Play(Sound.ScreamMan, audioSource);
     }
 }

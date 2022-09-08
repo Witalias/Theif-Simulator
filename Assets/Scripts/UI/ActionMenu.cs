@@ -23,6 +23,7 @@ public class ActionMenu : MonoBehaviour
         if (buttons.Count > 0)
             yield break;
 
+        SoundManager.Instanse.Play(Sound.OpenMenu);
         busy = true;
         Opened = true;
         var storage = GameStorage.Instanse;

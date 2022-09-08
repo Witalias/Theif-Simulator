@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(TriggerZone))]
 [RequireComponent(typeof(Lockable))]
 [RequireComponent(typeof(Noisy))]
+[RequireComponent(typeof(AudioSource))]
 public class ConnectionWall : MonoBehaviour
 {
     private const string openAnimatorBool = "Open";
@@ -16,6 +17,7 @@ public class ConnectionWall : MonoBehaviour
     private TriggerZone triggerZone;
     private Lockable lockable;
     private Noisy noisy;
+    private AudioSource audioSource;
 
     private bool triggered = false;
     private bool fixedUpdateDone = false;
@@ -43,6 +45,7 @@ public class ConnectionWall : MonoBehaviour
         triggerZone = GetComponent<TriggerZone>();
         lockable = GetComponent<Lockable>();
         noisy = GetComponent<Noisy>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -56,6 +59,7 @@ public class ConnectionWall : MonoBehaviour
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
             noisy.Noise(GameSettings.Instanse.HearingRadiusAfterOpeningDoor);
+            SoundManager.Instanse.Play(Sound.DoorOpen, audioSource);
         }
 
         lockable.SetEvents(null, AfterOpeningEvent);
@@ -78,7 +82,10 @@ public class ConnectionWall : MonoBehaviour
         {
             triggered = true;
             if (doorAnimator != null)
+            {
                 doorAnimator.SetBool(openAnimatorBool, true);
+                SoundManager.Instanse.Play(Sound.DoorOpen, audioSource);
+            }
         }
     }
 
@@ -88,7 +95,10 @@ public class ConnectionWall : MonoBehaviour
         {
             triggered = false;
             if (doorAnimator != null)
+            {
                 doorAnimator.SetBool(openAnimatorBool, false);
+                SoundManager.Instanse.Play(Sound.DoorClose, audioSource);
+            }
         }
     }
 

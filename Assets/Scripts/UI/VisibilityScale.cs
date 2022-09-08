@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class VisibilityScale : MonoBehaviour
 {
     private const float mainBarStep = 0.2f;
@@ -23,6 +24,7 @@ public class VisibilityScale : MonoBehaviour
     private Animation messageAnimation;
     private LevelGenerator generator;
     private VisibilityEventsList visibilityEvents;
+    private AudioSource audioSource;
 
     private Color scaleInitColor;
     private int level = 0;
@@ -50,6 +52,7 @@ public class VisibilityScale : MonoBehaviour
     {
         messageAnimation = message.GetComponent<Animation>();
         scaleInitColor = scaleAnimation.GetComponent<Image>().color;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -87,7 +90,10 @@ public class VisibilityScale : MonoBehaviour
     private void SetLevel(int value)
     {
         if (value > level)
+        {
             visibilityEvents.StartEvent(value);
+            SoundManager.Instanse.Play(Sound.NewVisibilityLevel);
+        }
 
         level = value;
         levelNumber.text = value.ToString();
@@ -102,6 +108,7 @@ public class VisibilityScale : MonoBehaviour
         message.text = $"+{value} {Translation.GetVisibilityName()}";
         messageAnimation.Play(showAndHideAnimationName);
 
+        SoundManager.Instanse.PlayOneStream(Sound.Scroll, audioSource);
         scaleAnimation.Play(flashAnimationName);
         StartCoroutine(StopScaleFlash());
     }

@@ -23,10 +23,20 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite masterKeyIcon;
     [SerializeField] private Sprite tierIronIcon;
 
+    [Header("Sounds")]
+    [SerializeField] private Sound foodSound;
+    [SerializeField] private Sound waterSound;
+    [SerializeField] private Sound moneySound;
+    [SerializeField] private Sound fuelSound;
+    [SerializeField] private Sound masterKeySound;
+    [SerializeField] private Sound tierIronSound;
+    [SerializeField] private Sound gadgetSound;
+
     [Header("Layer Masks")]
     [SerializeField] private LayerMask enemyMask;
 
     private Dictionary<ResourceType, Sprite> resourceSprites;
+    private Dictionary<ResourceType, Sound> resourceSounds;
 
     public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
 
@@ -47,6 +57,8 @@ public class GameStorage : MonoBehaviour
     public LayerMask EnemyMask { get => enemyMask; }
 
     public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
+
+    public Sound GetResourceSound(ResourceType type) => resourceSounds[type];
 
     public GameObject GetRandomEnemyPrefab() => enemyPrefabs[Random.Range(0, enemyPrefabs.Length)].gameObject;
 
@@ -71,6 +83,17 @@ public class GameStorage : MonoBehaviour
             [ResourceType.Water] = waterIcon,
             [ResourceType.MasterKeys] = masterKeyIcon,
             [ResourceType.TierIrons] = tierIronIcon
+        };
+
+        resourceSounds = new Dictionary<ResourceType, Sound>
+        {
+            [ResourceType.Food] = foodSound,
+            [ResourceType.Fuel] = fuelSound,
+            [ResourceType.Gadgets] = gadgetSound,
+            [ResourceType.MasterKeys] = masterKeySound,
+            [ResourceType.Money] = moneySound,
+            [ResourceType.TierIrons] = tierIronSound,
+            [ResourceType.Water] = waterSound
         };
     }
 }

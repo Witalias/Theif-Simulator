@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(AudioSource))]
 public class LevelGenerator : MonoBehaviour
 {
     private const float checkRadius = 0.5f;
@@ -24,6 +25,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject[] windows;
     [SerializeField] private GameObject[] walls;
     [SerializeField] private Transform[] spawnPoints;
+
+    private AudioSource audioSource;
 
     private int currentRoomsCount = 0;
     private int currentFrontDoorsCount = 0;
@@ -72,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
         {
             var agent = enemy.GetComponent<NavMeshAgent>();
             if (agent != null)
-                agent.speed += GameSettings.Instanse.IncreaseInResidentSpeed;
+                agent.speed += value;
         }
     }
 
@@ -82,7 +85,7 @@ public class LevelGenerator : MonoBehaviour
         {
             var vision = enemy.GetComponent<CreatureVision>();
             if (vision != null)
-                vision.ViewAngle += GameSettings.Instanse.IncreaseInResidentViewAngle;
+                vision.ViewAngle += value;
         }
     }
 
@@ -92,7 +95,7 @@ public class LevelGenerator : MonoBehaviour
         {
             var vision = enemy.GetComponent<CreatureVision>();
             if (vision != null)
-                vision.ViewDistance += GameSettings.Instanse.IncreaseInResidentViewDistance;
+                vision.ViewDistance += value;
         }
     }
 
@@ -115,6 +118,11 @@ public class LevelGenerator : MonoBehaviour
             enemies.Add(policeman);
             policemans.Add(policeman.GetComponent<EnemyAI>());
         }
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -251,6 +259,7 @@ public class LevelGenerator : MonoBehaviour
             connectionWall.RotateDoor(0);
         }
 
+        SoundManager.Instanse.PlayLoop(Sound.EmbientForest, audioSource);
         Generated = true;
     }
 

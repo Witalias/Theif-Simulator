@@ -29,6 +29,8 @@ public class MovementController : MonoBehaviour
     private LevelGenerator generator;
 
     private bool isMoving = false;
+    private float initialAgentSpeed;
+    private float initialRigitbodySpeed;
 
     public bool Busy { get; set; } = false;
 
@@ -87,6 +89,12 @@ public class MovementController : MonoBehaviour
         pathTrajectory.Go(transform, path, climbSpeed, false, actionAfter, climbDetectionDistance);
     }
 
+    public void AddSpeed(float valueInPercents)
+    {
+        manuallyMovingSpeed += initialRigitbodySpeed * valueInPercents / 100f;
+        agent.speed += initialAgentSpeed * valueInPercents / 100f;
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -94,6 +102,9 @@ public class MovementController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         pathTrajectory = GetComponent<PathTrajectory>();
+
+        initialAgentSpeed = agent.speed;
+        initialRigitbodySpeed = manuallyMovingSpeed;
     }
 
     private void Start()

@@ -120,6 +120,46 @@ public static class Translation
         }
     };
 
+    private readonly static Dictionary<Language, Dictionary<SkillType, string>> skillTitles = new Dictionary<Language, Dictionary<SkillType, string>>
+    {
+        [Language.English] = new Dictionary<SkillType, string>
+        {
+            [SkillType.FastFeet] = "Fast feet",
+            [SkillType.NotCheackingDoors] = "NOT squeaky doors",
+            [SkillType.PracticeOfHackingWithACrowbar] = "The practice of hacking with a crowbar",
+            [SkillType.PracticeOfHackingWithAMasterKey] = "The practice of hacking with a master key",
+            [SkillType.PracticeOfManualHacking] = "The practice of manual hacking"
+        },
+        [Language.Russian] = new Dictionary<SkillType, string>
+        {
+            [SkillType.FastFeet] = "Быстрые ноги",
+            [SkillType.NotCheackingDoors] = "НЕ скрипучие двери",
+            [SkillType.PracticeOfHackingWithACrowbar] = "Практика взлома ломом",
+            [SkillType.PracticeOfHackingWithAMasterKey] = "Практика взлома отмычкой",
+            [SkillType.PracticeOfManualHacking] = "Практика ручного взлома"
+        }
+    };
+
+    private readonly static Dictionary<Language, Dictionary<SkillType, string>> skillDescriptions = new Dictionary<Language, Dictionary<SkillType, string>>
+    {
+        [Language.English] = new Dictionary<SkillType, string>
+        {
+            [SkillType.FastFeet] = "Increased movement speed",
+            [SkillType.NotCheackingDoors] = "Noise reduction when opening doors",
+            [SkillType.PracticeOfHackingWithACrowbar] = "Reducing the time of hacking with a crowbar",
+            [SkillType.PracticeOfHackingWithAMasterKey] = "Reducing the time of hacking with a master key",
+            [SkillType.PracticeOfManualHacking] = "Reducing the time of hacking by arms"
+        },
+        [Language.Russian] = new Dictionary<SkillType, string>
+        {
+            [SkillType.FastFeet] = "Увеличение скорости передвижения",
+            [SkillType.NotCheackingDoors] = "Уменьшение шума при открытии дверей",
+            [SkillType.PracticeOfHackingWithACrowbar] = "Уменьшение времени взлома ломом",
+            [SkillType.PracticeOfHackingWithAMasterKey] = "Уменьшение времени взлома отмычкой",
+            [SkillType.PracticeOfManualHacking] = "Уменьшение времени взлома руками"
+        }
+    };
+
     public static string Get(LoudnessType type) => loudnessTypeNames[GameSettings.Instanse.Language][type];
 
     public static string Get(EquipmentType type) => equipmentTypeNames[GameSettings.Instanse.Language][type];
@@ -127,6 +167,10 @@ public static class Translation
     public static string Get(ResourceType type) => resourceNames[GameSettings.Instanse.Language][type];
 
     public static string Get(VisibilityEventType type) => visibilityEventMessages[GameSettings.Instanse.Language][type];
+
+    public static string GetTitle(SkillType type) => skillTitles[GameSettings.Instanse.Language][type];
+
+    public static string GetDescription(SkillType type) => skillDescriptions[GameSettings.Instanse.Language][type];
 
     public static string GetSecondsAbbreviation() => secondsAbbreviations[GameSettings.Instanse.Language];
 

@@ -42,6 +42,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
     {
         equipmentStats = Stats.Instanse.GetEquipmentStats(equipmentType);
 
+        var sound = Sound.DoorArms;
         var hackingTime = 0f;
         void ActionAfterWaitingForDoorOrWindow()
         {
@@ -57,6 +58,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         {
             case Obstacle.Door:
                 hackingTime += equipmentStats.HackingTimeDoor;
+                sound = equipmentStats.DoorSound;
                 clickAction = () =>
                 {
                     void ActionAfterWaiting()
@@ -64,19 +66,29 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                         ActionAfterWaitingForDoorOrWindow();
                         target.GetComponent<Lockable>().Open();
                     }
-                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, sound, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
 
             case Obstacle.Window:
                 hackingTime += equipmentStats.HackingTimeWindow;
+                sound = equipmentStats.WindowSound;
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, true, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, sound, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
 
-            case Obstacle.Device: hackingTime = equipmentStats.HackingTimeDevice; break;
+            case Obstacle.Device:
+                hackingTime = equipmentStats.HackingTimeDevice;
+                sound = equipmentStats.DeviceSound;
+                clickAction = () =>
+                {
+                    SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
+                };
+                break;
         }
 
         SetIcon(equipmentStats.Icon);
@@ -115,7 +127,9 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
     public void OnPointerMove(PointerEventData eventData)
     {
         if (!selected)
+        {
             Select();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -130,6 +144,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
             return;
 
         closeMenu?.Invoke();
+        SoundManager.Instanse.Play(Sound.Select);
         StartCoroutine(ExecuteAction());
     }
 
@@ -138,6 +153,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         if (Locked || anim.isPlaying)
             return;
 
+        SoundManager.Instanse.Play(Sound.MouseEnterButton);
         anim.Play(increaseAnimationName);
         selected = true;
     }

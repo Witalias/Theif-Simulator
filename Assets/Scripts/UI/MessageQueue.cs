@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 
 [RequireComponent(typeof(Animation))]
+[RequireComponent(typeof(Image))]
 public class MessageQueue : MonoBehaviour
 {
     private const string showAndHideAnimationName = "Show And Hide";
@@ -15,9 +16,12 @@ public class MessageQueue : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
     private Animation anim;
+    private Image background;
 
     private readonly Queue<MainMessage> messageQueue = new Queue<MainMessage>();
     private bool showed = false;
+    private Color backgroundInitialColor;
+    private Color titleInitialColor;
 
     public void Add(MainMessage message)
     {
@@ -30,6 +34,9 @@ public class MessageQueue : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animation>();
+        background = GetComponent<Image>();
+        backgroundInitialColor = background.color;
+        titleInitialColor = title.color;
     }
 
     private void Show()
@@ -38,9 +45,22 @@ public class MessageQueue : MonoBehaviour
         {
             showed = true;
             var message = messageQueue.Dequeue();
+
             title.text = message.Title;
             text.text = message.Text;
             icon.sprite = message.Sprite;
+
+            if (message.CustomColor)
+            {
+                title.color = message.TitleColor;
+                background.color = message.BackgroundColor;
+            }
+            else
+            {
+                title.color = titleInitialColor;
+                background.color = backgroundInitialColor;
+            }
+
             anim.Play(showAndHideAnimationName);
         }
         else
@@ -64,11 +84,22 @@ public class MainMessage
     public Sprite Sprite { get; }
     public string Title { get; }
     public string Text { get; }
+    public Color TitleColor { get; }
+    public Color BackgroundColor { get; }
+    public bool CustomColor { get; } = false;
 
     public MainMessage(Sprite sprite, string title, string text)
     {
         Sprite = sprite;
         Title = title;
         Text = text;
+    }
+
+    public MainMessage(Sprite sprite, string title, string text, Color titleColor, Color backgroundColor)
+        : this(sprite, title, text)
+    {
+        CustomColor = true;
+        TitleColor = titleColor;
+        BackgroundColor = backgroundColor;
     }
 }

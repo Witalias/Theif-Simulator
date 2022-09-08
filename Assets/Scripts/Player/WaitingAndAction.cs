@@ -21,12 +21,14 @@ public class WaitingAndAction : MonoBehaviour
     private float reachedTime = 1f;
     private float currentTime = 0f;
     private bool noisyAction = false;
+    private bool playSound = false;
     private float noiseRadius = 0f;
+    private Sound sound;
     private Action action;
 
     public bool InProgress { get; private set; } = false;
 
-    public void WaitAndExecute(float time, Action action, bool noisy = false, float noiseRadius = 0f)
+    public void WaitAndExecute(float time, Action action)
     {
         if (action == null || InProgress)
             return;
@@ -36,14 +38,35 @@ public class WaitingAndAction : MonoBehaviour
 
         reachedTime = time;
         this.action = action;
-        this.noiseRadius = noiseRadius;
-        noisyAction = noisy;
         InProgress = true;
 
         rectTransform.localPosition = new Vector3(0, yOffsetFromPlayer, 0);
         anim.Play(showAnimationName);
 
         waitingCoroutine = StartCoroutine(AddTick());
+    }
+
+    public void WaitAndExecute(float time, Action action, float noiseRadius)
+    {
+        this.noiseRadius = noiseRadius;
+        noisyAction = true;
+        WaitAndExecute(time, action);
+    }
+
+    public void WaitAndExecute(float time, Action action, Sound sound)
+    {
+        this.sound = sound;
+        this.playSound = true;
+        WaitAndExecute(time, action);
+    }
+
+    public void WaitAndExecute(float time, Action action, Sound sound, float noiseRadius)
+    {
+        this.sound = sound;
+        this.playSound = true;
+        this.noiseRadius = noiseRadius;
+        noisyAction = true;
+        WaitAndExecute(time, action);
     }
 
     public void Abort()
@@ -86,6 +109,12 @@ public class WaitingAndAction : MonoBehaviour
         reachedTime = 1f;
         currentTime = 0f;
         InProgress = false;
+
+        if (playSound)
+        {
+            playSound = false;
+            SoundManager.Instanse.Stop(sound);
+        }
         rectTransform.position = new Vector3(-10000, 0, 0);
     }
 }

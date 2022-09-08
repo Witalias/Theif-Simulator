@@ -14,10 +14,15 @@ public class VisibilityEventsList : MonoBehaviour
     [SerializeField] private Sprite trap;
     [SerializeField] private Sprite policeBadge;
     [SerializeField] private Sprite eye;
+    [SerializeField] private Sprite ear;
 
     [Header("from/to")]
     [SerializeField] private Vector2 lockedDoorsAndWindowsCount = new Vector2(3, 6);
     [SerializeField] private Vector2 furnitureWithTrapsCount = new Vector2(2, 4);
+
+    [Header("Colors")]
+    [SerializeField] private Color titleMessageColor;
+    [SerializeField] private Color backgroundMessageColor;
 
     private LevelGenerator generator;
     private MessageQueue messageQueue;
@@ -78,7 +83,7 @@ public class VisibilityEventsList : MonoBehaviour
                 GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise = true),
             new VisibilityEvent(VisibilityEventType.ExtraResident, suitcase, () =>
                 generator.CreateEnemy(1)),
-            new VisibilityEvent(VisibilityEventType.IncreasedHearingRadius, signal, () =>
+            new VisibilityEvent(VisibilityEventType.IncreasedHearingRadius, ear, () =>
                 GameSettings.Instanse.IncreasedHearingRadius = true)
         };
         currentEvents = new List<VisibilityEvent>(events);
@@ -86,6 +91,7 @@ public class VisibilityEventsList : MonoBehaviour
         void AddPoliceman()
         {
             generator.CreatePoliceman(1);
+            SoundManager.Instanse.Play(Sound.Police);
         }
         callPoliceEvent = new VisibilityEvent(VisibilityEventType.Police, policeBadge, AddPoliceman);
         newPolicemanEvent = new VisibilityEvent(VisibilityEventType.NewPoliceman, policeBadge, AddPoliceman);
@@ -110,7 +116,8 @@ public class VisibilityEventsList : MonoBehaviour
 
     private void ShowMessage(Sprite icon, int visibilityLevel, string message)
     {
-        messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {visibilityLevel}", message));
+        messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {visibilityLevel}", 
+            message, titleMessageColor, backgroundMessageColor));
     }
 }
 
