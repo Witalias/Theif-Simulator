@@ -6,6 +6,9 @@ public class Stats : MonoBehaviour
 {
     public static Stats Instanse { get; private set; } = null;
 
+    [SerializeField] private bool canIntentionallyNoise = false;
+
+    [Header("Equipment")]
     [SerializeField] private EquipmentStats arms;
     [SerializeField] private EquipmentStats masterKey;
     [SerializeField] private EquipmentStats tierIron;
@@ -16,8 +19,36 @@ public class Stats : MonoBehaviour
     private Dictionary<ResourceType, float> resources;
     private Dictionary<EquipmentType, EquipmentStats> equipment;
 
+    public bool CanIntentionallyNoise 
+    { 
+        get => canIntentionallyNoise;
+        set
+        {
+            canIntentionallyNoise = value;
+            if (resourcesPanel != null)
+                resourcesPanel.SetActiveNoiseHotkey(value);
+        }
+    }
+
+    public float IncreasedPlayerSpeedInPercents { get; private set; }
+
+    public float IncreasedDoorNoiseInPercents { get; private set; }
+
+    public void SetIncreasedDoorNoise(float valueInPercents) => IncreasedDoorNoiseInPercents = valueInPercents;
+
+    public void SetIncreasedPlayerSpeed(float valueInPercents)
+    {
+        IncreasedPlayerSpeedInPercents = valueInPercents;
+        var player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        if (player != null)
+            player.AddSpeed(valueInPercents);
+    }
+
     public void AddResource(ResourceType type, float value)
     {
+        if (resourcesPanel == null)
+            return;
+
         if (type == ResourceType.Food || type == ResourceType.Water)
             resources[type] = Mathf.Clamp(resources[type] + value, 0f, 100f);
         else

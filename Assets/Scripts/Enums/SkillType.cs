@@ -4,5 +4,7 @@ public enum SkillType
     NotCheackingDoors,
     PracticeOfManualHacking,
     PracticeOfHackingWithAMasterKey,
-    PracticeOfHackingWithACrowbar
+    PracticeOfHackingWithACrowbar,
+    PracticeOfHackingWithAGadget,
+    SlyFox
 }

@@ -62,6 +62,7 @@ public class MessageQueue : MonoBehaviour
             }
 
             anim.Play(showAndHideAnimationName);
+            SoundManager.Instanse.Play(message.Sound);
         }
         else
             showed = false;
@@ -87,16 +88,18 @@ public class MainMessage
     public Color TitleColor { get; }
     public Color BackgroundColor { get; }
     public bool CustomColor { get; } = false;
+    public Sound Sound { get; }
 
-    public MainMessage(Sprite sprite, string title, string text)
+    public MainMessage(Sprite sprite, string title, string text, Sound sound)
     {
         Sprite = sprite;
         Title = title;
         Text = text;
+        Sound = sound;
     }
 
-    public MainMessage(Sprite sprite, string title, string text, Color titleColor, Color backgroundColor)
-        : this(sprite, title, text)
+    public MainMessage(Sprite sprite, string title, string text, Sound sound, Color titleColor, Color backgroundColor)
+        : this(sprite, title, text, sound)
     {
         CustomColor = true;
         TitleColor = titleColor;

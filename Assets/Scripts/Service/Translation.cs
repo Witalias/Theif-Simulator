@@ -128,7 +128,9 @@ public static class Translation
             [SkillType.NotCheackingDoors] = "NOT squeaky doors",
             [SkillType.PracticeOfHackingWithACrowbar] = "The practice of hacking with a crowbar",
             [SkillType.PracticeOfHackingWithAMasterKey] = "The practice of hacking with a master key",
-            [SkillType.PracticeOfManualHacking] = "The practice of manual hacking"
+            [SkillType.PracticeOfManualHacking] = "The practice of manual hacking",
+            [SkillType.PracticeOfHackingWithAGadget] = "The practice of hacking with a gadget",
+            [SkillType.SlyFox] = "The sly fox"
         },
         [Language.Russian] = new Dictionary<SkillType, string>
         {
@@ -136,7 +138,9 @@ public static class Translation
             [SkillType.NotCheackingDoors] = "НЕ скрипучие двери",
             [SkillType.PracticeOfHackingWithACrowbar] = "Практика взлома ломом",
             [SkillType.PracticeOfHackingWithAMasterKey] = "Практика взлома отмычкой",
-            [SkillType.PracticeOfManualHacking] = "Практика ручного взлома"
+            [SkillType.PracticeOfManualHacking] = "Практика ручного взлома",
+            [SkillType.PracticeOfHackingWithAGadget] = "Практика взлома гаджетом",
+            [SkillType.SlyFox] = "Хитрая лиса"
         }
     };
 
@@ -148,7 +152,9 @@ public static class Translation
             [SkillType.NotCheackingDoors] = "Noise reduction when opening doors",
             [SkillType.PracticeOfHackingWithACrowbar] = "Reducing the time of hacking with a crowbar",
             [SkillType.PracticeOfHackingWithAMasterKey] = "Reducing the time of hacking with a master key",
-            [SkillType.PracticeOfManualHacking] = "Reducing the time of hacking by arms"
+            [SkillType.PracticeOfManualHacking] = "Reducing the time of hacking by arms",
+            [SkillType.PracticeOfHackingWithAGadget] = "Reducing the time of hacking with a gadget",
+            [SkillType.SlyFox] = "Ability to make noise and attract attention"
         },
         [Language.Russian] = new Dictionary<SkillType, string>
         {
@@ -156,7 +162,9 @@ public static class Translation
             [SkillType.NotCheackingDoors] = "Уменьшение шума при открытии дверей",
             [SkillType.PracticeOfHackingWithACrowbar] = "Уменьшение времени взлома ломом",
             [SkillType.PracticeOfHackingWithAMasterKey] = "Уменьшение времени взлома отмычкой",
-            [SkillType.PracticeOfManualHacking] = "Уменьшение времени взлома руками"
+            [SkillType.PracticeOfManualHacking] = "Уменьшение времени взлома руками",
+            [SkillType.PracticeOfHackingWithAGadget] = "Уменьшение времени взлома гаджетом",
+            [SkillType.SlyFox] = "Способность шуметь и привлекать внимание"
         }
     };
 

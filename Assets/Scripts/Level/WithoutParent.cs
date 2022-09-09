@@ -14,7 +14,8 @@ public class WithoutParent : MonoBehaviour
     {
         if (generator.Generated && !done)
         {
-            transform.parent = transform.parent.parent;
+            if (transform.parent != null)
+                transform.parent = transform.parent.parent;
             done = true;
         }
     }

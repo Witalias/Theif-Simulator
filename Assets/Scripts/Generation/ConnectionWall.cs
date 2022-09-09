@@ -58,7 +58,8 @@ public class ConnectionWall : MonoBehaviour
             triggered = true;
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
-            noisy.Noise(GameSettings.Instanse.HearingRadiusAfterOpeningDoor);
+            var hearingRadius = GameSettings.Instanse.HearingRadiusAfterOpeningDoor;
+            noisy.Noise(hearingRadius + hearingRadius * Stats.Instanse.IncreasedDoorNoiseInPercents / 100f);
             SoundManager.Instanse.Play(Sound.DoorOpen, audioSource);
         }
 

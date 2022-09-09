@@ -39,6 +39,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] windowOpen;
     [SerializeField] private AudioClip[] windowArms;
     [SerializeField] private AudioClip[] windowTierIron;
+    [SerializeField] private AudioClip[] newSkill;
+    [SerializeField] private AudioClip[] bookFlip;
 
     private AudioSource audioSource;
 
@@ -131,7 +133,9 @@ public class SoundManager : MonoBehaviour
             [Sound.Box] = box,
             [Sound.WindowOpen] = windowOpen,
             [Sound.WindowArms] = windowArms,
-            [Sound.WindowTierIron] = windowTierIron
+            [Sound.WindowTierIron] = windowTierIron,
+            [Sound.NewSkill] = newSkill,
+            [Sound.BookFlip] = bookFlip
         };
     }
 

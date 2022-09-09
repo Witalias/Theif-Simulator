@@ -58,6 +58,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         {
             case Obstacle.Door:
                 hackingTime += equipmentStats.HackingTimeDoor;
+                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.DoorSound;
                 clickAction = () =>
                 {
@@ -73,6 +74,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
 
             case Obstacle.Window:
                 hackingTime += equipmentStats.HackingTimeWindow;
+                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.WindowSound;
                 clickAction = () =>
                 {
@@ -82,7 +84,8 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                 break;
 
             case Obstacle.Device:
-                hackingTime = equipmentStats.HackingTimeDevice;
+                hackingTime += equipmentStats.HackingTimeDevice;
+                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.DeviceSound;
                 clickAction = () =>
                 {

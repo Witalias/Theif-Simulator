@@ -108,6 +108,7 @@ public class WaitingAndAction : MonoBehaviour
     {
         reachedTime = 1f;
         currentTime = 0f;
+        noiseRadius = 0f;
         InProgress = false;
 
         if (playSound)

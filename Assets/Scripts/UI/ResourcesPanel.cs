@@ -27,6 +27,17 @@ public class ResourcesPanel : MonoBehaviour
         }
     }
 
+    public void SetActiveNoiseHotkey(bool value)
+    {
+        noiseHotkey.gameObject.SetActive(value);
+        noiseText.gameObject.SetActive(value);
+        if (value)
+        {
+            noiseHotkey.SetKey(Controls.Instanse.GetKey(ActionControls.Noise));
+            noiseText.text = Translation.GetNoiseName();
+        }
+    }
+
     private void Start()
     {
         foodBar.SetTitle(Translation.Get(ResourceType.Food));
@@ -37,7 +48,6 @@ public class ResourcesPanel : MonoBehaviour
         tierIronsCounter.SetTitle(Translation.Get(ResourceType.TierIrons));
         gadgetsCounter.SetTitle(Translation.Get(ResourceType.Gadgets));
 
-        noiseHotkey.SetKey(Controls.Instanse.GetKey(ActionControls.Noise));
-        noiseText.text = Translation.GetNoiseName();
+        SetActiveNoiseHotkey(Stats.Instanse.CanIntentionallyNoise);
     }
 }

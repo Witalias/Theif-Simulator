@@ -32,5 +32,7 @@ public enum Sound
     Box,
     WindowOpen,
     WindowArms,
-    WindowTierIron
+    WindowTierIron,
+    NewSkill,
+    BookFlip
 }

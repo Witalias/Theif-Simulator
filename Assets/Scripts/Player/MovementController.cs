@@ -24,7 +24,7 @@ public class MovementController : MonoBehaviour
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
     private PathTrajectory pathTrajectory;
-    private Lootable targetObject;
+    private TargetObject targetObject;
     private WaitingAndAction waitingAndAction;
     private LevelGenerator generator;
 
@@ -36,17 +36,22 @@ public class MovementController : MonoBehaviour
 
     public Transform CenterPoint { get => centerPoint; }
 
-    public void GoToObject(Vector3 point, Lootable obj)
+    public void GoToObject(Vector3 point, TargetObject obj, RaycastHit hit)
     {
         if (obj == targetObject)
             return;
 
-        AbortSearching();
         targetObject = obj;
+        AbortSearching();
         var distance = Vector3.Distance(transform.position, new Vector3(point.x, transform.position.y, point.z));
         if (distance <= obj.ArriveDistance)
         {
-            LootTargetObject();
+            InteractWithTargetObject();
+            return;
+        }
+        if (hit.collider.GetComponent<MovementController>() == null)
+        {
+            targetObject = null;
             return;
         }
 
@@ -91,8 +96,8 @@ public class MovementController : MonoBehaviour
 
     public void AddSpeed(float valueInPercents)
     {
-        manuallyMovingSpeed += initialRigitbodySpeed * valueInPercents / 100f;
-        agent.speed += initialAgentSpeed * valueInPercents / 100f;
+        manuallyMovingSpeed = initialRigitbodySpeed + initialRigitbodySpeed * valueInPercents / 100f;
+        agent.speed = initialAgentSpeed + initialAgentSpeed * valueInPercents / 100f;
     }
 
     private void Awake()
@@ -111,6 +116,8 @@ public class MovementController : MonoBehaviour
     {
         waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
+
+        AddSpeed(Stats.Instanse.IncreasedPlayerSpeedInPercents);
     }
 
     private void Update()
@@ -120,7 +127,7 @@ public class MovementController : MonoBehaviour
             var currentDistance = Vector3.Distance(transform.position, agent.destination);
             if (currentDistance <= targetObject.ArriveDistance)
             {
-                LootTargetObject();
+                InteractWithTargetObject();
                 isMoving = false;
                 agent.enabled = false;
                 animator.SetBool(runAnimatorBool, false);
@@ -160,9 +167,24 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    private void LootTargetObject()
+    private void InteractWithTargetObject()
     {
-        targetObject.TakeLoot(() => targetObject = null);
+        TryLootTargetObject();
+        TryReadTargetObject();
+    }
+
+    private void TryLootTargetObject()
+    {
+        var lootable = targetObject.GetComponent<Lootable>();
+        if (lootable != null)
+            lootable.TakeLoot(() => targetObject = null);
+    }
+
+    private void TryReadTargetObject()
+    {
+        var book = targetObject.GetComponent<Book>();
+        if (book != null)
+            book.Read();
     }
 
     private void AbortSearching()

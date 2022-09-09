@@ -3,23 +3,20 @@ using System.Linq;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
 [RequireComponent(typeof(CenteredPoint))]
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(TargetObject))]
 public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private Sound sound;
-    [SerializeField] private float arriveDistance = 2f;
     [SerializeField] private float lootingTime = 2f;
 
     private MovementController movementController;
     private MovingFurnitureElements movingFurnitureElements;
     private WaitingAndAction waitingAndAction;
     private CenteredPoint centeredPoint;
-    //private AudioSource audioSource;
+    private TargetObject targetObject;
 
     private bool empty = false;
-
-    public float ArriveDistance { get => arriveDistance; }
 
     public void TakeLoot(System.Action extraAction = null)
     {
@@ -45,7 +42,7 @@ public class Lootable : MonoBehaviour
     {
         movingFurnitureElements = GetComponent<MovingFurnitureElements>();
         centeredPoint = GetComponent<CenteredPoint>();
-        //audioSource = GetComponent<AudioSource>();
+        targetObject = GetComponent<TargetObject>();
     }
 
     private void Start()
@@ -58,19 +55,11 @@ public class Lootable : MonoBehaviour
     {
         if (!empty && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
         {
-            if (hit.collider.GetComponent<MovementController>() == null)
-                return;
-
             if (centeredPoint == null)
-                movementController.GoToObject(transform.position, this);
+                movementController.GoToObject(transform.position, targetObject, hit);
             else
-                movementController.GoToObject(centeredPoint.CenterPoint, this);
+                movementController.GoToObject(centeredPoint.CenterPoint, targetObject, hit);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(centeredPoint.CenterPoint, arriveDistance);
     }
 
     private void RemoveIllumination()

@@ -6,16 +6,6 @@ public class VisibilityEventsList : MonoBehaviour
 {
     [SerializeField] private int[] visibilityLevelsForPoliceman;
 
-    [Header("Icons")]
-    [SerializeField] private Sprite padlock;
-    [SerializeField] private Sprite signal;
-    [SerializeField] private Sprite speed;
-    [SerializeField] private Sprite suitcase;
-    [SerializeField] private Sprite trap;
-    [SerializeField] private Sprite policeBadge;
-    [SerializeField] private Sprite eye;
-    [SerializeField] private Sprite ear;
-
     [Header("from/to")]
     [SerializeField] private Vector2 lockedDoorsAndWindowsCount = new Vector2(3, 6);
     [SerializeField] private Vector2 furnitureWithTrapsCount = new Vector2(2, 4);
@@ -51,10 +41,11 @@ public class VisibilityEventsList : MonoBehaviour
         var randomEvent = currentEvents[UnityEngine.Random.Range(0, currentEvents.Count)];
         ExecuteEvent(randomEvent, visibilityLevel);
 
+        var storage = GameStorage.Instanse;
         switch (randomEvent.Type)
         {
             case VisibilityEventType.IncreasedSpeed:
-                currentEvents.Add(new VisibilityEvent(VisibilityEventType.MoreIncreasedSpeed, speed, () =>
+                currentEvents.Add(new VisibilityEvent(VisibilityEventType.MoreIncreasedSpeed, storage.Speed, () =>
                     generator.IncreaseEnemiesSpeed(GameSettings.Instanse.IncreaseInResidentSpeed * 0.5f)));
                 break;
         }
@@ -66,24 +57,25 @@ public class VisibilityEventsList : MonoBehaviour
         generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
         messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
 
+        var storage = GameStorage.Instanse;
         events = new List<VisibilityEvent>
         {
-            new VisibilityEvent(VisibilityEventType.LockDoorsAndWindows, padlock, () =>
+            new VisibilityEvent(VisibilityEventType.LockDoorsAndWindows, storage.Padlock, () =>
                 generator.LockRandomDoorsAndWindows((int)UnityEngine.Random.Range(lockedDoorsAndWindowsCount.x, lockedDoorsAndWindowsCount.y))),
-            new VisibilityEvent(VisibilityEventType.IncreasedRangeAndViewAngle, eye, () =>
+            new VisibilityEvent(VisibilityEventType.IncreasedRangeAndViewAngle, storage.Eye, () =>
             {
                 generator.IncreaseEnemiesViewAngle(GameSettings.Instanse.IncreaseInResidentViewAngle);
                 generator.IncreaseEnemiesViewDistance(GameSettings.Instanse.IncreaseInResidentViewDistance);
             }),
-            new VisibilityEvent(VisibilityEventType.IncreasedSpeed, speed, () =>
+            new VisibilityEvent(VisibilityEventType.IncreasedSpeed, storage.Speed, () =>
                 generator.IncreaseEnemiesSpeed(GameSettings.Instanse.IncreaseInResidentSpeed)),
-            new VisibilityEvent(VisibilityEventType.DoubleLocks, padlock, () =>
+            new VisibilityEvent(VisibilityEventType.DoubleLocks, storage.Padlock, () =>
                 GameSettings.Instanse.DoubleLocks = true),
-            new VisibilityEvent(VisibilityEventType.NoReactionToNoise, signal, () =>
+            new VisibilityEvent(VisibilityEventType.NoReactionToNoise, storage.Signal, () =>
                 GameSettings.Instanse.NoResidentsReactionOnIntentionalNoise = true),
-            new VisibilityEvent(VisibilityEventType.ExtraResident, suitcase, () =>
+            new VisibilityEvent(VisibilityEventType.ExtraResident, storage.Suitcase, () =>
                 generator.CreateEnemy(1)),
-            new VisibilityEvent(VisibilityEventType.IncreasedHearingRadius, ear, () =>
+            new VisibilityEvent(VisibilityEventType.IncreasedHearingRadius, storage.Ear, () =>
                 GameSettings.Instanse.IncreasedHearingRadius = true)
         };
         currentEvents = new List<VisibilityEvent>(events);
@@ -93,8 +85,8 @@ public class VisibilityEventsList : MonoBehaviour
             generator.CreatePoliceman(1);
             SoundManager.Instanse.Play(Sound.Police);
         }
-        callPoliceEvent = new VisibilityEvent(VisibilityEventType.Police, policeBadge, AddPoliceman);
-        newPolicemanEvent = new VisibilityEvent(VisibilityEventType.NewPoliceman, policeBadge, AddPoliceman);
+        callPoliceEvent = new VisibilityEvent(VisibilityEventType.Police, storage.PoliceBadge, AddPoliceman);
+        newPolicemanEvent = new VisibilityEvent(VisibilityEventType.NewPoliceman, storage.PoliceBadge, AddPoliceman);
     }
 
     private void CallPolice(int visibilityLevel)
@@ -117,7 +109,7 @@ public class VisibilityEventsList : MonoBehaviour
     private void ShowMessage(Sprite icon, int visibilityLevel, string message)
     {
         messageQueue.Add(new MainMessage(icon, $"{Translation.GetVisibilityLevelName()} {visibilityLevel}", 
-            message, titleMessageColor, backgroundMessageColor));
+            message, Sound.NewVisibilityLevel, titleMessageColor, backgroundMessageColor));
     }
 }
 
@@ -127,6 +119,8 @@ public class VisibilityEvent
     public string Message { get; }
     public Sprite Icon { get; }
     public Action Action { get; }
+    public Sound Sound { get; }
+    public bool HaveSound { get; } = false;
 
     public VisibilityEvent(VisibilityEventType type, Sprite icon, Action action)
     {
@@ -134,5 +128,12 @@ public class VisibilityEvent
         Message = Translation.Get(type);
         Icon = icon;
         Action = action;
+    }
+
+    public VisibilityEvent(VisibilityEventType type, Sprite icon, Action action, Sound sound)
+        : this(type, icon, action)
+    {
+        HaveSound = true;
+        Sound = sound;
     }
 }

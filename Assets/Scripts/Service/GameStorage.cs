@@ -22,6 +22,20 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite fuelIcon;
     [SerializeField] private Sprite masterKeyIcon;
     [SerializeField] private Sprite tierIronIcon;
+    [SerializeField] private Sprite padlock;
+    [SerializeField] private Sprite signal;
+    [SerializeField] private Sprite speed;
+    [SerializeField] private Sprite suitcase;
+    [SerializeField] private Sprite trap;
+    [SerializeField] private Sprite policeBadge;
+    [SerializeField] private Sprite eye;
+    [SerializeField] private Sprite ear;
+    [SerializeField] private Sprite boot;
+    [SerializeField] private Sprite door;
+    [SerializeField] private Sprite armsTime;
+    [SerializeField] private Sprite masterKeyTime;
+    [SerializeField] private Sprite tierIronTime;
+    [SerializeField] private Sprite gadgetTime;
 
     [Header("Sounds")]
     [SerializeField] private Sound foodSound;
@@ -51,6 +65,34 @@ public class GameStorage : MonoBehaviour
     public GameObject NoiseEffectPrefab { get => noiseEffectPrefab.gameObject; }
 
     public GameObject PolicemanPrefab { get => policemanPrefab.gameObject; }
+
+    public Sprite Padlock { get => padlock; }
+
+    public Sprite Signal { get => signal; }
+
+    public Sprite Speed { get => speed; }
+
+    public Sprite Suitcase { get => suitcase; }
+
+    public Sprite Trap { get => trap; }
+
+    public Sprite PoliceBadge { get => policeBadge; }
+
+    public Sprite Eye { get => eye; }
+
+    public Sprite Ear { get => ear; }
+
+    public Sprite Boot { get => boot; }
+
+    public Sprite Door { get => door; }
+
+    public Sprite ArmsTime { get => armsTime; }
+
+    public Sprite MasterKeyTime { get => masterKeyTime; }
+
+    public Sprite TierIronTime { get => tierIronTime; }
+
+    public Sprite GadgetTime { get => gadgetTime; }
 
     public Transform MainCanvas { get; private set; }
 

@@ -92,7 +92,6 @@ public class VisibilityScale : MonoBehaviour
         if (value > level)
         {
             visibilityEvents.StartEvent(value);
-            SoundManager.Instanse.Play(Sound.NewVisibilityLevel);
         }
 
         level = value;
