@@ -91,6 +91,10 @@ public class Skills : MonoBehaviour
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfManualHacking, storage.ArmsTime),
 
+            new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.Arms).IncreasedNoiseInPercents = value,
+            new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
+            true, SkillType.AgilityOfManualHacking, storage.ArmsEar),
+
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.MasterKey).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithAMasterKey, storage.MasterKeyTime),
@@ -99,11 +103,39 @@ public class Skills : MonoBehaviour
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithACrowbar, storage.TierIronTime),
 
+            new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.TierIron).IncreasedNoiseInPercents = value,
+            new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
+            true, SkillType.AgilityOfHackingWithACrowbar, storage.TierIronEar),
+
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.Gadget).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithAGadget, storage.GadgetTime),
 
-            new Skill(value => Stats.Instanse.CanIntentionallyNoise = true, new[] { (0f, SkillCoolness.Cool) }, false, SkillType.SlyFox, storage.Signal)
+            new Skill(value => Stats.Instanse.IncreasedHackingTime = value,
+            new[] { (-5f, SkillCoolness.Usual), (-10f, SkillCoolness.Usual), (-15f, SkillCoolness.Cool), (-20f, SkillCoolness.Cool), (-25f, SkillCoolness.Epic) },
+            true, SkillType.PracticeOfHacking, storage.EquipmentTime),
+
+            new Skill(value => Stats.Instanse.IncreasedHackingNoiseInPercents = value,
+            new[] { (-5f, SkillCoolness.Usual), (-10f, SkillCoolness.Usual), (-15f, SkillCoolness.Cool), (-20f, SkillCoolness.Cool), (-25f, SkillCoolness.Epic) },
+            true, SkillType.AgilityOfHacking, storage.EquipmentEar),
+
+            new Skill(value => Stats.Instanse.CanIntentionallyNoise = true, new[] { (0f, SkillCoolness.Cool) }, false, SkillType.SlyFox, storage.Signal),
+
+            new Skill(value => Stats.Instanse.SetExtraResourceNumber(ResourceType.Food, value),
+            new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
+            true, SkillType.MoreFood, storage.ApplePlus),
+
+            new Skill(value => Stats.Instanse.SetExtraResourceNumber(ResourceType.Water, value),
+            new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
+            true, SkillType.MoreWater, storage.WaterPlus),
+
+            new Skill(value => Stats.Instanse.SetExtraResourceNumber(ResourceType.Money, value),
+            new[] { (10f, SkillCoolness.Usual), (20f, SkillCoolness.Usual), (40f, SkillCoolness.Cool), (60f, SkillCoolness.Cool), (100f, SkillCoolness.Epic) },
+            false, SkillType.MoreMoney, storage.MoneyPlus),
+
+            new Skill(value => Stats.Instanse.SetExtraResourceNumber(ResourceType.Fuel, value),
+            new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
+            false, SkillType.MoreFuel, storage.FuelPlus),
         };
     }
 }

@@ -39,6 +39,8 @@ public class EquipmentStats : MonoBehaviour
 
     public float IncreasedHackingTimeInPercents { get; set; } = 0;
 
+    public float IncreasedNoiseInPercents { get; set; } = 0;
+
     private void Awake()
     {
         AudioSource = GetComponent<AudioSource>();

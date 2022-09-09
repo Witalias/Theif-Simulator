@@ -43,7 +43,12 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         equipmentStats = Stats.Instanse.GetEquipmentStats(equipmentType);
 
         var sound = Sound.DoorArms;
-        var hackingTime = 0f;
+        var hackingTime = GetHackingTime(equipmentStats, obstacleType);
+
+        var noiseRadius = GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType);
+        noiseRadius += noiseRadius * equipmentStats.IncreasedNoiseInPercents / 100f;
+        noiseRadius += noiseRadius * Stats.Instanse.IncreasedHackingNoiseInPercents / 100f;
+
         void ActionAfterWaitingForDoorOrWindow()
         {
             target.GetComponent<Lockable>().Locked = false;
@@ -51,14 +56,9 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
             Stats.Instanse.AddResource(equipmentType, -1);
         }
 
-        if (GameSettings.Instanse.DoubleLocks)
-            hackingTime = GameSettings.Instanse.GetIncreaseInHackingTime(equipmentStats.Type);
-
         switch (obstacleType)
         {
             case Obstacle.Door:
-                hackingTime += equipmentStats.HackingTimeDoor;
-                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.DoorSound;
                 clickAction = () =>
                 {
@@ -67,25 +67,21 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                         ActionAfterWaitingForDoorOrWindow();
                         target.GetComponent<Lockable>().Open();
                     }
-                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, sound, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
 
             case Obstacle.Window:
-                hackingTime += equipmentStats.HackingTimeWindow;
-                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.WindowSound;
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, sound, GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType));
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
 
             case Obstacle.Device:
-                hackingTime += equipmentStats.HackingTimeDevice;
-                hackingTime += hackingTime * equipmentStats.IncreasedHackingTimeInPercents / 100f;
                 sound = equipmentStats.DeviceSound;
                 clickAction = () =>
                 {
@@ -98,6 +94,25 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         SetTitle(Translation.Get(equipmentType));
         SetTimeValue((int)Mathf.Ceil(hackingTime));
         SetLoudnessType(equipmentStats.LoudnessType);
+
+        float GetHackingTime(EquipmentStats equipmentStats, Obstacle obstacleType)
+        {
+            var time = 0f;
+            if (GameSettings.Instanse.DoubleLocks)
+                time = GameSettings.Instanse.GetIncreaseInHackingTime(equipmentStats.Type);
+
+            switch (obstacleType)
+            {
+                case Obstacle.Door: time += equipmentStats.HackingTimeDoor; break;
+                case Obstacle.Window: time += equipmentStats.HackingTimeWindow; break;
+                case Obstacle.Device: time += equipmentStats.HackingTimeDevice; break;
+            }
+
+            time += time * equipmentStats.IncreasedHackingTimeInPercents / 100f;
+            time += time * Stats.Instanse.IncreasedHackingTime / 100f;
+
+            return time;
+        }
     }
 
     public void SetActionCloseMenu(Action value) => closeMenu = value;

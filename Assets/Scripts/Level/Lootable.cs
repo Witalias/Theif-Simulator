@@ -75,7 +75,7 @@ public class Lootable : MonoBehaviour
     private void TakeResource(ResourceType type, System.Action extraAction)
     {
         var gap = GameSettings.Instanse.GetAmountResourceFound(type);
-        var count = Random.Range(gap.x, gap.y);
+        var count = Random.Range(gap.x, gap.y) + Stats.Instanse.GetExtraResource(type);
         RemoveIllumination();
         SoundManager.Instanse.Play(sound);
         void Action()

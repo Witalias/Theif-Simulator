@@ -36,6 +36,14 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite masterKeyTime;
     [SerializeField] private Sprite tierIronTime;
     [SerializeField] private Sprite gadgetTime;
+    [SerializeField] private Sprite armsEar;
+    [SerializeField] private Sprite tierIronEar;
+    [SerializeField] private Sprite equipmentTime;
+    [SerializeField] private Sprite equipmentEar;
+    [SerializeField] private Sprite applePlus;
+    [SerializeField] private Sprite waterPlus;
+    [SerializeField] private Sprite moneyPlus;
+    [SerializeField] private Sprite fuelPlus;
 
     [Header("Sounds")]
     [SerializeField] private Sound foodSound;
@@ -93,6 +101,22 @@ public class GameStorage : MonoBehaviour
     public Sprite TierIronTime { get => tierIronTime; }
 
     public Sprite GadgetTime { get => gadgetTime; }
+
+    public Sprite ArmsEar { get => armsEar; }
+
+    public Sprite TierIronEar { get => tierIronEar; }
+
+    public Sprite EquipmentTime { get => equipmentTime; }
+
+    public Sprite EquipmentEar { get => equipmentEar; }
+
+    public Sprite ApplePlus { get => applePlus; }
+
+    public Sprite WaterPlus { get => waterPlus; }
+
+    public Sprite MoneyPlus { get => moneyPlus; }
+
+    public Sprite FuelPlus { get => fuelPlus; }
 
     public Transform MainCanvas { get; private set; }
 

@@ -102,7 +102,8 @@ public class EnemyAI : MonoBehaviour
     {
         worried = true;
         isPatrolling = false;
-        PlaySuspectSound();
+        if (!isPoliceman)
+            PlaySuspectSound();
 
         if (!isPoliceman)
         {
@@ -125,7 +126,8 @@ public class EnemyAI : MonoBehaviour
             StopCoroutine(checkPatrolCoroutine);
         checkPatrolCoroutine = StartCoroutine(CheckPatrol());
 
-        visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
+        if (!isPoliceman)
+            visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
 
         questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }

@@ -130,7 +130,15 @@ public static class Translation
             [SkillType.PracticeOfHackingWithAMasterKey] = "The practice of hacking with a master key",
             [SkillType.PracticeOfManualHacking] = "The practice of manual hacking",
             [SkillType.PracticeOfHackingWithAGadget] = "The practice of hacking with a gadget",
-            [SkillType.SlyFox] = "The sly fox"
+            [SkillType.SlyFox] = "The sly fox",
+            [SkillType.PracticeOfHacking] = "The practice of hacking",
+            [SkillType.AgilityOfManualHacking] = "Agility of manual hacking",
+            [SkillType.AgilityOfHackingWithACrowbar] = "Agility of hacking with a crowbar",
+            [SkillType.AgilityOfHacking] = "Agility of hacking",
+            [SkillType.MoreFood] = "A skilled food seeker",
+            [SkillType.MoreWater] = "A skilled water seeker",
+            [SkillType.MoreMoney] = "A skilled money seeker",
+            [SkillType.MoreFuel] = "A skilled fuel seeker",
         },
         [Language.Russian] = new Dictionary<SkillType, string>
         {
@@ -140,7 +148,15 @@ public static class Translation
             [SkillType.PracticeOfHackingWithAMasterKey] = "Практика взлома отмычкой",
             [SkillType.PracticeOfManualHacking] = "Практика ручного взлома",
             [SkillType.PracticeOfHackingWithAGadget] = "Практика взлома гаджетом",
-            [SkillType.SlyFox] = "Хитрая лиса"
+            [SkillType.SlyFox] = "Хитрая лиса",
+            [SkillType.PracticeOfHacking] = "Практика взлома",
+            [SkillType.AgilityOfManualHacking] = "Ловкость ручного взлома",
+            [SkillType.AgilityOfHackingWithACrowbar] = "Ловкость взлома ломом",
+            [SkillType.AgilityOfHacking] = "Ловкость взлома",
+            [SkillType.MoreFood] = "Умелый искатель еды",
+            [SkillType.MoreWater] = "Умелый искатель воды",
+            [SkillType.MoreMoney] = "Умелый искатель монет",
+            [SkillType.MoreFuel] = "Умелый искатель топлива",
         }
     };
 
@@ -154,7 +170,15 @@ public static class Translation
             [SkillType.PracticeOfHackingWithAMasterKey] = "Reducing the time of hacking with a master key",
             [SkillType.PracticeOfManualHacking] = "Reducing the time of hacking by arms",
             [SkillType.PracticeOfHackingWithAGadget] = "Reducing the time of hacking with a gadget",
-            [SkillType.SlyFox] = "Ability to make noise and attract attention"
+            [SkillType.SlyFox] = "Ability to make noise and attract attention",
+            [SkillType.PracticeOfHacking] = "Reducing the time of hacking by any tool",
+            [SkillType.AgilityOfManualHacking] = "Reducing noise when hacking by arms",
+            [SkillType.AgilityOfHackingWithACrowbar] = "Reducing noise when hacking by crowbar",
+            [SkillType.AgilityOfHacking] = "Reducing noise when hacking by any tool",
+            [SkillType.MoreFood] = "Increasing the food found to",
+            [SkillType.MoreWater] = "Increasing the water found to",
+            [SkillType.MoreMoney] = "Increasing the money found to",
+            [SkillType.MoreFuel] = "Increasing the fuel found to",
         },
         [Language.Russian] = new Dictionary<SkillType, string>
         {
@@ -164,7 +188,15 @@ public static class Translation
             [SkillType.PracticeOfHackingWithAMasterKey] = "Уменьшение времени взлома отмычкой",
             [SkillType.PracticeOfManualHacking] = "Уменьшение времени взлома руками",
             [SkillType.PracticeOfHackingWithAGadget] = "Уменьшение времени взлома гаджетом",
-            [SkillType.SlyFox] = "Способность шуметь и привлекать внимание"
+            [SkillType.SlyFox] = "Способность шуметь и привлекать внимание",
+            [SkillType.PracticeOfHacking] = "Уменьшение времени взлома любым инструментом",
+            [SkillType.AgilityOfManualHacking] = "Уменьшение шума при взломе руками",
+            [SkillType.AgilityOfHackingWithACrowbar] = "Уменьшение шума при взломе ломом",
+            [SkillType.AgilityOfHacking] = "Уменьшение шума при взломе любым инструментом",
+            [SkillType.MoreFood] = "Увеличение находимой еды в добыче до",
+            [SkillType.MoreWater] = "Увеличение находимой воды в добыче до",
+            [SkillType.MoreMoney] = "Увеличение находимых монет в добыче до",
+            [SkillType.MoreFuel] = "Увеличение находимого топлива в добыче до",
         }
     };
 

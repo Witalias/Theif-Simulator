@@ -6,5 +6,13 @@ public enum SkillType
     PracticeOfHackingWithAMasterKey,
     PracticeOfHackingWithACrowbar,
     PracticeOfHackingWithAGadget,
-    SlyFox
+    PracticeOfHacking,
+    SlyFox,
+    AgilityOfManualHacking,
+    AgilityOfHackingWithACrowbar,
+    AgilityOfHacking,
+    MoreFood,
+    MoreWater,
+    MoreMoney,
+    MoreFuel
 }
