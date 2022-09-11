@@ -54,6 +54,7 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private bool increasedHearingRadius = false;
 
     private Dictionary<ResourceType, Vector2> amountsResourcesFound;
+    private Dictionary<ResourceType, float> chancesOfFindingSecondTool;
     private Dictionary<LoudnessType, float> hearingRadiuses;
     private Dictionary<EquipmentType, float> increasesInHackingTimes;
     private float initialHearingRadiusAfterOpeningDoor;
@@ -94,6 +95,8 @@ public class GameSettings : MonoBehaviour
 
     public float HearingRadiusMultiplier { get => hearingRadiusMultiplier; }
 
+    public float ExtraChanceOfFindingEquipment { get; set; } = 0f;
+
     public bool NoResidentsReactionOnIntentionalNoise { get => noResidentsReactionOnIntentionalNoise; set => noResidentsReactionOnIntentionalNoise = value; }
 
     public bool DoubleLocks { get => doubleLocks; set => doubleLocks = value; }
@@ -106,7 +109,30 @@ public class GameSettings : MonoBehaviour
 
     public float GetIncreaseInHackingTime(EquipmentType type) => increasesInHackingTimes[type];
 
-    public void AddHearingRadiusAfterOpeningDoor(float valueInPercents) => hearingRadiusAfterOpeningDoor += initialHearingRadiusAfterOpeningDoor * valueInPercents / 100f;
+    public float GetChanceOfFindingExtraTool(ResourceType type)
+    {
+        if (chancesOfFindingSecondTool.ContainsKey(type))
+            return chancesOfFindingSecondTool[type];
+        return 0f;
+    }
+
+    public void SetChanceOfFindingExtraTool(EquipmentType type, float chance)
+    {
+        if (type == EquipmentType.Arms)
+            return;
+        chancesOfFindingSecondTool[GetResourceTypeByEquipmentType(type)] = chance;
+    }
+
+    public ResourceType GetResourceTypeByEquipmentType(EquipmentType type)
+    {
+        return type switch
+        {
+            EquipmentType.MasterKey => ResourceType.MasterKeys,
+            EquipmentType.TierIron => ResourceType.TierIrons,
+            EquipmentType.Gadget => ResourceType.Gadgets,
+            _ => throw new System.Exception($"The resource {type} does not exist"),
+        };
+    }
 
     private void Awake()
     {
@@ -143,6 +169,13 @@ public class GameSettings : MonoBehaviour
             [EquipmentType.MasterKey] = increaseInHackingTimeWithMasterKey,
             [EquipmentType.TierIron] = increaseInHackingTimeWithTierIron,
             [EquipmentType.Gadget] = increaseInHackingTimeWithGadget
+        };
+
+        chancesOfFindingSecondTool = new Dictionary<ResourceType, float>
+        {
+            [ResourceType.MasterKeys] = 0f,
+            [ResourceType.TierIrons] = 0f,
+            [ResourceType.Gadgets] = 0f
         };
     }
 

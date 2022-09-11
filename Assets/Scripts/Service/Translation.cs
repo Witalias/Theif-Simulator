@@ -139,6 +139,12 @@ public static class Translation
             [SkillType.MoreWater] = "A skilled water seeker",
             [SkillType.MoreMoney] = "A skilled money seeker",
             [SkillType.MoreFuel] = "A skilled fuel seeker",
+            [SkillType.LessVisibilityScale] = "Inconspicuous",
+            [SkillType.NoVisibilityFromIntentionalNoise] = "The secretive fox",
+            [SkillType.SkilledToolFinder] = "A skilled tool finder",
+            [SkillType.SkilledMasterKeysFinder] = "Key search master",
+            [SkillType.SkilledTierIronsFinder] = "Crowbar search master",
+            [SkillType.SkilledGadgetsFinder] = "Gadget search master",
         },
         [Language.Russian] = new Dictionary<SkillType, string>
         {
@@ -148,7 +154,7 @@ public static class Translation
             [SkillType.PracticeOfHackingWithAMasterKey] = "Практика взлома отмычкой",
             [SkillType.PracticeOfManualHacking] = "Практика ручного взлома",
             [SkillType.PracticeOfHackingWithAGadget] = "Практика взлома гаджетом",
-            [SkillType.SlyFox] = "Хитрая лиса",
+            [SkillType.SlyFox] = "Хитрый лис",
             [SkillType.PracticeOfHacking] = "Практика взлома",
             [SkillType.AgilityOfManualHacking] = "Ловкость ручного взлома",
             [SkillType.AgilityOfHackingWithACrowbar] = "Ловкость взлома ломом",
@@ -157,6 +163,12 @@ public static class Translation
             [SkillType.MoreWater] = "Умелый искатель воды",
             [SkillType.MoreMoney] = "Умелый искатель монет",
             [SkillType.MoreFuel] = "Умелый искатель топлива",
+            [SkillType.LessVisibilityScale] = "Незаметный",
+            [SkillType.NoVisibilityFromIntentionalNoise] = "Скрытный лис",
+            [SkillType.SkilledToolFinder] = "Умелый искатель инструментов",
+            [SkillType.SkilledMasterKeysFinder] = "Мастер поиска отмычек",
+            [SkillType.SkilledTierIronsFinder] = "Мастер поиска ломов",
+            [SkillType.SkilledGadgetsFinder] = "Мастер поиска гаджетов",
         }
     };
 
@@ -179,7 +191,14 @@ public static class Translation
             [SkillType.MoreWater] = "Increasing the water found to",
             [SkillType.MoreMoney] = "Increasing the money found to",
             [SkillType.MoreFuel] = "Increasing the fuel found to",
+            [SkillType.LessVisibilityScale] = "Reducing the speed of self-filling the visibility scale",
+            [SkillType.NoVisibilityFromIntentionalNoise] = "Intentional noise does not increase the visibility scale",
+            [SkillType.SkilledToolFinder] = "Increasing the chance of finding tools",
+            [SkillType.SkilledMasterKeysFinder] = "Chance to find 2 master keys instead of one",
+            [SkillType.SkilledTierIronsFinder] = "Chance to find 2 crowbars instead of one",
+            [SkillType.SkilledGadgetsFinder] = "Chance to find 2 gadgets instead of one",
         },
+
         [Language.Russian] = new Dictionary<SkillType, string>
         {
             [SkillType.FastFeet] = "Увеличение скорости передвижения",
@@ -197,6 +216,12 @@ public static class Translation
             [SkillType.MoreWater] = "Увеличение находимой воды в добыче до",
             [SkillType.MoreMoney] = "Увеличение находимых монет в добыче до",
             [SkillType.MoreFuel] = "Увеличение находимого топлива в добыче до",
+            [SkillType.LessVisibilityScale] = "Уменьшение скорости самостоятельного заполнения шкалы заметности",
+            [SkillType.NoVisibilityFromIntentionalNoise] = "Намеренный шум не увеличивает шкалу заметности",
+            [SkillType.SkilledToolFinder] = "Увеличение шанса нахождения инструментов",
+            [SkillType.SkilledMasterKeysFinder] = "Шанс найти 2 отмычки вместо одной",
+            [SkillType.SkilledTierIronsFinder] = "Шанс найти 2 лома вместо одного",
+            [SkillType.SkilledGadgetsFinder] = "Шанс найти 2 гаджета вместо одного",
         }
     };
 

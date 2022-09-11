@@ -32,7 +32,7 @@ public class Noisy : MonoBehaviour
         {
             var enemyAI = enemy.GetComponent<EnemyAI>();
             if (enemyAI != null)
-                enemyAI.SetTargetPoint();
+                enemyAI.SetTargetPoint(!(intentional && !Stats.Instanse.VisibilityFromIntentionalNoise));
         }
     }
 

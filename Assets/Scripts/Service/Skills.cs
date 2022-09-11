@@ -17,6 +17,7 @@ public class Skills : MonoBehaviour
 
     private MovementController movementController;
     private MessageQueue messageQueue;
+    private GameStorage storage;
 
     private Dictionary<SkillCoolness, (Color title, Color background)> messageColors;
     private List<Skill> skills;
@@ -52,6 +53,8 @@ public class Skills : MonoBehaviour
         randomSkill.Use();
         if (randomSkill.MaxLevel)
             skills.Remove(randomSkill);
+
+        AddNewSkills(randomSkill.Type);
     }
 
     private void Awake()
@@ -75,8 +78,8 @@ public class Skills : MonoBehaviour
     {
         movementController = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
         messageQueue = GameObject.FindGameObjectWithTag(Tags.MessageQueue.ToString()).GetComponent<MessageQueue>();
+        storage = GameStorage.Instanse;
 
-        var storage = GameStorage.Instanse;
         skills = new List<Skill>
         {
             new Skill(value => Stats.Instanse.SetIncreasedPlayerSpeed(value),
@@ -99,6 +102,10 @@ public class Skills : MonoBehaviour
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithAMasterKey, storage.MasterKeyTime),
 
+            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.MasterKey, value),
+            new[] { (25f, SkillCoolness.Epic) },
+            true, SkillType.SkilledMasterKeysFinder, storage.MasterKeyPlus),
+
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.TierIron).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithACrowbar, storage.TierIronTime),
@@ -106,6 +113,14 @@ public class Skills : MonoBehaviour
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.TierIron).IncreasedNoiseInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
             true, SkillType.AgilityOfHackingWithACrowbar, storage.TierIronEar),
+
+            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.TierIron, value),
+            new[] { (25f, SkillCoolness.Epic) },
+            true, SkillType.SkilledTierIronsFinder, storage.TierIronPlus),
+
+            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.Gadget, value),
+            new[] { (25f, SkillCoolness.Epic) },
+            true, SkillType.SkilledGadgetsFinder, storage.GadgetPlus),
 
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.Gadget).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
@@ -136,7 +151,25 @@ public class Skills : MonoBehaviour
             new Skill(value => Stats.Instanse.SetExtraResourceNumber(ResourceType.Fuel, value),
             new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
             false, SkillType.MoreFuel, storage.FuelPlus),
+
+            new Skill(value => Stats.Instanse.IncreasedVisibilityScaleInPercents = value,
+            new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
+            true, SkillType.LessVisibilityScale, storage.NoEye),
+
+            new Skill(value => GameSettings.Instanse.ExtraChanceOfFindingEquipment = value,
+            new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
+            true, SkillType.SkilledToolFinder, storage.Equipment),
         };
+    }
+
+    private void AddNewSkills(SkillType previousSkill)
+    {
+        switch (previousSkill)
+        {
+            case SkillType.SlyFox: skills.Add(new Skill(value => Stats.Instanse.VisibilityFromIntentionalNoise = false,
+                new[] { (0f, SkillCoolness.Epic) }, false, SkillType.NoVisibilityFromIntentionalNoise, storage.NoEye));
+                break;
+        }
     }
 }
 
@@ -150,6 +183,7 @@ public class Skill
     public string Description { get; }
     public int Level { get; private set; } = 0;
     public Sprite Icon { get; }
+    public SkillType Type { get; }
 
     public Skill(Action<float> action, (float, SkillCoolness)[] levelValues, bool addPercents, SkillType type, Sprite icon)
     {
@@ -159,6 +193,7 @@ public class Skill
         Title = Translation.GetTitle(type);
         Description = Translation.GetDescription(type);
         Icon = icon;
+        Type = type;
 
         if (levelValues == null || levelValues.Length == 0)
             MaxLevel = true;

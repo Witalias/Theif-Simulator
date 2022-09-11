@@ -615,7 +615,7 @@ MonoBehaviour:
   waterIcon: {fileID: 21300000, guid: 52ebdb40ab736aa43ab36b349db7ea2c, type: 3}
   moneyIcon: {fileID: 21300000, guid: ffc005df95d2dd84ca01df67a8f2b962, type: 3}
   fuelIcon: {fileID: 21300000, guid: ec5e7328db710c749901a7f8eac6bdf3, type: 3}
-  masterKeyIcon: {fileID: 21300000, guid: ec5e7328db710c749901a7f8eac6bdf3, type: 3}
+  masterKeyIcon: {fileID: 21300000, guid: 332ce7fb50d45904991b004ad664decb, type: 3}
   tierIronIcon: {fileID: 21300000, guid: 98fd3969f1b01974482af71460474b1e, type: 3}
   padlock: {fileID: 21300000, guid: ce4bd1527b97ab54f8ca4daad388a86e, type: 3}
   signal: {fileID: 21300000, guid: 75816a0f2662a3d44839da37b715f8d8, type: 3}
@@ -635,10 +635,15 @@ MonoBehaviour:
   tierIronEar: {fileID: 21300000, guid: 31f01fd470f86364fbdf6e3b8829fcf3, type: 3}
   equipmentTime: {fileID: 21300000, guid: dec587d5c4def3f478261254149a9d4a, type: 3}
   equipmentEar: {fileID: 21300000, guid: 3a42242476749dc4a93b346691bdb667, type: 3}
+  equipment: {fileID: 21300000, guid: 707620cb03ef6eb49b60f8972b845df8, type: 3}
   applePlus: {fileID: 21300000, guid: 4a7d9aa44f23c7a44a1053032c3a0691, type: 3}
   waterPlus: {fileID: 21300000, guid: 800ec92b7fc009f46ac231d9ef51c6f5, type: 3}
   moneyPlus: {fileID: 21300000, guid: 63506dabeae0605418ed69d0f1e6c538, type: 3}
   fuelPlus: {fileID: 21300000, guid: eae951db2ccf8864eb2d84df4aa3deb9, type: 3}
+  noEye: {fileID: 21300000, guid: ca81354695768954c8b66456557094b1, type: 3}
+  masterKeyPlus: {fileID: 21300000, guid: 0ddfd3aec2d861148affb985d73ce355, type: 3}
+  tierIronPlus: {fileID: 21300000, guid: 01e664531f3015e439f94100cffd4be1, type: 3}
+  gadgetPlus: {fileID: 21300000, guid: a6c74f3a725fde745a45d5bac10c8ff7, type: 3}
   foodSound: 5
   waterSound: 6
   moneySound: 7

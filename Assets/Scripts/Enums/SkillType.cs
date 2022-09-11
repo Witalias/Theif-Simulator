@@ -14,5 +14,11 @@ public enum SkillType
     MoreFood,
     MoreWater,
     MoreMoney,
-    MoreFuel
+    MoreFuel,
+    LessVisibilityScale,
+    NoVisibilityFromIntentionalNoise,
+    SkilledToolFinder,
+    SkilledMasterKeysFinder,
+    SkilledTierIronsFinder,
+    SkilledGadgetsFinder,
 }

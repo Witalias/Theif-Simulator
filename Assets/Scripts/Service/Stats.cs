@@ -31,6 +31,8 @@ public class Stats : MonoBehaviour
         }
     }
 
+    public bool VisibilityFromIntentionalNoise { get; set; } = true;
+
     public float IncreasedPlayerSpeedInPercents { get; private set; }
 
     public float IncreasedDoorNoiseInPercents { get; private set; }
@@ -38,6 +40,8 @@ public class Stats : MonoBehaviour
     public float IncreasedHackingTime { get; set; }
 
     public float IncreasedHackingNoiseInPercents { get; set; }
+
+    public float IncreasedVisibilityScaleInPercents { get; set; }
 
     public void SetExtraResourceNumber(ResourceType type, float value)
     {
@@ -72,12 +76,12 @@ public class Stats : MonoBehaviour
         if (type == EquipmentType.Arms)
             return;
 
-        AddResource(GetResourceTypeByEquipmentType(type), value);
+        AddResource(GameSettings.Instanse.GetResourceTypeByEquipmentType(type), value);
     }
 
     public float GetResource(ResourceType type) => resources[type];
 
-    public float GetResource(EquipmentType type) => GetResource(GetResourceTypeByEquipmentType(type));
+    public float GetResource(EquipmentType type) => GetResource(GameSettings.Instanse.GetResourceTypeByEquipmentType(type));
 
     public EquipmentStats GetEquipmentStats(EquipmentType type) => equipment[type];
 
@@ -131,16 +135,5 @@ public class Stats : MonoBehaviour
 
         foreach (var resource in resources)
             resourcesPanel.SetResourceValue(resource.Key, resource.Value);
-    }
-
-    private ResourceType GetResourceTypeByEquipmentType(EquipmentType type)
-    {
-        return type switch
-        {
-            EquipmentType.MasterKey => ResourceType.MasterKeys,
-            EquipmentType.TierIron => ResourceType.TierIrons,
-            EquipmentType.Gadget => ResourceType.Gadgets,
-            _ => throw new Exception($"The resource {type} does not exist"),
-        };
     }
 }

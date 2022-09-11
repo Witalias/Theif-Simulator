@@ -17,6 +17,7 @@ public class Lootable : MonoBehaviour
     private TargetObject targetObject;
 
     private bool empty = false;
+    private ResourceType[] equipmentTypes = new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets };
 
     public void TakeLoot(System.Action extraAction = null)
     {
@@ -25,16 +26,16 @@ public class Lootable : MonoBehaviour
         {   
             settings.ChanceOfFinidngMainResource, 
             settings.ChanceOfFindingMoney,
-            settings.ChanceOfFindingEquipment
+            settings.ChanceOfFindingEquipment + settings.ExtraChanceOfFindingEquipment
         };
 
         var randomIndex = Randomizator.GetRandomIndexByChances(findingChances);
-        var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons };
+        var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons, settings.ChanceOfFindingGadgets };
         switch (randomIndex)
         {
             case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)], extraAction); break;
             case 1: TakeResource(ResourceType.Money, extraAction); break;
-            case 2: TakeResource(new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets }[Randomizator.GetRandomIndexByChances(equipmentChances)], extraAction); break;
+            case 2: TakeResource(equipmentTypes[Randomizator.GetRandomIndexByChances(equipmentChances)], extraAction); break;
         }
     }
 
@@ -74,8 +75,16 @@ public class Lootable : MonoBehaviour
 
     private void TakeResource(ResourceType type, System.Action extraAction)
     {
-        var gap = GameSettings.Instanse.GetAmountResourceFound(type);
+        var settings = GameSettings.Instanse;
+        var gap = settings.GetAmountResourceFound(type);
         var count = Random.Range(gap.x, gap.y) + Stats.Instanse.GetExtraResource(type);
+
+        if (System.Array.Exists(equipmentTypes, element => element == type))
+        {
+            var extraToolChance = settings.GetChanceOfFindingExtraTool(type);
+            count += new[] { 1, 0 }[Randomizator.GetRandomIndexByChances(new[] { extraToolChance, 100f - extraToolChance })];
+        }
+
         RemoveIllumination();
         SoundManager.Instanse.Play(sound);
         void Action()

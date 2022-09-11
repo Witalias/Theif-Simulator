@@ -116,7 +116,7 @@ public class VisibilityScale : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
         if (generator.Generated && level < maxLevel)
-            extraBarValueReached += increaseValueInSecond * 0.01f;
+            extraBarValueReached += (increaseValueInSecond + increaseValueInSecond * Stats.Instanse.IncreasedVisibilityScaleInPercents / 100f) * 0.01f;
         StartCoroutine(Add());
     }
 

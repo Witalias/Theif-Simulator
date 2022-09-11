@@ -38,12 +38,12 @@ public class EnemyAI : MonoBehaviour
     private bool worried = false;
     private bool isPatrolling = false;
 
-    public void SetTargetPoint()
+    public void SetTargetPoint(bool addVisibility = true)
     {
         if (worried)
             return;
 
-        TryDetectTarget();
+        TryDetectTarget(addVisibility);
     }
 
     private void Awake()
@@ -98,15 +98,17 @@ public class EnemyAI : MonoBehaviour
         Patrol();
     }
 
-    private void TryDetectTarget()
+    private void TryDetectTarget(bool addVisibility = true)
     {
         worried = true;
         isPatrolling = false;
-        if (!isPoliceman)
-            PlaySuspectSound();
 
         if (!isPoliceman)
         {
+            if (addVisibility)
+                visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
+
+            PlaySuspectSound();
             Stop();
             animator.SetTrigger(reactToNoiseAnimatorTrigger);
         }
@@ -125,9 +127,6 @@ public class EnemyAI : MonoBehaviour
         if (checkPatrolCoroutine != null)
             StopCoroutine(checkPatrolCoroutine);
         checkPatrolCoroutine = StartCoroutine(CheckPatrol());
-
-        if (!isPoliceman)
-            visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
 
         questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
     }
