@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Illumination : MonoBehaviour
 {
+    [SerializeField] private bool useCustomInitColor = false;
+    [SerializeField] private Color customInitColor;
+
+    private MeshRenderer render;
+
     private Color illuminationColor;
     private Color initColor;
 
@@ -9,11 +14,13 @@ public class Illumination : MonoBehaviour
 
     public void Illuminate() => SetColor(illuminationColor);
 
-    public void RemoveIllumination() => SetColor(initColor);
+    public void RemoveIllumination() => SetColor(useCustomInitColor ? customInitColor : initColor);
 
     private void Awake()
     {
-        initColor = GetComponent<Renderer>().material.color;
+        render = GetComponent<MeshRenderer>();
+        if (render != null)
+            initColor = render.material.color;
     }
 
     private void Start()
@@ -35,7 +42,10 @@ public class Illumination : MonoBehaviour
 
     private void SetColor(Color value)
     {
-        var renderers = GetComponentsInChildren<Renderer>();
+        if (render != null)
+            render.material.color = value;
+
+        var renderers = GetComponentsInChildren<MeshRenderer>();
         foreach (var renderer in renderers)
             renderer.material.color = value;
     }

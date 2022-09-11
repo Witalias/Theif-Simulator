@@ -49,7 +49,7 @@ public class Lootable : MonoBehaviour
     private void Start()
     {
         movementController = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-        waitingAndAction = GameStorage.Instanse.WaitingAndActionPrefab.GetComponent<WaitingAndAction>();
+        waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
     }
 
     private void OnMouseDown()

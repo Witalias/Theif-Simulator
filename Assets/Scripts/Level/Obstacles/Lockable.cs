@@ -40,7 +40,7 @@ public class Lockable : MonoBehaviour
 
     private void Start()
     {
-        waitingAndAction = GameStorage.Instanse.WaitingAndActionPrefab.GetComponent<WaitingAndAction>();
+        waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
     }
 
     private void Update()

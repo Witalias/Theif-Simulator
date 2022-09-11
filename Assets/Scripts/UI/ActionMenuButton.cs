@@ -83,8 +83,16 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
 
             case Obstacle.Device:
                 sound = equipmentStats.DeviceSound;
+
+                void ActionAfterWaiting()
+                {
+                    target.GetComponent<Device>().TurnOff();
+                    Stats.Instanse.AddResource(equipmentType, -1);
+                }
+
                 clickAction = () =>
                 {
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDevice, ActionAfterWaiting, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -138,8 +146,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
 
     private void Start()
     {
-        //waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
-        waitingAndAction = GameStorage.Instanse.WaitingAndActionPrefab.GetComponent<WaitingAndAction>();
+        waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
     }
 
     public void OnPointerMove(PointerEventData eventData)

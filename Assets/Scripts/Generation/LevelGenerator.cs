@@ -188,6 +188,9 @@ public class LevelGenerator : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.01f);
 
+                if (room == null)
+                    yield break;
+
                 room.transform.rotation = Quaternion.Euler(0, angle, 0);
                 var passagePoint = connectionWalls[i].PassagePointPosition;
                 var delta = transitionPoint - passagePoint;

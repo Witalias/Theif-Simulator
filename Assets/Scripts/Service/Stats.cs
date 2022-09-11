@@ -107,9 +107,9 @@ public class Stats : MonoBehaviour
             [ResourceType.Water] = 50f,
             [ResourceType.Money] = 0f,
             [ResourceType.Fuel] = 10f,
-            [ResourceType.MasterKeys] = 0f,
-            [ResourceType.TierIrons] = 0f,
-            [ResourceType.Gadgets] = 0f
+            [ResourceType.MasterKeys] = 1f,
+            [ResourceType.TierIrons] = 1f,
+            [ResourceType.Gadgets] = 1f
         };
 
         equipment = new Dictionary<EquipmentType, EquipmentStats>

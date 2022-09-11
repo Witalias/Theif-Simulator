@@ -128,6 +128,7 @@ public class MovementController : MonoBehaviour
             if (currentDistance <= targetObject.ArriveDistance)
             {
                 InteractWithTargetObject();
+                targetObject = null;
                 isMoving = false;
                 agent.enabled = false;
                 animator.SetBool(runAnimatorBool, false);
@@ -171,6 +172,7 @@ public class MovementController : MonoBehaviour
     {
         TryLootTargetObject();
         TryReadTargetObject();
+        TryChooseSecurityCamera();
     }
 
     private void TryLootTargetObject()
@@ -185,6 +187,13 @@ public class MovementController : MonoBehaviour
         var book = targetObject.GetComponent<Book>();
         if (book != null)
             book.Read();
+    }
+    
+    private void TryChooseSecurityCamera()
+    {
+        var device = targetObject.GetComponent<Device>();
+        if (device != null)
+            device.OpenActionMenu();
     }
 
     private void AbortSearching()
