@@ -18,6 +18,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform centerPoint;
+    [SerializeField] private DynamicJoystick _joystick;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -141,7 +142,10 @@ public class MovementController : MonoBehaviour
         if (!generator.Generated)
             return;
 
-        var movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        //var movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        var movementVector = new Vector3(_joystick.Horizontal, 0f, _joystick.Vertical);
+        rb.velocity = new Vector3(movementVector.x, rb.velocity.y, movementVector.z) * manuallyMovingSpeed;
+
         if (movementVector != Vector3.zero)
         {
             AbortSearching();
@@ -152,7 +156,7 @@ public class MovementController : MonoBehaviour
 
             if (!pathTrajectory.Finished) return;
 
-            rb.AddForce(manuallyMovingSpeed * Time.deltaTime * movementVector, ForceMode.Impulse);
+            //rb.AddForce(manuallyMovingSpeed * Time.deltaTime * movementVector, ForceMode.Impulse);
             rb.MoveRotation(Quaternion.LookRotation(movementVector));
 
             if (!isMoving)
