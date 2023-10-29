@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Lockable))]
 [RequireComponent(typeof(Noisy))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Animator))]
 public class ConnectionWall : MonoBehaviour
 {
     private const string openAnimatorBool = "Open";
@@ -13,31 +14,21 @@ public class ConnectionWall : MonoBehaviour
     [SerializeField] private GameObject door;
 
     private Animator doorAnimator;
-    private LevelGenerator generator;
     private TriggerZone triggerZone;
     private Lockable lockable;
     private Noisy noisy;
     private AudioSource audioSource;
 
     private bool triggered = false;
-    private bool fixedUpdateDone = false;
-
-    public Vector3 PassagePointPosition { get => passagePoint.position; }
-
-    public Vector3 OutsidePoint { get => outsidePoint.position; }
-
-    public bool RemoveAfterGeneration { get; set; }
 
     public void RotateDoor(float value)
     {
-        CheckPresenceDoorAnimator();
         doorAnimator.transform.localRotation = Quaternion.Euler(0, value, 0);
     }
 
     public void Delete()
     {
-        if (RemoveAfterGeneration)
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     private void Awake()
@@ -46,15 +37,13 @@ public class ConnectionWall : MonoBehaviour
         lockable = GetComponent<Lockable>();
         noisy = GetComponent<Noisy>();
         audioSource = GetComponent<AudioSource>();
+        doorAnimator = GetComponent<Animator>();
     }
 
     private void Start()
     {
-        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
-
         void AfterOpeningEvent()
         {
-            CheckPresenceDoorAnimator();
             triggered = true;
             triggerZone.RemoveTrigger();
             doorAnimator.SetBool(openAnimatorBool, true);
@@ -64,17 +53,7 @@ public class ConnectionWall : MonoBehaviour
         }
 
         lockable.SetEvents(null, AfterOpeningEvent);
-    }
-
-    private void FixedUpdate()
-    {
-        if (generator.Generated && !fixedUpdateDone)
-        {
-            CheckPresenceDoorAnimator();
-            doorAnimator.enabled = true;
-            fixedUpdateDone = true;
-            lockable.Open();
-        }
+        lockable.Open();
     }
 
     private void OnTriggerStay(Collider other)
@@ -101,11 +80,5 @@ public class ConnectionWall : MonoBehaviour
                 SoundManager.Instanse.Play(Sound.DoorClose, audioSource);
             }
         }
-    }
-
-    private void CheckPresenceDoorAnimator()
-    {
-        if (doorAnimator == null)
-            doorAnimator = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
     }
 }

@@ -23,7 +23,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        var wheelValue = Input.GetAxis("Mouse ScrollWheel");
+       // var wheelValue = Input.GetAxis("Mouse ScrollWheel");
+        var wheelValue = 0f;
         if (bounds.InBounds)
         {
             sharpness = boundsSharpness;
@@ -42,7 +43,7 @@ public class CameraController : MonoBehaviour
         var toPosition = new Vector3(
             bounds.InBoundsX ? transform.position.x : movementController.transform.position.x,
             currentY,
-            bounds.InBoundsZ ? transform.position.z : movementController.transform.position.z);
+            bounds.InBoundsZ ? transform.position.z : movementController.transform.position.z - 15f);
         transform.position = Vector3.Lerp(transform.position, toPosition, sharpness * Time.fixedDeltaTime);
     }
 }

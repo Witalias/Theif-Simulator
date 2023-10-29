@@ -10,7 +10,6 @@ public class SecurityCamera : MonoBehaviour
     [SerializeField] private Illumination illumination;
     [SerializeField] private Device device;
 
-    private VisibilityScale visibilityScale;
     private CreatureVision vision;
 
     private bool recording = false;
@@ -28,11 +27,6 @@ public class SecurityCamera : MonoBehaviour
         }
 
         device.SetEvent(ActionAfterTurnedOff);
-    }
-
-    private void Start()
-    {
-        visibilityScale = GameObject.FindGameObjectWithTag(Tags.VisibilityScale.ToString()).GetComponent<VisibilityScale>();
     }
 
     private void Update()
@@ -57,7 +51,6 @@ public class SecurityCamera : MonoBehaviour
 
     private IEnumerator AddVisibility()
     {
-        visibilityScale.Add(visibilityValueInSecond * 0.01f);
         yield return new WaitForSeconds(0.01f);
         if (vision.SeesTarget)
             StartCoroutine(AddVisibility());

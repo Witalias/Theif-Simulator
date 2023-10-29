@@ -25,9 +25,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private CreatureVision vision;
     private Noisy noisy;
-    private VisibilityScale visibilityScale;
     private MovementController player;
-    private LevelGenerator generator;
     private AudioSource audioSource;
 
     private Transform questionMark = null;
@@ -61,8 +59,6 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
-        visibilityScale = GameObject.FindGameObjectWithTag(Tags.VisibilityScale.ToString()).GetComponent<VisibilityScale>();
     }
 
     private void Update()
@@ -105,9 +101,6 @@ public class EnemyAI : MonoBehaviour
 
         if (!isPoliceman)
         {
-            if (addVisibility)
-                visibilityScale.Add(GameSettings.Instanse.VisibilityValueSuspicion);
-
             PlaySuspectSound();
             Stop();
             animator.SetTrigger(reactToNoiseAnimatorTrigger);
@@ -147,7 +140,6 @@ public class EnemyAI : MonoBehaviour
             {
                 noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
                 animator.SetTrigger(scaryAnimatorTrigger);
-                visibilityScale.Add(GameSettings.Instanse.VisibilityValueDetection);
                 PlayScreamSound();
             }
         }
@@ -160,11 +152,11 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
-        if (worried || isPatrolling || !generator.Generated)
+        if (worried || isPatrolling)
             return;
 
         isPatrolling = true;
-        targetPatrolPoint = generator.GetRandomPatrolPoint();
+        //targetPatrolPoint = generator.GetRandomPatrolPoint();
         Run(targetPatrolPoint.position);
         checkPatrolCoroutine = StartCoroutine(CheckPatrol());
     }

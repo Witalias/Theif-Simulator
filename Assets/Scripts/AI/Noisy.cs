@@ -45,7 +45,7 @@ public class Noisy : MonoBehaviour
     private void Start()
     {
         playerPoint = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).transform;
-        policemans = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>().GetPolicemans();
+        //policemans = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>().GetPolicemans();
         playerCenterPoint = playerPoint.GetComponent<MovementController>().CenterPoint;
     }
 

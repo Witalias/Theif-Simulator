@@ -18,7 +18,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float climbSpeed = 5f;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform centerPoint;
-    [SerializeField] private DynamicJoystick _joystick;
+    [SerializeField] private FloatingJoystick _joystick;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -27,7 +27,6 @@ public class MovementController : MonoBehaviour
     private PathTrajectory pathTrajectory;
     private TargetObject targetObject;
     private WaitingAndAction waitingAndAction;
-    private LevelGenerator generator;
 
     private bool isMoving = false;
     private float initialAgentSpeed;
@@ -116,8 +115,6 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
-        generator = GameObject.FindGameObjectWithTag(Tags.LevelGenerator.ToString()).GetComponent<LevelGenerator>();
-
         AddSpeed(Stats.Instanse.IncreasedPlayerSpeedInPercents);
     }
 
@@ -139,12 +136,15 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!generator.Generated)
-            return;
-
-        //var movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         var movementVector = new Vector3(_joystick.Horizontal, 0f, _joystick.Vertical);
-        rb.velocity = new Vector3(movementVector.x, rb.velocity.y, movementVector.z) * manuallyMovingSpeed;
+        if (movementVector == Vector3.zero)
+            movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+
+        var direction = new Vector3(movementVector.x, rb.velocity.y, movementVector.z);
+        if (direction.magnitude > 1)
+            direction.Normalize();
+
+        rb.velocity = direction * manuallyMovingSpeed;
 
         if (movementVector != Vector3.zero)
         {
@@ -156,7 +156,6 @@ public class MovementController : MonoBehaviour
 
             if (!pathTrajectory.Finished) return;
 
-            //rb.AddForce(manuallyMovingSpeed * Time.deltaTime * movementVector, ForceMode.Impulse);
             rb.MoveRotation(Quaternion.LookRotation(movementVector));
 
             if (!isMoving)
