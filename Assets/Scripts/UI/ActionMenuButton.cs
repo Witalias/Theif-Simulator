@@ -45,10 +45,6 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         var sound = Sound.DoorArms;
         var hackingTime = GetHackingTime(equipmentStats, obstacleType);
 
-        var noiseRadius = GameSettings.Instanse.GetHearingRadius(equipmentStats.LoudnessType);
-        noiseRadius += noiseRadius * equipmentStats.IncreasedNoiseInPercents / 100f;
-        noiseRadius += noiseRadius * Stats.Instanse.IncreasedHackingNoiseInPercents / 100f;
-
         void ActionAfterWaitingForDoorOrWindow()
         {
             target.GetComponent<Lockable>().Locked = false;
@@ -67,7 +63,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                         ActionAfterWaitingForDoorOrWindow();
                         target.GetComponent<Lockable>().Open();
                     }
-                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, null, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecuteWithSound(hackingTime, ActionAfterWaiting, null, sound);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -76,7 +72,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                 sound = equipmentStats.WindowSound;
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, null, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecuteWithSound(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, null, sound);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -92,7 +88,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
 
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDevice, ActionAfterWaiting, null, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecuteWithSound(equipmentStats.HackingTimeDevice, ActionAfterWaiting, null, sound);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -106,8 +102,6 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
         float GetHackingTime(EquipmentStats equipmentStats, Obstacle obstacleType)
         {
             var time = 0f;
-            if (GameSettings.Instanse.DoubleLocks)
-                time = GameSettings.Instanse.GetIncreaseInHackingTime(equipmentStats.Type);
 
             switch (obstacleType)
             {

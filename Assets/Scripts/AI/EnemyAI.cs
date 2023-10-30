@@ -5,7 +5,6 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(CreatureVision))]
-[RequireComponent(typeof(Noisy))]
 [RequireComponent(typeof(AudioSource))]
 public class EnemyAI : MonoBehaviour
 {
@@ -24,7 +23,6 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
     private CreatureVision vision;
-    private Noisy noisy;
     private MovementController player;
     private AudioSource audioSource;
 
@@ -49,7 +47,6 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<CreatureVision>();
-        noisy = GetComponent<Noisy>();
         audioSource = GetComponent<AudioSource>();
 
         if (isPoliceman)
@@ -132,13 +129,10 @@ public class EnemyAI : MonoBehaviour
 
         if (vision.SeesTarget)
         {
-            noisy.AttractPolicemans();
-
             if (isPoliceman && questionMark != null)
                 Run(questionMark.position);
             else
             {
-                noisy.Noise(GameSettings.Instanse.HearingRadiusDuringEnemyScream);
                 animator.SetTrigger(scaryAnimatorTrigger);
                 PlayScreamSound();
             }

@@ -5,7 +5,6 @@ using System;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Noisy))]
 public class WaitingAndAction : MonoBehaviour
 {
     private const string ANIMATOR_SHOW_TRIGGER = "Show";
@@ -13,20 +12,16 @@ public class WaitingAndAction : MonoBehaviour
 
     public static event Action<bool> TimerActived;
 
-    [SerializeField] private float _tapTimePercents = 10f;
     [SerializeField] private Image fill;
     [SerializeField] private float yOffsetFromPlayer = 100f;
 
     private Coroutine waitingCoroutine;
     private RectTransform rectTransform;
     private Animator _animator;
-    private Noisy noisy;
 
     private float reachedTime = 1f;
     private float currentTime = 0f;
-    private bool noisyAction = false;
     private bool playSound = false;
-    private float noiseRadius = 0f;
     private Sound sound;
     private Action _actionDone;
     private Action _actionAbort;
@@ -68,7 +63,7 @@ public class WaitingAndAction : MonoBehaviour
     //    WaitAndExecute(reachedTime, action);
     //}
     
-    public void WaitAndExecute(float reachedTime, Action actionDone, Action actionAbort, Sound sound, float currentTime = 0f)
+    public void WaitAndExecuteWithSound(float reachedTime, Action actionDone, Action actionAbort, Sound sound, float currentTime = 0f)
     {
         this.sound = sound;
         this.playSound = true;
@@ -87,7 +82,7 @@ public class WaitingAndAction : MonoBehaviour
     public void AddProgress(float percents)
     {
         percents = Mathf.Clamp(percents, 0f, 100f);
-        currentTime += (reachedTime - currentTime) * percents / 100f;
+        currentTime += reachedTime * percents / 100f;
         currentTime = Mathf.Clamp(currentTime, 0f, reachedTime);
         _animator.SetTrigger(ANIMATOR_PULSATE_TRIGGER);
     }
@@ -106,7 +101,16 @@ public class WaitingAndAction : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         _animator = GetComponent<Animator>();
-        noisy = GetComponent<Noisy>();
+    }
+
+    private void OnEnable()
+    {
+        ConnectionWall.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
+    }
+
+    private void OnDisable()
+    {
+        ConnectionWall.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
     }
 
     private void Update()
@@ -115,7 +119,7 @@ public class WaitingAndAction : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0))
-            AddProgress(_tapTimePercents);
+            AddProgress(GameSettings.Instanse.TapBonusTimePercents);
     }
 
     private IEnumerator ProcessTicks()
@@ -126,9 +130,6 @@ public class WaitingAndAction : MonoBehaviour
             yield return wait;
             currentTime += Time.deltaTime;
             fill.fillAmount = currentTime / reachedTime;
-
-            if (noisyAction)
-                noisy.Noise(noiseRadius);
         }
         _actionDone.Invoke();
         Refresh();
@@ -138,7 +139,6 @@ public class WaitingAndAction : MonoBehaviour
     {
         //reachedTime = 1f;
         //currentTime = 0f;
-        noiseRadius = 0f;
         InProgress = false;
 
         if (playSound)

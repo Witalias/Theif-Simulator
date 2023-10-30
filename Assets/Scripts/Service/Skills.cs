@@ -102,10 +102,6 @@ public class Skills : MonoBehaviour
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithAMasterKey, storage.MasterKeyTime),
 
-            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.MasterKey, value),
-            new[] { (25f, SkillCoolness.Epic) },
-            true, SkillType.SkilledMasterKeysFinder, storage.MasterKeyPlus),
-
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.TierIron).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
             true, SkillType.PracticeOfHackingWithACrowbar, storage.TierIronTime),
@@ -113,14 +109,6 @@ public class Skills : MonoBehaviour
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.TierIron).IncreasedNoiseInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
             true, SkillType.AgilityOfHackingWithACrowbar, storage.TierIronEar),
-
-            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.TierIron, value),
-            new[] { (25f, SkillCoolness.Epic) },
-            true, SkillType.SkilledTierIronsFinder, storage.TierIronPlus),
-
-            new Skill(value => GameSettings.Instanse.SetChanceOfFindingExtraTool(EquipmentType.Gadget, value),
-            new[] { (25f, SkillCoolness.Epic) },
-            true, SkillType.SkilledGadgetsFinder, storage.GadgetPlus),
 
             new Skill(value => Stats.Instanse.GetEquipmentStats(EquipmentType.Gadget).IncreasedHackingTimeInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-50f, SkillCoolness.Cool), (-70f, SkillCoolness.Epic) },
@@ -155,10 +143,6 @@ public class Skills : MonoBehaviour
             new Skill(value => Stats.Instanse.IncreasedVisibilityScaleInPercents = value,
             new[] { (-10f, SkillCoolness.Usual), (-20f, SkillCoolness.Usual), (-30f, SkillCoolness.Cool), (-40f, SkillCoolness.Cool), (-50f, SkillCoolness.Epic) },
             true, SkillType.LessVisibilityScale, storage.NoEye),
-
-            new Skill(value => GameSettings.Instanse.ExtraChanceOfFindingEquipment = value,
-            new[] { (1f, SkillCoolness.Usual), (2f, SkillCoolness.Usual), (3f, SkillCoolness.Cool), (4f, SkillCoolness.Cool), (5f, SkillCoolness.Epic) },
-            true, SkillType.SkilledToolFinder, storage.Equipment),
         };
     }
 

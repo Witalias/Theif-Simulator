@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -102,6 +103,13 @@ public class MovementController : MonoBehaviour
         agent.speed = initialAgentSpeed + initialAgentSpeed * valueInPercents / 100f;
     }
 
+    public void RotateTowards(Vector3 point)
+    {
+        var direction = point - transform.position;
+        var angle = Quaternion.LookRotation(direction).eulerAngles;
+        transform.DORotate(new Vector3(0f, angle.y, 0f), 0.5f);
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -185,23 +193,7 @@ public class MovementController : MonoBehaviour
 
     private void InteractWithTargetObject()
     {
-        TryLootTargetObject();
-        TryReadTargetObject();
         TryChooseSecurityCamera();
-    }
-
-    private void TryLootTargetObject()
-    {
-        var lootable = targetObject.GetComponent<Lootable>();
-        if (lootable != null)
-            lootable.TakeLoot(() => targetObject = null);
-    }
-
-    private void TryReadTargetObject()
-    {
-        var book = targetObject.GetComponent<Book>();
-        if (book != null)
-            book.Read();
     }
     
     private void TryChooseSecurityCamera()
@@ -214,12 +206,6 @@ public class MovementController : MonoBehaviour
     private void AbortSearching()
     {
         waitingAndAction.Abort();
-        if (targetObject != null)
-        {
-            var targetIllumination = targetObject.GetComponent<Illumination>();
-            if (targetIllumination != null)
-                targetIllumination.Enabled = true;
-        }
     }
 
     private void OnTimerActived(bool value)

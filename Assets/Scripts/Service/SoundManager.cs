@@ -1,11 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instanse { get; private set; }
 
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource loopAudioSource;
+
+    [Header("Sounds")]
     [SerializeField] private AudioClip openMenu;
     [SerializeField] private AudioClip mouseEnterButton;
     [SerializeField] private AudioClip[] selectButton;
@@ -42,8 +46,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] newSkill;
     [SerializeField] private AudioClip[] bookFlip;
 
-    private AudioSource audioSource;
-
     private Dictionary<Sound, AudioClip[]> sounds;
     private readonly Dictionary<Sound, AudioSource> currentLoopSounds = new Dictionary<Sound, AudioSource>();
 
@@ -69,12 +71,11 @@ public class SoundManager : MonoBehaviour
         source.PlayOneShot(GetRandomClip(sound));
     }
 
-    public void PlayLoop(Sound sound, AudioSource source)
+    public void PlayLoop(Sound sound, AudioSource source = null)
     {
         if (source == null)
-            return;
+            source = loopAudioSource;
 
-        source.loop = true;
         currentLoopSounds.Add(sound, source);
         source.PlayOneShot(GetRandomClip(sound));
     }
@@ -94,10 +95,6 @@ public class SoundManager : MonoBehaviour
             Instanse = this;
         else
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-
-        audioSource = GetComponent<AudioSource>();
 
         sounds = new Dictionary<Sound, AudioClip[]>
         {

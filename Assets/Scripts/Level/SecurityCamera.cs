@@ -7,7 +7,6 @@ public class SecurityCamera : MonoBehaviour
     [SerializeField] [Range(0f, 5f)] private float visibilityValueInSecond = 0.05f;
     [SerializeField] private Animation recAnimation;
     [SerializeField] private GameObject redPoint;
-    [SerializeField] private Illumination illumination;
     [SerializeField] private Device device;
 
     private CreatureVision vision;
@@ -22,8 +21,6 @@ public class SecurityCamera : MonoBehaviour
         void ActionAfterTurnedOff()
         {
             redPoint.SetActive(false);
-            if (illumination != null)
-                illumination.Enabled = false;
         }
 
         device.SetEvent(ActionAfterTurnedOff);
