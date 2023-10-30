@@ -36,6 +36,8 @@ public class MovementController : MonoBehaviour
 
     public Transform CenterPoint { get => centerPoint; }
 
+    public bool IsRunning => rb.velocity.magnitude > 0;
+
     public void GoToObject(Vector3 point, TargetObject obj, RaycastHit hit)
     {
         if (obj == targetObject)
@@ -116,6 +118,16 @@ public class MovementController : MonoBehaviour
     {
         waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
         AddSpeed(Stats.Instanse.IncreasedPlayerSpeedInPercents);
+    }
+
+    private void OnEnable()
+    {
+        WaitingAndAction.TimerActived += OnTimerActived;
+    }
+
+    private void OnDisable()
+    {
+        WaitingAndAction.TimerActived -= OnTimerActived;
     }
 
     private void Update()
@@ -208,5 +220,10 @@ public class MovementController : MonoBehaviour
             if (targetIllumination != null)
                 targetIllumination.Enabled = true;
         }
+    }
+
+    private void OnTimerActived(bool value)
+    {
+        //_joystick.enabled = !value;
     }
 }

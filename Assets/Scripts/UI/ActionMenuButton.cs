@@ -67,7 +67,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                         ActionAfterWaitingForDoorOrWindow();
                         target.GetComponent<Lockable>().Open();
                     }
-                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecute(hackingTime, ActionAfterWaiting, null, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -76,7 +76,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
                 sound = equipmentStats.WindowSound;
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeWindow, ActionAfterWaitingForDoorOrWindow, null, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;
@@ -92,7 +92,7 @@ public class ActionMenuButton : MonoBehaviour, IPointerExitHandler, IPointerMove
 
                 clickAction = () =>
                 {
-                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDevice, ActionAfterWaiting, sound, noiseRadius);
+                    waitingAndAction.WaitAndExecute(equipmentStats.HackingTimeDevice, ActionAfterWaiting, null, sound, noiseRadius);
                     SoundManager.Instanse.PlayLoop(sound, equipmentStats.AudioSource);
                 };
                 break;

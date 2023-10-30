@@ -21,7 +21,7 @@ public class Book : MonoBehaviour
             Destroy(gameObject);
         }
         SoundManager.Instanse.PlayLoop(Sound.BookFlip, audioSource);
-        waitingAndAction.WaitAndExecute(readingTime, ActionAfter, Sound.BookFlip);
+        waitingAndAction.WaitAndExecute(readingTime, ActionAfter, null, Sound.BookFlip);
     }
 
     private void Awake()

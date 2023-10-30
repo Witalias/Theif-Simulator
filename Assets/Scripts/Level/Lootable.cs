@@ -2,25 +2,26 @@ using UnityEngine;
 using System.Linq;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
-[RequireComponent(typeof(CenteredPoint))]
-[RequireComponent(typeof(TargetObject))]
 public class Lootable : MonoBehaviour
 {
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private Sound sound;
     [SerializeField] private float lootingTime = 2f;
+    [SerializeField] [Range(0f, 100f)] private float _tapTimePercents = 5f;
+    [SerializeField] private GameObject _hackingArea;
 
-    private MovementController movementController;
     private MovingFurnitureElements movingFurnitureElements;
     private WaitingAndAction waitingAndAction;
-    private CenteredPoint centeredPoint;
-    private TargetObject targetObject;
 
     private bool empty = false;
-    private ResourceType[] equipmentTypes = new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets };
+    private bool _isLooting = false;
+    private float _lootingCurrentTime = 0f;
+    private readonly ResourceType[] equipmentTypes = new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets };
 
     public void TakeLoot(System.Action extraAction = null)
     {
+        _isLooting = true;
+
         var settings = GameSettings.Instanse;
         var findingChances = new[]
         {   
@@ -30,7 +31,7 @@ public class Lootable : MonoBehaviour
         };
 
         var randomIndex = Randomizator.GetRandomIndexByChances(findingChances);
-        var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons, settings.ChanceOfFindingGadgets };
+        var equipmentChances = new[] { settings.ChanceOfFindingMasterKeys, settings.ChanceOfFindingTierIrons };
         switch (randomIndex)
         {
             case 0: TakeResource(containedResources[Random.Range(0, containedResources.Length)], extraAction); break;
@@ -42,25 +43,22 @@ public class Lootable : MonoBehaviour
     private void Awake()
     {
         movingFurnitureElements = GetComponent<MovingFurnitureElements>();
-        centeredPoint = GetComponent<CenteredPoint>();
-        targetObject = GetComponent<TargetObject>();
     }
 
     private void Start()
     {
-        movementController = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
         waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
     }
 
-    private void OnMouseDown()
+    private void OnTriggerStay(Collider other)
     {
-        if (!empty && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
-        {
-            if (centeredPoint == null)
-                movementController.GoToObject(transform.position, targetObject, hit);
-            else
-                movementController.GoToObject(centeredPoint.CenterPoint, targetObject, hit);
-        }
+        if (empty || !other.TryGetComponent<MovementController>(out MovementController player))
+            return;
+
+        if (!player.IsRunning && !_isLooting)
+            TakeLoot();
+
+        _hackingArea.SetActive(!_isLooting);
     }
 
     private void RemoveIllumination()
@@ -87,16 +85,22 @@ public class Lootable : MonoBehaviour
 
         RemoveIllumination();
         SoundManager.Instanse.Play(sound);
-        void Action()
+        void ActionDone()
         {
             empty = true;
+            _isLooting = false;
             movingFurnitureElements.Move();
             Stats.Instanse.AddResource(type, count);
             PlayResourceAnimation(type, (int)count);
             extraAction?.Invoke();
             SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(type));
         }
-        waitingAndAction.WaitAndExecute(lootingTime, Action, sound, GameSettings.Instanse.HearingRadiusDuringLoot);
+        void ActionAbort()
+        {
+            _isLooting = false;
+            _lootingCurrentTime = waitingAndAction.CurrentTime;
+        }
+        waitingAndAction.WaitAndExecute(lootingTime, ActionDone, ActionAbort, sound, _lootingCurrentTime);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count)
