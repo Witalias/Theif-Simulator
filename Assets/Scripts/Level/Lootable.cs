@@ -10,37 +10,30 @@ public class Lootable : MonoBehaviour
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private Sound sound;
     [SerializeField] private GameObject _hackingArea;
-    [SerializeField] private Transform _centerPoint;
+    [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements movingFurnitureElements;
-    private WaitingAndAction waitingAndAction;
 
     private bool empty = false;
     private bool _isLooting = false;
-    private readonly ResourceType[] equipmentTypes = new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets };
 
-    private void Awake()
+    public void Loot(MovementController player)
     {
-        movingFurnitureElements = GetComponent<MovingFurnitureElements>();
-    }
-
-    private void Start()
-    {
-        waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (empty || !other.TryGetComponent<MovementController>(out MovementController player))
+        if (empty)
             return;
 
         if (!player.IsRunning && !_isLooting)
         {
-            player.RotateTowards(_centerPoint.position);
+            player.RotateTowards(_appearHackingZoneTrigger.transform.position);
             TakeResource();
         }
 
         _hackingArea.SetActive(!_isLooting);
+    }
+
+    private void Awake()
+    {
+        movingFurnitureElements = GetComponent<MovingFurnitureElements>();
     }
 
     private void TakeResource(System.Action extraAction = null)
@@ -51,6 +44,7 @@ public class Lootable : MonoBehaviour
             SoundManager.Instanse.Play(sound);
             empty = true;
             _isLooting = false;
+            _appearHackingZoneTrigger.SetActive(false);
             movingFurnitureElements.Move();
             //Stats.Instanse.AddResource(type, count);
             //PlayResourceAnimation(type, (int)count);

@@ -6,8 +6,6 @@ public class Stats : MonoBehaviour
 {
     public static Stats Instanse { get; private set; } = null;
 
-    [SerializeField] private bool canIntentionallyNoise = false;
-
     [Header("Equipment")]
     [SerializeField] private EquipmentStats arms;
     [SerializeField] private EquipmentStats masterKey;
@@ -17,47 +15,6 @@ public class Stats : MonoBehaviour
     private ResourcesPanel resourcesPanel;
 
     private Dictionary<ResourceType, float> resources;
-    private Dictionary<EquipmentType, EquipmentStats> equipment;
-    private Dictionary<ResourceType, float> increasedResourceNumbers;
-
-    public bool CanIntentionallyNoise 
-    { 
-        get => canIntentionallyNoise;
-        set
-        {
-            canIntentionallyNoise = value;
-            if (resourcesPanel != null)
-                resourcesPanel.SetActiveNoiseHotkey(value);
-        }
-    }
-
-    public bool VisibilityFromIntentionalNoise { get; set; } = true;
-
-    public float IncreasedPlayerSpeedInPercents { get; private set; }
-
-    public float IncreasedDoorNoiseInPercents { get; private set; }
-
-    public float IncreasedHackingTime { get; set; }
-
-    public float IncreasedHackingNoiseInPercents { get; set; }
-
-    public float IncreasedVisibilityScaleInPercents { get; set; }
-
-    public void SetExtraResourceNumber(ResourceType type, float value)
-    {
-        if (increasedResourceNumbers.ContainsKey(type))
-            increasedResourceNumbers[type] = value;
-    }
-
-    public void SetIncreasedDoorNoise(float valueInPercents) => IncreasedDoorNoiseInPercents = valueInPercents;
-
-    public void SetIncreasedPlayerSpeed(float valueInPercents)
-    {
-        IncreasedPlayerSpeedInPercents = valueInPercents;
-        var player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-        if (player != null)
-            player.AddSpeed(valueInPercents);
-    }
 
     public void AddResource(ResourceType type, float value)
     {
@@ -83,15 +40,6 @@ public class Stats : MonoBehaviour
 
     public float GetResource(EquipmentType type) => GetResource(GameSettings.Instanse.GetResourceTypeByEquipmentType(type));
 
-    public EquipmentStats GetEquipmentStats(EquipmentType type) => equipment[type];
-
-    public float GetExtraResource(ResourceType type)
-    {
-        if (increasedResourceNumbers.ContainsKey(type))
-            return increasedResourceNumbers[type];
-        return 0f;
-    }
-
     private void Awake()
     {
         if (Instanse == null)
@@ -110,22 +58,6 @@ public class Stats : MonoBehaviour
             [ResourceType.MasterKeys] = 1f,
             [ResourceType.TierIrons] = 1f,
             [ResourceType.Gadgets] = 1f
-        };
-
-        equipment = new Dictionary<EquipmentType, EquipmentStats>
-        {
-            [EquipmentType.Arms] = arms,
-            [EquipmentType.Gadget] = gadget,
-            [EquipmentType.MasterKey] = masterKey,
-            [EquipmentType.TierIron] = tierIron
-        };
-
-        increasedResourceNumbers = new Dictionary<ResourceType, float>
-        {
-            [ResourceType.Food] = 0f,
-            [ResourceType.Fuel] = 0f,
-            [ResourceType.Money] = 0f,
-            [ResourceType.Water] = 0f
         };
     }
 

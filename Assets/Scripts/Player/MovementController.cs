@@ -97,7 +97,6 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         _waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
-        AddSpeed(Stats.Instanse.IncreasedPlayerSpeedInPercents);
     }
 
     private void OnEnable()

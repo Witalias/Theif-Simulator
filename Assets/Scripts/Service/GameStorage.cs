@@ -8,7 +8,6 @@ public class GameStorage : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private NewResourceAnimation newResourceAnimationPrefab;
     [SerializeField] private UIHotkey hotkeyPrefab;
-    [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
     [SerializeField] private QuestionMark questionMarkPrefab;
     [SerializeField] private EnemyAI[] enemyPrefabs;
 
@@ -39,8 +38,6 @@ public class GameStorage : MonoBehaviour
     public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
 
     public GameObject HotkeyPrefab { get => hotkeyPrefab.gameObject; }
-
-    public GameObject ActionMenuButtonPrefab { get => actionMenuButtonPrefab.gameObject; }
 
     public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
 

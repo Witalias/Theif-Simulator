@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private GameObject _hackingArea;
-    [SerializeField] private Transform _centerPoint;
+    [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private Animator _animator;
     private AudioSource _audioSource;
@@ -19,6 +19,40 @@ public class Door : MonoBehaviour
     private bool _triggered = false;
     private bool _hacked = false;
     private bool _isHacking = false;
+
+    public void HackOrOpen(MovementController player)
+    {
+        if (!_triggered && player != null)
+        {
+            if (!_hacked)
+            {
+                if (!_isHacking && !player.IsRunning)
+                {
+                    Hack();
+                    player.RotateTowards(_appearHackingZoneTrigger.transform.position);
+                }
+                _hackingArea.SetActive(!_isHacking);
+                return;
+            }
+            SetState(true);
+        }
+    }
+
+    public void Close()
+    {
+        if (!_triggered)
+            return;
+
+        SetState(false);
+    }
+
+    public void Open()
+    {
+        if (_triggered)
+            return;
+
+        SetState(true);
+    }
 
     private void Awake()
     {
@@ -28,31 +62,13 @@ public class Door : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        MovementController player = null;
-
-        if (!_triggered && (other.GetComponent<EnemyAI>() != null
-            || other.TryGetComponent<MovementController>(out player)))
-        {
-            if (player != null)
-            {
-                if (!_hacked)
-                {
-                    if (!_isHacking && !player.IsRunning)
-                    {
-                        Hack();
-                        player.RotateTowards(_centerPoint.position);
-                    }
-                    _hackingArea.SetActive(!_isHacking);
-                    return;
-                }
-            }
-            SetState(true);
-        }
+        if (!_triggered && other.GetComponent<EnemyAI>() != null)
+            Open();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_triggered && (other.GetComponent<MovementController>() != null || other.GetComponent<EnemyAI>() != null))
+        if (_triggered && other.GetComponent<EnemyAI>() != null)
         {
             SetState(false);
         }
@@ -66,6 +82,7 @@ public class Door : MonoBehaviour
         {
             _hacked = true;
             _isHacking = false;
+            _appearHackingZoneTrigger.SetActive(false);
         }
         void ActionAbort()
         {

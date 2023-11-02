@@ -9,7 +9,6 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     public static event Action<bool> HoldButtonActived;
 
-    [SerializeField] private float _fillSpeed;
     [SerializeField] private GameObject _content;
     [SerializeField] private Image _filledImage;
     [SerializeField] private Animation _animation;
@@ -57,7 +56,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (!_content.activeSelf)
             return;
 
-        _filledImage.fillAmount += Time.deltaTime * _fillSpeed;
+        _filledImage.fillAmount += Time.deltaTime * GameSettings.Instanse.FillSpeedForHoldButton;
 
         if (_filledImage.fillAmount >= 1.0f)
         {
