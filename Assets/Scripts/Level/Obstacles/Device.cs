@@ -42,8 +42,8 @@ public class Device : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!TurnedOff && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
-            movementController.GoToObject(centeredPoint.CenterPoint, targetObject, hit);
+        //if (!TurnedOff && Physics.Raycast(centeredPoint.CenterPoint, movementController.CenterPoint.position - centeredPoint.CenterPoint, out RaycastHit hit))
+        //    movementController.GoToObject(centeredPoint.CenterPoint, targetObject, hit);
     }
 
     private void OnTriggerExit(Collider other)

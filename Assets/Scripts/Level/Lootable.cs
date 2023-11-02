@@ -1,13 +1,14 @@
 using UnityEngine;
 using System.Linq;
+using System;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
 {
+    public static event Action<Action, Action> ShowHoldButton;
+
     [SerializeField] private ResourceType[] containedResources;
     [SerializeField] private Sound sound;
-    [SerializeField] private float lootingTime = 2f;
-    [SerializeField] [Range(0f, 100f)] private float _tapTimePercents = 5f;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private Transform _centerPoint;
 
@@ -16,7 +17,6 @@ public class Lootable : MonoBehaviour
 
     private bool empty = false;
     private bool _isLooting = false;
-    private float _lootingCurrentTime = 0f;
     private readonly ResourceType[] equipmentTypes = new[] { ResourceType.MasterKeys, ResourceType.TierIrons, ResourceType.Gadgets };
 
     private void Awake()
@@ -46,9 +46,9 @@ public class Lootable : MonoBehaviour
     private void TakeResource(System.Action extraAction = null)
     {
         _isLooting = true;
-        SoundManager.Instanse.Play(sound);
         void ActionDone()
         {
+            SoundManager.Instanse.Play(sound);
             empty = true;
             _isLooting = false;
             movingFurnitureElements.Move();
@@ -60,9 +60,8 @@ public class Lootable : MonoBehaviour
         void ActionAbort()
         {
             _isLooting = false;
-            _lootingCurrentTime = waitingAndAction.CurrentTime;
         }
-        waitingAndAction.WaitAndExecuteWithSound(lootingTime, ActionDone, ActionAbort, sound, _lootingCurrentTime);
+        ShowHoldButton?.Invoke(ActionDone, ActionAbort);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count)

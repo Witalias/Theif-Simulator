@@ -1,11 +1,9 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(TriggerZone))]
-[RequireComponent(typeof(Lockable))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
-public class ConnectionWall : MonoBehaviour
+public class Door : MonoBehaviour
 {
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
 
@@ -15,24 +13,24 @@ public class ConnectionWall : MonoBehaviour
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private Transform _centerPoint;
 
-    private Animator doorAnimator;
-    private AudioSource audioSource;
+    private Animator _animator;
+    private AudioSource _audioSource;
 
-    private bool triggered = false;
+    private bool _triggered = false;
     private bool _hacked = false;
     private bool _isHacking = false;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        doorAnimator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnTriggerStay(Collider other)
     {
         MovementController player = null;
 
-        if (!triggered && (other.TryGetComponent<EnemyAI>(out EnemyAI enemy)
+        if (!_triggered && (other.GetComponent<EnemyAI>() != null
             || other.TryGetComponent<MovementController>(out player)))
         {
             if (player != null)
@@ -54,7 +52,7 @@ public class ConnectionWall : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (triggered && (other.GetComponent<MovementController>() != null || other.GetComponent<EnemyAI>() != null))
+        if (_triggered && (other.GetComponent<MovementController>() != null || other.GetComponent<EnemyAI>() != null))
         {
             SetState(false);
         }
@@ -78,8 +76,8 @@ public class ConnectionWall : MonoBehaviour
 
     private void SetState(bool open)
     {
-        triggered = open;
-        doorAnimator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
-        SoundManager.Instanse.Play(open ? Sound.DoorOpen : Sound.DoorClose, audioSource);
+        _triggered = open;
+        _animator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
+        SoundManager.Instanse.Play(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
     }
 }
