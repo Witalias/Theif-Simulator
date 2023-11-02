@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +12,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField] private float _fillSpeed;
     [SerializeField] private GameObject _content;
     [SerializeField] private Image _filledImage;
+    [SerializeField] private Animation _animation;
 
     private Image _button;
     private Action _actionDone;
@@ -20,11 +22,13 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerDown(PointerEventData eventData)
     {
         _mouseDown = true;
+        transform.DOScale(0.9f, 0.25f);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         _mouseDown = false;
+        transform.DOScale(1.0f, 0.25f);
     }
 
     private void Awake()
@@ -83,6 +87,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (value)
         {
             _filledImage.fillAmount = 0.0f;
+            _animation.Play();
             MovementController.MovingStarted += Abort;
         }
         else
