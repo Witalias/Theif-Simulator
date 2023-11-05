@@ -192,15 +192,14 @@ MonoBehaviour:
   _containedResources:
   - Type: 0
     DropChance: 30
-    CountsChanges:
+    CountsChances:
     - 70
     - 30
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
   - Type: 2
     DropChance: 70
-    CountsChanges:
-    - 0
+    CountsChances: []
     OnlyMinMaxRange: 1
     MinMaxCount: {x: 10, y: 20}
   sound: 28

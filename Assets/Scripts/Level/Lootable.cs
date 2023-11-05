@@ -55,7 +55,7 @@ public class Lootable : MonoBehaviour
 
             var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
             var randomResource = _containedResources[randomIndex];
-            var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChanges) + 1;
+            var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
             if (randomResource.OnlyMinMaxRange)
                 count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
             Stats.Instanse.AddResource(randomResource.Type, count);
@@ -83,7 +83,7 @@ public class Lootable : MonoBehaviour
     {
         public ResourceType Type;
         public float DropChance;
-        public float[] CountsChanges;
+        public float[] CountsChances;
         public bool OnlyMinMaxRange;
         public Vector2 MinMaxCount;
     }
