@@ -1,38 +1,34 @@
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class ResourcesPanel : MonoBehaviour
 {
-    [SerializeField] private UIBar foodBar;
-    [SerializeField] private UIBar waterBar;
-    [SerializeField] private UICounter moneyCounter;
-    [SerializeField] private UICounter fuelCounter;
-    [SerializeField] private UICounter masterKeysCounter;
-    [SerializeField] private UICounter tierIronsCounter;
-    [SerializeField] private UICounter gadgetsCounter;
+    [SerializeField] private GameObject _moneyPanel;
+    [SerializeField] private GameObject _itemsPanel;
+    [SerializeField] private UICounter _money;
+    [SerializeField] private UICounter _bottles;
+    [SerializeField] private UICounter _sneakers;
 
-    public void SetResourceValue(ResourceType type, float value)
+    public void SetResourceValue(ResourceType type, int value)
     {
         switch (type)
         {
-            case ResourceType.Food: foodBar.SetValue(value); break;
-            case ResourceType.Water: waterBar.SetValue(value); break;
-            case ResourceType.Money: moneyCounter.SetValue(value); break;
-            case ResourceType.Fuel: fuelCounter.SetValue(value); break;
-            case ResourceType.MasterKeys: masterKeysCounter.SetValue(value); break;
-            case ResourceType.TierIrons: tierIronsCounter.SetValue(value); break;
-            case ResourceType.Gadgets: gadgetsCounter.SetValue(value); break;
+            case ResourceType.Money: _money.SetValue(value); break;
+            case ResourceType.Bootle: _bottles.SetValue(value); break;
+            case ResourceType.Sneakers: _sneakers.SetValue(value); break;
         }
+        UpdatePanels();
     }
 
-    private void Start()
+    private void UpdatePanels()
     {
-        foodBar.SetTitle(Translation.Get(ResourceType.Food));
-        waterBar.SetTitle(Translation.Get(ResourceType.Water));
-        moneyCounter.SetTitle(Translation.Get(ResourceType.Money));
-        fuelCounter.SetTitle(Translation.Get(ResourceType.Fuel));
-        masterKeysCounter.SetTitle(Translation.Get(ResourceType.MasterKeys));
-        tierIronsCounter.SetTitle(Translation.Get(ResourceType.TierIrons));
-        gadgetsCounter.SetTitle(Translation.Get(ResourceType.Gadgets));
+        _moneyPanel.SetActive(false);
+        _itemsPanel.SetActive(false);
+        DOVirtual.DelayedCall(Time.deltaTime, () =>
+        {
+            _moneyPanel.SetActive(true);
+            _itemsPanel.SetActive(true);
+        });
     }
 }

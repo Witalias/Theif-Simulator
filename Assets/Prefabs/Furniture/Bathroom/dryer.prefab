@@ -189,7 +189,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff141d60de3f144abb6f46a1443cf9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  containedResources: 0200000000000000
+  _containedResources:
+  - Type: 0
+    DropChance: 30
+    CountsChanges:
+    - 70
+    - 30
+    OnlyMinMaxRange: 0
+    MinMaxCount: {x: 0, y: 0}
+  - Type: 2
+    DropChance: 70
+    CountsChanges:
+    - 0
+    OnlyMinMaxRange: 1
+    MinMaxCount: {x: 10, y: 20}
   sound: 28
   _hackingArea: {fileID: 2123443670518620307}
   _appearHackingZoneTrigger: {fileID: 7383763923881535572}

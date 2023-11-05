@@ -18,17 +18,6 @@ public class GameSettings : MonoBehaviour
 
     public float AppearHackingZonesDistance => _appearHackingZonesRadius;
 
-    public ResourceType GetResourceTypeByEquipmentType(EquipmentType type)
-    {
-        return type switch
-        {
-            EquipmentType.MasterKey => ResourceType.MasterKeys,
-            EquipmentType.TierIron => ResourceType.TierIrons,
-            EquipmentType.Gadget => ResourceType.Gadgets,
-            _ => throw new System.Exception($"The resource {type} does not exist"),
-        };
-    }
-
     private void Awake()
     {
         if (Instanse == null)

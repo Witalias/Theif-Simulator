@@ -7,19 +7,21 @@ public class Lootable : MonoBehaviour
 {
     public static event Action<Action, Action> ShowHoldButton;
 
-    [SerializeField] private ResourceType[] containedResources;
+    [Tooltip("Counts Changes: индекс+1 - количество предметов")]
+    [SerializeField] private ItemsDropChance[] _containedResources;
     [SerializeField] private Sound sound;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
-    private MovingFurnitureElements movingFurnitureElements;
+    private MovingFurnitureElements _movingFurnitureElements;
+    private Camera _mainCamera;
 
-    private bool empty = false;
+    private bool _empty = false;
     private bool _isLooting = false;
 
     public void Loot(MovementController player)
     {
-        if (empty)
+        if (_empty)
             return;
 
         if (!player.IsRunning && !_isLooting)
@@ -33,23 +35,32 @@ public class Lootable : MonoBehaviour
 
     private void Awake()
     {
-        movingFurnitureElements = GetComponent<MovingFurnitureElements>();
+        _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
+        _mainCamera = Camera.main;
     }
 
-    private void TakeResource(System.Action extraAction = null)
+    private void TakeResource()
     {
         _isLooting = true;
+        SoundManager.Instanse.Play(sound);
         void ActionDone()
         {
-            SoundManager.Instanse.Play(sound);
-            empty = true;
+            _empty = true;
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
-            movingFurnitureElements.Move();
-            //Stats.Instanse.AddResource(type, count);
-            //PlayResourceAnimation(type, (int)count);
-            //extraAction?.Invoke();
-            //SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(type));
+            _movingFurnitureElements.Move();
+
+            if (_containedResources.Length == 0)
+                return;
+
+            var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
+            var randomResource = _containedResources[randomIndex];
+            var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChanges) + 1;
+            if (randomResource.OnlyMinMaxRange)
+                count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
+            Stats.Instanse.AddResource(randomResource.Type, count);
+            PlayResourceAnimation(randomResource.Type, count);
+            SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
         }
         void ActionAbort()
         {
@@ -61,11 +72,19 @@ public class Lootable : MonoBehaviour
     private void PlayResourceAnimation(ResourceType type, int count)
     {
         var text = count.ToString();
-        if (type == ResourceType.Food || type == ResourceType.Water)
-            text += '%';
-        var newResourceObject = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab, Camera.main.WorldToScreenPoint(transform.position), Quaternion.identity, GameStorage.Instanse.MainCanvas);
+        var newResourceObject = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab, _mainCamera.WorldToScreenPoint(transform.position), Quaternion.identity, GameStorage.Instanse.MainCanvas);
         var newResource = newResourceObject.GetComponent<NewResourceAnimation>();
         newResource.SetIcon(GameStorage.Instanse.GetResourceSprite(type));
         newResource.SetText(text);
+    }
+
+    [Serializable]
+    public class ItemsDropChance
+    {
+        public ResourceType Type;
+        public float DropChance;
+        public float[] CountsChanges;
+        public bool OnlyMinMaxRange;
+        public Vector2 MinMaxCount;
     }
 }

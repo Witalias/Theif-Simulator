@@ -52,23 +52,13 @@ public static class Translation
     {
         [Language.English] = new Dictionary<ResourceType, string>
         {
-            [ResourceType.Food] = "Food",
-            [ResourceType.Fuel] = "Fuel",
-            [ResourceType.MasterKeys] = "Master keys",
-            [ResourceType.Money] = "Money",
-            [ResourceType.TierIrons] = "Crowbars",
-            [ResourceType.Water] = "Water",
-            [ResourceType.Gadgets] = "Gadgets"
+            [ResourceType.Bootle] = "Bootle",
+            [ResourceType.Sneakers] = "Sneakers",
         },
         [Language.Russian] = new Dictionary<ResourceType, string>
         {
-            [ResourceType.Food] = "Еда",
-            [ResourceType.Fuel] = "Топливо",
-            [ResourceType.MasterKeys] = "Отмычки",
-            [ResourceType.Money] = "Монеты",
-            [ResourceType.TierIrons] = "Лом",
-            [ResourceType.Water] = "Вода",
-            [ResourceType.Gadgets] = "Гаджеты"
+            [ResourceType.Bootle] = "Bootle",
+            [ResourceType.Sneakers] = "Sneakers",
         }
     };
 

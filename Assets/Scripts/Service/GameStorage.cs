@@ -12,22 +12,14 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private EnemyAI[] enemyPrefabs;
 
     [Header("Sprites")]
-    [SerializeField] private Sprite appleIcon;
-    [SerializeField] private Sprite waterIcon;
-    [SerializeField] private Sprite moneyIcon;
-    [SerializeField] private Sprite fuelIcon;
-    [SerializeField] private Sprite masterKeyIcon;
-    [SerializeField] private Sprite tierIronIcon;
-    [SerializeField] private Sprite padlock;
+    [SerializeField] private Sprite _bootle;
+    [SerializeField] private Sprite _sneakers;
+    [SerializeField] private Sprite _money;
 
     [Header("Sounds")]
-    [SerializeField] private Sound foodSound;
-    [SerializeField] private Sound waterSound;
-    [SerializeField] private Sound moneySound;
-    [SerializeField] private Sound fuelSound;
-    [SerializeField] private Sound masterKeySound;
-    [SerializeField] private Sound tierIronSound;
-    [SerializeField] private Sound gadgetSound;
+    [SerializeField] private Sound _bootleSound;
+    [SerializeField] private Sound _moneySound;
+    [SerializeField] private Sound _sneakersSound;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask enemyMask;
@@ -67,23 +59,16 @@ public class GameStorage : MonoBehaviour
 
         resourceSprites = new Dictionary<ResourceType, Sprite>
         {
-            [ResourceType.Food] = appleIcon,
-            [ResourceType.Fuel] = fuelIcon,
-            [ResourceType.Money] = moneyIcon,
-            [ResourceType.Water] = waterIcon,
-            [ResourceType.MasterKeys] = masterKeyIcon,
-            [ResourceType.TierIrons] = tierIronIcon
+            [ResourceType.Bootle] = _bootle,
+            [ResourceType.Sneakers] = _sneakers,
+            [ResourceType.Money] = _money,
         };
 
         resourceSounds = new Dictionary<ResourceType, Sound>
         {
-            [ResourceType.Food] = foodSound,
-            [ResourceType.Fuel] = fuelSound,
-            [ResourceType.Gadgets] = gadgetSound,
-            [ResourceType.MasterKeys] = masterKeySound,
-            [ResourceType.Money] = moneySound,
-            [ResourceType.TierIrons] = tierIronSound,
-            [ResourceType.Water] = waterSound
+            [ResourceType.Bootle] = _bootleSound,
+            [ResourceType.Sneakers] = _sneakersSound,
+            [ResourceType.Money] = _moneySound,
         };
     }
 }
