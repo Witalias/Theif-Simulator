@@ -10,13 +10,14 @@ public class UIBar : MonoBehaviour
 
     public bool Filled { get => bar.fillAmount >= 0.99f; }
 
-    /// <param name="value">От 0 до 100</param>
-    public void SetValue(float value)
+    public void SetValue(float value, float maxValue)
     {
-        value = Mathf.Clamp(value, 0f, 100f);
-        bar.fillAmount = value / 100f;
+        value = Mathf.Clamp(value, 0.0f, maxValue);
+        bar.fillAmount = value / maxValue;
         if (valueText != null)
-            valueText.text = $"{(int)value} %";
+            valueText.text = $"{(int)value}";
+        if (maxValue > 0.0f)
+            valueText.text += $"/{(int)maxValue}";
     }
 
     public void SetTitle(string value)

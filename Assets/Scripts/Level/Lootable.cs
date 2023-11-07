@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Linq;
 using System;
+using DG.Tweening;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
 {
     public static event Action<Action, Action> ShowHoldButton;
+    public static event Action<ResourceType, int, int> PlayResourceAnimation;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
     [SerializeField] private ItemsDropChance[] _containedResources;
+    [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private Sound sound;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
@@ -27,7 +30,7 @@ public class Lootable : MonoBehaviour
         if (!player.IsRunning && !_isLooting)
         {
             player.RotateTowards(_appearHackingZoneTrigger.transform.position);
-            TakeResource();
+            TakeResource(player.transform);
         }
 
         _hackingArea.SetActive(!_isLooting);
@@ -39,7 +42,7 @@ public class Lootable : MonoBehaviour
         _mainCamera = Camera.main;
     }
 
-    private void TakeResource()
+    private void TakeResource(Transform player)
     {
         _isLooting = true;
         SoundManager.Instanse.Play(sound);
@@ -56,10 +59,15 @@ public class Lootable : MonoBehaviour
             var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
             var randomResource = _containedResources[randomIndex];
             var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
+
             if (randomResource.OnlyMinMaxRange)
                 count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
             Stats.Instanse.AddResource(randomResource.Type, count);
-            PlayResourceAnimation(randomResource.Type, count);
+
+            var xp = Randomizator.GetRandomValue(_minMaxXP);
+            Stats.Instanse.AddXP(xp);
+
+            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp);
             SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
         }
         void ActionAbort()
@@ -67,15 +75,6 @@ public class Lootable : MonoBehaviour
             _isLooting = false;
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
-    }
-
-    private void PlayResourceAnimation(ResourceType type, int count)
-    {
-        var text = count.ToString();
-        var newResourceObject = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab, _mainCamera.WorldToScreenPoint(transform.position), Quaternion.identity, GameStorage.Instanse.MainCanvas);
-        var newResource = newResourceObject.GetComponent<NewResourceAnimation>();
-        newResource.SetIcon(GameStorage.Instanse.GetResourceSprite(type));
-        newResource.SetText(text);
     }
 
     [Serializable]

@@ -202,6 +202,7 @@ MonoBehaviour:
     CountsChances: []
     OnlyMinMaxRange: 1
     MinMaxCount: {x: 10, y: 20}
+  _minMaxXP: {x: 1, y: 2}
   sound: 28
   _hackingArea: {fileID: 2123443670518620307}
   _appearHackingZoneTrigger: {fileID: 7383763923881535572}

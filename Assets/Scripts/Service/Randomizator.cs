@@ -15,4 +15,9 @@ public class Randomizator
         }
         return 0;
     }
+
+    public static int GetRandomValue(Vector2 minMax)
+    {
+        return (int)Mathf.Round(Random.Range(minMax.x, minMax.y));
+    }
 }

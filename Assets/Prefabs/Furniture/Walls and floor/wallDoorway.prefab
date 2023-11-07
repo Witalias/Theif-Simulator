@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hackingTime: 10
+  _minMaxXP: {x: 1, y: 2}
   _hackingArea: {fileID: 3937147670290651463}
   _appearHackingZoneTrigger: {fileID: 4128030732711831117}
 --- !u!1 &9079740374777843845

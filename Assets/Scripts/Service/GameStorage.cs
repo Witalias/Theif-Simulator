@@ -15,6 +15,7 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Sprite _bootle;
     [SerializeField] private Sprite _sneakers;
     [SerializeField] private Sprite _money;
+    [SerializeField] private Sprite _xp;
 
     [Header("Sounds")]
     [SerializeField] private Sound _bootleSound;
@@ -27,15 +28,17 @@ public class GameStorage : MonoBehaviour
     private Dictionary<ResourceType, Sprite> resourceSprites;
     private Dictionary<ResourceType, Sound> resourceSounds;
 
-    public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
+    public GameObject NewResourceAnimatinPrefab => newResourceAnimationPrefab.gameObject;
 
-    public GameObject HotkeyPrefab { get => hotkeyPrefab.gameObject; }
+    public GameObject HotkeyPrefab => hotkeyPrefab.gameObject;
 
-    public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
+    public GameObject QuestionMarkPrefab => questionMarkPrefab.gameObject;
 
     public Transform MainCanvas { get; private set; }
 
-    public LayerMask EnemyMask { get => enemyMask; }
+    public Sprite Star => _xp;
+
+    public LayerMask EnemyMask => enemyMask;
 
     public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
 

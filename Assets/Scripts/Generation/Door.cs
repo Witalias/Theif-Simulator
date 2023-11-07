@@ -8,8 +8,10 @@ public class Door : MonoBehaviour
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
 
     public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
+    public static event Action<ResourceType, int, int> PlayResourceAnimation;
 
     [SerializeField] private float _hackingTime = 10f;
+    [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
@@ -83,6 +85,9 @@ public class Door : MonoBehaviour
             _hacked = true;
             _isHacking = false;
             _appearHackingZoneTrigger.SetActive(false);
+            var xp = Randomizator.GetRandomValue(_minMaxXP);
+            Stats.Instanse.AddXP(xp);
+            PlayResourceAnimation?.Invoke(ResourceType.Money, 0, xp);
         }
         void ActionAbort()
         {
