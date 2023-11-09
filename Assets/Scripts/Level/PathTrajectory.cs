@@ -1,72 +1,53 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System;
+using UnityEngine.AI;
 
 public class PathTrajectory : MonoBehaviour
 {
-    private Queue<Vector3> path = null;
-    private Transform body;
-    private Vector3 start;
-    private Vector3 end;
-    private bool smoothly;
-    private float speed = 1f;
-    private float detectionDistance;
-    private Action actionAfterFinishing = null;
+    [SerializeField] private Transform[] _path;
+    [SerializeField] private bool _loop;
+    [SerializeField] private bool _reverse;
+    [SerializeField] private NavMeshAgent _agent;
 
-    private float interpolationValue = 0;
+    private int _currentIndex;
 
-    public bool Finished { get; private set; } = true;
-
-    public void Go(Transform body, Queue<Vector3> path, float speed, bool smoothly, Action actionAfterFinishing, float detectionDistance)
+    public void Go()
     {
-        this.path = path;
-        this.smoothly = smoothly;
-        this.body = body;
-        this.speed = speed;
-        this.actionAfterFinishing = actionAfterFinishing;
-        this.detectionDistance = detectionDistance;
-
-        if (path.Count <= 1)
+        if (_path.Length == 0)
             return;
 
-        start = path.Dequeue();
-        end = path.Dequeue();
-        Finished = false;
+        if (_path.Length == 1)
+        {
+            _agent.SetDestination(_path[0].position);
+            return;
+        }
+
+        _agent.SetDestination(_path[_currentIndex].position);
+    }
+
+    public void Stop()
+    {
+        _agent.isStopped = true;
     }
 
     private void FixedUpdate()
     {
-        if (path == null || Finished)
+        if (_path == null || _path.Length <= 1)
             return;
 
-        if (smoothly)
-            body.position = Vector3.Lerp(body.position, end, Time.fixedDeltaTime * speed);
-        else
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            interpolationValue += Time.fixedDeltaTime * speed;
-            body.position = Vector3.Lerp(start, end, interpolationValue);
-        }
-
-        if (Vector3.Distance(body.position, end) <= detectionDistance)
-        {
-            interpolationValue = 0;
-            if (path.Count == 0)
-                Finish();
-            else
+            _currentIndex += _reverse ? -1 : 1;
+            if (_currentIndex == _path.Length || _currentIndex == -1)
             {
-                start = end;
-                end = path.Dequeue();
+                if (_loop)
+                    _currentIndex = _reverse ? _path.Length - 1 : 0;
+                else
+                {
+                    _currentIndex = _reverse ? 1 : _path.Length - 2;
+                    _reverse = !_reverse;
+                }
             }
+            Go();
         }
-    }
-
-    private void Finish()
-    {
-        path = null;
-        start = Vector3.zero;
-        end = Vector3.zero;
-        Finished = true;
-        actionAfterFinishing?.Invoke();
-        actionAfterFinishing = null;
     }
 }

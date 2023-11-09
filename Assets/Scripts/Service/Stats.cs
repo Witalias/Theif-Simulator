@@ -25,6 +25,9 @@ public class Stats : MonoBehaviour
             NextLevel();
         }
         _xpBar.SetProgress(_xpAmount, _neededXP);
+
+        if (Level >= GameSettings.Instanse.MaxLevel)
+            _xpBar.SetMaxLevelState();
     }
 
     public void AddResource(ResourceType type, int value)
@@ -34,6 +37,8 @@ public class Stats : MonoBehaviour
 
         _resources[type] = (int)Mathf.Clamp(_resources[type] + value, 0, Mathf.Infinity);
         _resourcesPanel.SetResourceValue(type, _resources[type]);
+
+        _resourcesPanel.SetActiveCounter(type, _resources[type] > 0);
     }
 
     public float GetResource(ResourceType type) => _resources[type];
@@ -56,13 +61,13 @@ public class Stats : MonoBehaviour
 
         Level = _initialLevel;
         _xpBar.SetLevel(_initialLevel);
-        AddXP(0);
     }
 
     private void Start()
     {
         foreach (var resource in _resources)
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+        AddXP(0);
     }
 
     private void NextLevel()

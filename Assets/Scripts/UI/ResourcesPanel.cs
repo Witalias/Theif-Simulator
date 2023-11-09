@@ -1,16 +1,17 @@
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine.UI;
 
 public class ResourcesPanel : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _panels;
+    [SerializeField] private GameObject[] _itemCounters;
+    [SerializeField] private GameObject _itemPanel;
     [SerializeField] private UICounter _money;
     [SerializeField] private UICounter _bottles;
     [SerializeField] private UICounter _sneakers;
     [SerializeField] private Transform _resourceAnimationPoint;
-
-    private Camera _mainCamera;
 
     public void SetResourceValue(ResourceType type, int value)
     {
@@ -23,9 +24,15 @@ public class ResourcesPanel : MonoBehaviour
         UpdatePanels();
     }
 
-    private void Awake()
+    public void SetActiveCounter(ResourceType type, bool value)
     {
-        _mainCamera = Camera.main;
+        switch (type)
+        {
+            case ResourceType.Money: _money.gameObject.SetActive(value); break;
+            case ResourceType.Bootle: _bottles.gameObject.SetActive(value); break;
+            case ResourceType.Sneakers: _sneakers.gameObject.SetActive(value); break;
+        }
+        UpdatePanels();
     }
 
     private void OnEnable()
@@ -42,13 +49,15 @@ public class ResourcesPanel : MonoBehaviour
 
     private void UpdatePanels()
     {
-        foreach (var panel in _panels)
-            panel.SetActive(false);
-        DOVirtual.DelayedCall(Time.deltaTime, () =>
+        foreach (var counter in _itemCounters)
         {
-            foreach (var panel in _panels)
-                panel.SetActive(true);
-        });
+            if (counter.activeSelf)
+            {
+                _itemPanel.SetActive(true);
+                return;
+            }
+        }
+        _itemPanel.SetActive(false);
     }
 
     private void PlayResourceAnimation(ResourceType type, int count, int xp)

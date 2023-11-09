@@ -10,6 +10,7 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private float _fillSpeedForHoldButton = 0.3f;
     [SerializeField] private float _appearHackingZonesRadius = 20.0f;
     [SerializeField] private int _stepXPRequirement = 2;
+    [SerializeField] private int _maxLevel = 30;
 
     public Language Language { get => language; set => language = value; }
 
@@ -20,6 +21,8 @@ public class GameSettings : MonoBehaviour
     public float AppearHackingZonesDistance => _appearHackingZonesRadius;
 
     public int StepXPRequirement => _stepXPRequirement;
+
+    public int MaxLevel => _maxLevel;
 
     private void Awake()
     {

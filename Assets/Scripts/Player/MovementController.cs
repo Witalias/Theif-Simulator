@@ -37,40 +37,7 @@ public class MovementController : MonoBehaviour
 
     public Transform CenterPoint { get => centerPoint; }
 
-    public bool IsRunning => _rigidbody.velocity.magnitude > 0;
-
-    public void StopJumpAnimation()
-    {
-        _animator.SetTrigger(stopJumpAnimatorTrigger);
-        Busy = false;
-    }
-
-    public void JumpThroughWindow(Vector3 targetPoint)
-    {
-        if (Busy)
-            return;
-
-        Busy = true;
-        _animator.SetTrigger(jumpAnimatorTrigger);
-        _capsuleCollider.enabled = false;
-
-        void actionAfter()
-        {
-            Busy = false;
-            _animator.SetTrigger(stopJumpAnimatorTrigger);
-            _capsuleCollider.enabled = true;
-        }
-
-        var direction = new Vector3(targetPoint.x, transform.position.y, targetPoint.z) - transform.position;
-        transform.rotation = Quaternion.LookRotation(direction);
-        var path = new Queue<Vector3>(new List<Vector3>
-        {
-            transform.position,
-            targetPoint,
-            transform.position + direction * 2.5f
-        });
-        _pathTrajectory.Go(transform, path, climbSpeed, false, actionAfter, climbDetectionDistance);
-    }
+    public bool IsRunning => _isMoving;
 
     public void AddSpeed(float valueInPercents)
     {
