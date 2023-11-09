@@ -37,7 +37,7 @@ public class MovementController : MonoBehaviour
 
     public Transform CenterPoint { get => centerPoint; }
 
-    public bool IsRunning => _rigidbody.velocity.magnitude > 0;
+    public bool IsRunning => _isMoving;
 
     public void StopJumpAnimation()
     {
@@ -125,7 +125,7 @@ public class MovementController : MonoBehaviour
         if (movementVector == Vector3.zero)
             movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
-        var direction = new Vector3(movementVector.x, _rigidbody.velocity.y, movementVector.z);
+        var direction = new Vector3(movementVector.x, 0f, movementVector.z);
         if (direction.magnitude > 1)
             direction.Normalize();
 

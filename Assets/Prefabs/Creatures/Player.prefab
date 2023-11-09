@@ -1414,7 +1414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04da72fe066d5b14e9152444459d4527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manuallyMovingSpeed: 15
+  manuallyMovingSpeed: 20
   climbSpeed: 3
   playerMask:
     serializedVersion: 2
@@ -1446,7 +1446,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &922727250244075302
 CapsuleCollider:

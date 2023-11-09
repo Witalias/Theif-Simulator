@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 1994038144103167491}
   - component: {fileID: 4343942195603686089}
   - component: {fileID: 1668693338289404693}
-  - component: {fileID: 8678182173372460858}
   m_Layer: 0
   m_Name: kitchenFridge
   m_TagString: Untagged
@@ -120,7 +119,7 @@ Transform:
   - {fileID: 6272174662982547329}
   - {fileID: 864324986311293380}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1994038144103167491
 MeshFilter:
@@ -181,23 +180,19 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2830569649180402460}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 4.3, y: 9.2, z: 2.619339}
   m_Center: {x: 2.15, y: 4.6, z: 1.5096695}
---- !u!114 &8678182173372460858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2830569649180402460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2be7cd80de3f91e488eb7d48263e9bca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8060548723359378451
 GameObject:
   m_ObjectHideFlags: 0
