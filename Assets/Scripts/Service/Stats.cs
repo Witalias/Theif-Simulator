@@ -6,91 +6,37 @@ public class Stats : MonoBehaviour
 {
     public static Stats Instanse { get; private set; } = null;
 
-    [SerializeField] private bool canIntentionallyNoise = false;
+    [SerializeField] private int _initialLevel = 1;
+    [SerializeField] private int _neededXP = 3;
+    [SerializeField] private ResourcesPanel _resourcesPanel;
+    [SerializeField] private XPBar _xpBar;
 
-    [Header("Equipment")]
-    [SerializeField] private EquipmentStats arms;
-    [SerializeField] private EquipmentStats masterKey;
-    [SerializeField] private EquipmentStats tierIron;
-    [SerializeField] private EquipmentStats gadget;
+    private Dictionary<ResourceType, int> _resources;
+    private int _xpAmount;
 
-    private ResourcesPanel resourcesPanel;
+    public int Level { get; private set; }
 
-    private Dictionary<ResourceType, float> resources;
-    private Dictionary<EquipmentType, EquipmentStats> equipment;
-    private Dictionary<ResourceType, float> increasedResourceNumbers;
-
-    public bool CanIntentionallyNoise 
-    { 
-        get => canIntentionallyNoise;
-        set
+    public void AddXP(int value)
+    {
+        _xpAmount += value;
+        if (_xpAmount >= _neededXP)
         {
-            canIntentionallyNoise = value;
-            if (resourcesPanel != null)
-                resourcesPanel.SetActiveNoiseHotkey(value);
+            _xpAmount -= _neededXP;
+            NextLevel();
         }
+        _xpBar.SetProgress(_xpAmount, _neededXP);
     }
 
-    public bool VisibilityFromIntentionalNoise { get; set; } = true;
-
-    public float IncreasedPlayerSpeedInPercents { get; private set; }
-
-    public float IncreasedDoorNoiseInPercents { get; private set; }
-
-    public float IncreasedHackingTime { get; set; }
-
-    public float IncreasedHackingNoiseInPercents { get; set; }
-
-    public float IncreasedVisibilityScaleInPercents { get; set; }
-
-    public void SetExtraResourceNumber(ResourceType type, float value)
+    public void AddResource(ResourceType type, int value)
     {
-        if (increasedResourceNumbers.ContainsKey(type))
-            increasedResourceNumbers[type] = value;
-    }
-
-    public void SetIncreasedDoorNoise(float valueInPercents) => IncreasedDoorNoiseInPercents = valueInPercents;
-
-    public void SetIncreasedPlayerSpeed(float valueInPercents)
-    {
-        IncreasedPlayerSpeedInPercents = valueInPercents;
-        var player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
-        if (player != null)
-            player.AddSpeed(valueInPercents);
-    }
-
-    public void AddResource(ResourceType type, float value)
-    {
-        if (resourcesPanel == null)
+        if (_resourcesPanel == null)
             return;
 
-        if (type == ResourceType.Food || type == ResourceType.Water)
-            resources[type] = Mathf.Clamp(resources[type] + value, 0f, 100f);
-        else
-            resources[type] = Mathf.Clamp(resources[type] + value, 0f, Mathf.Infinity);
-        resourcesPanel.SetResourceValue(type, resources[type]);
+        _resources[type] = (int)Mathf.Clamp(_resources[type] + value, 0, Mathf.Infinity);
+        _resourcesPanel.SetResourceValue(type, _resources[type]);
     }
 
-    public void AddResource(EquipmentType type, float value)
-    {
-        if (type == EquipmentType.Arms)
-            return;
-
-        AddResource(GameSettings.Instanse.GetResourceTypeByEquipmentType(type), value);
-    }
-
-    public float GetResource(ResourceType type) => resources[type];
-
-    public float GetResource(EquipmentType type) => GetResource(GameSettings.Instanse.GetResourceTypeByEquipmentType(type));
-
-    public EquipmentStats GetEquipmentStats(EquipmentType type) => equipment[type];
-
-    public float GetExtraResource(ResourceType type)
-    {
-        if (increasedResourceNumbers.ContainsKey(type))
-            return increasedResourceNumbers[type];
-        return 0f;
-    }
+    public float GetResource(ResourceType type) => _resources[type];
 
     private void Awake()
     {
@@ -101,39 +47,27 @@ public class Stats : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        resources = new Dictionary<ResourceType, float>
+        _resources = new Dictionary<ResourceType, int>
         {
-            [ResourceType.Food] = 50f,
-            [ResourceType.Water] = 50f,
-            [ResourceType.Money] = 0f,
-            [ResourceType.Fuel] = 10f,
-            [ResourceType.MasterKeys] = 1f,
-            [ResourceType.TierIrons] = 1f,
-            [ResourceType.Gadgets] = 1f
+            [ResourceType.Bootle] = 0,
+            [ResourceType.Sneakers] = 0,
+            [ResourceType.Money] = 0,
         };
 
-        equipment = new Dictionary<EquipmentType, EquipmentStats>
-        {
-            [EquipmentType.Arms] = arms,
-            [EquipmentType.Gadget] = gadget,
-            [EquipmentType.MasterKey] = masterKey,
-            [EquipmentType.TierIron] = tierIron
-        };
-
-        increasedResourceNumbers = new Dictionary<ResourceType, float>
-        {
-            [ResourceType.Food] = 0f,
-            [ResourceType.Fuel] = 0f,
-            [ResourceType.Money] = 0f,
-            [ResourceType.Water] = 0f
-        };
+        Level = _initialLevel;
+        _xpBar.SetLevel(_initialLevel);
+        AddXP(0);
     }
 
     private void Start()
     {
-        resourcesPanel = GameObject.FindGameObjectWithTag(Tags.ResourcesPanel.ToString()).GetComponent<ResourcesPanel>();
+        foreach (var resource in _resources)
+            _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+    }
 
-        foreach (var resource in resources)
-            resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+    private void NextLevel()
+    {
+        _xpBar.SetLevel(++Level);
+        _neededXP += GameSettings.Instanse.StepXPRequirement;
     }
 }

@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private ConnectionWall[] connectionWalls;
+    [SerializeField] private Door[] connectionWalls;
     [SerializeField] private CenteredPoint[] windows;
     [SerializeField] private CenteredPoint[] walls;
     [SerializeField] private CenteredPoint[] cornerTiles;
     [SerializeField] private GameObject[] fogs;
     [SerializeField] private Transform[] patrolPoints;
 
-    public ConnectionWall[] GetConnectionWalls() => connectionWalls;
+    public Door[] GetConnectionWalls() => connectionWalls;
 
     public CenteredPoint[] GetWindows() => windows;
 

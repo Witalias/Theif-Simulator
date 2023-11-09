@@ -1,55 +1,27 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TriggerZone : MonoBehaviour
 {
-    [SerializeField] private ActionControls action = ActionControls.None;
-
-    private UIHotkey hotkey;
-
-    public bool Triggered { get; private set; } = false;
-
-    public void SetTrigger()
-    {
-        Triggered = true;
-        if (action != ActionControls.None)
-            ShowHotkey();
-    }
-
-    public void RemoveTrigger()
-    {
-        Triggered = false;
-        if (action != ActionControls.None)
-            HideHotkey();
-    }
-
-    public void ShowHotkey()
-    {
-        //if (hotkey != null)
-        //    return;
-
-        //hotkey = Instantiate(
-        //    GameStorage.Instanse.HotkeyPrefab,
-        //    Camera.main.WorldToScreenPoint(transform.position),
-        //    Quaternion.identity, GameStorage.Instanse.MainCanvas).GetComponent<UIHotkey>();
-        //hotkey.SetKey(Controls.Instanse.GetKey(action));
-        //hotkey.Show();
-    }
-
-    public void HideHotkey()
-    {
-        //if (hotkey != null)
-        //    hotkey.Hide();
-    }
+    [SerializeField] private UnityEvent<MovementController> _onEnter;
+    [SerializeField] private UnityEvent<MovementController> _onStay;
+    [SerializeField] private UnityEvent<MovementController> _onExit;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<MovementController>() != null)
-            SetTrigger();
+        if (other.TryGetComponent<MovementController>(out MovementController player))
+            _onEnter?.Invoke(player);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<MovementController>(out MovementController player))
+            _onStay?.Invoke(player);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<MovementController>() != null)
-            RemoveTrigger();
+        if (other.TryGetComponent<MovementController>(out MovementController player))
+            _onExit?.Invoke(player);
     }
 }

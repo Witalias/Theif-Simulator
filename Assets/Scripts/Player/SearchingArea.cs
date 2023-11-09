@@ -7,15 +7,6 @@ public class SearchingArea : MonoBehaviour
     [SerializeField] private float searchingInterval = 0.5f;
     [SerializeField] private float searchingDistance = 1f;
 
-    private LayerMask fogMask;
-    private LayerMask windowMask;
-
-    private void Awake()
-    {
-        fogMask = 1 << 11;
-        windowMask = 1 << 9;
-    }
-
     private void Start()
     {
         StartCoroutine(Search());
@@ -43,9 +34,6 @@ public class SearchingArea : MonoBehaviour
             case 9:
                 if (Physics.Raycast(hit.point + transform.forward, transform.forward, out RaycastHit nextHit, searchingDistance))
                     CheckRaycastHit(nextHit);
-                break;
-            case 11:
-                hit.collider.GetComponent<Fog>().Remove();
                 break;
         }
     }

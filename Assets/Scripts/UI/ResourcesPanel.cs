@@ -1,53 +1,69 @@
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class ResourcesPanel : MonoBehaviour
 {
-    [SerializeField] private UIBar foodBar;
-    [SerializeField] private UIBar waterBar;
-    [SerializeField] private UICounter moneyCounter;
-    [SerializeField] private UICounter fuelCounter;
-    [SerializeField] private UICounter masterKeysCounter;
-    [SerializeField] private UICounter tierIronsCounter;
-    [SerializeField] private UICounter gadgetsCounter;
-    [SerializeField] private UIHotkey noiseHotkey;
-    [SerializeField] private TextMeshProUGUI noiseText;
+    [SerializeField] private GameObject[] _panels;
+    [SerializeField] private UICounter _money;
+    [SerializeField] private UICounter _bottles;
+    [SerializeField] private UICounter _sneakers;
+    [SerializeField] private Transform _resourceAnimationPoint;
 
-    public void SetResourceValue(ResourceType type, float value)
+    private Camera _mainCamera;
+
+    public void SetResourceValue(ResourceType type, int value)
     {
         switch (type)
         {
-            case ResourceType.Food: foodBar.SetValue(value); break;
-            case ResourceType.Water: waterBar.SetValue(value); break;
-            case ResourceType.Money: moneyCounter.SetValue(value); break;
-            case ResourceType.Fuel: fuelCounter.SetValue(value); break;
-            case ResourceType.MasterKeys: masterKeysCounter.SetValue(value); break;
-            case ResourceType.TierIrons: tierIronsCounter.SetValue(value); break;
-            case ResourceType.Gadgets: gadgetsCounter.SetValue(value); break;
+            case ResourceType.Money: _money.SetValue(value); break;
+            case ResourceType.Bootle: _bottles.SetValue(value); break;
+            case ResourceType.Sneakers: _sneakers.SetValue(value); break;
         }
+        UpdatePanels();
     }
 
-    public void SetActiveNoiseHotkey(bool value)
+    private void Awake()
     {
-        noiseHotkey.gameObject.SetActive(value);
-        noiseText.gameObject.SetActive(value);
-        if (value)
+        _mainCamera = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        Lootable.PlayResourceAnimation += PlayResourceAnimation;
+        Door.PlayResourceAnimation += PlayResourceAnimation;
+    }
+
+    private void OnDisable()
+    {
+        Lootable.PlayResourceAnimation -= PlayResourceAnimation;
+        Door.PlayResourceAnimation -= PlayResourceAnimation;
+    }
+
+    private void UpdatePanels()
+    {
+        foreach (var panel in _panels)
+            panel.SetActive(false);
+        DOVirtual.DelayedCall(Time.deltaTime, () =>
         {
-            noiseHotkey.SetKey(Controls.Instanse.GetKey(ActionControls.Noise));
-            noiseText.text = Translation.GetNoiseName();
-        }
+            foreach (var panel in _panels)
+                panel.SetActive(true);
+        });
     }
 
-    private void Start()
+    private void PlayResourceAnimation(ResourceType type, int count, int xp)
     {
-        foodBar.SetTitle(Translation.Get(ResourceType.Food));
-        waterBar.SetTitle(Translation.Get(ResourceType.Water));
-        moneyCounter.SetTitle(Translation.Get(ResourceType.Money));
-        fuelCounter.SetTitle(Translation.Get(ResourceType.Fuel));
-        masterKeysCounter.SetTitle(Translation.Get(ResourceType.MasterKeys));
-        tierIronsCounter.SetTitle(Translation.Get(ResourceType.TierIrons));
-        gadgetsCounter.SetTitle(Translation.Get(ResourceType.Gadgets));
+        if (count > 0)
+            CreateResourceAnimation(count.ToString(), GameStorage.Instanse.GetResourceSprite(type));
+        DOVirtual.DelayedCall(count > 0 ? 1.0f : 0.0f, () => CreateResourceAnimation(xp.ToString(), GameStorage.Instanse.Star));
 
-        SetActiveNoiseHotkey(Stats.Instanse.CanIntentionallyNoise);
+        void CreateResourceAnimation(string text, Sprite icon)
+        {
+            var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
+                _resourceAnimationPoint.position, Quaternion.identity, transform)
+                .GetComponent<NewResourceAnimation>();
+            newResource.SetIcon(icon);
+            newResource.SetText(text);
+        }
     }
 }

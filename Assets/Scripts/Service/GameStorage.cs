@@ -8,54 +8,19 @@ public class GameStorage : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private NewResourceAnimation newResourceAnimationPrefab;
     [SerializeField] private UIHotkey hotkeyPrefab;
-    [SerializeField] private ActionMenuButton actionMenuButtonPrefab;
     [SerializeField] private QuestionMark questionMarkPrefab;
-    [SerializeField] private EnemyAI policemanPrefab;
     [SerializeField] private EnemyAI[] enemyPrefabs;
 
     [Header("Sprites")]
-    [SerializeField] private Sprite appleIcon;
-    [SerializeField] private Sprite waterIcon;
-    [SerializeField] private Sprite moneyIcon;
-    [SerializeField] private Sprite fuelIcon;
-    [SerializeField] private Sprite masterKeyIcon;
-    [SerializeField] private Sprite tierIronIcon;
-    [SerializeField] private Sprite padlock;
-    [SerializeField] private Sprite signal;
-    [SerializeField] private Sprite speed;
-    [SerializeField] private Sprite suitcase;
-    [SerializeField] private Sprite trap;
-    [SerializeField] private Sprite policeBadge;
-    [SerializeField] private Sprite eye;
-    [SerializeField] private Sprite ear;
-    [SerializeField] private Sprite boot;
-    [SerializeField] private Sprite door;
-    [SerializeField] private Sprite armsTime;
-    [SerializeField] private Sprite masterKeyTime;
-    [SerializeField] private Sprite tierIronTime;
-    [SerializeField] private Sprite gadgetTime;
-    [SerializeField] private Sprite armsEar;
-    [SerializeField] private Sprite tierIronEar;
-    [SerializeField] private Sprite equipmentTime;
-    [SerializeField] private Sprite equipmentEar;
-    [SerializeField] private Sprite equipment;
-    [SerializeField] private Sprite applePlus;
-    [SerializeField] private Sprite waterPlus;
-    [SerializeField] private Sprite moneyPlus;
-    [SerializeField] private Sprite fuelPlus;
-    [SerializeField] private Sprite noEye;
-    [SerializeField] private Sprite masterKeyPlus;
-    [SerializeField] private Sprite tierIronPlus;
-    [SerializeField] private Sprite gadgetPlus;
+    [SerializeField] private Sprite _bootle;
+    [SerializeField] private Sprite _sneakers;
+    [SerializeField] private Sprite _money;
+    [SerializeField] private Sprite _xp;
 
     [Header("Sounds")]
-    [SerializeField] private Sound foodSound;
-    [SerializeField] private Sound waterSound;
-    [SerializeField] private Sound moneySound;
-    [SerializeField] private Sound fuelSound;
-    [SerializeField] private Sound masterKeySound;
-    [SerializeField] private Sound tierIronSound;
-    [SerializeField] private Sound gadgetSound;
+    [SerializeField] private Sound _bootleSound;
+    [SerializeField] private Sound _moneySound;
+    [SerializeField] private Sound _sneakersSound;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask enemyMask;
@@ -63,73 +28,17 @@ public class GameStorage : MonoBehaviour
     private Dictionary<ResourceType, Sprite> resourceSprites;
     private Dictionary<ResourceType, Sound> resourceSounds;
 
-    public GameObject NewResourceAnimatinPrefab { get => newResourceAnimationPrefab.gameObject; }
+    public GameObject NewResourceAnimatinPrefab => newResourceAnimationPrefab.gameObject;
 
-    public GameObject HotkeyPrefab { get => hotkeyPrefab.gameObject; }
+    public GameObject HotkeyPrefab => hotkeyPrefab.gameObject;
 
-    public GameObject ActionMenuButtonPrefab { get => actionMenuButtonPrefab.gameObject; }
-
-    public GameObject QuestionMarkPrefab { get => questionMarkPrefab.gameObject; }
-
-    public GameObject PolicemanPrefab { get => policemanPrefab.gameObject; }
-
-    public Sprite Padlock { get => padlock; }
-
-    public Sprite Signal { get => signal; }
-
-    public Sprite Speed { get => speed; }
-
-    public Sprite Suitcase { get => suitcase; }
-
-    public Sprite Trap { get => trap; }
-
-    public Sprite PoliceBadge { get => policeBadge; }
-
-    public Sprite Eye { get => eye; }
-
-    public Sprite Ear { get => ear; }
-
-    public Sprite Boot { get => boot; }
-
-    public Sprite Door { get => door; }
-
-    public Sprite ArmsTime { get => armsTime; }
-
-    public Sprite MasterKeyTime { get => masterKeyTime; }
-
-    public Sprite TierIronTime { get => tierIronTime; }
-
-    public Sprite GadgetTime { get => gadgetTime; }
-
-    public Sprite ArmsEar { get => armsEar; }
-
-    public Sprite TierIronEar { get => tierIronEar; }
-
-    public Sprite EquipmentTime { get => equipmentTime; }
-
-    public Sprite EquipmentEar { get => equipmentEar; }
-
-    public Sprite Equipment { get => equipment; }
-
-    public Sprite ApplePlus { get => applePlus; }
-
-    public Sprite WaterPlus { get => waterPlus; }
-
-    public Sprite MoneyPlus { get => moneyPlus; }
-
-    public Sprite FuelPlus { get => fuelPlus; }
-
-    public Sprite NoEye { get => noEye; }
-
-    public Sprite MasterKeyPlus { get => masterKeyPlus; }
-
-    public Sprite TierIronPlus { get => tierIronPlus; }
-
-    public Sprite GadgetPlus { get => gadgetPlus; }
+    public GameObject QuestionMarkPrefab => questionMarkPrefab.gameObject;
 
     public Transform MainCanvas { get; private set; }
 
-    public LayerMask EnemyMask { get => enemyMask; }
+    public Sprite Star => _xp;
+
+    public LayerMask EnemyMask => enemyMask;
 
     public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
 
@@ -144,6 +53,7 @@ public class GameStorage : MonoBehaviour
         else
             Destroy(gameObject);
 
+
         DontDestroyOnLoad(gameObject);
 
         var canvas = GameObject.FindGameObjectWithTag(Tags.MainCanvas.ToString());
@@ -152,23 +62,16 @@ public class GameStorage : MonoBehaviour
 
         resourceSprites = new Dictionary<ResourceType, Sprite>
         {
-            [ResourceType.Food] = appleIcon,
-            [ResourceType.Fuel] = fuelIcon,
-            [ResourceType.Money] = moneyIcon,
-            [ResourceType.Water] = waterIcon,
-            [ResourceType.MasterKeys] = masterKeyIcon,
-            [ResourceType.TierIrons] = tierIronIcon
+            [ResourceType.Bootle] = _bootle,
+            [ResourceType.Sneakers] = _sneakers,
+            [ResourceType.Money] = _money,
         };
 
         resourceSounds = new Dictionary<ResourceType, Sound>
         {
-            [ResourceType.Food] = foodSound,
-            [ResourceType.Fuel] = fuelSound,
-            [ResourceType.Gadgets] = gadgetSound,
-            [ResourceType.MasterKeys] = masterKeySound,
-            [ResourceType.Money] = moneySound,
-            [ResourceType.TierIrons] = tierIronSound,
-            [ResourceType.Water] = waterSound
+            [ResourceType.Bootle] = _bootleSound,
+            [ResourceType.Sneakers] = _sneakersSound,
+            [ResourceType.Money] = _moneySound,
         };
     }
 }

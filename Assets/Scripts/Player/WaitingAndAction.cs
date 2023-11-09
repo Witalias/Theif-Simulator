@@ -105,12 +105,12 @@ public class WaitingAndAction : MonoBehaviour
 
     private void OnEnable()
     {
-        ConnectionWall.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
+        Door.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
     }
 
     private void OnDisable()
     {
-        ConnectionWall.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
+        Door.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
     }
 
     private void Update()
