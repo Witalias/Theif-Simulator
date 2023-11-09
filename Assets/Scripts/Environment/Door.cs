@@ -62,19 +62,19 @@ public class Door : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!_triggered && other.GetComponent<EnemyAI>() != null)
-            Open();
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (!_triggered && other.GetComponent<EnemyAI>() != null)
+    //        Open();
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (_triggered && other.GetComponent<EnemyAI>() != null)
-        {
-            SetState(false);
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (_triggered && other.GetComponent<EnemyAI>() != null)
+    //    {
+    //        SetState(false);
+    //    }
+    //}
 
     private void Hack()
     {

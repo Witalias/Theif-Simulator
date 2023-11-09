@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using DG.Tweening;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -13,16 +14,35 @@ public class EnemyAI : MonoBehaviour
     private const string SCARY_ANIMATOR_TRIGGER = "Scary";
 
     [SerializeField] private bool _isWoman;
+    [SerializeField] private float _searchingDuration;
+    [SerializeField] private Color _detectViewColor;
     [SerializeField] private PathTrajectory _pathTrajectory;
+    [SerializeField] private SpriteRenderer _view;
 
     private Animator _animator;
     private NavMeshAgent _agent;
     private CreatureVision _vision;
     private MovementController _player;
     private AudioSource _audioSource;
+    private Color _defaultViewColor;
+    private Coroutine _searchTargetCoroutine;
+    private bool _worried;
+    private bool _followed;
+    private bool _inSearching;
 
-    private bool _worried = false;
-    private bool _isPatrolling = false;
+    public void Calm()
+    {
+        Stop();
+        _followed = false;
+        _worried = false;
+        _view.color = _defaultViewColor;
+        PlayNotFindSound();
+        DOVirtual.DelayedCall(2.0f, () =>
+        {
+            if (!_worried)
+                Patrol();
+        });
+    }
 
     private void Awake()
     {
@@ -30,12 +50,20 @@ public class EnemyAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _vision = GetComponent<CreatureVision>();
         _audioSource = GetComponent<AudioSource>();
+        _defaultViewColor = _view.color;
     }
 
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
         Patrol();
+    }
+
+    private void Update()
+    {
+        Detect();
+        Follow();
+        SearchTarget();
     }
 
     private void Patrol()
@@ -46,6 +74,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Run()
     {
+        _agent.isStopped = false;
         _animator.SetBool(WALK_ANIMATOR_BOOLEAN, true);
     }
 
@@ -53,6 +82,49 @@ public class EnemyAI : MonoBehaviour
     {
         _animator.SetBool(WALK_ANIMATOR_BOOLEAN, false);
         _pathTrajectory.Stop();
+    }
+
+    private void Detect()
+    {
+        if (!_vision.SeesTarget || _worried)
+            return;
+
+        Stop();
+        _worried = true;
+        _inSearching = false;
+        _animator.SetTrigger(REACT_TO_NOISE_ANIMATOR_TRIGGER);
+        _view.color = _detectViewColor;
+        PlayScreamSound();
+        DOVirtual.DelayedCall(1.0f, () =>
+        {
+            _followed = true;
+            Run();
+        });
+    }
+
+    private void Follow()
+    {
+        if (!_followed)
+            return;
+
+        _agent.SetDestination(_player.transform.position);
+    }
+
+    private void SearchTarget()
+    {
+        if (!_followed || _inSearching)
+            return;
+
+        _inSearching = true;
+        if (_searchTargetCoroutine != null)
+            StopCoroutine(_searchTargetCoroutine);
+        _searchTargetCoroutine = StartCoroutine(Coroutine());
+
+        IEnumerator Coroutine()
+        {
+            yield return new WaitForSeconds(_searchingDuration);
+            Calm();
+        }
     }
 
     private void PlaySuspectSound()

@@ -88,11 +88,11 @@ public class MovementController : MonoBehaviour
         if (_controlsLocked)
             return;
 
-        var movementVector = new Vector3(_joystick.Horizontal, 0f, _joystick.Vertical);
+        var movementVector = new Vector3(_joystick.Horizontal, 0.0f, _joystick.Vertical);
         if (movementVector == Vector3.zero)
-            movementVector = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            movementVector = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 
-        var direction = new Vector3(movementVector.x, _rigidbody.velocity.y, movementVector.z);
+        var direction = new Vector3(movementVector.x, 0.0f, movementVector.z);
         if (direction.magnitude > 1)
             direction.Normalize();
 
