@@ -11,6 +11,7 @@ using System;
 public class EnemyAI : MonoBehaviour
 {
     private const string WALK_ANIMATOR_BOOLEAN = "Walk";
+    private const string RUN_ANIAMTOR_BOOLEAN = "Run";
     private const string REACT_TO_NOISE_ANIMATOR_TRIGGER = "React To Noise";
     private const string SCARY_ANIMATOR_TRIGGER = "Scary";
 
@@ -18,7 +19,8 @@ public class EnemyAI : MonoBehaviour
     public static event Action<string, float> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
-    [SerializeField] private float _searchingDuration;
+    [SerializeField] private float _followSpeed;
+    //[SerializeField] private float _searchingDuration;
     [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
     [SerializeField] private PathTrajectory _pathTrajectory;
@@ -30,11 +32,12 @@ public class EnemyAI : MonoBehaviour
     private MovementController _player;
     private AudioSource _audioSource;
     private Color _defaultViewColor;
-    private Coroutine _searchTargetCoroutine;
+    //private Coroutine _searchTargetCoroutine;
     private Building _building;
+    private float _defaultSpeed;
     private bool _worried;
     private bool _followed;
-    private bool _inSearching;
+    //private bool _inSearching;
     private bool _lockedControls;
 
     public bool Worried => _worried;
@@ -52,7 +55,9 @@ public class EnemyAI : MonoBehaviour
         Stop();
         _followed = false;
         _worried = false;
+        _agent.speed = _defaultSpeed;
         _view.color = _defaultViewColor;
+        _animator.SetTrigger(SCARY_ANIMATOR_TRIGGER);
         PlayNotFindSound();
         DOVirtual.DelayedCall(2.0f, () =>
         {
@@ -68,6 +73,7 @@ public class EnemyAI : MonoBehaviour
         _vision = GetComponent<CreatureVision>();
         _audioSource = GetComponent<AudioSource>();
         _defaultViewColor = _view.color;
+        _defaultSpeed = _agent.speed;
     }
 
     private void Start()
@@ -83,7 +89,7 @@ public class EnemyAI : MonoBehaviour
 
         Detect();
         Follow();
-        SearchTarget();
+        //SearchTarget();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -107,33 +113,39 @@ public class EnemyAI : MonoBehaviour
     private void Run()
     {
         _agent.isStopped = false;
-        _animator.SetBool(WALK_ANIMATOR_BOOLEAN, true);
+
+        if (_worried)
+            _animator.SetBool(RUN_ANIAMTOR_BOOLEAN, true);
+        else
+            _animator.SetBool(WALK_ANIMATOR_BOOLEAN, true);
     }
 
     private void Stop()
     {
+        _animator.SetBool(RUN_ANIAMTOR_BOOLEAN, false);
         _animator.SetBool(WALK_ANIMATOR_BOOLEAN, false);
         _pathTrajectory.Stop();
     }
 
     private void Detect()
     {
-        if (!_vision.SeesTarget || _worried)
+        if (!_vision.SeesTarget || _worried || !_player.InBuilding)
             return;
 
         Stop();
         _worried = true;
-        _inSearching = false;
+        //_inSearching = false;
+        _agent.speed = _followSpeed;
         _animator.SetTrigger(REACT_TO_NOISE_ANIMATOR_TRIGGER);
         _view.color = _detectViewColor;
         PlayScreamSound();
+        PlayerIsNoticed?.Invoke();
+        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
         DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;
             Run();
         });
-        PlayerIsNoticed?.Invoke();
-        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
     }
 
     private void Follow()
@@ -144,22 +156,22 @@ public class EnemyAI : MonoBehaviour
         _agent.SetDestination(_player.transform.position);
     }
 
-    private void SearchTarget()
-    {
-        if (!_followed || _inSearching)
-            return;
+    //private void SearchTarget()
+    //{
+    //    if (!_followed || _inSearching)
+    //        return;
 
-        _inSearching = true;
-        if (_searchTargetCoroutine != null)
-            StopCoroutine(_searchTargetCoroutine);
-        _searchTargetCoroutine = StartCoroutine(Coroutine());
+    //    _inSearching = true;
+    //    if (_searchTargetCoroutine != null)
+    //        StopCoroutine(_searchTargetCoroutine);
+    //    _searchTargetCoroutine = StartCoroutine(Coroutine());
 
-        IEnumerator Coroutine()
-        {
-            yield return new WaitForSeconds(_searchingDuration);
-            Calm();
-        }
-    }
+    //    IEnumerator Coroutine()
+    //    {
+    //        yield return new WaitForSeconds(_searchingDuration);
+    //        Calm();
+    //    }
+    //}
 
     private void PlaySuspectSound()
     {

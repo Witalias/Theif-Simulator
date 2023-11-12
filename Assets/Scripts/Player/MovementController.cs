@@ -30,7 +30,7 @@ public class MovementController : MonoBehaviour
     private bool _inBuilding;
     private float _initialSpeed;
 
-    public bool Busy { get; set; } = false;
+    public bool InBuilding => _inBuilding;
 
     public Transform CenterPoint { get => centerPoint; }
 
@@ -53,7 +53,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
-        InBuilding(false);
+        InBuildingState(false);
         DOVirtual.DelayedCall(delay, () =>
         {
             transform.position = Stats.Instanse.PrisonSpawnPoint.position;
@@ -81,7 +81,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
-        Building.PlayerInBuilding += InBuilding;
+        Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
     }
 
@@ -89,7 +89,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
-        Building.PlayerInBuilding -= InBuilding;
+        Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
 
@@ -148,7 +148,7 @@ public class MovementController : MonoBehaviour
         CanHide(false);
     }
 
-    private void InBuilding(bool value)
+    private void InBuildingState(bool value)
     {
         _inBuilding = value;
         CanHide(value);

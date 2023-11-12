@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Ru SDF Default
   m_EditorClassIdentifier: 
-  hashCode: -983965418
+  hashCode: 1529811709
   material: {fileID: -2227429625539768613}
-  materialHashCode: -1361510666
+  materialHashCode: 1085614397
   m_Version: 1.1.0
   m_SourceFontFileGUID: 7c08d33e2fa64374e9502e12ebb9cadb
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 7c08d33e2fa64374e9502e12ebb9cadb, type: 3}

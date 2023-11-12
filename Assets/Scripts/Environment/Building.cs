@@ -15,6 +15,8 @@ public class Building : MonoBehaviour
 
     public void OnPlayerExit()
     {
+        PlayerInBuilding?.Invoke(false);
+
         var doorsLocked = false;
         foreach (var enemy in _enemies)
         {
@@ -25,7 +27,6 @@ public class Building : MonoBehaviour
             }
             enemy.Calm();
         }
-        PlayerInBuilding?.Invoke(false);
     }
 
     public void LockDoors()
