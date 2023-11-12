@@ -19,9 +19,15 @@ public class Building : MonoBehaviour
         }
     }
 
-    private void LockDoors()
+    public void LockDoors()
     {
         foreach (var door in _doors)
             door.Lock(true);
+    }
+
+    private void Start()
+    {
+        foreach (var enemy in _enemies)
+            enemy.Initialize(this);
     }
 }

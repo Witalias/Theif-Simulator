@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _searchingDuration;
+    [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
     [SerializeField] private PathTrajectory _pathTrajectory;
     [SerializeField] private SpriteRenderer _view;
@@ -26,14 +27,24 @@ public class EnemyAI : MonoBehaviour
     private AudioSource _audioSource;
     private Color _defaultViewColor;
     private Coroutine _searchTargetCoroutine;
+    private Building _building;
     private bool _worried;
     private bool _followed;
     private bool _inSearching;
+    private bool _lockedControls;
 
     public bool Worried => _worried;
 
+    public void Initialize(Building building)
+    {
+        _building = building;
+    }
+
     public void Calm()
     {
+        if (!_worried)
+            return;
+
         Stop();
         _followed = false;
         _worried = false;
@@ -63,9 +74,24 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (_lockedControls)
+            return;
+
         Detect();
         Follow();
         SearchTarget();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!_followed || !collision.gameObject.TryGetComponent<MovementController>(out MovementController player))
+            return;
+
+        Stop();
+        player.Caught(_caughtDuration);
+        _building.LockDoors();
+        _lockedControls = true;
+        DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () => _lockedControls = false);
     }
 
     private void Patrol()

@@ -682,6 +682,11 @@ MonoBehaviour:
   bottomLimit: -280
   leftLimit: -280
   rightLimit: 280
+--- !u!4 &981833372 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6510368250246440931, guid: 028e6e0efca26364e9be9c229442dd85, type: 3}
+  m_PrefabInstance: {fileID: 7837301603797226853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1606907476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,6 +1077,10 @@ PrefabInstance:
       propertyPath: _resourcesPanel
       value: 
       objectReference: {fileID: 413027586}
+    - target: {fileID: 418802330973924088, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
+      propertyPath: _prisonSpawnPoint
+      value: 
+      objectReference: {fileID: 981833372}
     - target: {fileID: 2331973922239976233, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
       propertyPath: m_Name
       value: Game Stats

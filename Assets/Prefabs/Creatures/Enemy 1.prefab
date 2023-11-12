@@ -733,7 +733,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isWoman: 1
-  _searchingDuration: 5
+  _searchingDuration: 10
+  _caughtDuration: 2
   _detectViewColor: {r: 1, g: 0.60784316, b: 0.60784316, a: 0.31764707}
   _pathTrajectory: {fileID: 4310526444678127791}
   _view: {fileID: 3496653355060631713}

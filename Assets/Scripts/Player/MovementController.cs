@@ -10,12 +10,11 @@ using System;
 [RequireComponent(typeof(PathTrajectory))]
 public class MovementController : MonoBehaviour
 {
-    private const string runAnimatorBool = "Run";
-    private const string jumpAnimatorTrigger = "Jump";
-    private const string stopJumpAnimatorTrigger = "Stop Jump";
-    private const float climbDetectionDistance = 0.1f;
+    private const string RUN_ANIMATOR_BOOLEAN = "Run";
+    private const string CAUGHT_ANIMATOR_TRIGGER = "Caught";
 
     public static event Action MovingStarted;
+    public static event Action PlayerCaught;
 
     [SerializeField] private float manuallyMovingSpeed = 5f;
     [SerializeField] private float climbSpeed = 5f;
@@ -25,9 +24,9 @@ public class MovementController : MonoBehaviour
 
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private CapsuleCollider _capsuleCollider;
     private PathTrajectory _pathTrajectory;
     private WaitingAndAction _waitingAndAction;
+    private CapsuleCollider _capsuleCollider;
 
     private bool _isMoving = false;
     private bool _controlsLocked;
@@ -51,12 +50,24 @@ public class MovementController : MonoBehaviour
         transform.DORotate(new Vector3(0f, angle.y, 0f), 0.5f);
     }
 
+    public void Caught(float delay)
+    {
+        PlayerCaught?.Invoke();
+        _controlsLocked = true;
+        _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
+        DOVirtual.DelayedCall(delay, () =>
+        {
+            transform.position = Stats.Instanse.PrisonSpawnPoint.position;
+            _controlsLocked = false;
+        });
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
         _pathTrajectory = GetComponent<PathTrajectory>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
 
         _initialSpeed = manuallyMovingSpeed;
     }
@@ -107,14 +118,14 @@ public class MovementController : MonoBehaviour
             if (!_isMoving)
             {
                 _isMoving = true;
-                _animator.SetBool(runAnimatorBool, true);
+                _animator.SetBool(RUN_ANIMATOR_BOOLEAN, true);
                 MovingStarted?.Invoke();
             }
         }
         else
         {
             _isMoving = false;
-            _animator.SetBool(runAnimatorBool, false);
+            _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
         }
     }
 

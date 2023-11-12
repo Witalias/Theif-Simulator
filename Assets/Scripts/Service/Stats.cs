@@ -10,11 +10,14 @@ public class Stats : MonoBehaviour
     [SerializeField] private int _neededXP = 3;
     [SerializeField] private ResourcesPanel _resourcesPanel;
     [SerializeField] private XPBar _xpBar;
+    [SerializeField] private Transform _prisonSpawnPoint;
 
     private Dictionary<ResourceType, int> _resources;
     private int _xpAmount;
 
     public int Level { get; private set; }
+
+    public Transform PrisonSpawnPoint => _prisonSpawnPoint;
 
     public void AddXP(int value)
     {

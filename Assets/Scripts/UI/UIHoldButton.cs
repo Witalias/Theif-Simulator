@@ -40,11 +40,13 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     private void OnEnable()
     {
         Lootable.ShowHoldButton += Show;
+        MovementController.PlayerCaught += Abort;
     }
 
     private void OnDisable()
     {
         Lootable.ShowHoldButton -= Show;
+        MovementController.PlayerCaught -= Abort;
     }
 
     private void Update()
