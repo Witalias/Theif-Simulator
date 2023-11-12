@@ -56,6 +56,12 @@ public class Door : MonoBehaviour
         SetState(true);
     }
 
+    public void Lock(bool value)
+    {
+        _hacked = !value;
+        _appearHackingZoneTrigger.SetActive(value);
+    }
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -82,9 +88,8 @@ public class Door : MonoBehaviour
         SoundManager.Instanse.PlayLoop(Sound.DoorMasterKey);
         void ActionDone()
         {
-            _hacked = true;
+            Lock(false);
             _isHacking = false;
-            _appearHackingZoneTrigger.SetActive(false);
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
             PlayResourceAnimation?.Invoke(ResourceType.Money, 0, xp);

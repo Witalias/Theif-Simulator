@@ -30,6 +30,8 @@ public class EnemyAI : MonoBehaviour
     private bool _followed;
     private bool _inSearching;
 
+    public bool Worried => _worried;
+
     public void Calm()
     {
         Stop();
