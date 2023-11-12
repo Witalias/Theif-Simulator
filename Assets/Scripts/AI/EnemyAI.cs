@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     private const string SCARY_ANIMATOR_TRIGGER = "Scary";
 
     public static event Action PlayerIsNoticed;
+    public static event Action<string, float> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _searchingDuration;
@@ -132,6 +133,7 @@ public class EnemyAI : MonoBehaviour
             Run();
         });
         PlayerIsNoticed?.Invoke();
+        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
     }
 
     private void Follow()

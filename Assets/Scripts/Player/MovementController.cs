@@ -27,6 +27,7 @@ public class MovementController : MonoBehaviour
     private bool _isMoving;
     private bool _controlsLocked;
     private bool _canHide;
+    private bool _inBuilding;
     private float _initialSpeed;
 
     public bool Busy { get; set; } = false;
@@ -52,7 +53,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
-        CanHide(false);
+        InBuilding(false);
         DOVirtual.DelayedCall(delay, () =>
         {
             transform.position = Stats.Instanse.PrisonSpawnPoint.position;
@@ -62,6 +63,9 @@ public class MovementController : MonoBehaviour
 
     public void CanHide(bool value)
     {
+        if (value == true && !_inBuilding)
+            return;
+
         _canHide = value;
     }
 
@@ -77,7 +81,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
-        Building.PlayerInBuilding += CanHide;
+        Building.PlayerInBuilding += InBuilding;
         EnemyAI.PlayerIsNoticed += OnNoticed;
     }
 
@@ -85,7 +89,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
-        Building.PlayerInBuilding -= CanHide;
+        Building.PlayerInBuilding -= InBuilding;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
 
@@ -142,5 +146,11 @@ public class MovementController : MonoBehaviour
     private void OnNoticed()
     {
         CanHide(false);
+    }
+
+    private void InBuilding(bool value)
+    {
+        _inBuilding = value;
+        CanHide(value);
     }
 }
