@@ -12,6 +12,8 @@ public class WaitingAndAction : MonoBehaviour
 
     public static event Action<bool> TimerActived;
 
+    [SerializeField] private Color _negativeColor;
+    [SerializeField] private Color _positiveColor;
     [SerializeField] private Image fill;
     [SerializeField] private float yOffsetFromPlayer = 100f;
 
@@ -130,6 +132,7 @@ public class WaitingAndAction : MonoBehaviour
             yield return wait;
             currentTime += Time.deltaTime;
             fill.fillAmount = currentTime / reachedTime;
+            fill.color = Color.Lerp(_negativeColor, _positiveColor, fill.fillAmount);
         }
         _actionDone.Invoke();
         Refresh();

@@ -9,6 +9,8 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     public static event Action<bool> HoldButtonActived;
 
+    [SerializeField] private Color _negativeColor;
+    [SerializeField] private Color _positiveColor;
     [SerializeField] private GameObject _content;
     [SerializeField] private Image _filledImage;
     [SerializeField] private Animation _animation;
@@ -57,6 +59,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             return;
 
         _filledImage.fillAmount += Time.deltaTime * GameSettings.Instanse.FillSpeedForHoldButton;
+        _filledImage.color = Color.Lerp(_negativeColor, _positiveColor, _filledImage.fillAmount);
 
         if (_filledImage.fillAmount >= 1.0f)
         {
