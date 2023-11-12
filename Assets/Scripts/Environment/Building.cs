@@ -1,9 +1,17 @@
+using System;
 using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    public static event Action<bool> PlayerInBuilding;
+
     [SerializeField] private EnemyAI[] _enemies;
     [SerializeField] private Door[] _doors;
+
+    public void OnPlayerEnter()
+    {
+        PlayerInBuilding?.Invoke(true);
+    }
 
     public void OnPlayerExit()
     {
@@ -17,6 +25,7 @@ public class Building : MonoBehaviour
             }
             enemy.Calm();
         }
+        PlayerInBuilding?.Invoke(false);
     }
 
     public void LockDoors()

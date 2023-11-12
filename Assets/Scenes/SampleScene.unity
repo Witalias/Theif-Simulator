@@ -1396,9 +1396,17 @@ PrefabInstance:
       propertyPath: climbSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4662870302611521917, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5764222128491727568, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5764222128491959940, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_RootOrder

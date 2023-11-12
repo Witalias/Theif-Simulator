@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using DG.Tweening;
+using System;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -12,6 +13,8 @@ public class EnemyAI : MonoBehaviour
     private const string WALK_ANIMATOR_BOOLEAN = "Walk";
     private const string REACT_TO_NOISE_ANIMATOR_TRIGGER = "React To Noise";
     private const string SCARY_ANIMATOR_TRIGGER = "Scary";
+
+    public static event Action PlayerIsNoticed;
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _searchingDuration;
@@ -128,6 +131,7 @@ public class EnemyAI : MonoBehaviour
             _followed = true;
             Run();
         });
+        PlayerIsNoticed?.Invoke();
     }
 
     private void Follow()

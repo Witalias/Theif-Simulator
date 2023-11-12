@@ -7,7 +7,6 @@ using System;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(PathTrajectory))]
 public class MovementController : MonoBehaviour
 {
     private const string RUN_ANIMATOR_BOOLEAN = "Run";
@@ -18,18 +17,16 @@ public class MovementController : MonoBehaviour
 
     [SerializeField] private float manuallyMovingSpeed = 5f;
     [SerializeField] private float climbSpeed = 5f;
+    [SerializeField] private Stealth _stealth;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform centerPoint;
     [SerializeField] private FloatingJoystick _joystick;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private PathTrajectory _pathTrajectory;
-    private WaitingAndAction _waitingAndAction;
-    private CapsuleCollider _capsuleCollider;
-
-    private bool _isMoving = false;
+    private bool _isMoving;
     private bool _controlsLocked;
+    private bool _canHide;
     private float _initialSpeed;
 
     public bool Busy { get; set; } = false;
@@ -55,6 +52,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
+        CanHide(false);
         DOVirtual.DelayedCall(delay, () =>
         {
             transform.position = Stats.Instanse.PrisonSpawnPoint.position;
@@ -62,31 +60,33 @@ public class MovementController : MonoBehaviour
         });
     }
 
+    public void CanHide(bool value)
+    {
+        _canHide = value;
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        _pathTrajectory = GetComponent<PathTrajectory>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
 
         _initialSpeed = manuallyMovingSpeed;
-    }
-
-    private void Start()
-    {
-        _waitingAndAction = GameObject.FindGameObjectWithTag(Tags.TimeCircle.ToString()).GetComponent<WaitingAndAction>();
     }
 
     private void OnEnable()
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
+        Building.PlayerInBuilding += CanHide;
+        EnemyAI.PlayerIsNoticed += OnNoticed;
     }
 
     private void OnDisable()
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
+        Building.PlayerInBuilding -= CanHide;
+        EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
 
     private void FixedUpdate()
@@ -111,8 +111,6 @@ public class MovementController : MonoBehaviour
 
         if (movementVector != Vector3.zero)
         {
-            AbortSearching();
-
             _rigidbody.MoveRotation(Quaternion.LookRotation(movementVector));
 
             if (!_isMoving)
@@ -120,23 +118,29 @@ public class MovementController : MonoBehaviour
                 _isMoving = true;
                 _animator.SetBool(RUN_ANIMATOR_BOOLEAN, true);
                 MovingStarted?.Invoke();
+
+                if (_canHide)
+                    _stealth.Show();
             }
         }
-        else
+        else if (_isMoving)
         {
             _isMoving = false;
             _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
-        }
-    }
 
-    private void AbortSearching()
-    {
-        _waitingAndAction.Abort();
+            if (_canHide)
+                _stealth.Hide();
+        }
     }
 
     private void OnProcessAction(bool value)
     {
         _controlsLocked = value;
         _joystick.gameObject.SetActive(!value);
+    }
+
+    private void OnNoticed()
+    {
+        CanHide(false);
     }
 }
