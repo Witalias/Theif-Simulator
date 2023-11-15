@@ -4,6 +4,7 @@ public class WithoutParent : MonoBehaviour
 {
     private void Start()
     {
-        transform.parent = transform.parent.parent;
+        if (transform.parent != null)
+            transform.parent = transform.parent.parent;
     }
 }
