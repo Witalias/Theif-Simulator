@@ -1190,6 +1190,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5407154646005973686, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407154646005973686, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407154646005973686, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407154646005973686, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5783746540861617422, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
       propertyPath: m_fontSize
       value: 21.05
@@ -1283,19 +1299,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8419627807254069211, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419627807254069211, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419627807254069211, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419627807254069211, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}
-      propertyPath: m_AnchoredPosition.y
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9174447695412431811, guid: 71ef23d694e2cd347b1184eb50ed24ab, type: 3}

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &418802330973924088
 MonoBehaviour:
@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialLevel: 1
+  _backpackCapacity: 10
   _neededXP: 3
   _resourcesPanel: {fileID: 0}
   _xpBar: {fileID: 0}
+  _prisonSpawnPoint: {fileID: 0}
