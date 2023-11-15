@@ -5,10 +5,9 @@ public class CreatureVision : MonoBehaviour
 {
     [SerializeField] [Range(0, 360)] private float viewAngle = 90f;
     [SerializeField] private float viewDistance = 15f;
-    [SerializeField] private float detectionDistance = 3f;
     [SerializeField] private Transform enemyEye;
 
-    private MovementController target;
+    private MovementController _target;
 
     public bool SeesTarget { get; private set; }
 
@@ -16,24 +15,33 @@ public class CreatureVision : MonoBehaviour
 
     public float ViewDistance { get => viewDistance; set => viewDistance = value; }
 
-    private void Start()
+    public void Detect()
     {
-        target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        SeesTarget = true;
     }
 
-    private void Update()
+    public void NotDetect()
     {
-        var distanceToPlayer = Vector3.Distance(target.transform.position, transform.position);
-        SeesTarget = distanceToPlayer <= detectionDistance || IsInView();
+        SeesTarget = false;
+    }
+
+    private void Start()
+    {
+        _target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+    }
+
+    private void FixedUpdate()
+    {
+        SeesTarget = IsInView();
         DrawViewState();
     }
 
-    private bool IsInView() // true если цель видна
+    private bool IsInView()
     {
-        var realAngle = Vector3.Angle(enemyEye.forward, target.CenterPoint.position - enemyEye.position);
-        if (Physics.Raycast(enemyEye.transform.position, target.CenterPoint.position - enemyEye.position, out RaycastHit hit, viewDistance))
+        var realAngle = Vector3.Angle(enemyEye.forward, _target.CenterPoint.position - enemyEye.position);
+        if (Physics.Raycast(enemyEye.transform.position, _target.CenterPoint.position - enemyEye.position, out RaycastHit hit, viewDistance))
         {
-            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, target.CenterPoint.position) <= viewDistance && hit.transform == target.transform)
+            if (realAngle < viewAngle / 2f && Vector3.Distance(enemyEye.position, _target.CenterPoint.position) <= viewDistance && hit.transform == _target.transform)
                 return true;
         }
         return false;
@@ -46,6 +54,4 @@ public class CreatureVision : MonoBehaviour
         Debug.DrawLine(enemyEye.position, left, Color.yellow);
         Debug.DrawLine(enemyEye.position, right, Color.yellow);
     }
-
-
 }

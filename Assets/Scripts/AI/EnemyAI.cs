@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using DG.Tweening;
+using System;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -8,206 +10,190 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class EnemyAI : MonoBehaviour
 {
-    private const string walkAnimatorBool = "Walk";
-    private const string reactToNoiseAnimatorTrigger = "React To Noise";
-    private const string scaryAnimatorTrigger = "Scary";
+    private const string WALK_ANIMATOR_BOOLEAN = "Walk";
+    private const string RUN_ANIAMTOR_BOOLEAN = "Run";
+    private const string REACT_TO_NOISE_ANIMATOR_TRIGGER = "React To Noise";
+    private const string SCARY_ANIMATOR_TRIGGER = "Scary";
 
-    [SerializeField] private bool isPoliceman = false;
-    [SerializeField] private bool isWoman = false;
-    [SerializeField] private float detectionTime = 1.5f;
-    [SerializeField] private float detectionRadius = 2f;
-    [SerializeField] private float minStayingTime = 1f;
-    [SerializeField] private float maxStayingTime = 10f;
-    [SerializeField] private float patrolCheckingTime = 20f;
+    public static event Action PlayerIsNoticed;
+    public static event Action<string, float> ShowQuickMessage;
 
-    private Animator animator;
-    private NavMeshAgent agent;
-    private CreatureVision vision;
-    private MovementController player;
-    private AudioSource audioSource;
+    [SerializeField] private bool _isWoman;
+    [SerializeField] private float _followSpeed;
+    //[SerializeField] private float _searchingDuration;
+    [SerializeField] private float _caughtDuration;
+    [SerializeField] private Color _detectViewColor;
+    [SerializeField] private PathTrajectory _pathTrajectory;
+    [SerializeField] private SpriteRenderer _view;
 
-    private Transform questionMark = null;
-    private Transform targetPatrolPoint = null;
-    private Coroutine waitCoroutine = null;
-    private Coroutine checkPatrolCoroutine = null;
-    private bool inProcessDetection = false;
-    private bool worried = false;
-    private bool isPatrolling = false;
+    private Animator _animator;
+    private NavMeshAgent _agent;
+    private CreatureVision _vision;
+    private MovementController _player;
+    private AudioSource _audioSource;
+    private Color _defaultViewColor;
+    //private Coroutine _searchTargetCoroutine;
+    private Building _building;
+    private float _defaultSpeed;
+    private bool _worried;
+    private bool _followed;
+    //private bool _inSearching;
+    private bool _lockedControls;
 
-    public void SetTargetPoint(bool addVisibility = true)
+    public bool Worried => _worried;
+
+    public void Initialize(Building building)
     {
-        if (worried)
+        _building = building;
+    }
+
+    public void Calm()
+    {
+        if (!_worried)
             return;
 
-        TryDetectTarget(addVisibility);
+        Stop();
+        _followed = false;
+        _worried = false;
+        _agent.speed = _defaultSpeed;
+        _view.color = _defaultViewColor;
+        _animator.SetTrigger(SCARY_ANIMATOR_TRIGGER);
+        PlayNotFindSound();
+        DOVirtual.DelayedCall(2.0f, () =>
+        {
+            if (!_worried)
+                Patrol();
+        });
     }
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        vision = GetComponent<CreatureVision>();
-        audioSource = GetComponent<AudioSource>();
-
-        if (isPoliceman)
-            detectionTime = 0f;
+        _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
+        _vision = GetComponent<CreatureVision>();
+        _audioSource = GetComponent<AudioSource>();
+        _defaultViewColor = _view.color;
+        _defaultSpeed = _agent.speed;
     }
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        _player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+        Patrol();
     }
 
     private void Update()
     {
-        if (vision.SeesTarget && !inProcessDetection)
-        {
-            inProcessDetection = true;
-            TryDetectTarget();
-        }
+        if (_lockedControls)
+            return;
 
-        if (questionMark != null && Vector3.Distance(transform.position, 
-            new Vector3(questionMark.transform.position.x, transform.position.y, questionMark.transform.position.z)
-            ) <= detectionRadius)
-        {
-            Stop();
-            Destroy(questionMark.gameObject);
-            StopCoroutine(checkPatrolCoroutine);
-            isPatrolling = true;
-            worried = false;
-            PlayNotFindSound();
-            waitCoroutine = StartCoroutine(Wait());
-        }
-
-        if (isPatrolling && targetPatrolPoint != null && Vector3.Distance(transform.position,
-            new Vector3(targetPatrolPoint.position.x, transform.position.y, targetPatrolPoint.position.z)) <= detectionRadius)
-        {
-            Stop();
-            targetPatrolPoint = null;
-            waitCoroutine = StartCoroutine(Wait());
-            StopCoroutine(checkPatrolCoroutine);
-        }
-
-        Patrol();
+        Detect();
+        Follow();
+        //SearchTarget();
     }
 
-    private void TryDetectTarget(bool addVisibility = true)
+    private void OnCollisionEnter(Collision collision)
     {
-        worried = true;
-        isPatrolling = false;
+        if (!_followed || !collision.gameObject.TryGetComponent<MovementController>(out MovementController player))
+            return;
 
-        if (!isPoliceman)
-        {
-            PlaySuspectSound();
-            Stop();
-            animator.SetTrigger(reactToNoiseAnimatorTrigger);
-        }
-        CreateQuestionMark();
-        StartCoroutine(DetectTarget());
-    }
-
-    private void CreateQuestionMark()
-    {
-        if (questionMark != null)
-            Destroy(questionMark.gameObject);
-
-        if (waitCoroutine != null)
-            StopCoroutine(waitCoroutine);
-
-        if (checkPatrolCoroutine != null)
-            StopCoroutine(checkPatrolCoroutine);
-        checkPatrolCoroutine = StartCoroutine(CheckPatrol());
-
-        questionMark = Instantiate(GameStorage.Instanse.QuestionMarkPrefab, player.CenterPoint.position, Quaternion.Euler(90, 0, 0)).transform;
-    }
-
-    private IEnumerator DetectTarget()
-    {
-        yield return new WaitForSeconds(detectionTime);
-
-        inProcessDetection = false;
-
-        if (vision.SeesTarget)
-        {
-            if (isPoliceman && questionMark != null)
-                Run(questionMark.position);
-            else
-            {
-                animator.SetTrigger(scaryAnimatorTrigger);
-                PlayScreamSound();
-            }
-        }
-        else
-        {
-            if (questionMark != null)
-                Run(questionMark.position);
-        }
+        Stop();
+        player.Caught(_caughtDuration);
+        _building.LockDoors();
+        _lockedControls = true;
+        DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () => _lockedControls = false);
     }
 
     private void Patrol()
     {
-        if (worried || isPatrolling)
-            return;
-
-        isPatrolling = true;
-        //targetPatrolPoint = generator.GetRandomPatrolPoint();
-        Run(targetPatrolPoint.position);
-        checkPatrolCoroutine = StartCoroutine(CheckPatrol());
+        _pathTrajectory.Go();
+        Run();
     }
 
-    private IEnumerator Wait()
+    private void Run()
     {
-        yield return new WaitForSeconds(Random.Range(minStayingTime, maxStayingTime));
-        isPatrolling = false;
-        worried = false;
-        inProcessDetection = false;
-    }
+        _agent.isStopped = false;
 
-    private IEnumerator CheckPatrol()
-    {
-        yield return new WaitForSeconds(patrolCheckingTime);
-        Stop();
-
-        if (questionMark != null && !inProcessDetection)
-            Destroy(questionMark.gameObject);
-
-        waitCoroutine = StartCoroutine(Wait());
-    }
-
-    private void Run(Vector3 toPosition)
-    {
-        agent.SetDestination(toPosition);
-        animator.SetBool(walkAnimatorBool, true);
+        if (_worried)
+            _animator.SetBool(RUN_ANIAMTOR_BOOLEAN, true);
+        else
+            _animator.SetBool(WALK_ANIMATOR_BOOLEAN, true);
     }
 
     private void Stop()
     {
-        agent.isStopped = true;
-        agent.ResetPath();
-        animator.SetBool(walkAnimatorBool, false);
+        _animator.SetBool(RUN_ANIAMTOR_BOOLEAN, false);
+        _animator.SetBool(WALK_ANIMATOR_BOOLEAN, false);
+        _pathTrajectory.Stop();
     }
+
+    private void Detect()
+    {
+        if (!_vision.SeesTarget || _worried || !_player.InBuilding)
+            return;
+
+        Stop();
+        _worried = true;
+        //_inSearching = false;
+        _agent.speed = _followSpeed;
+        _animator.SetTrigger(REACT_TO_NOISE_ANIMATOR_TRIGGER);
+        _view.color = _detectViewColor;
+        PlayScreamSound();
+        PlayerIsNoticed?.Invoke();
+        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
+        DOVirtual.DelayedCall(1.0f, () =>
+        {
+            _followed = true;
+            Run();
+        });
+    }
+
+    private void Follow()
+    {
+        if (!_followed)
+            return;
+
+        _agent.SetDestination(_player.transform.position);
+    }
+
+    //private void SearchTarget()
+    //{
+    //    if (!_followed || _inSearching)
+    //        return;
+
+    //    _inSearching = true;
+    //    if (_searchTargetCoroutine != null)
+    //        StopCoroutine(_searchTargetCoroutine);
+    //    _searchTargetCoroutine = StartCoroutine(Coroutine());
+
+    //    IEnumerator Coroutine()
+    //    {
+    //        yield return new WaitForSeconds(_searchingDuration);
+    //        Calm();
+    //    }
+    //}
 
     private void PlaySuspectSound()
     {
-        if (isWoman)
-            SoundManager.Instanse.Play(Sound.SuspectWoman, audioSource);
+        if (_isWoman)
+            SoundManager.Instanse.Play(Sound.SuspectWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.SuspectMan, audioSource);
+            SoundManager.Instanse.Play(Sound.SuspectMan, _audioSource);
     }
 
     private void PlayNotFindSound()
     {
-        if (isWoman)
-            SoundManager.Instanse.Play(Sound.NotFindWoman, audioSource);
+        if (_isWoman)
+            SoundManager.Instanse.Play(Sound.NotFindWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.NotFindMan, audioSource);
+            SoundManager.Instanse.Play(Sound.NotFindMan, _audioSource);
     }
 
     private void PlayScreamSound()
     {
-        if (isWoman)
-            SoundManager.Instanse.Play(Sound.ScreamWoman, audioSource);
+        if (_isWoman)
+            SoundManager.Instanse.Play(Sound.ScreamWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.ScreamMan, audioSource);
+            SoundManager.Instanse.Play(Sound.ScreamMan, _audioSource);
     }
 }

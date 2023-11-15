@@ -17,32 +17,40 @@ public class Lootable : MonoBehaviour
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements _movingFurnitureElements;
-    private Camera _mainCamera;
 
     private bool _empty = false;
     private bool _isLooting = false;
 
-    public void Loot(MovementController player)
+    public void OnPlayerStay(MovementController player)
     {
         if (_empty)
             return;
 
+        player.CanHide(false);
+
         if (!player.IsRunning && !_isLooting)
         {
             player.RotateTowards(_appearHackingZoneTrigger.transform.position);
-            TakeResource(player.transform);
+            TakeResource(player);
         }
 
         _hackingArea.SetActive(!_isLooting);
     }
 
+    public void OnPlayerExit(MovementController player)
+    {
+        if (_empty)
+            return;
+
+        player.CanHide(true);
+    }
+
     private void Awake()
     {
         _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
-        _mainCamera = Camera.main;
     }
 
-    private void TakeResource(Transform player)
+    private void TakeResource(MovementController player)
     {
         _isLooting = true;
         SoundManager.Instanse.Play(sound);
@@ -52,6 +60,7 @@ public class Lootable : MonoBehaviour
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
             _movingFurnitureElements.Move();
+            player.CanHide(true);
 
             if (_containedResources.Length == 0)
                 return;
@@ -73,6 +82,7 @@ public class Lootable : MonoBehaviour
         void ActionAbort()
         {
             _isLooting = false;
+            _appearHackingZoneTrigger.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
     }

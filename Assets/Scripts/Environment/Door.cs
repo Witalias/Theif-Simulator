@@ -56,25 +56,31 @@ public class Door : MonoBehaviour
         SetState(true);
     }
 
+    public void Lock(bool value)
+    {
+        _hacked = !value;
+        _appearHackingZoneTrigger.SetActive(value);
+    }
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!_triggered && other.GetComponent<EnemyAI>() != null)
-            Open();
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (!_triggered && other.GetComponent<EnemyAI>() != null)
+    //        Open();
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (_triggered && other.GetComponent<EnemyAI>() != null)
-        {
-            SetState(false);
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (_triggered && other.GetComponent<EnemyAI>() != null)
+    //    {
+    //        SetState(false);
+    //    }
+    //}
 
     private void Hack()
     {
@@ -82,9 +88,8 @@ public class Door : MonoBehaviour
         SoundManager.Instanse.PlayLoop(Sound.DoorMasterKey);
         void ActionDone()
         {
-            _hacked = true;
+            Lock(false);
             _isHacking = false;
-            _appearHackingZoneTrigger.SetActive(false);
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
             PlayResourceAnimation?.Invoke(ResourceType.Money, 0, xp);
