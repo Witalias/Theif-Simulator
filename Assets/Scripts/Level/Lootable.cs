@@ -6,8 +6,11 @@ using DG.Tweening;
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
 {
+    private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
+
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int> PlayResourceAnimation;
+    public static event Action<string, float> ShowQuickMessage;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
     [SerializeField] private ItemsDropChance[] _containedResources;
@@ -20,6 +23,12 @@ public class Lootable : MonoBehaviour
 
     private bool _empty = false;
     private bool _isLooting = false;
+
+    public void OnPlayerEnter()
+    {
+        if (Stats.Instanse.BackpackIsFull)
+            ShowQuickMessage?.Invoke(FULL_BACKPACK_TEXT, 1.0f);
+    }
 
     public void OnPlayerStay(MovementController player)
     {

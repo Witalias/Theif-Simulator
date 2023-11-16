@@ -16,11 +16,13 @@ public class QuickMessage : MonoBehaviour
     private void OnEnable()
     {
         EnemyAI.ShowQuickMessage += Process;
+        Lootable.ShowQuickMessage += Process;
     }
 
     private void OnDisable()
     {
         EnemyAI.ShowQuickMessage -= Process;
+        Lootable.ShowQuickMessage -= Process;
     }
 
     private void Process(string message, float delay)
