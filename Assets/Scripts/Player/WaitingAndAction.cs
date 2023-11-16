@@ -30,10 +30,6 @@ public class WaitingAndAction : MonoBehaviour
 
     public bool InProgress { get; private set; } = false;
 
-    public float CurrentTime => currentTime;
-
-    public float ReachedTime => reachedTime;
-
     public void WaitAndExecute(float reachedTime, Action actionDone, Action actionAbort, float currentTime = 0f)
     {
         if (actionDone == null || InProgress)
@@ -57,13 +53,6 @@ public class WaitingAndAction : MonoBehaviour
         waitingCoroutine = StartCoroutine(ProcessTicks());
         TimerActived?.Invoke(true);
     }
-
-    //public void WaitAndExecute(float reachedTime, Action action, float noiseRadius)
-    //{
-    //    this.noiseRadius = noiseRadius;
-    //    noisyAction = true;
-    //    WaitAndExecute(reachedTime, action);
-    //}
     
     public void WaitAndExecuteWithSound(float reachedTime, Action actionDone, Action actionAbort, Sound sound, float currentTime = 0f)
     {
@@ -72,31 +61,12 @@ public class WaitingAndAction : MonoBehaviour
         WaitAndExecute(reachedTime, actionDone, actionAbort, currentTime);
     }
 
-    //public void WaitAndExecute(float time, Action actionDone, Action actionAbort, Sound sound, float noiseRadius)
-    //{
-    //    this.sound = sound;
-    //    this.playSound = true;
-    //    this.noiseRadius = noiseRadius;
-    //    noisyAction = true;
-    //    WaitAndExecute(time, actionDone, actionAbort);
-    //}
-
     public void AddProgress(float percents)
     {
         percents = Mathf.Clamp(percents, 0f, 100f);
         currentTime += reachedTime * percents / 100f;
         currentTime = Mathf.Clamp(currentTime, 0f, reachedTime);
         _animator.SetTrigger(ANIMATOR_PULSATE_TRIGGER);
-    }
-
-    public void Abort()
-    {
-        if (!InProgress)
-            return;
-
-        _actionAbort?.Invoke();
-        StopCoroutine(waitingCoroutine);
-        Refresh();
     }
 
     private void Awake()
@@ -108,11 +78,13 @@ public class WaitingAndAction : MonoBehaviour
     private void OnEnable()
     {
         Door.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
+        EnemyAI.PlayerIsNoticed += Abort;
     }
 
     private void OnDisable()
     {
         Door.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
+        EnemyAI.PlayerIsNoticed -= Abort;
     }
 
     private void Update()
@@ -151,5 +123,15 @@ public class WaitingAndAction : MonoBehaviour
         }
         rectTransform.position = new Vector3(-10000, 0, 0);
         TimerActived?.Invoke(false);
+    }
+
+    private void Abort()
+    {
+        if (!InProgress)
+            return;
+
+        _actionAbort?.Invoke();
+        StopCoroutine(waitingCoroutine);
+        Refresh();
     }
 }

@@ -52,10 +52,27 @@ public class Stats : MonoBehaviour
         _resources[type] = (int)Mathf.Clamp(_resources[type] + value, 0, Mathf.Infinity);
         _resourcesPanel.SetResourceValue(type, _resources[type]);
         _resourcesPanel.SetActiveCounter(type, _resources[type] > 0);
-        _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+        UpdateCapacity();
     }
 
     public float GetResource(ResourceType type) => _resources[type];
+
+    public void ClearBackpack()
+    {
+        foreach (var resource in Enum.GetValues(typeof(ResourceType)))
+            ClearResource((ResourceType)resource);
+        _resourcesPanel.ClearResources();
+    }
+
+    public void ClearResource(ResourceType type)
+    {
+        if (type == ResourceType.Money)
+            return;
+
+        _backpackFullness -= _resources[type];
+        _resources[type] = 0;
+        UpdateCapacity();
+    }
 
     private void Awake()
     {
@@ -75,7 +92,7 @@ public class Stats : MonoBehaviour
 
         Level = _initialLevel;
         _xpBar.SetLevel(_initialLevel);
-        _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+        UpdateCapacity();
     }
 
     private void Start()
@@ -90,4 +107,6 @@ public class Stats : MonoBehaviour
         _xpBar.SetLevel(++Level);
         _neededXP += GameSettings.Instanse.StepXPRequirement;
     }
+
+    private void UpdateCapacity() => _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
 }

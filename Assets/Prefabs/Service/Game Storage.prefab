@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8280207394263037430
 MonoBehaviour:
@@ -45,13 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newResourceAnimationPrefab: {fileID: 3968714428361785677, guid: 188ce89e10a5c224b835ecabf425d2d5, type: 3}
-  hotkeyPrefab: {fileID: 2639714983690925403, guid: 41cc745d4026d404e99408b6bd788838, type: 3}
-  questionMarkPrefab: {fileID: 8038256728635678481, guid: 77ada4242d8e45848966f529532acae3, type: 3}
   enemyPrefabs:
   - {fileID: 2102709877019701409, guid: 28ba09a1a3de95f448e916d4ef926f8a, type: 3}
+  _playerBoxPrefab: {fileID: 0}
   _bootle: {fileID: 21300000, guid: 52ebdb40ab736aa43ab36b349db7ea2c, type: 3}
   _sneakers: {fileID: 21300000, guid: 5172c71bfcf680e498ac01f8c7b7341e, type: 3}
-  _money: {fileID: 21300000, guid: ffc005df95d2dd84ca01df67a8f2b962, type: 3}
+  _money: {fileID: 21300000, guid: 69f66a90b07fc284bb33250998649f81, type: 3}
   _xp: {fileID: 21300000, guid: b98eda24323493e478bb52269dd6be81, type: 3}
   _bootleSound: 6
   _moneySound: 7

@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -16,7 +17,7 @@ public class MovementController : MonoBehaviour
     public static event Action PlayerCaught;
 
     [SerializeField] private float manuallyMovingSpeed = 5f;
-    [SerializeField] private float climbSpeed = 5f;
+    [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform centerPoint;
@@ -25,9 +26,9 @@ public class MovementController : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rigidbody;
     private bool _isMoving;
-    private bool _controlsLocked;
     private bool _canHide;
     private bool _inBuilding;
+    private bool _noticed;
     private float _initialSpeed;
 
     public bool InBuilding => _inBuilding;
@@ -35,6 +36,8 @@ public class MovementController : MonoBehaviour
     public Transform CenterPoint { get => centerPoint; }
 
     public bool IsRunning => _isMoving;
+
+    public bool Noticed => _noticed;
 
     public void AddSpeed(float valueInPercents)
     {
@@ -54,11 +57,15 @@ public class MovementController : MonoBehaviour
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
         InBuildingState(false);
-        DOVirtual.DelayedCall(delay, () =>
+        StartCoroutine(Coroutine());
+
+        IEnumerator Coroutine()
         {
+            yield return new WaitForSeconds(delay);
             transform.position = Stats.Instanse.PrisonSpawnPoint.position;
+            Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
-        });
+        }
     }
 
     public void CanHide(bool value)
@@ -146,11 +153,15 @@ public class MovementController : MonoBehaviour
     private void OnNoticed()
     {
         CanHide(false);
+        _noticed = true;
     }
 
     private void InBuildingState(bool value)
     {
         _inBuilding = value;
         CanHide(value);
+
+        if (value == false)
+            _noticed = false;
     }
 }

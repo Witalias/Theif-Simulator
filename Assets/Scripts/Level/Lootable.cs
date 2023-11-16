@@ -23,7 +23,7 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed)
             return;
 
         player.CanHide(false);
@@ -39,7 +39,7 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerExit(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed)
             return;
 
         player.CanHide(true);

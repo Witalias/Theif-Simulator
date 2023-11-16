@@ -47,6 +47,12 @@ public class ResourcesPanel : MonoBehaviour
             _backpack.SetDefaultColor();
     }
 
+    public void ClearResources()
+    {
+        SetActiveCounter(ResourceType.Bootle, false);
+        SetActiveCounter(ResourceType.Sneakers, false);
+    }
+
     private void OnEnable()
     {
         Lootable.PlayResourceAnimation += PlayResourceAnimation;

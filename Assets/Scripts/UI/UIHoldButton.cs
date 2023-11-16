@@ -41,12 +41,14 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Lootable.ShowHoldButton += Show;
         MovementController.PlayerCaught += Abort;
+        EnemyAI.PlayerIsNoticed += Abort;
     }
 
     private void OnDisable()
     {
         Lootable.ShowHoldButton -= Show;
         MovementController.PlayerCaught -= Abort;
+        EnemyAI.PlayerIsNoticed -= Abort;
     }
 
     private void Update()
@@ -72,6 +74,9 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private void Abort()
     {
+        if (!_content.activeSelf)
+            return;
+
         _actionAbort?.Invoke();
         SetActive(false);
     }
@@ -92,13 +97,11 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         {
             _filledImage.fillAmount = 0.0f;
             _animation.Play();
-            MovementController.MovingStarted += Abort;
         }
         else
         {
             _actionAbort = null;
             _actionDone = null;
-            MovementController.MovingStarted -= Abort;
         }
         HoldButtonActived?.Invoke(value);
     }
