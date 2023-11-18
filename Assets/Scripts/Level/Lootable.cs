@@ -20,7 +20,6 @@ public class Lootable : MonoBehaviour
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements _movingFurnitureElements;
-
     private bool _empty = false;
     private bool _isLooting = false;
 
@@ -32,7 +31,7 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(false);
@@ -48,7 +47,7 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerExit(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(true);

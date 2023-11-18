@@ -79,12 +79,14 @@ public class WaitingAndAction : MonoBehaviour
     {
         Door.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed += Abort;
+        UpgradesPanel.Opened += (open) => Abort();
     }
 
     private void OnDisable()
     {
         Door.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed -= Abort;
+        UpgradesPanel.Opened -= (open) => Abort();
     }
 
     private void Update()
@@ -93,7 +95,7 @@ public class WaitingAndAction : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0))
-            AddProgress(GameSettings.Instanse.TapBonusTimePercents);
+            AddProgress(Stats.Instanse.TapBonusTimePercents);
     }
 
     private IEnumerator ProcessTicks()

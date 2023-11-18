@@ -14,8 +14,6 @@ public class UIBar : MonoBehaviour
         value = Mathf.Clamp(value, 0.0f, maxValue);
         bar.fillAmount = value / maxValue;
         if (valueText != null)
-            valueText.text = $"{(int)value}";
-        if (maxValue > 0.0f)
-            valueText.text += $"/{(int)maxValue}";
+            valueText.text = $"{(int)value}/{(int)maxValue}";
     }
 }

@@ -61,14 +61,12 @@ public class GameStorage : MonoBehaviour
         {
             [ResourceType.Bootle] = _bootle,
             [ResourceType.Sneakers] = _sneakers,
-            [ResourceType.Money] = _money,
         };
 
         resourceSounds = new Dictionary<ResourceType, Sound>
         {
             [ResourceType.Bootle] = _bootleSound,
             [ResourceType.Sneakers] = _sneakersSound,
-            [ResourceType.Money] = _moneySound,
         };
     }
 }

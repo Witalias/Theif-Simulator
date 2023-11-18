@@ -16,7 +16,6 @@ public class MovementController : MonoBehaviour
     public static event Action MovingStarted;
     public static event Action PlayerCaught;
 
-    [SerializeField] private float manuallyMovingSpeed = 5f;
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
     [SerializeField] private LayerMask playerMask;
@@ -29,20 +28,12 @@ public class MovementController : MonoBehaviour
     private bool _canHide;
     private bool _inBuilding;
     private bool _noticed;
-    private float _initialSpeed;
 
     public bool InBuilding => _inBuilding;
-
     public Transform CenterPoint { get => centerPoint; }
-
     public bool IsRunning => _isMoving;
-
     public bool Noticed => _noticed;
-
-    public void AddSpeed(float valueInPercents)
-    {
-        manuallyMovingSpeed = _initialSpeed + _initialSpeed * valueInPercents / 100f;
-    }
+    public bool Busy => _controlsLocked;
 
     public void RotateTowards(Vector3 point)
     {
@@ -80,14 +71,13 @@ public class MovementController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-
-        _initialSpeed = manuallyMovingSpeed;
     }
 
     private void OnEnable()
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
+        UpgradesPanel.Opened += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
     }
@@ -96,6 +86,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
+        UpgradesPanel.Opened -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
@@ -118,7 +109,7 @@ public class MovementController : MonoBehaviour
         if (direction.magnitude > 1)
             direction.Normalize();
 
-        _rigidbody.velocity = direction * manuallyMovingSpeed;
+        _rigidbody.velocity = direction * Stats.Instanse.PlayerMovingSpeed;
 
         if (movementVector != Vector3.zero)
         {
