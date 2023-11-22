@@ -22,10 +22,14 @@ public class UpgradesPanel : MonoBehaviour
         _closeButton.onClick.AddListener(Close);
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-            Open();
+        UpgradesPopupButton.Clicked += Open;
+    }
+
+    private void OnDisable()
+    {
+        UpgradesPopupButton.Clicked += Open;
     }
 
     private void Open()
