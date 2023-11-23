@@ -42,7 +42,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         Lootable.ShowHoldButton += Show;
         MovementController.PlayerCaught += Abort;
         EnemyAI.PlayerIsNoticed += Abort;
-        UpgradesPanel.Opened += (open) => Abort();
+        UpgradesPanel.Opened += OnOpenPopup;
     }
 
     private void OnDisable()
@@ -50,7 +50,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         Lootable.ShowHoldButton -= Show;
         MovementController.PlayerCaught -= Abort;
         EnemyAI.PlayerIsNoticed -= Abort;
-        UpgradesPanel.Opened -= (open) => Abort();
+        UpgradesPanel.Opened -= OnOpenPopup;
     }
 
     private void Update()
@@ -81,6 +81,11 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         _actionAbort?.Invoke();
         SetActive(false);
+    }
+
+    private void OnOpenPopup(bool arg)
+    {
+        Abort();
     }
 
     private void Show(Action actionDone, Action actionAbort)

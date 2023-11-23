@@ -108,6 +108,7 @@ public class Lootable : MonoBehaviour
         {
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(true);
+            _hackingArea.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
     }

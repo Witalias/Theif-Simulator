@@ -25,11 +25,13 @@ public class UpgradesPanel : MonoBehaviour
     private void OnEnable()
     {
         UpgradesPopupButton.Clicked += Open;
+        EnemyAI.PlayerIsNoticed += Close;
     }
 
     private void OnDisable()
     {
         UpgradesPopupButton.Clicked += Open;
+        EnemyAI.PlayerIsNoticed -= Close;
     }
 
     private void Open()

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using DG.Tweening;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Animator))]
@@ -79,14 +80,14 @@ public class WaitingAndAction : MonoBehaviour
     {
         Door.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed += Abort;
-        UpgradesPanel.Opened += (open) => Abort();
+        UpgradesPanel.Opened += OnOpenPopup;
     }
 
     private void OnDisable()
     {
         Door.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed -= Abort;
-        UpgradesPanel.Opened -= (open) => Abort();
+        UpgradesPanel.Opened -= OnOpenPopup;
     }
 
     private void Update()
@@ -112,7 +113,7 @@ public class WaitingAndAction : MonoBehaviour
         Refresh();
     }
 
-    private void Refresh()
+    private void Refresh(bool aborted = false)
     {
         //reachedTime = 1f;
         //currentTime = 0f;
@@ -124,7 +125,9 @@ public class WaitingAndAction : MonoBehaviour
             SoundManager.Instanse.Stop(sound);
         }
         rectTransform.position = new Vector3(-10000, 0, 0);
-        TimerActived?.Invoke(false);
+
+        if (!aborted)
+            TimerActived?.Invoke(false);
     }
 
     private void Abort()
@@ -134,6 +137,11 @@ public class WaitingAndAction : MonoBehaviour
 
         _actionAbort?.Invoke();
         StopCoroutine(waitingCoroutine);
-        Refresh();
+        Refresh(true);
+    }
+
+    private void OnOpenPopup(bool arg)
+    {
+        Abort();
     }
 }
