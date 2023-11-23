@@ -125,7 +125,6 @@ public class Stats : MonoBehaviour
 
         Level = _initialLevel;
         _xpBar.SetLevel(_initialLevel);
-        UpdateCapacity();
     }
 
     private void Start()
@@ -134,6 +133,7 @@ public class Stats : MonoBehaviour
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
         _resourcesPanel.SetMovey(_money);
         AddXP(0);
+        UpdateCapacity();
     }
 
     private void NextLevel()
