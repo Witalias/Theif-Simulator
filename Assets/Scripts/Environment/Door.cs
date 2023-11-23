@@ -6,11 +6,13 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
+    private const string ANIMATOR_BACK_SIDE_BOOLEAN = "Back Side";
 
     public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
     public static event Action<ResourceType, int, int> PlayResourceAnimation;
 
     [SerializeField] private float _hackingTime = 10f;
+    [SerializeField] private bool _openBackSide;
     [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
@@ -66,6 +68,7 @@ public class Door : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
+        _animator.SetBool(ANIMATOR_BACK_SIDE_BOOLEAN, _openBackSide);
     }
 
     //private void OnTriggerStay(Collider other)

@@ -42476,6 +42476,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 646304718}
     m_Modifications:
+    - target: {fileID: 5304190448428796067, guid: 37310a3484b283a4696a12d12d550541, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5304190448428796067, guid: 37310a3484b283a4696a12d12d550541, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7197695521293522734, guid: 37310a3484b283a4696a12d12d550541, type: 3}
+      propertyPath: _openBackSide
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7483040031821912368, guid: 37310a3484b283a4696a12d12d550541, type: 3}
       propertyPath: m_Name
       value: Small House
@@ -42559,7 +42571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -89.3
+      value: -66.6
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -42567,7 +42579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.1
+      value: -97
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960048, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42599,19 +42611,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960058, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0000054651655
+      value: -0.0000053888693
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960058, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00072759826
+      value: 0.000727578
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960060, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000022125244
+      value: 0.0000022506713
       objectReference: {fileID: 0}
     - target: {fileID: 5764222128491960060, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00031240223
+      value: -0.00031238794
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6587955239811512166, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
@@ -42816,6 +42828,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 646304718}
     m_Modifications:
+    - target: {fileID: 5027302684222416843, guid: 12b36ec11a486ea4390e6d57566a94d4, type: 3}
+      propertyPath: m_Size.x
+      value: 5.2883615
+      objectReference: {fileID: 0}
+    - target: {fileID: 5027302684222416843, guid: 12b36ec11a486ea4390e6d57566a94d4, type: 3}
+      propertyPath: m_Center.x
+      value: 6.8858194
+      objectReference: {fileID: 0}
     - target: {fileID: 7100690643736975409, guid: 12b36ec11a486ea4390e6d57566a94d4, type: 3}
       propertyPath: m_Name
       value: Small Angle House (1)
