@@ -191,17 +191,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _containedResources:
   - Type: 0
-    DropChance: 70
+    DropChance: 100
     CountsChances:
     - 70
     - 30
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  - Type: 2
-    DropChance: 30
-    CountsChances: []
-    OnlyMinMaxRange: 1
-    MinMaxCount: {x: 10, y: 20}
   _minMaxXP: {x: 1, y: 2}
   sound: 28
   _hackingArea: {fileID: 2123443670518620307}
@@ -266,13 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 2459616930806361613}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: 0, y: 120, z: 0}
+  _movingObjects:
+  - Object: {fileID: 2459616930806361613}
+    ChangePosition: 0
+    EndLocalPosition: {x: 0, y: 0, z: 0}
+    ChangeRotation: 1
+    EndLocalRotation: {x: 0, y: 135, z: 0}
 --- !u!208 &4659569460230070355
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -513,7 +507,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onEnter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8669048186366563205}
+        m_TargetAssemblyTypeName: Lootable, Assembly-CSharp
+        m_MethodName: OnPlayerEnter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onStay:
     m_PersistentCalls:
       m_Calls:

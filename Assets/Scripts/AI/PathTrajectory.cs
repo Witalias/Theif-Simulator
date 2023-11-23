@@ -10,6 +10,12 @@ public class PathTrajectory : MonoBehaviour
 
     private int _currentIndex;
 
+    private void Start()
+    {
+        if (TryGetComponent<DrawPath>(out DrawPath path))
+            path.Draw(_path, _loop);
+    }
+
     public void Go()
     {
         if (_path.Length == 0)

@@ -41,12 +41,16 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Lootable.ShowHoldButton += Show;
         MovementController.PlayerCaught += Abort;
+        EnemyAI.PlayerIsNoticed += Abort;
+        UpgradesPanel.Opened += OnOpenPopup;
     }
 
     private void OnDisable()
     {
         Lootable.ShowHoldButton -= Show;
         MovementController.PlayerCaught -= Abort;
+        EnemyAI.PlayerIsNoticed -= Abort;
+        UpgradesPanel.Opened -= OnOpenPopup;
     }
 
     private void Update()
@@ -60,7 +64,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (!_content.activeSelf)
             return;
 
-        _filledImage.fillAmount += Time.deltaTime * GameSettings.Instanse.FillSpeedForHoldButton;
+        _filledImage.fillAmount += Time.deltaTime * Stats.Instanse.FillSpeedForHoldButton;
         _filledImage.color = Color.Lerp(_negativeColor, _positiveColor, _filledImage.fillAmount);
 
         if (_filledImage.fillAmount >= 1.0f)
@@ -72,8 +76,16 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private void Abort()
     {
+        if (!_content.activeSelf)
+            return;
+
         _actionAbort?.Invoke();
         SetActive(false);
+    }
+
+    private void OnOpenPopup(bool arg)
+    {
+        Abort();
     }
 
     private void Show(Action actionDone, Action actionAbort)
@@ -92,13 +104,11 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         {
             _filledImage.fillAmount = 0.0f;
             _animation.Play();
-            MovementController.MovingStarted += Abort;
         }
         else
         {
             _actionAbort = null;
             _actionDone = null;
-            MovementController.MovingStarted -= Abort;
         }
         HoldButtonActived?.Invoke(value);
     }

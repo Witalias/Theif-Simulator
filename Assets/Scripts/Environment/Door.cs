@@ -24,20 +24,20 @@ public class Door : MonoBehaviour
 
     public void HackOrOpen(MovementController player)
     {
-        if (!_triggered && player != null)
+        if (_triggered || player == null || player.Busy)
+            return;
+
+        if (!_hacked)
         {
-            if (!_hacked)
+            if (!_isHacking && !player.IsRunning)
             {
-                if (!_isHacking && !player.IsRunning)
-                {
-                    Hack();
-                    player.RotateTowards(_appearHackingZoneTrigger.transform.position);
-                }
-                _hackingArea.SetActive(!_isHacking);
-                return;
+                Hack();
+                player.RotateTowards(_appearHackingZoneTrigger.transform.position);
             }
-            SetState(true);
+            _hackingArea.SetActive(!_isHacking);
+            return;
         }
+        SetState(true);
     }
 
     public void Close()
@@ -92,7 +92,7 @@ public class Door : MonoBehaviour
             _isHacking = false;
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
-            PlayResourceAnimation?.Invoke(ResourceType.Money, 0, xp);
+            PlayResourceAnimation?.Invoke(ResourceType.Sneakers, 0, xp);
         }
         void ActionAbort()
         {

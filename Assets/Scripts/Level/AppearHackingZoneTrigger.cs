@@ -25,6 +25,9 @@ public class AppearHackingZoneTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.GetComponent<MovementController>() == null)
+            return;
+
         _hackingZone.SetActive(false);
     }
 }

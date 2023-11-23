@@ -123,7 +123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102709877049460057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.23, z: 0.43}
+  m_LocalPosition: {x: 0, y: 2.14, z: 0.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -154,14 +154,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6519703478190158187}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 6.95}
-  m_LocalScale: {x: 11, y: 11, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0.04, y: 1, z: 5.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6080330519455056559}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!212 &3496653355060631713
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -203,8 +203,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4117647}
+  m_Sprite: {fileID: 21300000, guid: 7028fb1bce91ced4cb894d6720313d10, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -233,6 +233,10 @@ PrefabInstance:
     - target: {fileID: 100002, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c63a0f262481f1841881031595ba98cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_Layer
@@ -462,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 100116, guid: c63a0f262481f1841881031595ba98cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100118, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -568,6 +576,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4310526444678127791}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7033712603474661825}
   m_SourcePrefab: {fileID: 100100000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
 --- !u!1 &6080330519454834319 stripped
 GameObject:
@@ -733,9 +744,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isWoman: 1
-  _followSpeed: 6
+  _followSpeed: 20
   _caughtDuration: 2
-  _detectViewColor: {r: 1, g: 0.60784316, b: 0.60784316, a: 0.31764707}
+  _detectViewColor: {r: 1, g: 0.60784316, b: 0.60784316, a: 1}
   _pathTrajectory: {fileID: 4310526444678127791}
   _view: {fileID: 3496653355060631713}
 --- !u!195 &2102709877019701420
@@ -748,7 +759,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 90
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -773,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 45
-  viewDistance: 11
+  viewDistance: 17
   enemyEye: {fileID: 2102709877049460062}
 --- !u!114 &4310526444678127791
 MonoBehaviour:
@@ -791,6 +802,20 @@ MonoBehaviour:
   _loop: 0
   _reverse: 0
   _agent: {fileID: 2102709877019701420}
+--- !u!114 &7033712603474661825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080330519454834319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b8d2f2e63d3a246ab637177c5ac53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pointPrefab: {fileID: 7365049038611901970, guid: ad9fddac3f0f8f94bb29b6d4dd0839a5, type: 3}
+  _linePrefab: {fileID: 179272086315791011, guid: 286f810e75983534bae8c6e25d9de6f1, type: 3}
 --- !u!4 &6080330519455056559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c63a0f262481f1841881031595ba98cb, type: 3}

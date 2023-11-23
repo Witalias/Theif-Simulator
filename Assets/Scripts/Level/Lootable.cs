@@ -6,8 +6,21 @@ using DG.Tweening;
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
 {
+    [Serializable]
+    private class ItemsDropChance
+    {
+        public ResourceType Type;
+        public float DropChance;
+        public float[] CountsChances;
+        public bool OnlyMinMaxRange;
+        public Vector2 MinMaxCount;
+    }
+
+    private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
+
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int> PlayResourceAnimation;
+    public static event Action<string, float> ShowQuickMessage;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
     [SerializeField] private ItemsDropChance[] _containedResources;
@@ -17,13 +30,18 @@ public class Lootable : MonoBehaviour
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements _movingFurnitureElements;
-
     private bool _empty = false;
     private bool _isLooting = false;
 
+    public void OnPlayerEnter()
+    {
+        if (Stats.Instanse.BackpackIsFull)
+            ShowQuickMessage?.Invoke(FULL_BACKPACK_TEXT, 1.0f);
+    }
+
     public void OnPlayerStay(MovementController player)
     {
-        if (_empty)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(false);
@@ -39,10 +57,17 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerExit(MovementController player)
     {
-        if (_empty)
+        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(true);
+    }
+
+    public void Fill()
+    {
+        _empty = false;
+        _appearHackingZoneTrigger.SetActive(true);
+        _movingFurnitureElements.MoveBack();
     }
 
     private void Awake()
@@ -59,7 +84,7 @@ public class Lootable : MonoBehaviour
             _empty = true;
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
-            _movingFurnitureElements.Move();
+            _movingFurnitureElements.MoveForward();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)
@@ -83,17 +108,8 @@ public class Lootable : MonoBehaviour
         {
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(true);
+            _hackingArea.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
-    }
-
-    [Serializable]
-    public class ItemsDropChance
-    {
-        public ResourceType Type;
-        public float DropChance;
-        public float[] CountsChances;
-        public bool OnlyMinMaxRange;
-        public Vector2 MinMaxCount;
     }
 }

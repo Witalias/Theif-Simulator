@@ -1,55 +1,65 @@
+using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class MovingFurnitureElements : MonoBehaviour
 {
-    private const float movingSpeed = 10f;
-
-    [Tooltip("Оставьте пустым, если объект не будет заменён другим после обыска")]
-    [SerializeField] private GameObject objectAfterLooting;
-
-    [SerializeField] private Transform[] movingObjects;
-
-    [Tooltip("Оставьте нули, если объект не нужно перемещать")]
-    [SerializeField] private Vector3[] endLocalPositions;
-
-    [Tooltip("Оставьте нули, если объект не нужно вращать")]
-    [SerializeField] private Vector3[] endLocalRotations;
-
-    private bool moveChildObjects = false;
-
-    public void Move()
+    [Serializable]
+    private class MovingObject
     {
-        if (objectAfterLooting == null)
-            MoveChildObjects();
-        else
-            ReplaceObject();
-    }
+        public Transform Object;
+        public bool ChangePosition;
+        public Vector3 EndLocalPosition;
+        public bool ChangeRotation;
+        public Vector3 EndLocalRotation;
 
-    private void Update()
-    {
-        if (moveChildObjects)
+        public MovingObject(MovingObject other)
         {
-            for (var i = 0; i < movingObjects.Length; ++i)
-            {
-                if (endLocalPositions[i] != Vector3.zero)
-                    movingObjects[i].localPosition = Vector3.Lerp(movingObjects[i].localPosition, endLocalPositions[i], Time.deltaTime * movingSpeed);
-                if (endLocalRotations[i] != Vector3.zero)
-                    movingObjects[i].localRotation = Quaternion.Lerp(movingObjects[i].localRotation, Quaternion.Euler(endLocalRotations[i]), Time.deltaTime * movingSpeed);
-            }
+            Object = other.Object;
+            ChangePosition = other.ChangePosition;
+            EndLocalPosition = other.EndLocalPosition;
+            ChangeRotation = other.ChangeRotation;
+            EndLocalRotation = other.EndLocalRotation;
         }
     }
 
-    private void MoveChildObjects()
-    {
-        if (movingObjects.Length == 0 || endLocalPositions.Length == 0 || endLocalRotations.Length == 0)
-            return;
+    private const float ANIMATION_DURATION = 0.25f;
 
-        moveChildObjects = true;
+    [SerializeField] private MovingObject[] _movingObjects;
+
+    private MovingObject[] _initialMovingStates;
+
+    public void MoveForward()
+    {
+        Move(_movingObjects);
     }
 
-    private void ReplaceObject()
+    public void MoveBack()
     {
-        Instantiate(objectAfterLooting, transform.position, transform.rotation, transform.parent);
-        Destroy(gameObject);
+        Move(_initialMovingStates);
+    }
+
+    private void Awake()
+    {
+        _initialMovingStates = new MovingObject[_movingObjects.Length];
+        for (var i = 0; i < _movingObjects.Length; i++)
+        {
+            _initialMovingStates[i] = new MovingObject(_movingObjects[i])
+            {
+                EndLocalPosition = _movingObjects[i].Object.localPosition,
+                EndLocalRotation = _movingObjects[i].Object.localEulerAngles
+            };
+        }
+    }
+
+    private void Move(MovingObject[] moves)
+    {
+        foreach (var movable in moves)
+        {
+            if (movable.ChangePosition)
+                movable.Object.DOLocalMove(movable.EndLocalPosition, ANIMATION_DURATION);
+            if (movable.ChangeRotation)
+                movable.Object.DOLocalRotate(movable.EndLocalRotation, ANIMATION_DURATION);
+        }
     }
 }

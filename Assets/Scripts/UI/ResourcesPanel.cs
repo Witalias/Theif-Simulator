@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class ResourcesPanel : MonoBehaviour
 {
+    [SerializeField] private Color _fullBackpackTextColor;
     [SerializeField] private GameObject[] _itemCounters;
     [SerializeField] private GameObject _itemPanel;
+    [SerializeField] private UICounter _backpack;
     [SerializeField] private UICounter _money;
     [SerializeField] private UICounter _bottles;
     [SerializeField] private UICounter _sneakers;
@@ -17,22 +19,38 @@ public class ResourcesPanel : MonoBehaviour
     {
         switch (type)
         {
-            case ResourceType.Money: _money.SetValue(value); break;
             case ResourceType.Bootle: _bottles.SetValue(value); break;
             case ResourceType.Sneakers: _sneakers.SetValue(value); break;
         }
-        UpdatePanels();
+        //UpdatePanels();
     }
 
     public void SetActiveCounter(ResourceType type, bool value)
     {
         switch (type)
         {
-            case ResourceType.Money: _money.gameObject.SetActive(value); break;
             case ResourceType.Bootle: _bottles.gameObject.SetActive(value); break;
             case ResourceType.Sneakers: _sneakers.gameObject.SetActive(value); break;
         }
-        UpdatePanels();
+        //UpdatePanels();
+    }
+
+    public void SetBackpackCapacity(int fullness, int capacity)
+    {
+        _backpack.SetValue(fullness, capacity);
+
+        if (fullness >= capacity)
+            _backpack.SetColor(_fullBackpackTextColor);
+        else
+            _backpack.SetDefaultColor();
+    }
+
+    public void SetMovey(int value) => _money.SetValue(value);
+
+    public void ClearResources()
+    {
+        SetActiveCounter(ResourceType.Bootle, false);
+        SetActiveCounter(ResourceType.Sneakers, false);
     }
 
     private void OnEnable()
@@ -47,18 +65,18 @@ public class ResourcesPanel : MonoBehaviour
         Door.PlayResourceAnimation -= PlayResourceAnimation;
     }
 
-    private void UpdatePanels()
-    {
-        foreach (var counter in _itemCounters)
-        {
-            if (counter.activeSelf)
-            {
-                _itemPanel.SetActive(true);
-                return;
-            }
-        }
-        _itemPanel.SetActive(false);
-    }
+    //private void UpdatePanels()
+    //{
+    //    foreach (var counter in _itemCounters)
+    //    {
+    //        if (counter.activeSelf)
+    //        {
+    //            _itemPanel.SetActive(true);
+    //            return;
+    //        }
+    //    }
+    //    _itemPanel.SetActive(false);
+    //}
 
     private void PlayResourceAnimation(ResourceType type, int count, int xp)
     {

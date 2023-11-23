@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -15,8 +16,7 @@ public class MovementController : MonoBehaviour
     public static event Action MovingStarted;
     public static event Action PlayerCaught;
 
-    [SerializeField] private float manuallyMovingSpeed = 5f;
-    [SerializeField] private float climbSpeed = 5f;
+    [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform centerPoint;
@@ -25,21 +25,15 @@ public class MovementController : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rigidbody;
     private bool _isMoving;
-    private bool _controlsLocked;
     private bool _canHide;
     private bool _inBuilding;
-    private float _initialSpeed;
+    private bool _noticed;
 
     public bool InBuilding => _inBuilding;
-
     public Transform CenterPoint { get => centerPoint; }
-
     public bool IsRunning => _isMoving;
-
-    public void AddSpeed(float valueInPercents)
-    {
-        manuallyMovingSpeed = _initialSpeed + _initialSpeed * valueInPercents / 100f;
-    }
+    public bool Noticed => _noticed;
+    public bool Busy => _controlsLocked;
 
     public void RotateTowards(Vector3 point)
     {
@@ -54,11 +48,15 @@ public class MovementController : MonoBehaviour
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
         InBuildingState(false);
-        DOVirtual.DelayedCall(delay, () =>
+        StartCoroutine(Coroutine());
+
+        IEnumerator Coroutine()
         {
+            yield return new WaitForSeconds(delay);
             transform.position = Stats.Instanse.PrisonSpawnPoint.position;
+            Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
-        });
+        }
     }
 
     public void CanHide(bool value)
@@ -73,14 +71,13 @@ public class MovementController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-
-        _initialSpeed = manuallyMovingSpeed;
     }
 
     private void OnEnable()
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
+        UpgradesPanel.Opened += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
     }
@@ -89,6 +86,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
+        UpgradesPanel.Opened -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
@@ -111,7 +109,7 @@ public class MovementController : MonoBehaviour
         if (direction.magnitude > 1)
             direction.Normalize();
 
-        _rigidbody.velocity = direction * manuallyMovingSpeed;
+        _rigidbody.velocity = direction * Stats.Instanse.PlayerMovingSpeed;
 
         if (movementVector != Vector3.zero)
         {
@@ -146,11 +144,15 @@ public class MovementController : MonoBehaviour
     private void OnNoticed()
     {
         CanHide(false);
+        _noticed = true;
     }
 
     private void InBuildingState(bool value)
     {
         _inBuilding = value;
         CanHide(value);
+
+        if (value == false)
+            _noticed = false;
     }
 }
