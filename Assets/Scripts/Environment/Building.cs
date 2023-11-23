@@ -7,10 +7,16 @@ public class Building : MonoBehaviour
 
     [SerializeField] private EnemyAI[] _enemies;
     [SerializeField] private Door[] _doors;
+    [SerializeField] private Lootable[] _lootables;
+
+    private RefreshBuildingTimer _refreshTimer;
 
     public void OnPlayerEnter()
     {
         PlayerInBuilding?.Invoke(true);
+
+        if (_refreshTimer != null)
+            _refreshTimer.StopTimer();
     }
 
     public void OnPlayerExit()
@@ -27,6 +33,9 @@ public class Building : MonoBehaviour
             }
             enemy.Calm();
         }
+
+        if (_refreshTimer != null)
+            _refreshTimer.StartTimer();
     }
 
     public void LockDoors()
@@ -35,9 +44,27 @@ public class Building : MonoBehaviour
             door.Lock(true);
     }
 
+    private void Awake()
+    {
+        if (TryGetComponent<RefreshBuildingTimer>(out _refreshTimer))
+            _refreshTimer.Initialize(Refresh);
+    }
+
     private void Start()
     {
         foreach (var enemy in _enemies)
             enemy.Initialize(this);
+    }
+
+    private void Refresh()
+    {
+        LockDoors();
+        FillContainers();
+    }
+
+    private void FillContainers()
+    {
+        foreach (var lootable in _lootables)
+            lootable.Fill();
     }
 }

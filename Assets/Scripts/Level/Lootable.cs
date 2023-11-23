@@ -6,6 +6,16 @@ using DG.Tweening;
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
 {
+    [Serializable]
+    private class ItemsDropChance
+    {
+        public ResourceType Type;
+        public float DropChance;
+        public float[] CountsChances;
+        public bool OnlyMinMaxRange;
+        public Vector2 MinMaxCount;
+    }
+
     private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
 
     public static event Action<Action, Action> ShowHoldButton;
@@ -53,6 +63,13 @@ public class Lootable : MonoBehaviour
         player.CanHide(true);
     }
 
+    public void Fill()
+    {
+        _empty = false;
+        _appearHackingZoneTrigger.SetActive(true);
+        _movingFurnitureElements.MoveBack();
+    }
+
     private void Awake()
     {
         _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
@@ -67,7 +84,7 @@ public class Lootable : MonoBehaviour
             _empty = true;
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
-            _movingFurnitureElements.Move();
+            _movingFurnitureElements.MoveForward();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)
@@ -93,15 +110,5 @@ public class Lootable : MonoBehaviour
             _appearHackingZoneTrigger.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
-    }
-
-    [Serializable]
-    public class ItemsDropChance
-    {
-        public ResourceType Type;
-        public float DropChance;
-        public float[] CountsChances;
-        public bool OnlyMinMaxRange;
-        public Vector2 MinMaxCount;
     }
 }

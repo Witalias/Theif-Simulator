@@ -261,13 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 2459616930806361613}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: 0, y: 120, z: 0}
+  _movingObjects:
+  - Object: {fileID: 2459616930806361613}
+    ChangePosition: 0
+    EndLocalPosition: {x: 0, y: 0, z: 0}
+    ChangeRotation: 1
+    EndLocalRotation: {x: 0, y: 135, z: 0}
 --- !u!208 &4659569460230070355
 NavMeshObstacle:
   m_ObjectHideFlags: 0

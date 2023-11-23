@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 
 [RequireComponent(typeof(PathTrajectory))]
@@ -8,30 +9,24 @@ public class DrawPath : MonoBehaviour
 
     public void Draw(Transform[] points, bool loop)
     {
+        if (points.Length <= 1)
+            return;
+
+        var line = Instantiate(_linePrefab, points[0].position, Quaternion.identity, points[0].parent)
+            .GetComponent<LineRenderer>();
+        line.positionCount = 1;
+        line.SetPosition(0, points[0].position);
+        line.loop = loop;
+
         for (var i = 0; i < points.Length; i++)
         {
-            Instantiate(_pointPrefab, points[i].position, _pointPrefab.transform.rotation, points[i]);
+            if ((i == 0 || i == points.Length - 1) && !loop)
+                Instantiate(_pointPrefab, points[i].position, _pointPrefab.transform.rotation, points[i]);
             if (i > 0)
             {
-                var lineRenderer = CreateLine(points[i - 1]);
-                lineRenderer.positionCount = 2;
-                lineRenderer.SetPosition(0, points[i - 1].position);
-                lineRenderer.SetPosition(1, points[i].position);
-
-                if (i ==  points.Length - 1 && loop)
-                {
-                    lineRenderer = CreateLine(points[i]);
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.SetPosition(0, points[i].position);
-                    lineRenderer.SetPosition(1, points[0].position);
-                }
+                line.positionCount++;
+                line.SetPosition(i, points[i].position);
             }    
         }
-    }
-
-    private LineRenderer CreateLine(Transform point)
-    {
-        return Instantiate(_linePrefab, point.position, Quaternion.identity, point)
-            .GetComponent<LineRenderer>();
     }
 }
