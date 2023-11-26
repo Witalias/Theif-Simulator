@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 6199991160669883166}
   - component: {fileID: 6145190595070271354}
   m_Layer: 5
-  m_Name: Upgrade
+  m_Name: Upgrade Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

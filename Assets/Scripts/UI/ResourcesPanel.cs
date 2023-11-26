@@ -19,7 +19,7 @@ public class ResourcesPanel : MonoBehaviour
     {
         switch (type)
         {
-            case ResourceType.Bootle: _bottles.SetValue(value); break;
+            case ResourceType.Bottle: _bottles.SetValue(value); break;
             case ResourceType.Sneakers: _sneakers.SetValue(value); break;
         }
         //UpdatePanels();
@@ -29,7 +29,7 @@ public class ResourcesPanel : MonoBehaviour
     {
         switch (type)
         {
-            case ResourceType.Bootle: _bottles.gameObject.SetActive(value); break;
+            case ResourceType.Bottle: _bottles.gameObject.SetActive(value); break;
             case ResourceType.Sneakers: _sneakers.gameObject.SetActive(value); break;
         }
         //UpdatePanels();
@@ -45,12 +45,16 @@ public class ResourcesPanel : MonoBehaviour
             _backpack.SetDefaultColor();
     }
 
-    public void SetMovey(int value) => _money.SetValue(value);
+    public void SetMoney(int value) => _money.SetValue(value);
 
     public void ClearResources()
     {
-        SetActiveCounter(ResourceType.Bootle, false);
+        SetActiveCounter(ResourceType.Bottle, false);
         SetActiveCounter(ResourceType.Sneakers, false);
+        SetActiveCounter(ResourceType.Diamond, false);
+        SetActiveCounter(ResourceType.Watch, false);
+        SetActiveCounter(ResourceType.Phone, false);
+        SetActiveCounter(ResourceType.Ring, false);
     }
 
     private void OnEnable()

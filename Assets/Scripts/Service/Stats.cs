@@ -17,8 +17,7 @@ public class Stats : MonoBehaviour
     [SerializeField] private XPBar _xpBar;
     [SerializeField] private Transform _prisonSpawnPoint;
 
-    private Dictionary<ResourceType, int> _resources;
-    private Dictionary<UpgradeType, float> _upgrades;
+    private readonly Dictionary<ResourceType, int> _resources = new();
     private int _xpAmount;
     private int _backpackFullness;
 
@@ -63,10 +62,10 @@ public class Stats : MonoBehaviour
     public void AddMoney(int value)
     {
         _money = Mathf.Clamp(_money + value, 0, int.MaxValue);
-        _resourcesPanel.SetMovey(_money);
+        _resourcesPanel.SetMoney(_money);
     }
 
-    public float GetResource(ResourceType type) => _resources[type];
+    public int GetResourceCount(ResourceType type) => _resources[type];
 
     public void ClearBackpack()
     {
@@ -79,6 +78,7 @@ public class Stats : MonoBehaviour
     {
         _backpackFullness -= _resources[type];
         _resources[type] = 0;
+        _resourcesPanel.SetActiveCounter(type, false);
         UpdateCapacity();
     }
 
@@ -117,11 +117,8 @@ public class Stats : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        _resources = new Dictionary<ResourceType, int>
-        {
-            [ResourceType.Bootle] = 0,
-            [ResourceType.Sneakers] = 0,
-        };
+        foreach (var resourceType in Enum.GetValues(typeof(ResourceType)))
+            _resources.Add((ResourceType)resourceType, 0);
 
         Level = _initialLevel;
         _xpBar.SetLevel(_initialLevel);
@@ -131,7 +128,7 @@ public class Stats : MonoBehaviour
     {
         foreach (var resource in _resources)
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
-        _resourcesPanel.SetMovey(_money);
+        _resourcesPanel.SetMoney(_money);
         AddXP(0);
         UpdateCapacity();
     }

@@ -44,17 +44,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c5679db44771f42b4038ba71cc7858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _resourceData:
+  - Type: 0
+    Sprite: {fileID: 21300000, guid: 52ebdb40ab736aa43ab36b349db7ea2c, type: 3}
+    Sound: 5
+    Price: 3
+  - Type: 1
+    Sprite: {fileID: 21300000, guid: 5172c71bfcf680e498ac01f8c7b7341e, type: 3}
+    Sound: 5
+    Price: 5
+  - Type: 2
+    Sprite: {fileID: 21300000, guid: 318aa347f23597343b7ad5b15a400e9c, type: 3}
+    Sound: 8
+    Price: 16
+  - Type: 3
+    Sprite: {fileID: 21300000, guid: 7404e8a7d0ce2174ebad1d5309da5496, type: 3}
+    Sound: 9
+    Price: 20
+  - Type: 4
+    Sprite: {fileID: 21300000, guid: 372b90b8abf588a42960da3bf9e939a3, type: 3}
+    Sound: 8
+    Price: 50
+  - Type: 5
+    Sprite: {fileID: 21300000, guid: 746971813044de541a85a43589d7c08e, type: 3}
+    Sound: 6
+    Price: 70
   newResourceAnimationPrefab: {fileID: 3968714428361785677, guid: 188ce89e10a5c224b835ecabf425d2d5, type: 3}
   enemyPrefabs:
   - {fileID: 2102709877019701409, guid: 28ba09a1a3de95f448e916d4ef926f8a, type: 3}
-  _playerBoxPrefab: {fileID: 0}
-  _bootle: {fileID: 21300000, guid: 52ebdb40ab736aa43ab36b349db7ea2c, type: 3}
-  _sneakers: {fileID: 21300000, guid: 5172c71bfcf680e498ac01f8c7b7341e, type: 3}
   _money: {fileID: 21300000, guid: 69f66a90b07fc284bb33250998649f81, type: 3}
   _xp: {fileID: 21300000, guid: b98eda24323493e478bb52269dd6be81, type: 3}
-  _bootleSound: 6
   _moneySound: 7
-  _sneakersSound: 29
   enemyMask:
     serializedVersion: 2
     m_Bits: 4096

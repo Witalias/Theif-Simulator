@@ -77,14 +77,14 @@ public class WaitingAndAction : MonoBehaviour
     {
         Door.WaitAndExecuteWithSound += WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed += Abort;
-        UpgradesPanel.Opened += OnOpenPopup;
+        OpenClosePopup.Opened += OnOpenPopup;
     }
 
     private void OnDisable()
     {
         Door.WaitAndExecuteWithSound -= WaitAndExecuteWithSound;
         EnemyAI.PlayerIsNoticed -= Abort;
-        UpgradesPanel.Opened -= OnOpenPopup;
+        OpenClosePopup.Opened -= OnOpenPopup;
     }
 
     private void Update()

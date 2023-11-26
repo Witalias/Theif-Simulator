@@ -1,5 +1,9 @@
 public enum ResourceType
 {
-    Bootle,
+    Bottle,
     Sneakers,
+    Watch,
+    Phone,
+    Ring,
+    Diamond
 }

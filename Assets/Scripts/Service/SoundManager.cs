@@ -15,14 +15,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] selectButton;
     [SerializeField] private AudioClip[] doorClose;
     [SerializeField] private AudioClip[] doorOpen;
-    [SerializeField] private AudioClip[] food;
-    [SerializeField] private AudioClip[] water;
+    [SerializeField] private AudioClip[] getResource;
     [SerializeField] private AudioClip[] getMoney;
     [SerializeField] private AudioClip[] fuel;
     [SerializeField] private AudioClip[] masterKey;
     [SerializeField] private AudioClip[] tierIron;
     [SerializeField] private AudioClip[] gadget;
-    [SerializeField] private AudioClip[] scroll;
     [SerializeField] private AudioClip[] suspectMan;
     [SerializeField] private AudioClip[] suspectWoman;
     [SerializeField] private AudioClip[] notFindMan;
@@ -103,14 +101,12 @@ public class SoundManager : MonoBehaviour
             [Sound.Select] = selectButton,
             [Sound.DoorClose] = doorClose,
             [Sound.DoorOpen] = doorOpen,
-            [Sound.Food] = food,
             [Sound.Fuel] = fuel,
             [Sound.Gadget] = gadget,
             [Sound.GetMoney] = getMoney,
             [Sound.MasterKey] = masterKey,
             [Sound.TierIron] = tierIron,
-            [Sound.Water] = water,
-            [Sound.Scroll] = scroll,
+            [Sound.GetResource] = getResource,
             [Sound.NotFindMan] = notFindMan,
             [Sound.NotFindWoman] = notFindWoman,
             [Sound.ScreamMan] = screamMan,

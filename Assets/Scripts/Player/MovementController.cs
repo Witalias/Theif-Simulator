@@ -77,7 +77,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived += OnProcessAction;
         UIHoldButton.HoldButtonActived += OnProcessAction;
-        UpgradesPanel.Opened += OnProcessAction;
+        OpenClosePopup.Opened += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
     }
@@ -86,7 +86,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnProcessAction;
         UIHoldButton.HoldButtonActived -= OnProcessAction;
-        UpgradesPanel.Opened -= OnProcessAction;
+        OpenClosePopup.Opened -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
     }
