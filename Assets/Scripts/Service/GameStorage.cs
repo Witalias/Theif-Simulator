@@ -38,6 +38,8 @@ public class GameStorage : MonoBehaviour
 
     public Sprite Star => _xp;
 
+    public Sprite Money => _money;
+
     public LayerMask EnemyMask => enemyMask;
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;

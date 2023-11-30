@@ -17,6 +17,7 @@ public class WaitingAndAction : MonoBehaviour
     [SerializeField] private Color _positiveColor;
     [SerializeField] private GameObject _content;
     [SerializeField] private Image _fill;
+    [SerializeField] private GameObject _taskPanel;
 
     private Coroutine _waitingCoroutine;
     private Animator _animator;
@@ -40,8 +41,8 @@ public class WaitingAndAction : MonoBehaviour
             return;
         }
 
-        this._reachedTime = reachedTime;
-        this._currentTime = currentTime;
+        _reachedTime = reachedTime;
+        _currentTime = currentTime;
         _actionDone = actionDone;
         _actionAbort = actionAbort;
         InProgress = true;
@@ -51,12 +52,13 @@ public class WaitingAndAction : MonoBehaviour
 
         _waitingCoroutine = StartCoroutine(ProcessTicks());
         TimerActived?.Invoke(true);
+        _taskPanel.SetActive(false);
     }
     
     public void WaitAndExecuteWithSound(float reachedTime, Action actionDone, Action actionAbort, Sound sound, float currentTime = 0f)
     {
-        this._sound = sound;
-        this._playSound = true;
+        _sound = sound;
+        _playSound = true;
         WaitAndExecute(reachedTime, actionDone, actionAbort, currentTime);
     }
 
@@ -114,6 +116,7 @@ public class WaitingAndAction : MonoBehaviour
     {
         //reachedTime = 1f;
         //currentTime = 0f;
+        _taskPanel.SetActive(true);
         InProgress = false;
 
         if (_playSound)

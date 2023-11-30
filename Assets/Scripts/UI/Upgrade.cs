@@ -23,7 +23,12 @@ public class Upgrade : MonoBehaviour
     [SerializeField] private UIBar _upgradeBar;
     [SerializeField] private Button _buyButton;
 
-    private bool IsMaxLevel => _level > _effects.Length;
+    public bool IsMaxLevel => _level > _effects.Length;
+
+    public void CheckInteractableBuyButton()
+    {
+        _buyButton.interactable = !IsMaxLevel && Stats.Instanse.Money >= _effects[_level - 1].Cost;
+    }
 
     private void Awake()
     {
@@ -39,16 +44,6 @@ public class Upgrade : MonoBehaviour
         CheckInteractableBuyButton();
     }
 
-    private void OnEnable()
-    {
-        Upgrade.Upgraded += CheckInteractableBuyButton;
-    }
-
-    private void OnDisable()
-    {
-        Upgrade.Upgraded -= CheckInteractableBuyButton;
-    }
-
     private void OnBuyButtonClick()
     {
         if (IsMaxLevel || Stats.Instanse.Money < _effects[_level - 1].Cost)
@@ -60,6 +55,7 @@ public class Upgrade : MonoBehaviour
         _level++;
         Refresh();
         Upgraded?.Invoke();
+        TaskManager.Instance.ProcessTask(TaskType.BuyUpgrade, 1);
     }
 
     private void Refresh()
@@ -68,11 +64,6 @@ public class Upgrade : MonoBehaviour
         SetIncreaseToText((float)Math.Round(upgradeValue, 2));
         SetCostText(IsMaxLevel ? "MAX" : _effects[_level - 1].Cost.ToString());
         SetBarValue(_level - 1, _effects.Length);
-    }
-
-    private void CheckInteractableBuyButton()
-    {
-        _buyButton.interactable = !IsMaxLevel && Stats.Instanse.Money >= _effects[_level - 1].Cost;
     }
 
     private void SetIncreaseToText(float value)

@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     private const string ANIMATOR_BACK_SIDE_BOOLEAN = "Back Side";
 
     public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
-    public static event Action<ResourceType, int, int> PlayResourceAnimation;
+    public static event Action<int> PlayResourceAnimationXp;
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private bool _openBackSide;
@@ -95,7 +95,8 @@ public class Door : MonoBehaviour
             _isHacking = false;
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
-            PlayResourceAnimation?.Invoke(ResourceType.Sneakers, 0, xp);
+            PlayResourceAnimationXp?.Invoke(xp);
+            TaskManager.Instance.ProcessTask(TaskType.HackHouse, 1);
         }
         void ActionAbort()
         {

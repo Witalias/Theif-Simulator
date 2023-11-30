@@ -59,10 +59,13 @@ public class Stats : MonoBehaviour
         UpdateCapacity();
     }
 
-    public void AddMoney(int value)
+    public void AddMoney(int value, bool assignTask = true)
     {
         _money = Mathf.Clamp(_money + value, 0, int.MaxValue);
         _resourcesPanel.SetMoney(_money);
+
+        if (assignTask && value > 0)
+            TaskManager.Instance.ProcessTask(TaskType.EarnMoney, value);
     }
 
     public int GetResourceCount(ResourceType type) => _resources[type];

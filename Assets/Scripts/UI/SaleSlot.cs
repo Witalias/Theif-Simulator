@@ -43,6 +43,8 @@ public class SaleSlot : MonoBehaviour
         if (!_initialized)
             return;
 
+        TaskManager.Instance.ProcessTask(TaskType.SellItems, Stats.Instanse.GetResourceCount(_type));
+        TaskManager.Instance.ProcessTask(TaskType.SellCertainItems, _type, Stats.Instanse.GetResourceCount(_type));
         Stats.Instanse.ClearResource(_type);
         Stats.Instanse.AddMoney(_reward);
         SoundManager.Instanse.Play(Sound.GetMoney);

@@ -3,6 +3,8 @@ using TMPro;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
 
 public class ResourcesPanel : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class ResourcesPanel : MonoBehaviour
     [SerializeField] private UICounter _bottles;
     [SerializeField] private UICounter _sneakers;
     [SerializeField] private Transform _resourceAnimationPoint;
+
+    private readonly Queue<Action> _resourceAnimationQueue = new();
+    private Coroutine _playResourceAnimationCoroutine;
 
     public void SetResourceValue(ResourceType type, int value)
     {
@@ -59,14 +64,16 @@ public class ResourcesPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        Lootable.PlayResourceAnimation += PlayResourceAnimation;
-        Door.PlayResourceAnimation += PlayResourceAnimation;
+        Lootable.PlayResourceAnimation += PlayResourceAnimationUniversal;
+        Door.PlayResourceAnimationXp += PlayResourceAnimationXp;
+        TaskManager.PlayResourceAnimationMoney += PlayResourceAnimationMoney;
     }
 
     private void OnDisable()
     {
-        Lootable.PlayResourceAnimation -= PlayResourceAnimation;
-        Door.PlayResourceAnimation -= PlayResourceAnimation;
+        Lootable.PlayResourceAnimation -= PlayResourceAnimationUniversal;
+        Door.PlayResourceAnimationXp -= PlayResourceAnimationXp;
+        TaskManager.PlayResourceAnimationMoney -= PlayResourceAnimationMoney;
     }
 
     //private void UpdatePanels()
@@ -82,19 +89,57 @@ public class ResourcesPanel : MonoBehaviour
     //    _itemPanel.SetActive(false);
     //}
 
-    private void PlayResourceAnimation(ResourceType type, int count, int xp)
+    private void PlayResourceAnimationUniversal(ResourceType resourceType, int count, int xp, int money)
     {
         if (count > 0)
-            CreateResourceAnimation(count.ToString(), GameStorage.Instanse.GetResourceSprite(type));
-        DOVirtual.DelayedCall(count > 0 ? 1.0f : 0.0f, () => CreateResourceAnimation(xp.ToString(), GameStorage.Instanse.Star));
+            PlayResourceAnimationItem(resourceType, count);
+        if (money > 0)
+            PlayResourceAnimationMoney(money);
+        if (xp > 0)
+            PlayResourceAnimationXp(xp);
+    }
 
-        void CreateResourceAnimation(string text, Sprite icon)
+    private void PlayResourceAnimationItem(ResourceType type, int count)
+    {
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.GetResourceSprite(type)));
+        PlayResourceAnimation();
+    }
+
+    private void PlayResourceAnimationXp(int count)
+    {
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.Star));
+        PlayResourceAnimation();
+    }
+
+    private void PlayResourceAnimationMoney(int count)
+    {
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.Money));
+        PlayResourceAnimation();
+    }
+
+    private void PlayResourceAnimation()
+    {
+        if (_playResourceAnimationCoroutine == null)
+            _playResourceAnimationCoroutine = StartCoroutine(Coroutine());
+
+        IEnumerator Coroutine()
         {
-            var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
-                _resourceAnimationPoint.position, Quaternion.identity, transform)
-                .GetComponent<NewResourceAnimation>();
-            newResource.SetIcon(icon);
-            newResource.SetText(text);
+            var wait = new WaitForSeconds(1.0f);
+            while (_resourceAnimationQueue.Count > 0)
+            {
+                _resourceAnimationQueue.Dequeue()?.Invoke();
+                yield return wait;
+            }
+            _playResourceAnimationCoroutine = null;
         }
+    }
+
+    private void CreateResourceAnimation(string text, Sprite icon)
+    {
+        var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
+            _resourceAnimationPoint.position, Quaternion.identity, transform)
+            .GetComponent<NewResourceAnimation>();
+        newResource.SetIcon(icon);
+        newResource.SetText(text);
     }
 }

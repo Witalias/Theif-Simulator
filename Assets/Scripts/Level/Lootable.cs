@@ -19,7 +19,7 @@ public class Lootable : MonoBehaviour
     private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
 
     public static event Action<Action, Action> ShowHoldButton;
-    public static event Action<ResourceType, int, int> PlayResourceAnimation;
+    public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
     public static event Action<string, float> ShowQuickMessage;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
@@ -101,8 +101,11 @@ public class Lootable : MonoBehaviour
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
 
-            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp);
+            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
             SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
+
+            TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
+            TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
         }
         void ActionAbort()
         {

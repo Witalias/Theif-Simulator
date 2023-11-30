@@ -24,5 +24,11 @@ public static class Translation
         }
     };
 
-    public static string GetResourceName(ResourceType type) => _resourceNames[GameSettings.Instanse.Language][type];
+    public static string GetResourceName(ResourceType type, bool plural = false)
+    {
+        var result = _resourceNames[GameSettings.Instanse.Language][type];
+        if (!plural)
+            return result;
+        return result + (result[^1] == 's' ? "" : "s");
+    }
 }
