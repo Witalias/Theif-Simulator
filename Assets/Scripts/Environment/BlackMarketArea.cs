@@ -9,7 +9,12 @@ public class BlackMarketArea : MonoBehaviour
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_triggered || player.Busy || player.IsRunning)
+        if (player.IsRunning)
+        {
+            _triggered = false;
+            return;
+        }
+        else if (_triggered || player.Busy)
             return;
 
         _triggered = true;
