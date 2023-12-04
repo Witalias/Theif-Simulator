@@ -9,35 +9,24 @@ using System.Collections.Generic;
 public class ResourcesPanel : MonoBehaviour
 {
     [SerializeField] private Color _fullBackpackTextColor;
-    [SerializeField] private GameObject[] _itemCounters;
-    [SerializeField] private GameObject _itemPanel;
-    [SerializeField] private UICounter _backpack;
+    [SerializeField] private GameObject _itemCounterPrefab;
+    [SerializeField] private Transform _itemPanel;
     [SerializeField] private UICounter _money;
-    [SerializeField] private UICounter _bottles;
-    [SerializeField] private UICounter _sneakers;
+    [SerializeField] private UICounter _backpack;
     [SerializeField] private Transform _resourceAnimationPoint;
 
+    private readonly Dictionary<ResourceType, UICounter> _itemCounters = new();
     private readonly Queue<Action> _resourceAnimationQueue = new();
     private Coroutine _playResourceAnimationCoroutine;
 
     public void SetResourceValue(ResourceType type, int value)
     {
-        switch (type)
-        {
-            case ResourceType.Bottle: _bottles.SetValue(value); break;
-            case ResourceType.Sneakers: _sneakers.SetValue(value); break;
-        }
-        //UpdatePanels();
+        _itemCounters[type].SetValue(value);
     }
 
     public void SetActiveCounter(ResourceType type, bool value)
     {
-        switch (type)
-        {
-            case ResourceType.Bottle: _bottles.gameObject.SetActive(value); break;
-            case ResourceType.Sneakers: _sneakers.gameObject.SetActive(value); break;
-        }
-        //UpdatePanels();
+        _itemCounters[type].gameObject.SetActive(value);
     }
 
     public void SetBackpackCapacity(int fullness, int capacity)
@@ -54,12 +43,14 @@ public class ResourcesPanel : MonoBehaviour
 
     public void ClearResources()
     {
-        SetActiveCounter(ResourceType.Bottle, false);
-        SetActiveCounter(ResourceType.Sneakers, false);
-        SetActiveCounter(ResourceType.Diamond, false);
-        SetActiveCounter(ResourceType.Watch, false);
-        SetActiveCounter(ResourceType.Phone, false);
-        SetActiveCounter(ResourceType.Ring, false);
+        foreach (var counter in _itemCounters.Values)
+            counter.gameObject.SetActive(false);
+    }
+
+    private void Awake()
+    {
+        CreateItemCounters();
+        ClearResources();
     }
 
     private void OnEnable()
@@ -76,18 +67,15 @@ public class ResourcesPanel : MonoBehaviour
         TaskManager.PlayResourceAnimationMoney -= PlayResourceAnimationMoney;
     }
 
-    //private void UpdatePanels()
-    //{
-    //    foreach (var counter in _itemCounters)
-    //    {
-    //        if (counter.activeSelf)
-    //        {
-    //            _itemPanel.SetActive(true);
-    //            return;
-    //        }
-    //    }
-    //    _itemPanel.SetActive(false);
-    //}
+    private void CreateItemCounters()
+    {
+        foreach (var resource in Enum.GetValues(typeof(ResourceType)))
+        {
+            var counter = Instantiate(_itemCounterPrefab, _itemPanel).GetComponent<UICounter>();
+            counter.SetIcon(GameStorage.Instanse.GetResourceSprite((ResourceType)resource));
+            _itemCounters.Add((ResourceType)resource, counter);
+        }
+    }
 
     private void PlayResourceAnimationUniversal(ResourceType resourceType, int count, int xp, int money)
     {
@@ -119,8 +107,7 @@ public class ResourcesPanel : MonoBehaviour
 
     private void PlayResourceAnimation()
     {
-        if (_playResourceAnimationCoroutine == null)
-            _playResourceAnimationCoroutine = StartCoroutine(Coroutine());
+        _playResourceAnimationCoroutine ??= StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
         {

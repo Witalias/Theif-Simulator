@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UICounter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI valueText;
+    [SerializeField] private TMP_Text valueText;
+    [SerializeField] private Image _icon;
 
     private Color _defaultColor;
 
@@ -19,6 +21,8 @@ public class UICounter : MonoBehaviour
     public void SetDefaultColor() => valueText.color = _defaultColor;
 
     public void SetColor(Color value) => valueText.color = value;
+
+    public void SetIcon(Sprite value) => _icon.sprite = value;
 
     private void Awake()
     {
