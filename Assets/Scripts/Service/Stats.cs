@@ -6,6 +6,8 @@ public class Stats : MonoBehaviour
 {
     public static Stats Instanse { get; private set; } = null;
 
+    public static event Action<int> NewLevelReached;
+
     [SerializeField] private int _money = 0;
     [SerializeField] private float _playerMovingSpeed;
     [SerializeField] private float _tapBonusTimePercents = 5.0f;
@@ -140,6 +142,7 @@ public class Stats : MonoBehaviour
     {
         _xpBar.SetLevel(++Level);
         _neededXP += GameSettings.Instanse.StepXPRequirement;
+        NewLevelReached?.Invoke(Level);
     }
 
     private void UpdateCapacity() => _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
