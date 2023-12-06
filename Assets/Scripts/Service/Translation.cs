@@ -24,6 +24,12 @@ public static class Translation
         }
     };
 
+    private readonly static Dictionary<Language, string> _maximumName = new()
+    {
+        [Language.English] = "MAX",
+        [Language.Russian] = "ְּÊׁ"
+    };
+
     public static string GetResourceName(ResourceType type, bool plural = false)
     {
         var result = _resourceNames[GameSettings.Instanse.Language][type];
@@ -31,4 +37,6 @@ public static class Translation
             return result;
         return result + (result[^1] == 's' ? "" : "s");
     }
+
+    public static string GetMaximumName() => _maximumName[GameSettings.Instanse.Language];
 }

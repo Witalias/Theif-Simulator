@@ -422,6 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e163cc9f7993ed47acf2a7e120fbe12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _allowMaxText: 0
   bar: {fileID: 2275613342144488344}
   differenceBar: {fileID: 7117132414647207452}
   valueText: {fileID: 2691054155807698612}
@@ -1464,7 +1465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 125}
+  m_AnchoredPosition: {x: -28, y: 65}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2293826738629214346
@@ -2015,6 +2016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e163cc9f7993ed47acf2a7e120fbe12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _allowMaxText: 0
   bar: {fileID: 1877428687735596532}
   differenceBar: {fileID: 7602621870218117388}
   valueText: {fileID: 8211380815384724168}

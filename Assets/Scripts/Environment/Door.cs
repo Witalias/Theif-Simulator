@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -16,6 +18,10 @@ public class Door : MonoBehaviour
     [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
+    [SerializeField] private TMP_Text _buildingLevelText;
+    [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private UIBar _progressBar;
+    [SerializeField] private CanvasGroup _buildingLevelPanel;
 
     private Animator _animator;
     private AudioSource _audioSource;
@@ -35,6 +41,7 @@ public class Door : MonoBehaviour
             {
                 Hack();
                 player.RotateTowards(_appearHackingZoneTrigger.transform.position);
+                SetActiveBuildingLevelPanel(false);
             }
             _hackingArea.SetActive(!_isHacking);
             return;
@@ -58,32 +65,44 @@ public class Door : MonoBehaviour
         SetState(true);
     }
 
+    public void ShowBuildingInfo()
+    {
+        SetActiveBuildingLevelPanel(true);
+    }
+
+    public void HideBuildingInfo()
+    {
+        SetActiveBuildingLevelPanel(false);
+    }
+
     public void Lock(bool value)
     {
         _hacked = !value;
         _appearHackingZoneTrigger.SetActive(value);
     }
 
+    public void SetBuildingLevel(int level) => _buildingLevelText.text = $"LVL {level}";
+
+    public void SetTimerText(int seconds)
+    {
+        if (!_timerText.gameObject.activeSelf)
+            _timerText.gameObject.SetActive(true);
+
+        _timerText.text = TimeSpan.FromSeconds(seconds).ToString("mm\\:ss");
+
+        if (seconds <= 0)
+            DOVirtual.DelayedCall(1.0f, () => _timerText.gameObject.SetActive(false));
+    }
+
+    public void SetProgressBarValue(int value, int maxValue) => _progressBar.SetValue(value, maxValue);
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
         _animator.SetBool(ANIMATOR_BACK_SIDE_BOOLEAN, _openBackSide);
+        _buildingLevelPanel.alpha = 0.0f;
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (!_triggered && other.GetComponent<EnemyAI>() != null)
-    //        Open();
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (_triggered && other.GetComponent<EnemyAI>() != null)
-    //    {
-    //        SetState(false);
-    //    }
-    //}
 
     private void Hack()
     {
@@ -110,5 +129,10 @@ public class Door : MonoBehaviour
         _triggered = open;
         _animator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
         SoundManager.Instanse.Play(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
+    }
+
+    private void SetActiveBuildingLevelPanel(bool value)
+    {
+        _buildingLevelPanel.DOFade(value ? 0.8f : 0.0f, 0.5f);
     }
 }

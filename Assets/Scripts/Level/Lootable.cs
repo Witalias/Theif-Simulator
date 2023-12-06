@@ -30,8 +30,14 @@ public class Lootable : MonoBehaviour
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements _movingFurnitureElements;
+    private Action _afterLootingAction;
     private bool _empty = false;
     private bool _isLooting = false;
+
+    public void Initialize(Action afterLootingAction)
+    {
+        _afterLootingAction = afterLootingAction;
+    }
 
     public void OnPlayerEnter()
     {
@@ -65,6 +71,9 @@ public class Lootable : MonoBehaviour
 
     public void Fill()
     {
+        if (!gameObject.activeSelf)
+            return;
+
         _empty = false;
         _appearHackingZoneTrigger.SetActive(true);
         _movingFurnitureElements.MoveBack();
@@ -85,6 +94,7 @@ public class Lootable : MonoBehaviour
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
             _movingFurnitureElements.MoveForward();
+            _afterLootingAction?.Invoke();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)

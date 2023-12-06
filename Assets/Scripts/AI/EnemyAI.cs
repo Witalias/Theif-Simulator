@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour
 
         Stop();
         player.Caught(_caughtDuration);
-        _building.LockDoors();
+        _building.LockDoors(true);
         _lockedControls = true;
         DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () => _lockedControls = false);
     }
