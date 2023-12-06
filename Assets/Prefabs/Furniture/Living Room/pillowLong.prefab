@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 7368852550004862518}
   - component: {fileID: 4730920443229608700}
   - component: {fileID: 6073830878591597084}
-  - component: {fileID: -8622521830080599248}
-  - component: {fileID: 7184015044651464739}
   m_Layer: 0
   m_Name: pillowLong
   m_TagString: Untagged
@@ -94,40 +92,16 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6532303463349107497}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
   m_Size: {x: 3.865756, y: 2.221629, z: 0.8848358}
   m_Center: {x: 1.932878, y: 1.1108145, z: 0.4424179}
---- !u!54 &-8622521830080599248
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6532303463349107497}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!208 &7184015044651464739
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6532303463349107497}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.9330001, y: 1.1110001, z: 0.44200003}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 1.9330001, y: 1.1110001, z: 0.44200003}
-  m_TimeToStationary: 0.5
