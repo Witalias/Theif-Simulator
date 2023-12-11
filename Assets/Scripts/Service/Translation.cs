@@ -30,6 +30,12 @@ public static class Translation
         [Language.Russian] = "люйя"
     };
 
+    private readonly static Dictionary<Language, string> _completeName = new()
+    {
+        [Language.English] = "COMPLETED",
+        [Language.Russian] = "гюбепьемн"
+    };
+
     public static string GetResourceName(ResourceType type, bool plural = false)
     {
         var result = _resourceNames[GameSettings.Instanse.Language][type];
@@ -39,4 +45,6 @@ public static class Translation
     }
 
     public static string GetMaximumName() => _maximumName[GameSettings.Instanse.Language];
+
+    public static string GetCompleteName() => _completeName[GameSettings.Instanse.Language];
 }

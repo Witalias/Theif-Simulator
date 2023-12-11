@@ -30,7 +30,7 @@ public class CreatureVision : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         SeesTarget = IsInView();
         DrawViewState();

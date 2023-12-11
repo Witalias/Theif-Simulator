@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e163cc9f7993ed47acf2a7e120fbe12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _allowMaxText: 0
   bar: {fileID: 1749155314530716529}
   differenceBar: {fileID: 294543860820718380}
   valueText: {fileID: 0}
@@ -380,15 +381,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Theft speed
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d516bd4df61c2eb459393f6c59bd74de, type: 2}
-  m_sharedMaterial: {fileID: -2227429625539768613, guid: d516bd4df61c2eb459393f6c59bd74de, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82e9f83606e18334eb06fa926cfcb59e, type: 2}
+  m_sharedMaterial: {fileID: -2227429625539768613, guid: 82e9f83606e18334eb06fa926cfcb59e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291068490
+  m_fontColor: {r: 0.2901961, g: 0.50980395, b: 0.7686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

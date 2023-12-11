@@ -18,17 +18,19 @@ public class Door : MonoBehaviour
     [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
+    [SerializeField] private BoxCollider _collider;
     [SerializeField] private TMP_Text _buildingLevelText;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private UIBar _progressBar;
+    [SerializeField] private GameObject _barIcon;
     [SerializeField] private CanvasGroup _buildingLevelPanel;
 
     private Animator _animator;
     private AudioSource _audioSource;
 
-    private bool _triggered = false;
-    private bool _hacked = false;
-    private bool _isHacking = false;
+    private bool _triggered;
+    private bool _hacked;
+    private bool _isHacking;
 
     public void HackOrOpen(MovementController player)
     {
@@ -94,7 +96,12 @@ public class Door : MonoBehaviour
             DOVirtual.DelayedCall(1.0f, () => _timerText.gameObject.SetActive(false));
     }
 
-    public void SetProgressBarValue(int value, int maxValue) => _progressBar.SetValue(value, maxValue);
+    public void SetProgressBarValue(int value, int maxValue, string text = null)
+    {
+        _progressBar.SetValue(value, maxValue);
+        _progressBar.SetText(text);
+        _barIcon.SetActive(text == null);
+    }
 
     private void Awake()
     {
@@ -127,6 +134,7 @@ public class Door : MonoBehaviour
     private void SetState(bool open)
     {
         _triggered = open;
+        _collider.enabled = !open;
         _animator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
         SoundManager.Instanse.Play(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
     }

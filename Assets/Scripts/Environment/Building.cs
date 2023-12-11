@@ -59,7 +59,8 @@ public class Building : MonoBehaviour
         foreach (var door in _doors)
         {
             door.Lock(value);
-            door.Close();
+            if (value == true)
+                door.Close();
         }
     }
 
@@ -84,6 +85,9 @@ public class Building : MonoBehaviour
         LockDoors(true);
         FillContainers();
 
+        if (_currentXp >= _requiredXp)
+            NextLevel();
+
         if (_level > 1 && !_levelStates[_level - 2].ObjectsWasActived)
         {
             foreach (var obj in _levelStates[_level - 2].ObjectsToActive)
@@ -107,8 +111,6 @@ public class Building : MonoBehaviour
     private void AddXp()
     {
         ++_currentXp;
-        if (_currentXp >= _requiredXp)
-            NextLevel();
         UpdateProgressBar();
     }
 
@@ -125,12 +127,17 @@ public class Building : MonoBehaviour
                 _currentXp = 0;
                 _requiredXp = _levelStates[_level - 1].RequiredXp;
             }
+            UpdateProgressBar();
         }
     }
 
     private void UpdateProgressBar()
     {
+        string valueText = null;
+        if (!IsMaxLevel && _currentXp >= _requiredXp)
+            valueText = Translation.GetCompleteName();
+
         foreach (var door in _doors)
-            door.SetProgressBarValue(_currentXp, _requiredXp);
+            door.SetProgressBarValue(_currentXp, _requiredXp, valueText);
     }
 }

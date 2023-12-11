@@ -28,4 +28,11 @@ public class UIBar : MonoBehaviour
                 valueText.text = Translation.GetMaximumName();
         }
     }
+
+    public void SetText(string value)
+    {
+        if (value == null || valueText == null)
+            return;
+        valueText.text = value;
+    }
 }
