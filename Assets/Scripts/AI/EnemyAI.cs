@@ -6,8 +6,8 @@ using System;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(CreatureVision))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(FieldOfView))]
 public class EnemyAI : MonoBehaviour
 {
     private const string WALK_ANIMATOR_BOOLEAN = "Walk";
@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     private Animator _animator;
     private NavMeshAgent _agent;
-    private CreatureVision _vision;
+    private FieldOfView _vision;
     private MovementController _player;
     private AudioSource _audioSource;
     private Color _defaultViewColor;
@@ -70,7 +70,7 @@ public class EnemyAI : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
-        _vision = GetComponent<CreatureVision>();
+        _vision = GetComponent<FieldOfView>();
         _audioSource = GetComponent<AudioSource>();
         _defaultViewColor = _view.color;
         _defaultSpeed = _agent.speed;
@@ -129,7 +129,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Detect()
     {
-        if (!_vision.SeesTarget || _worried || !_player.InBuilding)
+        if (!_vision.canSeePlayer || _worried || !_player.InBuilding)
             return;
 
         Stop();
