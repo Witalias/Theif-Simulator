@@ -20,7 +20,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _followSpeed;
-    //[SerializeField] private float _searchingDuration;
     [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
     [SerializeField] private PathTrajectory _pathTrajectory;
@@ -32,12 +31,11 @@ public class EnemyAI : MonoBehaviour
     private MovementController _player;
     private AudioSource _audioSource;
     private Color _defaultViewColor;
-    //private Coroutine _searchTargetCoroutine;
     private Building _building;
+    private Tween _detectTween;
     private float _defaultSpeed;
     private bool _worried;
     private bool _followed;
-    //private bool _inSearching;
     private bool _lockedControls;
 
     public bool Worried => _worried;
@@ -53,6 +51,7 @@ public class EnemyAI : MonoBehaviour
             return;
 
         Stop();
+        _detectTween.Kill();
         _followed = false;
         _worried = false;
         _agent.speed = _defaultSpeed;
@@ -141,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
         ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
-        DOVirtual.DelayedCall(1.0f, () =>
+        _detectTween = DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;
             Run();

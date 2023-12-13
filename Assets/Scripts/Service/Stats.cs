@@ -99,15 +99,15 @@ public class Stats : MonoBehaviour
         };
     }
 
-    public void IncreaseUpgradableValue(UpgradeType type, float value)
+    public void SetUpgradableValue(UpgradeType type, float value)
     {
         switch (type)
         {
-            case UpgradeType.MoveSpeed: Stats.Instanse.PlayerMovingSpeed += value; break;
-            case UpgradeType.HackingSpeed: Stats.Instanse.TapBonusTimePercents += value; break;
-            case UpgradeType.TheftSpeed: Stats.Instanse.FillSpeedForHoldButton += value; break;
+            case UpgradeType.MoveSpeed: Stats.Instanse.PlayerMovingSpeed = value; break;
+            case UpgradeType.HackingSpeed: Stats.Instanse.TapBonusTimePercents = value; break;
+            case UpgradeType.TheftSpeed: Stats.Instanse.FillSpeedForHoldButton = value; break;
             case UpgradeType.BackpackCapacity:
-                Stats.Instanse.BackpackCapacity += (int)value;
+                Stats.Instanse.BackpackCapacity = (int)value;
                 UpdateCapacity();
                 break;
         }
