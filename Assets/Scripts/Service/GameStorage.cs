@@ -5,41 +5,48 @@ public class GameStorage : MonoBehaviour
 {
     public static GameStorage Instanse { get; private set; } = null;
 
+    [System.Serializable]
+    private class ResourceData
+    {
+        public ResourceType Type;
+        public Sprite Sprite;
+        public Sound Sound;
+        public int Price;
+    }
+
+    [SerializeField] private ResourceData[] _resourceData;
+
     [Header("Prefabs")]
     [SerializeField] private NewResourceAnimation newResourceAnimationPrefab;
     [SerializeField] private EnemyAI[] enemyPrefabs;
-    [SerializeField] private GameObject _playerBoxPrefab;
 
     [Header("Sprites")]
-    [SerializeField] private Sprite _bootle;
-    [SerializeField] private Sprite _sneakers;
     [SerializeField] private Sprite _money;
     [SerializeField] private Sprite _xp;
 
     [Header("Sounds")]
-    [SerializeField] private Sound _bootleSound;
     [SerializeField] private Sound _moneySound;
-    [SerializeField] private Sound _sneakersSound;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask enemyMask;
 
-    private Dictionary<ResourceType, Sprite> resourceSprites;
-    private Dictionary<ResourceType, Sound> resourceSounds;
+    private Dictionary<ResourceType, ResourceData> _resources = new();
 
     public GameObject NewResourceAnimatinPrefab => newResourceAnimationPrefab.gameObject;
-
-    public GameObject PlayerBoxPrefab => _playerBoxPrefab;
 
     public Transform MainCanvas { get; private set; }
 
     public Sprite Star => _xp;
 
+    public Sprite Money => _money;
+
     public LayerMask EnemyMask => enemyMask;
 
-    public Sprite GetResourceSprite(ResourceType type) => resourceSprites[type];
+    public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;
 
-    public Sound GetResourceSound(ResourceType type) => resourceSounds[type];
+    public Sound GetResourceSound(ResourceType type) => _resources[type].Sound;
+
+    public int GetResourcePrice(ResourceType type) => _resources[type].Price;
 
     public GameObject GetRandomEnemyPrefab() => enemyPrefabs[Random.Range(0, enemyPrefabs.Length)].gameObject;
 
@@ -57,16 +64,7 @@ public class GameStorage : MonoBehaviour
         if (canvas == null) Debug.LogWarning("The main canvas was not found!");
         else MainCanvas = canvas.transform;
 
-        resourceSprites = new Dictionary<ResourceType, Sprite>
-        {
-            [ResourceType.Bootle] = _bootle,
-            [ResourceType.Sneakers] = _sneakers,
-        };
-
-        resourceSounds = new Dictionary<ResourceType, Sound>
-        {
-            [ResourceType.Bootle] = _bootleSound,
-            [ResourceType.Sneakers] = _sneakersSound,
-        };
+        foreach (var resource in _resourceData)
+            _resources.Add(resource.Type, resource);
     }
 }

@@ -27,11 +27,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 22600815876781743}
   - {fileID: 710267939603697355}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!205 &6255940456696395783
 LODGroup:
@@ -67,7 +68,6 @@ GameObject:
   - component: {fileID: 710267939603697355}
   - component: {fileID: 3899556690471127494}
   - component: {fileID: 8474632420897709930}
-  - component: {fileID: 2006559156180452826}
   m_Layer: 0
   m_Name: Grass_03_LOD1
   m_TagString: Untagged
@@ -85,6 +85,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 192023875367939688}
   m_RootOrder: 1
@@ -108,6 +109,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -138,19 +140,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2006559156180452826
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5732877469042814934}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.39849246, y: 0.39713275, z: 0.3099114}
-  m_Center: {x: 0.0020122677, y: 0.19088387, z: -0.023614973}
 --- !u!1 &8104047895475143866
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +151,6 @@ GameObject:
   - component: {fileID: 22600815876781743}
   - component: {fileID: 6453838791370436765}
   - component: {fileID: 8265357878316705253}
-  - component: {fileID: 2006559156180452805}
   m_Layer: 0
   m_Name: Grass_03_LOD0
   m_TagString: Untagged
@@ -180,6 +168,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 192023875367939688}
   m_RootOrder: 0
@@ -203,6 +192,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -233,16 +223,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2006559156180452805
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8104047895475143866}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.39849246, y: 0.39713275, z: 0.3167647}
-  m_Center: {x: 0.0020122677, y: 0.19088387, z: -0.02018831}

@@ -6,8 +6,8 @@ using System;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(CreatureVision))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(FieldOfView))]
 public class EnemyAI : MonoBehaviour
 {
     private const string WALK_ANIMATOR_BOOLEAN = "Walk";
@@ -20,7 +20,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _followSpeed;
-    //[SerializeField] private float _searchingDuration;
     [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
     [SerializeField] private PathTrajectory _pathTrajectory;
@@ -28,16 +27,15 @@ public class EnemyAI : MonoBehaviour
 
     private Animator _animator;
     private NavMeshAgent _agent;
-    private CreatureVision _vision;
+    private FieldOfView _vision;
     private MovementController _player;
     private AudioSource _audioSource;
     private Color _defaultViewColor;
-    //private Coroutine _searchTargetCoroutine;
     private Building _building;
+    private Tween _detectTween;
     private float _defaultSpeed;
     private bool _worried;
     private bool _followed;
-    //private bool _inSearching;
     private bool _lockedControls;
 
     public bool Worried => _worried;
@@ -53,6 +51,7 @@ public class EnemyAI : MonoBehaviour
             return;
 
         Stop();
+        _detectTween.Kill();
         _followed = false;
         _worried = false;
         _agent.speed = _defaultSpeed;
@@ -70,7 +69,7 @@ public class EnemyAI : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
-        _vision = GetComponent<CreatureVision>();
+        _vision = GetComponent<FieldOfView>();
         _audioSource = GetComponent<AudioSource>();
         _defaultViewColor = _view.color;
         _defaultSpeed = _agent.speed;
@@ -99,7 +98,7 @@ public class EnemyAI : MonoBehaviour
 
         Stop();
         player.Caught(_caughtDuration);
-        _building.LockDoors();
+        _building.LockDoors(true);
         _lockedControls = true;
         DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () => _lockedControls = false);
     }
@@ -129,7 +128,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Detect()
     {
-        if (!_vision.SeesTarget || _worried || !_player.InBuilding)
+        if (!_vision.canSeePlayer || _worried || !_player.InBuilding)
             return;
 
         Stop();
@@ -141,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
         ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
-        DOVirtual.DelayedCall(1.0f, () =>
+        _detectTween = DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;
             Run();

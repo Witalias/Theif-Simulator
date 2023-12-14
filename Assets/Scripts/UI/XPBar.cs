@@ -13,7 +13,7 @@ public class XPBar : MonoBehaviour
 
     public void SetMaxLevelState()
     {
-        _progressText.text = "MAX";
+        _progressText.text = Translation.GetMaximumName();
         SetProgress(1.0f, 1.0f);
     }
 }

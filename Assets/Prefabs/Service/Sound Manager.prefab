@@ -317,13 +317,7 @@ MonoBehaviour:
   doorOpen:
   - {fileID: 8300000, guid: 3c7fb8047c07f534c87f244f25f705ca, type: 3}
   - {fileID: 8300000, guid: adde85b18b29f6a41beedd941b20288a, type: 3}
-  food:
-  - {fileID: 8300000, guid: 79840d5c56ddab94bbebf977226957d0, type: 3}
-  - {fileID: 8300000, guid: 3aff50dc5752ef748a025fa555023875, type: 3}
-  - {fileID: 8300000, guid: 0d099da3ee3092a4f9e37ff76c51e0d5, type: 3}
-  - {fileID: 8300000, guid: 0c5fb23ca4a96f241b3480480081c67b, type: 3}
-  - {fileID: 8300000, guid: 0ab0dd89678e8e24ead9a044c8cc4e5b, type: 3}
-  water:
+  getResource:
   - {fileID: 8300000, guid: 79840d5c56ddab94bbebf977226957d0, type: 3}
   - {fileID: 8300000, guid: 3aff50dc5752ef748a025fa555023875, type: 3}
   - {fileID: 8300000, guid: 0d099da3ee3092a4f9e37ff76c51e0d5, type: 3}
@@ -345,12 +339,6 @@ MonoBehaviour:
   gadget:
   - {fileID: 8300000, guid: 6d5e4c508494c5947bb96856cf6a96ce, type: 3}
   - {fileID: 8300000, guid: 550d70adf215d6f41baab777398904db, type: 3}
-  scroll:
-  - {fileID: 8300000, guid: b81746d6c792e7f4e9ec9016b9374c1d, type: 3}
-  - {fileID: 8300000, guid: 32968d6311201fe49aa3622a7cd12f01, type: 3}
-  - {fileID: 8300000, guid: 0d13142376ad2ed4d8b713a067aa5ce9, type: 3}
-  - {fileID: 8300000, guid: f018155f7b6884d4b94ddf34502ef491, type: 3}
-  - {fileID: 8300000, guid: 1658c29861c586f4fbfe408048288522, type: 3}
   suspectMan:
   - {fileID: 8300000, guid: a58567ea4a42a6c4e9d079f37c644e82, type: 3}
   - {fileID: 8300000, guid: 3f5b9c2239431e24d9ebd8b554c4a85b, type: 3}

@@ -12,9 +12,6 @@ GameObject:
   - component: {fileID: 4038441968845217943}
   - component: {fileID: 2301228200486540381}
   - component: {fileID: 7123187770035396620}
-  - component: {fileID: -529513294792186536}
-  - component: {fileID: -4071406270473216966}
-  - component: {fileID: 1789688147440777917}
   m_Layer: 0
   m_Name: speaker
   m_TagString: Untagged
@@ -96,52 +93,16 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355615780944164232}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.48, y: 6.364, z: 1.48}
-  m_Center: {x: 0.74, y: 3.182, z: 0.74}
---- !u!114 &-529513294792186536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355615780944164232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c6f2d60ab3ad6448c9e6c6c63a8492, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &-4071406270473216966
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355615780944164232}
-  serializedVersion: 2
-  m_Mass: 30
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!208 &1789688147440777917
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355615780944164232}
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.74, y: 3.1820002, z: 0.74}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0.74, y: 3.1820002, z: 0.74}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 1.48, y: 6.364, z: 1.48}
+  m_Center: {x: 0.74, y: 3.182, z: 0.74}

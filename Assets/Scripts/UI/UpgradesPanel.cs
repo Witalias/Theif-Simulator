@@ -1,55 +1,44 @@
-using DG.Tweening;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(OpenClosePopup))]
 public class UpgradesPanel : MonoBehaviour
 {
-    public static event Action<bool> Opened;
+    [SerializeField] private Upgrade[] _upgradeSlots;
 
-    [SerializeField] private float _animationDuration;
-    [SerializeField] private GameObject _anticlick;
-    [SerializeField] private Transform _content;
-    [SerializeField] private Button _closeButton;
-
-    private bool _opened;
+    private OpenClosePopup _popup;
+    private bool _maxUpgrades;
 
     private void Awake()
     {
-        _content.localScale = Vector3.zero;
-        _content.gameObject.SetActive(true);
-        _closeButton.onClick.AddListener(Close);
+        _popup = GetComponent<OpenClosePopup>();
     }
 
     private void OnEnable()
     {
-        UpgradesPopupButton.Clicked += Open;
-        EnemyAI.PlayerIsNoticed += Close;
+        UpgradesPopupButton.Clicked += _popup.Open;
+        Upgrade.Upgraded += OnUpgrade;
     }
 
     private void OnDisable()
     {
-        UpgradesPopupButton.Clicked += Open;
-        EnemyAI.PlayerIsNoticed -= Close;
+        UpgradesPopupButton.Clicked -= _popup.Open;
+        Upgrade.Upgraded -= OnUpgrade;
     }
 
-    private void Open()
+    private void OnUpgrade()
     {
-        if (_opened)
+        foreach (var upgrade in _upgradeSlots)
+            upgrade.CheckInteractableBuyButton();
+
+        if (_maxUpgrades)
             return;
 
-        _opened = true;
-        _anticlick.SetActive(true);
-        _content.DOScale(Vector3.one, _animationDuration);
-        Opened?.Invoke(true);
-    }
-
-    private void Close()
-    {
-        _opened = false;
-        _anticlick.SetActive(false);
-        _content.DOScale(Vector3.zero, _animationDuration);
-        Opened?.Invoke(false);
+        foreach (var upgrade in _upgradeSlots)
+        {
+            if (!upgrade.IsMaxLevel)
+                return;
+        }
+        TaskManager.Instance.RemoveAvailableTask(TaskType.BuyUpgrade);
+        _maxUpgrades = true;
     }
 }

@@ -19,7 +19,7 @@ public class Lootable : MonoBehaviour
     private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
 
     public static event Action<Action, Action> ShowHoldButton;
-    public static event Action<ResourceType, int, int> PlayResourceAnimation;
+    public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
     public static event Action<string, float> ShowQuickMessage;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
@@ -30,8 +30,14 @@ public class Lootable : MonoBehaviour
     [SerializeField] private GameObject _appearHackingZoneTrigger;
 
     private MovingFurnitureElements _movingFurnitureElements;
+    private Action _afterLootingAction;
     private bool _empty = false;
     private bool _isLooting = false;
+
+    public void Initialize(Action afterLootingAction)
+    {
+        _afterLootingAction = afterLootingAction;
+    }
 
     public void OnPlayerEnter()
     {
@@ -65,6 +71,9 @@ public class Lootable : MonoBehaviour
 
     public void Fill()
     {
+        if (!gameObject.activeSelf)
+            return;
+
         _empty = false;
         _appearHackingZoneTrigger.SetActive(true);
         _movingFurnitureElements.MoveBack();
@@ -85,6 +94,7 @@ public class Lootable : MonoBehaviour
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(false);
             _movingFurnitureElements.MoveForward();
+            _afterLootingAction?.Invoke();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)
@@ -101,8 +111,11 @@ public class Lootable : MonoBehaviour
             var xp = Randomizator.GetRandomValue(_minMaxXP);
             Stats.Instanse.AddXP(xp);
 
-            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp);
+            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
             SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
+
+            TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
+            TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
         }
         void ActionAbort()
         {

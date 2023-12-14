@@ -94,10 +94,7 @@ GameObject:
   - component: {fileID: 8103990769406851552}
   - component: {fileID: 5177155220475819589}
   - component: {fileID: 6934422438303613583}
-  - component: {fileID: 6002532521424920468}
-  - component: {fileID: -2989482253401847897}
-  - component: {fileID: 8168375805103427799}
-  - component: {fileID: -508489319074922429}
+  - component: {fileID: 5152541656502709558}
   m_Layer: 0
   m_Name: pottedPlant
   m_TagString: Untagged
@@ -172,60 +169,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6002532521424920468
-BoxCollider:
+--- !u!136 &5152541656502709558
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8880245276820530010}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8578848, y: 1.2152, z: 0.9906}
+  m_Radius: 0.44
+  m_Height: 1.2152
+  m_Direction: 1
   m_Center: {x: 0.4289424, y: 0.6076, z: 0.4953}
---- !u!114 &-2989482253401847897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8880245276820530010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c6f2d60ab3ad6448c9e6c6c63a8492, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &8168375805103427799
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8880245276820530010}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!208 &-508489319074922429
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8880245276820530010}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.42900002, y: 0.60800004, z: 0.49500003}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0.42900002, y: 0.60800004, z: 0.49500003}
-  m_TimeToStationary: 0.5

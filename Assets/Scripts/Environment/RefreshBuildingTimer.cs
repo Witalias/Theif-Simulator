@@ -10,10 +10,13 @@ public class RefreshBuildingTimer : MonoBehaviour
     private int _remainSeconds;
     private Coroutine _tickCoroutine;
     private Action _outAction;
+    private Action<int> _tickAction;
 
-    public void Initialize(Action outAction)
+    public void Initialize(Action outAction, Action<int> tickAction)
     {
         _outAction = outAction;
+        _tickAction = tickAction;
+        _remainSeconds = _secondsForRefresh + 1;
     }
 
     public void StartTimer()
@@ -32,15 +35,16 @@ public class RefreshBuildingTimer : MonoBehaviour
         var wait = new WaitForSeconds(1.0f);
         while (_remainSeconds > 0)
         {
-            yield return wait;
             _remainSeconds--;
+            _tickAction?.Invoke(_remainSeconds);
+            yield return wait;
         }
         Refresh();
     }
 
     private void Refresh()
     {
-        _remainSeconds = _secondsForRefresh;
+        _remainSeconds = _secondsForRefresh + 1;
         _outAction?.Invoke();
     }
 }
