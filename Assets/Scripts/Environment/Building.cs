@@ -81,6 +81,18 @@ public class Building : MonoBehaviour
         UpdateProgressBar();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<MovementController>(out MovementController player))
+            OnPlayerEnter();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<MovementController>(out MovementController player))
+            OnPlayerExit();
+    }
+
     private void Refresh()
     {
         LockDoors(true);

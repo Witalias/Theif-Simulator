@@ -65,7 +65,9 @@ public class TaskManager : MonoBehaviour
             taskIcon = _taskDataDict[task].Sprite;
         }
         UpdateProgressBar();
-        _taskPanel.Show(taskIcon, GetTaskDescription(), _reward);
+
+        if (_taskPanel != null)
+            _taskPanel.Show(taskIcon, GetTaskDescription(), _reward);
     }
 
     public void RemoveAvailableTask(TaskType task)
@@ -164,5 +166,11 @@ public class TaskManager : MonoBehaviour
         };
     }
 
-    private void UpdateProgressBar() => _taskPanel.SetBarValue(_currentCount, _requiredCount);
+    private void UpdateProgressBar()
+    {
+        if (_taskPanel == null)
+            return;
+
+        _taskPanel.SetBarValue(_currentCount, _requiredCount);
+    }
 }

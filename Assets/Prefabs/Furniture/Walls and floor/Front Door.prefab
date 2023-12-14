@@ -68,7 +68,6 @@ GameObject:
   - component: {fileID: 5654292161975782874}
   - component: {fileID: 8347887827840150042}
   - component: {fileID: 1578788414866005384}
-  - component: {fileID: 3068885394056901198}
   - component: {fileID: 1898714775270354798}
   - component: {fileID: 1667166992915107497}
   - component: {fileID: 1109314976485366585}
@@ -214,27 +213,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.9140167, z: 0.5961914}
   m_Center: {x: 5, y: 11.438313, z: 0.23246002}
---- !u!65 &3068885394056901198
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743471952935465036}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5.001595, y: 1.5011485, z: 11.231381}
-  m_Center: {x: 4.959202, y: 1.0005742, z: -2.2879982}
 --- !u!82 &1898714775270354798
 AudioSource:
   m_ObjectHideFlags: 0
@@ -255,8 +233,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 1
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1135,7 +1113,8 @@ GameObject:
   - component: {fileID: 6887069205357800507}
   - component: {fileID: 6131703807711339101}
   - component: {fileID: 9160006286622103811}
-  - component: {fileID: 484867658040836715}
+  - component: {fileID: 70442649754060971}
+  - component: {fileID: 5077113025405611266}
   m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
@@ -1227,7 +1206,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &484867658040836715
+--- !u!114 &70442649754060971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1239,7 +1218,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e41e0855b23bc4fb281a2ed556ee22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotation: {x: 40, y: 0, z: 0}
+  _rotation: {x: 60, y: 0, z: 0}
+--- !u!114 &5077113025405611266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8377637223148433811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f1d8f77f745d94cafd8f07964e8151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8994854901383811167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,8 +1419,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.001595, y: 1.5011485, z: 11.231381}
-  m_Center: {x: 4.959202, y: 1.0005742, z: -2.2879982}
+  m_Size: {x: 5.0015945, y: 1.5011485, z: 7.6563663}
+  m_Center: {x: 4.959202, y: 1.0005742, z: -0.50049114}
 --- !u!114 &8315127343889222345
 MonoBehaviour:
   m_ObjectHideFlags: 0
