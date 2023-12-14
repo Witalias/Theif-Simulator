@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(RefreshBuildingTimer))]
 public class Building : MonoBehaviour
 {
     [Serializable]
