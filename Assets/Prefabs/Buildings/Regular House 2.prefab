@@ -1130,6 +1130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vision Area Mask
       objectReference: {fileID: 0}
+    - target: {fileID: 9218613953165474870, guid: e440f2366e149f048a8acd6b4d43cd94, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
