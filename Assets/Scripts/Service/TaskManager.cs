@@ -110,7 +110,7 @@ public class TaskManager : MonoBehaviour
 
     private void Start()
     {
-        StartRandomTask();
+        //StartRandomTask();
     }
 
     private void Update()
