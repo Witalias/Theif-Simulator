@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
         var toPosition = new Vector3(
             movementController.transform.position.x,
             currentY,
-            movementController.transform.position.z - 15f);
+            movementController.transform.position.z - 32f);
         transform.position = Vector3.Lerp(transform.position, toPosition, sharpness * Time.fixedDeltaTime);
     }
 }

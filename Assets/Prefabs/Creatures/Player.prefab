@@ -1350,6 +1350,7 @@ GameObject:
   - component: {fileID: 5764222128491960048}
   - component: {fileID: 5764222128499161360}
   - component: {fileID: 1993429244136543331}
+  - component: {fileID: 7833941796118625320}
   - component: {fileID: 30854329}
   - component: {fileID: 922727250244075302}
   - component: {fileID: 2134120180737514993}
@@ -1415,14 +1416,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04da72fe066d5b14e9152444459d4527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manuallyMovingSpeed: 20
-  climbSpeed: 3
+  _controlsLocked: 0
   _stealth: {fileID: 9118138834692433051}
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
   centerPoint: {fileID: 2305661208440498080}
   _joystick: {fileID: 0}
+--- !u!114 &7833941796118625320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764222128491727568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2caf7d684c1095a41b5932506ce37880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &30854329
 Rigidbody:
   m_ObjectHideFlags: 0
