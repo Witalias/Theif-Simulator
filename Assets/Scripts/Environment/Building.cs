@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
         public bool ObjectsWasActived { get; set; }
     }
 
-    public static event Action<bool> PlayerInBuilding;
+    public static event Action<bool, bool> PlayerInBuilding;
 
     [SerializeField] private EnemyAI[] _enemies;
     [SerializeField] private Door[] _doors;
@@ -29,7 +29,7 @@ public class Building : MonoBehaviour
 
     public void OnPlayerEnter()
     {
-        PlayerInBuilding?.Invoke(true);
+        PlayerInBuilding?.Invoke(true, ContainsEnemies());
         LockDoors(false);
 
         if (_refreshTimer != null)
@@ -38,7 +38,7 @@ public class Building : MonoBehaviour
 
     public void OnPlayerExit()
     {
-        PlayerInBuilding?.Invoke(false);
+        PlayerInBuilding?.Invoke(false, false);
 
         var doorsLocked = false;
         foreach (var enemy in _enemies)
@@ -152,5 +152,15 @@ public class Building : MonoBehaviour
 
         foreach (var door in _doors)
             door.SetProgressBarValue(_currentXp, _requiredXp, valueText);
+    }
+
+    private bool ContainsEnemies()
+    {
+        foreach (var enemy in _enemies)
+        {
+            if (enemy.gameObject.activeSelf)
+                return true;
+        }
+        return false;
     }
 }

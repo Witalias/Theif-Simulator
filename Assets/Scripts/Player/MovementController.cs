@@ -19,7 +19,6 @@ public class MovementController : MonoBehaviour
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
     [SerializeField] private LayerMask playerMask;
-    [SerializeField] private Transform centerPoint;
     [SerializeField] private FloatingJoystick _joystick;
 
     private Animator _animator;
@@ -30,7 +29,6 @@ public class MovementController : MonoBehaviour
     private bool _noticed;
 
     public bool InBuilding => _inBuilding;
-    public Transform CenterPoint { get => centerPoint; }
     public bool IsRunning => _isMoving;
     public bool Noticed => _noticed;
     public bool Busy => _controlsLocked;
@@ -47,7 +45,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
-        InBuildingState(false);
+        InBuildingState(false, false);
         StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
@@ -147,12 +145,12 @@ public class MovementController : MonoBehaviour
         _noticed = true;
     }
 
-    private void InBuildingState(bool value)
+    private void InBuildingState(bool inBuilding, bool canHide)
     {
-        _inBuilding = value;
-        CanHide(value);
+        _inBuilding = inBuilding;
+        CanHide(canHide);
 
-        if (value == false)
+        if (inBuilding == false)
             _noticed = false;
     }
 }
