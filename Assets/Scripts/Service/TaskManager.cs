@@ -119,7 +119,8 @@ public class TaskManager : MonoBehaviour
 
     private void Start()
     {
-        //StartRandomTask();
+        if (YandexGame.savesData.TutorialDone)
+            StartRandomTask();
     }
 
     private void Update()

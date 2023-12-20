@@ -23,12 +23,12 @@ public class MovementController : MonoBehaviour
 
     private Animator _animator;
     private Rigidbody _rigidbody;
+    private Building _currentBuilding;
     private bool _isMoving;
     private bool _canHide;
-    private bool _inBuilding;
     private bool _noticed;
 
-    public bool InBuilding => _inBuilding;
+    public bool InBuilding => _currentBuilding != null;
     public bool IsRunning => _isMoving;
     public bool Noticed => _noticed;
     public bool Busy => _controlsLocked;
@@ -45,7 +45,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
-        InBuildingState(false, false);
+        InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
@@ -59,7 +59,7 @@ public class MovementController : MonoBehaviour
 
     public void CanHide(bool value)
     {
-        if (value == true && !_inBuilding)
+        if (value == true && (!InBuilding || !_currentBuilding.ContainsEnemies()))
             return;
 
         _canHide = value;
@@ -145,12 +145,18 @@ public class MovementController : MonoBehaviour
         _noticed = true;
     }
 
-    private void InBuildingState(bool inBuilding, bool canHide)
+    private void InBuildingState(bool inBuilding, Building building)
     {
-        _inBuilding = inBuilding;
-        CanHide(canHide);
+        CanHide(building.ContainsEnemies());
 
-        if (inBuilding == false)
+        if (inBuilding)
+        {
+            _currentBuilding = building;
+        }
+        else
+        {
             _noticed = false;
+            _currentBuilding = null;
+        }    
     }
 }

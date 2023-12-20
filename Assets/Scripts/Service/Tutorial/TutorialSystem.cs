@@ -1,3 +1,4 @@
+using Cinemachine;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using YG;
 public class TutorialSystem : MonoBehaviour
 {
     [SerializeField] private float _startingTaskDelay;
+    [SerializeField] private float _switchingCameraDelay;
     [SerializeField] private GameObject _arrow3dPrefab;
     [SerializeField] private GameObject _arrow2d;
 
@@ -14,6 +16,8 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private Transform _crackDoorArrowPoint;
     [SerializeField] private Transform[] _lootableAreaPoints;
     [SerializeField] private Transform _sellItemsPoint;
+    [SerializeField] private Transform _sellButton;
+    [SerializeField] private Button _closeMarketPanelButton;
     [SerializeField] private Button _upgradePanelButton;
     [SerializeField] private Button _closeUpgradePanelButton;
     [SerializeField] private Transform _buyUpgradeButton;
@@ -22,6 +26,12 @@ public class TutorialSystem : MonoBehaviour
     [Header("Walls")]
     [SerializeField] private GameObject _robWalls;
     [SerializeField] private GameObject _sellWalls;
+
+    [Header("Virtual Cameras")]
+    [SerializeField] private CinemachineVirtualCamera _doorCamera;
+    [SerializeField] private CinemachineVirtualCamera _houseCamera;
+    [SerializeField] private CinemachineVirtualCamera _blackMarketCamera;
+    [SerializeField] private CinemachineVirtualCamera _unlockAreaCamera;
 
     private readonly List<Transform> _arrows = new();
 
@@ -50,6 +60,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnCrackedDoor;
         CreateArrow(_crackDoorArrowPoint.position);
         _robWalls.SetActive(true);
+        CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay);
     }
 
     private void OnCrackedDoor(TaskType type)
@@ -69,6 +80,7 @@ public class TutorialSystem : MonoBehaviour
         foreach (var point in _lootableAreaPoints)
             CreateArrow(point.position);
         _robWalls.SetActive(true);
+        CameraChanger.Instance.TemporarilySwitchCamera(_houseCamera, _switchingCameraDelay);
     }
 
     private void OnRobbedHouse(TaskType type)
@@ -86,17 +98,41 @@ public class TutorialSystem : MonoBehaviour
     {
         TaskManager.Instance.StartTask(TaskType.TutorialSellItems, 1, -1);
         TaskManager.TaskCompleted += OnSoldItems;
+        BlackMarketArea.PlayerStayed += OnOpenedMarketPopup;
         CreateArrow(_sellItemsPoint.position);
         _sellWalls.SetActive(true);
+        CameraChanger.Instance.TemporarilySwitchCamera(_blackMarketCamera, _switchingCameraDelay);
+    }
+
+    private void OnOpenedMarketPopup()
+    {
+        BlackMarketArea.PlayerStayed -= OnOpenedMarketPopup;
+        _closeMarketPanelButton.interactable = false;
+        DOVirtual.DelayedCall(0.25f, () =>
+        {
+            _arrow2d.SetActive(true);
+            _arrow2d.transform.position = _sellButton.position;
+        });
     }
 
     private void OnSoldItems(TaskType type)
     {
         if (type != TaskType.TutorialSellItems)
             return;
-        SaveLoad.SaveTutorialSellItemsDoneBoolean(true);
         TaskManager.TaskCompleted -= OnSoldItems;
+        OpenClosePopup.Opened += OnClosedMarketPanel;
+        _closeMarketPanelButton.interactable = true;
+        _arrow2d.transform.position = _closeMarketPanelButton.transform.position;
         ClearArrows();
+    }
+
+    private void OnClosedMarketPanel(bool opened)
+    {
+        if (opened)
+            return;
+        OpenClosePopup.Opened -= OnClosedMarketPanel;
+        SaveLoad.SaveTutorialSellItemsDoneBoolean(true);
+        _arrow2d.SetActive(false);
         DOVirtual.DelayedCall(_startingTaskDelay, StartBuyUpgradeTutorial);
     }
 
@@ -145,6 +181,7 @@ public class TutorialSystem : MonoBehaviour
         _unlockArea.gameObject.SetActive(true);
         _sellWalls.SetActive(true);
         CreateArrow(_unlockArea.position);
+        CameraChanger.Instance.TemporarilySwitchCamera(_unlockAreaCamera, _switchingCameraDelay);
     }
 
     private void OnBoughtZone(TaskType type)
