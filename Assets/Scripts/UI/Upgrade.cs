@@ -56,6 +56,7 @@ public class Upgrade : MonoBehaviour
         Refresh();
         Upgraded?.Invoke();
         TaskManager.Instance.ProcessTask(TaskType.BuyUpgrade, 1);
+        TaskManager.Instance.ProcessTask(TaskType.TutorialBuyUpgrade, 1);
     }
 
     private void Refresh()

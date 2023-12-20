@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class TaskManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TaskManager : MonoBehaviour
     }
 
     public static event Action<int> PlayResourceAnimationMoney;
+    public static event Action<TaskType> TaskCompleted;
 
     [SerializeField] private TaskData[] _taskData;
     [SerializeField] private TaskPanel _taskPanel;
@@ -26,8 +28,8 @@ public class TaskManager : MonoBehaviour
     private int _requiredCount;
     private int _currentCount;
     private int _reward;
-    private Dictionary<TaskType, TaskData> _taskDataDict = new();
-    private List<TaskType> _availableTasks = new()
+    private readonly Dictionary<TaskType, TaskData> _taskDataDict = new();
+    private readonly List<TaskType> _availableTasks = new()
     {
         TaskType.EarnMoney,
         TaskType.HackHouse,
@@ -37,24 +39,21 @@ public class TaskManager : MonoBehaviour
         TaskType.TheftCertainItems,
         TaskType.TheftItems
     };
-    private List<ResourceType> _availableResources = new()
+    private readonly List<ResourceType> _availableResources = new()
     {
         ResourceType.Bottle,
         ResourceType.Sneakers
     };
 
-    public void StartRandomTask()
+    public void StartTask(TaskType type, int requiredCount, int reward = -1)
     {
-        var task = _currentTask;
-        while (task == _currentTask)
-            task = _availableTasks[UnityEngine.Random.Range(0, _availableTasks.Count)];
-        _currentTask = task;
-        _requiredCount = Randomizator.GetRandomValue(_taskDataDict[task].MinMaxRequirenment);
+        _currentTask = type;
+        _requiredCount = requiredCount;
+        _reward = Mathf.Clamp(reward, 0, int.MaxValue);
         _currentCount = 0;
-        _reward = _taskDataDict[task].RewardMoney;
 
         Sprite taskIcon;
-        var isResourceTask = (task == TaskType.TheftCertainItems || task == TaskType.SellCertainItems);
+        var isResourceTask = (type == TaskType.TheftCertainItems || type == TaskType.SellCertainItems);
         if (isResourceTask)
         {
             _requiredResource = _availableResources[UnityEngine.Random.Range(0, _availableResources.Count)];
@@ -62,12 +61,22 @@ public class TaskManager : MonoBehaviour
         }
         else
         {
-            taskIcon = _taskDataDict[task].Sprite;
+            taskIcon = _taskDataDict[type].Sprite;
         }
         UpdateProgressBar();
 
         if (_taskPanel != null)
-            _taskPanel.Show(taskIcon, GetTaskDescription(), _reward);
+            _taskPanel.Show(taskIcon, GetTaskDescription(), reward);
+    }
+
+    public void StartRandomTask()
+    {
+        var task = _currentTask;
+        while (task == _currentTask)
+            task = _availableTasks[UnityEngine.Random.Range(0, _availableTasks.Count)];
+        var requiredCount = Randomizator.GetRandomValue(_taskDataDict[task].MinMaxRequirenment);
+        var reward = _taskDataDict[task].RewardMoney;
+        StartTask(task, requiredCount, reward);
     }
 
     public void RemoveAvailableTask(TaskType task)
@@ -130,10 +139,15 @@ public class TaskManager : MonoBehaviour
 
     private void Complete()
     {
-        Stats.Instanse.AddMoney(_reward, false);
-        PlayResourceAnimationMoney?.Invoke(_reward);
-        SoundManager.Instanse.Play(Sound.GetMoney);
-        DOVirtual.DelayedCall(1.0f, StartRandomTask);
+        if (_reward > 0)
+        {
+            Stats.Instanse.AddMoney(_reward, false);
+            PlayResourceAnimationMoney?.Invoke(_reward);
+            SoundManager.Instanse.Play(Sound.GetMoney);
+        }
+        TaskCompleted?.Invoke(_currentTask);
+        if (YandexGame.savesData.TutorialDone)
+            DOVirtual.DelayedCall(1.0f, StartRandomTask);
     }
 
     private string GetTaskDescription()
@@ -149,6 +163,11 @@ public class TaskManager : MonoBehaviour
                 TaskType.EarnMoney => $"Earn {_requiredCount} money",
                 TaskType.BuyUpgrade => $"Buy {_requiredCount} upgrade",
                 TaskType.HackHouse => $"Hack {_requiredCount} buildings",
+                TaskType.TutorialCrackDoors => $"Crack the door",
+                TaskType.TutorialRobHouse => $"Rob the house",
+                TaskType.TutorialSellItems => $"Sell items",
+                TaskType.TutorialBuyUpgrade => $"Buy upgrade",
+                TaskType.TutorialBuyZone => $"Buy zone",
                 _ => "",
             },
             Language.Russian => _currentTask switch
@@ -160,6 +179,11 @@ public class TaskManager : MonoBehaviour
                 TaskType.EarnMoney => $"Заработать {_requiredCount} денег",
                 TaskType.BuyUpgrade => $"Купить {_requiredCount} улучшение",
                 TaskType.HackHouse => $"Взломать {_requiredCount} домов",
+                TaskType.TutorialCrackDoors => $"Взломай дверь",
+                TaskType.TutorialRobHouse => $"Ограбь дом",
+                TaskType.TutorialSellItems => $"Продай предметы",
+                TaskType.TutorialBuyUpgrade => $"Купи улучшение",
+                TaskType.TutorialBuyZone => $"Купи область",
                 _ => "",
             },
             _ => "",

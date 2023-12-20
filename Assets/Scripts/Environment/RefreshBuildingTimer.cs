@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using YG;
 
 [RequireComponent(typeof(Building))]
 public class RefreshBuildingTimer : MonoBehaviour
@@ -33,6 +34,10 @@ public class RefreshBuildingTimer : MonoBehaviour
     private IEnumerator Tick()
     {
         var wait = new WaitForSeconds(1.0f);
+        while (!YandexGame.savesData.TutorialDone)
+        {
+            yield return wait;
+        }
         while (_remainSeconds > 0)
         {
             _remainSeconds--;

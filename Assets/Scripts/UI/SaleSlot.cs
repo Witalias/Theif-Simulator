@@ -44,6 +44,7 @@ public class SaleSlot : MonoBehaviour
             return;
 
         TaskManager.Instance.ProcessTask(TaskType.SellItems, Stats.Instanse.GetResourceCount(_type));
+        TaskManager.Instance.ProcessTask(TaskType.TutorialSellItems, 1);
         TaskManager.Instance.ProcessTask(TaskType.SellCertainItems, _type, Stats.Instanse.GetResourceCount(_type));
         Stats.Instanse.ClearResource(_type);
         Stats.Instanse.AddMoney(_reward);

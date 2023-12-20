@@ -13,6 +13,7 @@ public class TaskPanel : MonoBehaviour
     [SerializeField] private TMP_Text _taskText;
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private UIBar _progressBar;
+    [SerializeField] private GameObject _rewardPanel;
 
     public void SetBarValue(int value, int maxValue) => _progressBar.SetValue(value, maxValue);
 
@@ -23,6 +24,7 @@ public class TaskPanel : MonoBehaviour
             SetItemSprite(itemSprite);
             SetTaskText(taskText);
             SetReward(rewardMoney);
+            _rewardPanel.SetActive(rewardMoney > 0);
         }
 
         if (_panel.localScale == Vector3.one)

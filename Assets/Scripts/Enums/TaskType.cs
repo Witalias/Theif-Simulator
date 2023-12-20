@@ -6,5 +6,10 @@ public enum TaskType
     SellItems,
     SellCertainItems,
     EarnMoney,
-    BuyUpgrade
+    BuyUpgrade,
+    TutorialCrackDoors,
+    TutorialRobHouse,
+    TutorialSellItems,
+    TutorialBuyUpgrade,
+    TutorialBuyZone
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -72,7 +73,8 @@ public class UnlockArea : MonoBehaviour
                 Stats.Instanse.AddMoney(-1);
                 yield return wait;
             }
-            _onPurchase.Invoke();
+            TaskManager.Instance.ProcessTask(TaskType.TutorialBuyZone, 1);
+            _onPurchase?.Invoke();
             Hide();
         }
     }
@@ -86,7 +88,7 @@ public class UnlockArea : MonoBehaviour
     private void Hide()
     {
         DOTween.Sequence()
-            .Append(transform.DOScale(Vector3.one + new Vector3(0.3f, 0.3f, 0.3f), 0.2f))
+            .Append(transform.DOScale(transform.localScale + new Vector3(0.3f, 0.3f, 0.3f), 0.2f))
             .Append(transform.DOScale(Vector3.zero, 0.25f))
             .OnComplete(() => Destroy(gameObject))
             .Play();

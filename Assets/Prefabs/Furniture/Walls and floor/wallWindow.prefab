@@ -215,9 +215,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8067726398312463513, guid: 1dfec05ad4c52764b808ef12869e8ef9, type: 3}
+  - {fileID: 2100000, guid: 4da0f42d0626a8146b4f4af1227c77fa, type: 2}
   - {fileID: 2100000, guid: 00a6146725fe90e4cb27cbbf99cdebff, type: 2}
-  - {fileID: -3963241562183589234, guid: 1dfec05ad4c52764b808ef12869e8ef9, type: 3}
+  - {fileID: 2100000, guid: 00a6146725fe90e4cb27cbbf99cdebff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -285,13 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a0507e677cf694c945fda7238a70d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectAfterLooting: {fileID: 0}
-  movingObjects:
-  - {fileID: 1678926029049541344}
-  endLocalPositions:
-  - {x: 0, y: 0, z: 0}
-  endLocalRotations:
-  - {x: 0, y: -120, z: 0}
+  _movingObjects: []
 --- !u!65 &1823839311939891454
 BoxCollider:
   m_ObjectHideFlags: 0

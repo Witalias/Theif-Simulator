@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using DG.Tweening;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour
@@ -28,6 +29,7 @@ public class Lootable : MonoBehaviour
     [SerializeField] private Sound sound;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
+    [SerializeField] private UnityEvent _onLooted;
 
     private MovingFurnitureElements _movingFurnitureElements;
     private Action _afterLootingAction;
@@ -95,6 +97,7 @@ public class Lootable : MonoBehaviour
             _appearHackingZoneTrigger.SetActive(false);
             _movingFurnitureElements.MoveForward();
             _afterLootingAction?.Invoke();
+            _onLooted?.Invoke();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)
@@ -115,6 +118,7 @@ public class Lootable : MonoBehaviour
             SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
 
             TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
+            TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
             TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
         }
         void ActionAbort()

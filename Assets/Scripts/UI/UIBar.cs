@@ -20,9 +20,14 @@ public class UIBar : MonoBehaviour
             differenceBar.fillAmount = value / maxValue;
 
         if (value / maxValue < bar.fillAmount)
+        {
+            bar.DOKill();
             bar.fillAmount = value / maxValue;
+        }
         else
+        {
             DOVirtual.DelayedCall(0.25f, () => bar.DOFillAmount(value / maxValue, 1.0f));
+        }
 
         if (valueText != null)
         {

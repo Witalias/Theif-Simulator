@@ -123,6 +123,7 @@ public class Door : MonoBehaviour
             Stats.Instanse.AddXP(xp);
             PlayResourceAnimationXp?.Invoke(xp);
             TaskManager.Instance.ProcessTask(TaskType.HackHouse, 1);
+            TaskManager.Instance.ProcessTask(TaskType.TutorialCrackDoors, 1);
         }
         void ActionAbort()
         {

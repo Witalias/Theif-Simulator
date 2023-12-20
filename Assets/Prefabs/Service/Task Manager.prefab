@@ -73,4 +73,24 @@ MonoBehaviour:
     MinMaxRequirenment: {x: 1, y: 1}
     RewardMoney: 100
     Sprite: {fileID: 21300000, guid: a867b86916ff467479603f3565bab945, type: 3}
+  - Type: 7
+    MinMaxRequirenment: {x: 0, y: 0}
+    RewardMoney: 0
+    Sprite: {fileID: 21300000, guid: 5e92a4b5a11cd91469d3d478b45f3c38, type: 3}
+  - Type: 8
+    MinMaxRequirenment: {x: 0, y: 0}
+    RewardMoney: 0
+    Sprite: {fileID: 21300000, guid: ed2a9819db6e933458ab89be8304d98f, type: 3}
+  - Type: 9
+    MinMaxRequirenment: {x: 0, y: 0}
+    RewardMoney: 0
+    Sprite: {fileID: 21300000, guid: bb0b88ad2aec5124688717966568ea10, type: 3}
+  - Type: 10
+    MinMaxRequirenment: {x: 0, y: 0}
+    RewardMoney: 0
+    Sprite: {fileID: 21300000, guid: a867b86916ff467479603f3565bab945, type: 3}
+  - Type: 11
+    MinMaxRequirenment: {x: 0, y: 0}
+    RewardMoney: 0
+    Sprite: {fileID: 21300000, guid: 63202729e6f4a034ca0326f74ce1e9d8, type: 3}
   _taskPanel: {fileID: 0}
