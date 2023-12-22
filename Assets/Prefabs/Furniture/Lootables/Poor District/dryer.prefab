@@ -122,7 +122,7 @@ Transform:
   - {fileID: 1929198787466320485}
   - {fileID: 8983002033954566582}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4832808063077853129
 MeshFilter:
@@ -190,16 +190,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _containedResources:
   - Type: 0
-    DropChance: 100
+    DropChance: 90
     CountsChances:
-    - 70
-    - 30
+    - 90
+    - 10
+    OnlyMinMaxRange: 0
+    MinMaxCount: {x: 0, y: 0}
+  - Type: 1
+    DropChance: 10
+    CountsChances:
+    - 90
+    - 10
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
   _minMaxXP: {x: 1, y: 2}
   sound: 28
   _hackingArea: {fileID: 2123443670518620307}
   _appearHackingZoneTrigger: {fileID: 7383763923881535572}
+  _onLooted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &8943744418753606704
 BoxCollider:
   m_ObjectHideFlags: 0
