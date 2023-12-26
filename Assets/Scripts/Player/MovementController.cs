@@ -147,16 +147,17 @@ public class MovementController : MonoBehaviour
 
     private void InBuildingState(bool inBuilding, Building building)
     {
-        CanHide(building.ContainsEnemies());
-
         if (inBuilding)
         {
             _currentBuilding = building;
+            CameraChanger.Instance.SwitchToIndoorCamera();
         }
         else
         {
             _noticed = false;
             _currentBuilding = null;
-        }    
+            CameraChanger.Instance.SwitchToMainCamera();
+        }
+        CanHide(building.ContainsEnemies());
     }
 }

@@ -16,5 +16,6 @@ namespace YG
         public bool TutorialSellItemsDone;
         public bool TutorialBuyUpgradeDone;
         public bool TutorialBuyZoneDone;
+        public bool TutorialEnterBuildingWithEnemyDone;
     }
 }

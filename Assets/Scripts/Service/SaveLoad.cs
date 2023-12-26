@@ -37,4 +37,10 @@ public static class SaveLoad
         YandexGame.savesData.TutorialBuyZoneDone = value;
         YandexGame.SaveProgress();
     }
+
+    public static void SaveTutorialEnterBuildingWithEnemyDoneBoolean(bool value)
+    {
+        YandexGame.savesData.TutorialEnterBuildingWithEnemyDone = value;
+        YandexGame.SaveProgress();
+    }
 }
