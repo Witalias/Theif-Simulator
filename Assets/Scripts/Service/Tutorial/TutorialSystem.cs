@@ -11,6 +11,8 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private float _switchingCameraDelay;
     [SerializeField] private GameObject _arrow3dPrefab;
     [SerializeField] private GameObject _arrow2d;
+    [SerializeField] private GameObject _controls;
+    [SerializeField] private OpenClosePopup _stealth;
 
     [Header("Arrow points")]
     [SerializeField] private Transform _crackDoorArrowPoint;
@@ -37,6 +39,9 @@ public class TutorialSystem : MonoBehaviour
 
     private void Start()
     {
+        if (!YandexGame.savesData.TutorialEnterBuildingWithEnemyDone)
+            Building.PlayerInBuildingWithEnemyFirstly += OnEnterBuildingWithEnemy;
+
         if (YandexGame.savesData.TutorialDone)
             return;
 
@@ -60,7 +65,17 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnCrackedDoor;
         CreateArrow(_crackDoorArrowPoint.position);
         _robWalls.SetActive(true);
-        CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay);
+        CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay, () =>
+        {
+            _controls.SetActive(true);
+            MovementController.MovingStarted += OnMovingStarted;
+        });
+    }
+
+    private void OnMovingStarted()
+    {
+        MovementController.MovingStarted -= OnMovingStarted;
+        _controls.SetActive(false);
     }
 
     private void OnCrackedDoor(TaskType type)
@@ -194,6 +209,13 @@ public class TutorialSystem : MonoBehaviour
         ClearArrows();
         _upgradePanelButton.interactable = true;
         DOVirtual.DelayedCall(_startingTaskDelay, TaskManager.Instance.StartRandomTask);
+    }
+
+    private void OnEnterBuildingWithEnemy()
+    {
+        Building.PlayerInBuildingWithEnemyFirstly -= OnEnterBuildingWithEnemy;
+        SaveLoad.SaveTutorialEnterBuildingWithEnemyDoneBoolean(true);
+        _stealth.Open();
     }
 
     private void CreateArrow(Vector3 position)

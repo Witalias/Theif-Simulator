@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using YG;
 
 [RequireComponent(typeof(RefreshBuildingTimer))]
 public class Building : MonoBehaviour
@@ -14,6 +15,7 @@ public class Building : MonoBehaviour
     }
 
     public static event Action<bool, Building> PlayerInBuilding;
+    public static event Action PlayerInBuildingWithEnemyFirstly;
 
     [SerializeField] private EnemyAI[] _enemies;
     [SerializeField] private Door[] _doors;
@@ -70,7 +72,11 @@ public class Building : MonoBehaviour
         foreach (var enemy in _enemies)
         {
             if (enemy.gameObject.activeInHierarchy)
+            {
+                if (!YandexGame.savesData.TutorialEnterBuildingWithEnemyDone)
+                    PlayerInBuildingWithEnemyFirstly?.Invoke();
                 return true;
+            }
         }
         return false;
     }
