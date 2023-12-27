@@ -1,11 +1,15 @@
+using DG.Tweening;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PathTrajectory : MonoBehaviour
 {
     [SerializeField] private Transform[] _path;
+    [SerializeField] private Transform[] _stopPoints;
     [SerializeField] private bool _loop;
     [SerializeField] private bool _reverse;
+    [SerializeField] private float _stoppingDuration = 3.0f;
     [SerializeField] private NavMeshAgent _agent;
 
     private int _currentIndex;
@@ -14,6 +18,8 @@ public class PathTrajectory : MonoBehaviour
     {
         if (TryGetComponent<DrawPath>(out DrawPath path))
             path.Draw(_path, _loop);
+
+        Go();
     }
 
     public void Go()
@@ -28,6 +34,7 @@ public class PathTrajectory : MonoBehaviour
         }
 
         _agent.SetDestination(_path[_currentIndex].position);
+        _agent.isStopped = false;
     }
 
     public void Stop()
@@ -37,23 +44,36 @@ public class PathTrajectory : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_path == null || _path.Length <= 1)
+        if (_path == null || _path.Length <= 1 || !_agent.hasPath || _agent.isStopped)
             return;
 
         if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            _currentIndex += _reverse ? -1 : 1;
-            if (_currentIndex == _path.Length || _currentIndex == -1)
+            if (_stopPoints.Contains(_path[_currentIndex]))
             {
-                if (_loop)
-                    _currentIndex = _reverse ? _path.Length - 1 : 0;
-                else
-                {
-                    _currentIndex = _reverse ? 1 : _path.Length - 2;
-                    _reverse = !_reverse;
-                }
+                Stop();
+                DOVirtual.DelayedCall(_stoppingDuration, ChangeIndexAndGo);
             }
-            Go();
+            else
+                ChangeIndexAndGo();
         }
+    }
+
+    private void ChangeIndexAndGo()
+    {
+        _currentIndex += _reverse ? -1 : 1;
+        if (_currentIndex == _path.Length || _currentIndex == -1)
+        {
+            if (_loop)
+            {
+                _currentIndex = _reverse ? _path.Length - 1 : 0;
+            }
+            else
+            {
+                _currentIndex = _reverse ? 1 : _path.Length - 2;
+                _reverse = !_reverse;
+            }
+        }
+        Go();
     }
 }
