@@ -27,10 +27,19 @@ public class Building : MonoBehaviour
     private int _level = 1;
     private int _currentXp;
     private int _requiredXp;
+    private bool _triggered;
+    private bool _isIntersectTriggers;
     private RefreshBuildingTimer _refreshTimer;
 
     public void OnPlayerEnter()
     {
+        if (_triggered)
+        {
+            _isIntersectTriggers = true;
+            return;
+        }
+        _triggered = true;
+
         PlayerInBuilding?.Invoke(true, this);
         LockDoors(false);
 
@@ -40,6 +49,13 @@ public class Building : MonoBehaviour
 
     public void OnPlayerExit()
     {
+        if (_isIntersectTriggers)
+        {
+            _isIntersectTriggers = false;
+            return;
+        }
+        _triggered = false;
+
         PlayerInBuilding?.Invoke(false, this);
 
         var doorsLocked = false;
