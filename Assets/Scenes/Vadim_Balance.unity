@@ -4046,6 +4046,8 @@ MonoBehaviour:
   _switchingCameraDelay: 4
   _arrow3dPrefab: {fileID: 6697617789751508545, guid: 8f72afaa1736dbd469857fb55581e016, type: 3}
   _arrow2d: {fileID: 531436746}
+  _controls: {fileID: 0}
+  _stealth: {fileID: 0}
   _crackDoorArrowPoint: {fileID: 1578731059319844578}
   _lootableAreaPoints:
   - {fileID: 608248357}
@@ -4497,6 +4499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1365885785}
+  _indoorCamera: {fileID: 0}
 --- !u!1001 &301359606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36906,6 +36909,22 @@ PrefabInstance:
     - target: {fileID: 30854329, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_Constraints
       value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 47666725161627485, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.78956676
+      objectReference: {fileID: 0}
+    - target: {fileID: 47666725161627485, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.6136648
+      objectReference: {fileID: 0}
+    - target: {fileID: 47666725161627485, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000050344937
+      objectReference: {fileID: 0}
+    - target: {fileID: 47666725161627485, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00000003912895
       objectReference: {fileID: 0}
     - target: {fileID: 193297773776257205, guid: a75c1efc27af7f6419b659d91137fc5d, type: 3}
       propertyPath: m_LocalPosition.y
