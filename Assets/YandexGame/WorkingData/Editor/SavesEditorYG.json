@@ -1,12 +1,13 @@
 {
-    "idSave": 6,
+    "idSave": 8,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "TutorialDone": false,
+    "TutorialDone": true,
     "TutorialCrackDoorDone": true,
     "TutorialRobHouseDone": true,
     "TutorialSellItemsDone": true,
     "TutorialBuyUpgradeDone": true,
-    "TutorialBuyZoneDone": false
+    "TutorialBuyZoneDone": true,
+    "TutorialEnterBuildingWithEnemyDone": false
 }

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _containedResources:
-  - Type: 1
+  - Type: 0
     DropChance: 100
     CountsChances:
     - 100
@@ -150,6 +150,9 @@ MonoBehaviour:
   sound: 28
   _hackingArea: {fileID: 2307625135605655369}
   _appearHackingZoneTrigger: {fileID: 2277925668741146566}
+  _onLooted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1092745159293432724
 PrefabInstance:
   m_ObjectHideFlags: 0
