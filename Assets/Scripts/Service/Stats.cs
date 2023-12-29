@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using YG;
 
 public class Stats : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Stats : MonoBehaviour
     [SerializeField] private XPBar _xpBar;
     [SerializeField] private Transform _prisonSpawnPoint;
 
-    private readonly Dictionary<ResourceType, int> _resources = new();
+    private Dictionary<ResourceType, int> _resources = new();
     private int _xpAmount;
     private int _backpackFullness;
 
@@ -40,10 +41,8 @@ public class Stats : MonoBehaviour
             _xpAmount -= _neededXP;
             NextLevel();
         }
-        _xpBar.SetProgress(_xpAmount, _neededXP);
-
-        if (Level >= GameSettings.Instanse.MaxLevel)
-            _xpBar.SetMaxLevelState();
+        UpdateXPBar();
+        SaveLoad.SaveLevel(Level, _xpAmount, _neededXP);
     }
 
     public void AddResource(ResourceType type, int value)
@@ -59,6 +58,7 @@ public class Stats : MonoBehaviour
         _resourcesPanel.SetResourceValue(type, _resources[type]);
         _resourcesPanel.SetActiveCounter(type, _resources[type] > 0);
         UpdateCapacity();
+        SaveLoad.SaveResources(_resources);
     }
 
     public void AddMoney(int value, bool assignTask = true)
@@ -68,6 +68,8 @@ public class Stats : MonoBehaviour
 
         if (assignTask && value > 0)
             TaskManager.Instance.ProcessTask(TaskType.EarnMoney, value);
+
+        SaveLoad.SaveMoney(_money);
     }
 
     public int GetResourceCount(ResourceType type) => _resources[type];
@@ -75,16 +77,20 @@ public class Stats : MonoBehaviour
     public void ClearBackpack()
     {
         foreach (var resource in Enum.GetValues(typeof(ResourceType)))
-            ClearResource((ResourceType)resource);
+            ClearResource((ResourceType)resource, false);
         _resourcesPanel.ClearResources();
+        SaveLoad.SaveResources(_resources);
     }
 
-    public void ClearResource(ResourceType type)
+    public void ClearResource(ResourceType type, bool save = true)
     {
         _backpackFullness -= _resources[type];
         _resources[type] = 0;
         _resourcesPanel.SetActiveCounter(type, false);
         UpdateCapacity();
+
+        if (save)
+            SaveLoad.SaveResources(_resources);
     }
 
     public float GetUpgradableValue(UpgradeType type)
@@ -120,21 +126,40 @@ public class Stats : MonoBehaviour
         else
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        var loadedResources = SaveLoad.LoadResources();
+        if (loadedResources == null)
+        {
+            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)))
+                _resources.Add((ResourceType)resourceType, 0);
+        }
+        else
+        {
+            _resources = loadedResources;
+        }
 
-        foreach (var resourceType in Enum.GetValues(typeof(ResourceType)))
-            _resources.Add((ResourceType)resourceType, 0);
-
-        Level = _initialLevel;
-        _xpBar.SetLevel(_initialLevel);
+        if (SaveLoad.HasLevelSave)
+        {
+            Level = YandexGame.savesData.Level;
+            _xpAmount = YandexGame.savesData.CurrentXP;
+            _neededXP = YandexGame.savesData.RequiredXP;
+        }
+        else
+        {
+            Level = _initialLevel;
+        }
+        _xpBar.SetLevel(Level);
     }
 
     private void Start()
     {
         foreach (var resource in _resources)
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+
+        if (SaveLoad.HasMoneySave)
+            _money = YandexGame.savesData.Money;
         _resourcesPanel.SetMoney(_money);
-        AddXP(0);
+
+        UpdateXPBar();
         UpdateCapacity();
     }
 
@@ -143,6 +168,14 @@ public class Stats : MonoBehaviour
         _xpBar.SetLevel(++Level);
         _neededXP += GameSettings.Instanse.StepXPRequirement;
         NewLevelReached?.Invoke(Level);
+    }
+
+    private void UpdateXPBar()
+    {
+        _xpBar.SetProgress(_xpAmount, _neededXP);
+
+        if (Level >= GameSettings.Instanse.MaxLevel)
+            _xpBar.SetMaxLevelState();
     }
 
     private void UpdateCapacity() => _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);

@@ -24,6 +24,8 @@ public class Upgrade : MonoBehaviour
     [SerializeField] private Button _buyButton;
 
     public bool IsMaxLevel => _level > _effects.Length;
+    public int Level => _level;
+    public UpgradeType Type => _type;
 
     public void CheckInteractableBuyButton()
     {
@@ -35,11 +37,20 @@ public class Upgrade : MonoBehaviour
         _buyButton.onClick.AddListener(OnBuyButtonClick);
     }
 
-    private void Start()
+    //private void Start()
+    //{
+    //    _level = Mathf.Clamp(_level, 1, _effects.Length + 1);
+    //    //for (var i = 0; i < _level - 1; i++)
+    //    //    Stats.Instanse.SetUpgradableValue(_type, _effects[i].Value);
+    //}
+
+    public void Initialize(int level)
     {
-        _level = Mathf.Clamp(_level, 1, _effects.Length + 1);
-        for (var i = 0; i < _level - 1; i++)
-            Stats.Instanse.SetUpgradableValue(_type, _effects[i].Value);
+        _level = Mathf.Clamp(level, 1, _effects.Length + 1);
+
+        if (_level > 1)
+            Stats.Instanse.SetUpgradableValue(_type, _effects[_level - 2].Value);
+
         Refresh();
         CheckInteractableBuyButton();
     }

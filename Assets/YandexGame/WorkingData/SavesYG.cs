@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace YG
 {
     [System.Serializable]
@@ -17,5 +19,12 @@ namespace YG
         public bool TutorialBuyUpgradeDone;
         public bool TutorialBuyZoneDone;
         public bool TutorialEnterBuildingWithEnemyDone;
+
+        public int Level = -1;
+        public int CurrentXP;
+        public int RequiredXP;
+        public int Money = -1;
+        public List<string> ResourceData = new();
+        public List<string> UpgradeData = new();
     }
 }
