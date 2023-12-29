@@ -1,13 +1,26 @@
 {
-    "idSave": 8,
+    "idSave": 14,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "TutorialDone": true,
+    "TutorialDone": false,
     "TutorialCrackDoorDone": true,
     "TutorialRobHouseDone": true,
     "TutorialSellItemsDone": true,
-    "TutorialBuyUpgradeDone": true,
-    "TutorialBuyZoneDone": true,
-    "TutorialEnterBuildingWithEnemyDone": false
+    "TutorialBuyUpgradeDone": false,
+    "TutorialBuyZoneDone": false,
+    "TutorialEnterBuildingWithEnemyDone": false,
+    "Level": 1,
+    "CurrentXP": 5,
+    "RequiredXP": 10,
+    "Money": 40,
+    "ResourceData": [
+        "Bottle:0",
+        "Sneakers:0",
+        "Watch:0",
+        "Phone:0",
+        "Ring:0",
+        "Diamond:0"
+    ],
+    "UpgradeData": []
 }

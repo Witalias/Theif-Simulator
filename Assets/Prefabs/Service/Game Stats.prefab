@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587da8aad18e7c549920836c7c2ba274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _money: 10000
+  _money: 0
   _playerMovingSpeed: 15
   _tapBonusTimePercents: 3
   _fillSpeedForHoldButton: 0.3
   _initialLevel: 1
   _backpackCapacity: 10
-  _neededXP: 3
+  _neededXP: 10
   _resourcesPanel: {fileID: 0}
   _xpBar: {fileID: 0}
   _prisonSpawnPoint: {fileID: 0}

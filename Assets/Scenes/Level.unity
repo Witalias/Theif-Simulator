@@ -4881,9 +4881,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 321501026}
     m_Modifications:
     - target: {fileID: 418802330973924088, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
+      propertyPath: _money
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418802330973924088, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
       propertyPath: _xpBar
       value: 
       objectReference: {fileID: 1249345971}
+    - target: {fileID: 418802330973924088, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
+      propertyPath: _neededXP
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 418802330973924088, guid: f3764e7ee927297429f199efdfd524ca, type: 3}
       propertyPath: _resourcesPanel
       value: 

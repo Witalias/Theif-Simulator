@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   language: 0
   _appearHackingZonesRadius: 20
-  _stepXPRequirement: 2
+  _stepXPRequirement: 10
   _maxLevel: 30
 --- !u!114 &2909314512041351344
 MonoBehaviour:
