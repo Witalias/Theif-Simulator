@@ -49,6 +49,8 @@ MonoBehaviour:
   _appearHackingZonesRadius: 20
   _stepXPRequirement: 10
   _maxLevel: 30
+  _hackingXPReward: 2
+  _theftXPReward: 1
 --- !u!114 &2909314512041351344
 MonoBehaviour:
   m_ObjectHideFlags: 0

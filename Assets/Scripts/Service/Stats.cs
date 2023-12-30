@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using YG;
+using System.Linq;
 
 public class Stats : MonoBehaviour
 {
@@ -126,15 +127,15 @@ public class Stats : MonoBehaviour
         else
             Destroy(gameObject);
 
-        var loadedResources = SaveLoad.LoadResources();
-        if (loadedResources == null)
+        if (SaveLoad.HasResourcesSave)
         {
-            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)))
-                _resources.Add((ResourceType)resourceType, 0);
+            _resources = SaveLoad.LoadResources();
+            _backpackFullness = _resources.Values.Sum();
         }
         else
         {
-            _resources = loadedResources;
+            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)))
+                _resources.Add((ResourceType)resourceType, 0);
         }
 
         if (SaveLoad.HasLevelSave)
@@ -148,16 +149,16 @@ public class Stats : MonoBehaviour
             Level = _initialLevel;
         }
         _xpBar.SetLevel(Level);
+
+        if (SaveLoad.HasMoneySave)
+            _money = YandexGame.savesData.Money;
+        _resourcesPanel.SetMoney(_money);
     }
 
     private void Start()
     {
         foreach (var resource in _resources)
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
-
-        if (SaveLoad.HasMoneySave)
-            _money = YandexGame.savesData.Money;
-        _resourcesPanel.SetMoney(_money);
 
         UpdateXPBar();
         UpdateCapacity();

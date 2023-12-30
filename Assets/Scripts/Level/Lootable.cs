@@ -25,7 +25,6 @@ public class Lootable : MonoBehaviour
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
     [SerializeField] private ItemsDropChance[] _containedResources;
-    [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private Sound sound;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
@@ -111,7 +110,7 @@ public class Lootable : MonoBehaviour
                 count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
             Stats.Instanse.AddResource(randomResource.Type, count);
 
-            var xp = Randomizator.GetRandomValue(_minMaxXP);
+            var xp = GameSettings.Instanse.TheftXPReward;
             Stats.Instanse.AddXP(xp);
 
             PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);

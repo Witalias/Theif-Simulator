@@ -6,8 +6,9 @@ using YG;
 public static class SaveLoad
 {
     public static bool HasLevelSave => YandexGame.savesData.Level >= 0;
-
     public static bool HasMoneySave => YandexGame.savesData.Money >= 0;
+    public static bool HasResourcesSave => YandexGame.savesData.ResourceData.Count > 0;
+    public static bool HasUpgradesSave => YandexGame.savesData.UpgradeData.Count > 0;
 
     public static void SaveTutorialDoneBoolean(bool value)
     {

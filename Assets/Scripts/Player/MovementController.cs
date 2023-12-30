@@ -32,6 +32,7 @@ public class MovementController : MonoBehaviour
     public bool IsRunning => _isMoving;
     public bool Noticed => _noticed;
     public bool Busy => _controlsLocked;
+    public bool Hided => _stealth.Hided;
 
     public void RotateTowards(Vector3 point)
     {
@@ -150,14 +151,15 @@ public class MovementController : MonoBehaviour
         if (inBuilding)
         {
             _currentBuilding = building;
+            CanHide(building.ContainsEnemies());
             CameraChanger.Instance.SwitchToIndoorCamera();
         }
         else
         {
             _noticed = false;
             _currentBuilding = null;
+            CanHide(false);
             CameraChanger.Instance.SwitchToMainCamera();
         }
-        CanHide(building.ContainsEnemies());
     }
 }

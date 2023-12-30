@@ -344,7 +344,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hackingTime: 10
   _openBackSide: 0
-  _minMaxXP: {x: 1, y: 2}
   _hackingArea: {fileID: 3937147670290651463}
   _appearHackingZoneTrigger: {fileID: 4128030732711831117}
   _collider: {fileID: 8212388285335575771}
@@ -1113,8 +1112,6 @@ GameObject:
   - component: {fileID: 6887069205357800507}
   - component: {fileID: 6131703807711339101}
   - component: {fileID: 9160006286622103811}
-  - component: {fileID: 70442649754060971}
-  - component: {fileID: 5077113025405611266}
   m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
@@ -1206,31 +1203,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &70442649754060971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8377637223148433811}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e41e0855b23bc4fb281a2ed556ee22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotation: {x: 50, y: 0, z: 0}
---- !u!114 &5077113025405611266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8377637223148433811}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f1d8f77f745d94cafd8f07964e8151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8994854901383811167
 GameObject:
   m_ObjectHideFlags: 0

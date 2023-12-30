@@ -128,7 +128,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Detect()
     {
-        if (!_vision.canSeePlayer || _worried || !_player.InBuilding)
+        if (!_vision.canSeePlayer || _worried || !_player.InBuilding || _player.Hided)
             return;
 
         Stop();

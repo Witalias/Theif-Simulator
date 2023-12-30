@@ -15,7 +15,6 @@ public class Door : MonoBehaviour
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private bool _openBackSide;
-    [SerializeField] private Vector2 _minMaxXP;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
     [SerializeField] private BoxCollider _collider;
@@ -98,6 +97,9 @@ public class Door : MonoBehaviour
 
     public void SetProgressBarValue(int value, int maxValue, string text = null)
     {
+        if (!_buildingLevelPanel.gameObject.activeInHierarchy)
+            return;
+
         _progressBar.SetValue(value, maxValue);
         _progressBar.SetText(text);
         _barIcon.SetActive(text == null);
@@ -119,7 +121,7 @@ public class Door : MonoBehaviour
         {
             Lock(false);
             _isHacking = false;
-            var xp = Randomizator.GetRandomValue(_minMaxXP);
+            var xp = GameSettings.Instanse.HackingXPReward;
             Stats.Instanse.AddXP(xp);
             PlayResourceAnimationXp?.Invoke(xp);
             TaskManager.Instance.ProcessTask(TaskType.HackHouse, 1);

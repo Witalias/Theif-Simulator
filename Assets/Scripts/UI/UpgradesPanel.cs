@@ -26,20 +26,20 @@ public class UpgradesPanel : MonoBehaviour
     private void OnEnable()
     {
         UpgradesPopupButton.Clicked += _popup.Open;
+        UpgradesPopupButton.Clicked += UpdateInteractableBuyButtons;
         Upgrade.Upgraded += OnUpgrade;
     }
 
     private void OnDisable()
     {
         UpgradesPopupButton.Clicked -= _popup.Open;
+        UpgradesPopupButton.Clicked -= UpdateInteractableBuyButtons;
         Upgrade.Upgraded -= OnUpgrade;
     }
 
     private void OnUpgrade()
     {
-        foreach (var upgrade in _upgradeSlots)
-            upgrade.CheckInteractableBuyButton();
-
+        UpdateInteractableBuyButtons();
         SaveLoad.SaveUpgradeLevels(_upgradeSlots);
 
         if (_maxUpgrades)
@@ -56,16 +56,21 @@ public class UpgradesPanel : MonoBehaviour
 
     private void LoadLevels()
     {
-        var upgradeLevels = SaveLoad.LoadUpgradeLevels();
-        if (upgradeLevels == null)
+        if (SaveLoad.HasUpgradesSave)
+        {
+            foreach (var upgrade in SaveLoad.LoadUpgradeLevels())
+                _upgradesDict[upgrade.Key].Initialize(upgrade.Value);
+        }
+        else
         {
             foreach (var upgrade in _upgradeSlots)
                 upgrade.Initialize(1);
         }
-        else
-        {
-            foreach (var upgrade in upgradeLevels)
-                _upgradesDict[upgrade.Key].Initialize(upgrade.Value);
-        }
+    }
+
+    private void UpdateInteractableBuyButtons()
+    {
+        foreach (var upgrade in _upgradeSlots)
+            upgrade.CheckInteractableBuyButton();
     }
 }

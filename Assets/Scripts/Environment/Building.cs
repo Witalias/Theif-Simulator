@@ -17,6 +17,7 @@ public class Building : MonoBehaviour
     public static event Action<bool, Building> PlayerInBuilding;
     public static event Action PlayerInBuildingWithEnemyFirstly;
 
+    [SerializeField] private bool _enableUpdates = true;
     [SerializeField] private EnemyAI[] _enemies;
     [SerializeField] private Door[] _doors;
     [SerializeField] private Lootable[] _lootables;
@@ -41,7 +42,9 @@ public class Building : MonoBehaviour
         _triggered = true;
 
         PlayerInBuilding?.Invoke(true, this);
-        LockDoors(false);
+
+        if (_enableUpdates)
+            LockDoors(false);
 
         if (_refreshTimer != null)
             _refreshTimer.StopTimer();
@@ -58,11 +61,12 @@ public class Building : MonoBehaviour
 
         PlayerInBuilding?.Invoke(false, this);
 
+
         var doorsLocked = false;
         foreach (var enemy in _enemies)
         {
-            if (!doorsLocked && enemy.Worried)
-            {
+            if (_enableUpdates && !doorsLocked && enemy.Worried)
+            {               
                 LockDoors(true);
                 doorsLocked = true;
             }

@@ -7,6 +7,7 @@ using YG;
 public class RefreshBuildingTimer : MonoBehaviour
 {
     [SerializeField] private int _secondsForRefresh;
+    [SerializeField] private bool _enabled = true;
 
     private int _remainSeconds;
     private Coroutine _tickCoroutine;
@@ -22,7 +23,8 @@ public class RefreshBuildingTimer : MonoBehaviour
 
     public void StartTimer()
     {
-        _tickCoroutine = StartCoroutine(Tick());
+        if (_enabled)
+            _tickCoroutine = StartCoroutine(Tick());
     }
 
     public void StopTimer()
