@@ -617,8 +617,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 17.318638, y: 3.7839265, z: 8.483289}
-  m_Center: {x: 0.08428477, y: 1.3919632, z: 1.974709}
+  m_Size: {x: 17.318638, y: 3.7839265, z: 9.581134}
+  m_Center: {x: 0.08428476, y: 1.3919632, z: 1.4257857}
 --- !u!114 &6549418940281220359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,7 +1429,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1109314976485366585}
         m_TargetAssemblyTypeName: Door, Assembly-CSharp
         m_MethodName: Close
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

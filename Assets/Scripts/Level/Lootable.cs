@@ -117,8 +117,6 @@ public class Lootable : MonoBehaviour
         {
             SetEmpty(true);
             _isLooting = false;
-            _afterLootingAction?.Invoke();
-            _onLooted?.Invoke();
             player.CanHide(true);
 
             if (_containedResources.Length == 0)
@@ -141,6 +139,9 @@ public class Lootable : MonoBehaviour
             TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
             TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
             TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
+
+            _afterLootingAction?.Invoke();
+            _onLooted?.Invoke();
         }
         void ActionAbort()
         {

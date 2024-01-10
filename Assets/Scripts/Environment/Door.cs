@@ -67,7 +67,7 @@ public class Door : MonoBehaviour
             _hackingArea.SetActive(!_isHacking);
             return;
         }
-        SetState(true);
+        Open();
     }
 
     public void Close()
@@ -160,7 +160,7 @@ public class Door : MonoBehaviour
         _triggered = open;
         _collider.enabled = !open;
         _animator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
-        SoundManager.Instanse.Play(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
+        SoundManager.Instanse.PlayOneStream(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
     }
 
     private void SetActiveBuildingLevelPanel(bool value)

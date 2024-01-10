@@ -147,6 +147,7 @@ public class MovementController : MonoBehaviour
     private void OnProcessAction(bool value)
     {
         _controlsLocked = value;
+        _joystick.OnPointerUp(null);
         _joystick.gameObject.SetActive(!value);
     }
 
