@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _money: 0
-  _playerMovingSpeed: 15
-  _tapBonusTimePercents: 3
-  _fillSpeedForHoldButton: 0.3
+  _playerMovingSpeed: 20
+  _tapBonusTimePercents: 4
+  _fillSpeedForHoldButton: 0.5
   _initialLevel: 1
-  _backpackCapacity: 10
-  _neededXP: 10
+  _backpackCapacity: 5
+  _neededXP: 100
   _resourcesPanel: {fileID: 0}
   _xpBar: {fileID: 0}
   _prisonSpawnPoint: {fileID: 0}
