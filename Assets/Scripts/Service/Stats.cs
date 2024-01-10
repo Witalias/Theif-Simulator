@@ -19,7 +19,6 @@ public class Stats : MonoBehaviour
     [SerializeField] private int _neededXP = 3;
     [SerializeField] private ResourcesPanel _resourcesPanel;
     [SerializeField] private XPBar _xpBar;
-    [SerializeField] private Transform _prisonSpawnPoint;
 
     private Dictionary<ResourceType, int> _resources = new();
     private int _xpAmount;
@@ -32,7 +31,6 @@ public class Stats : MonoBehaviour
     public float FillSpeedForHoldButton { get => _fillSpeedForHoldButton; set => _fillSpeedForHoldButton = value; }
     public int BackpackCapacity { get => _backpackCapacity; set => _backpackCapacity = value; }
     public bool BackpackIsFull => _backpackFullness >= _backpackCapacity;
-    public Transform PrisonSpawnPoint => _prisonSpawnPoint;
 
     public void AddXP(int value)
     {
@@ -122,11 +120,26 @@ public class Stats : MonoBehaviour
 
     private void Awake()
     {
-        if (Instanse == null)
-            Instanse = this;
-        else
-            Destroy(gameObject);
+        Instanse = this;
+        Load();
+        _resourcesPanel.SetMoney(_money);
+        _xpBar.SetLevel(Level);
+    }
 
+    private void Start()
+    {
+        foreach (var resource in _resources)
+        {
+            _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+            _resourcesPanel.SetActiveCounter(resource.Key, resource.Value > 0);
+        }
+
+        UpdateXPBar();
+        UpdateCapacity();
+    }
+
+    private void Load()
+    {
         if (SaveLoad.HasResourcesSave)
         {
             _resources = SaveLoad.LoadResources();
@@ -148,20 +161,9 @@ public class Stats : MonoBehaviour
         {
             Level = _initialLevel;
         }
-        _xpBar.SetLevel(Level);
 
         if (SaveLoad.HasMoneySave)
             _money = YandexGame.savesData.Money;
-        _resourcesPanel.SetMoney(_money);
-    }
-
-    private void Start()
-    {
-        foreach (var resource in _resources)
-            _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
-
-        UpdateXPBar();
-        UpdateCapacity();
     }
 
     private void NextLevel()

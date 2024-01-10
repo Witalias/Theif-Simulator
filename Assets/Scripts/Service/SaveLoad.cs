@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using YG;
 
 public static class SaveLoad
@@ -9,6 +10,8 @@ public static class SaveLoad
     public static bool HasMoneySave => YandexGame.savesData.Money >= 0;
     public static bool HasResourcesSave => YandexGame.savesData.ResourceData.Count > 0;
     public static bool HasUpgradesSave => YandexGame.savesData.UpgradeData.Count > 0;
+    public static bool HasBuildingsSave => YandexGame.savesData.BuildingData.Count > 0;
+    public static bool HasPlayerPositionSave => YandexGame.savesData.PlayerPosition != null;
 
     public static void SaveTutorialDoneBoolean(bool value)
     {
@@ -77,7 +80,7 @@ public static class SaveLoad
         YandexGame.SaveProgress();
     }
 
-    public static void SaveUpgradeLevels(Upgrade[] upgrades)
+    public static void SaveUpgradeLevels(IEnumerable<Upgrade> upgrades)
     {
         YandexGame.savesData.UpgradeData.Clear();
         foreach (var upgrade in upgrades)
@@ -88,11 +91,25 @@ public static class SaveLoad
         YandexGame.SaveProgress();       
     }
 
+    public static void SaveBuildings(IEnumerable<Building.SavedData> buildings)
+    {
+        YandexGame.savesData.BuildingData.Clear();
+        foreach (var building in buildings)
+        {
+            var data = JsonUtility.ToJson(building);
+            YandexGame.savesData.BuildingData.Add(data);
+        }
+        YandexGame.SaveProgress();
+    }
+
+    public static void SavePlayerPosition(Vector3 position)
+    {
+        YandexGame.savesData.PlayerPosition = JsonUtility.ToJson(position);
+        YandexGame.SaveProgress();
+    }
+
     public static Dictionary<ResourceType, int> LoadResources()
     {
-        if (YandexGame.savesData.ResourceData.Count == 0)
-            return null;
-
         return YandexGame.savesData.ResourceData
                 .Select(data => data.Split(':'))
                 .ToDictionary(data => Enum.Parse<ResourceType>(data[0]), data => int.Parse(data[1]));
@@ -100,11 +117,20 @@ public static class SaveLoad
 
     public static Dictionary<UpgradeType, int> LoadUpgradeLevels()
     {
-        if (YandexGame.savesData.UpgradeData.Count == 0)
-            return null;
-
         return YandexGame.savesData.UpgradeData
                 .Select(data => data.Split(':'))
                 .ToDictionary(data => Enum.Parse<UpgradeType>(data[0]), data => int.Parse(data[1]));
+    }
+
+    public static Dictionary<int, Building.SavedData> LoadBuildings()
+    {
+        return YandexGame.savesData.BuildingData
+            .Select(data => JsonUtility.FromJson<Building.SavedData>(data))
+            .ToDictionary(data => data.ID);
+    }
+
+    public static Vector3 LoadPlayerPosition()
+    {
+        return JsonUtility.FromJson<Vector3>(YandexGame.savesData.PlayerPosition);
     }
 }

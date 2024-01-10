@@ -26,5 +26,7 @@ namespace YG
         public int Money = -1;
         public List<string> ResourceData = new();
         public List<string> UpgradeData = new();
+        public List<string> BuildingData = new();
+        public string PlayerPosition;
     }
 }

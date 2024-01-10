@@ -27,8 +27,9 @@ public class GameStorage : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private Sound _moneySound;
 
-    [Header("Layer Masks")]
-    [SerializeField] private LayerMask enemyMask;
+    [Header("Points")]
+    [SerializeField] private Transform _prisonSpawnPoint;
+    [SerializeField] private Transform _initialPlayerSpawnPoint;
 
     private Dictionary<ResourceType, ResourceData> _resources = new();
 
@@ -40,7 +41,9 @@ public class GameStorage : MonoBehaviour
 
     public Sprite Money => _money;
 
-    public LayerMask EnemyMask => enemyMask;
+    public Transform PrisonSpawnPoint => _prisonSpawnPoint;
+
+    public Transform InitialPlayerSpawnPoint => _initialPlayerSpawnPoint;
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;
 

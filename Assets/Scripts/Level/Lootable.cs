@@ -17,6 +17,13 @@ public class Lootable : MonoBehaviour
         public Vector2 MinMaxCount;
     }
 
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public bool IsEmpty;
+    }
+
     private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
 
     public static event Action<Action, Action> ShowHoldButton;
@@ -32,8 +39,21 @@ public class Lootable : MonoBehaviour
 
     private MovingFurnitureElements _movingFurnitureElements;
     private Action _afterLootingAction;
-    private bool _empty = false;
-    private bool _isLooting = false;
+    private readonly SavedData _savedData = new();
+    private bool _isLooting;
+    private bool _isEmpty;
+
+    public SavedData Save()
+    {
+        _savedData.ID = GetHashCode();
+        _savedData.IsEmpty = _isEmpty;
+        return _savedData;
+    }
+
+    public void Load(SavedData data)
+    {
+        SetEmpty(data.IsEmpty);
+    }
 
     public void Initialize(Action afterLootingAction)
     {
@@ -48,7 +68,7 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
+        if (_isEmpty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(false);
@@ -64,20 +84,24 @@ public class Lootable : MonoBehaviour
 
     public void OnPlayerExit(MovementController player)
     {
-        if (_empty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
+        if (_isEmpty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(true);
     }
 
-    public void Fill()
+    public void SetEmpty(bool value)
     {
         if (!gameObject.activeSelf)
             return;
 
-        _empty = false;
-        _appearHackingZoneTrigger.SetActive(true);
-        _movingFurnitureElements.MoveBack();
+        _isEmpty = value;
+        _appearHackingZoneTrigger.SetActive(!value);
+
+        if (value == true)
+            _movingFurnitureElements.MoveForward();
+        else
+            _movingFurnitureElements.MoveBack();
     }
 
     private void Awake()
@@ -91,10 +115,8 @@ public class Lootable : MonoBehaviour
         SoundManager.Instanse.Play(sound);
         void ActionDone()
         {
-            _empty = true;
+            SetEmpty(true);
             _isLooting = false;
-            _appearHackingZoneTrigger.SetActive(false);
-            _movingFurnitureElements.MoveForward();
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
             player.CanHide(true);

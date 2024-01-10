@@ -52,7 +52,7 @@ public class MovementController : MonoBehaviour
         IEnumerator Coroutine()
         {
             yield return new WaitForSeconds(delay);
-            transform.position = Stats.Instanse.PrisonSpawnPoint.position;
+            transform.position = GameStorage.Instanse.PrisonSpawnPoint.position;
             Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
         }
@@ -72,6 +72,11 @@ public class MovementController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        LoadPosition();
+    }
+
     private void OnEnable()
     {
         WaitingAndAction.TimerActived += OnProcessAction;
@@ -79,6 +84,7 @@ public class MovementController : MonoBehaviour
         OpenClosePopup.Opened += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
+        Door.BuildingInfoShowed += SavePosition;
     }
 
     private void OnDisable()
@@ -88,6 +94,7 @@ public class MovementController : MonoBehaviour
         OpenClosePopup.Opened -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
+        Door.BuildingInfoShowed -= SavePosition;
     }
 
     private void FixedUpdate()
@@ -161,5 +168,18 @@ public class MovementController : MonoBehaviour
             CanHide(false);
             CameraChanger.Instance.SwitchToMainCamera();
         }
+    }
+
+    private void SavePosition()
+    {
+        SaveLoad.SavePlayerPosition(transform.position);
+    }
+
+    private void LoadPosition()
+    {
+        if (SaveLoad.HasPlayerPositionSave)
+            transform.position = SaveLoad.LoadPlayerPosition();
+        else
+            transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;
     }
 }

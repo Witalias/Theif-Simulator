@@ -206,7 +206,7 @@ Transform:
   - {fileID: 1081648891996233325}
   - {fileID: 6128834818665918630}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6578307034492756602
 MeshFilter:
@@ -300,7 +300,7 @@ MonoBehaviour:
     EndLocalRotation: {x: 0, y: 0, z: 0}
   - Object: {fileID: 477337609370652239}
     ChangePosition: 1
-    EndLocalPosition: {x: 2.776755, y: 2.74017, z: 0.45}
+    EndLocalPosition: {x: 2.776755, y: 2.74017, z: 1.19}
     ChangeRotation: 0
     EndLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &329512210704355196
@@ -329,7 +329,6 @@ MonoBehaviour:
     - 10
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  _minMaxXP: {x: 1, y: 2}
   sound: 25
   _hackingArea: {fileID: 626230387843687579}
   _appearHackingZoneTrigger: {fileID: 5755477319465838916}

@@ -7,11 +7,19 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour
 {
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public bool IsLocked;
+    }
+
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
     private const string ANIMATOR_BACK_SIDE_BOOLEAN = "Back Side";
 
     public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
     public static event Action<int> PlayResourceAnimationXp;
+    public static event Action BuildingInfoShowed;
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private bool _openBackSide;
@@ -26,10 +34,22 @@ public class Door : MonoBehaviour
 
     private Animator _animator;
     private AudioSource _audioSource;
-
+    private readonly SavedData _savedData = new();
     private bool _triggered;
-    private bool _hacked;
     private bool _isHacking;
+    private bool _hacked;
+
+    public SavedData Save()
+    {
+        _savedData.ID = GetHashCode();
+        _savedData.IsLocked = !_hacked;
+        return _savedData;
+    }
+
+    public void Load(SavedData data)
+    {
+        Lock(data.IsLocked);
+    }
 
     public void HackOrOpen(MovementController player)
     {
@@ -69,6 +89,7 @@ public class Door : MonoBehaviour
     public void ShowBuildingInfo()
     {
         SetActiveBuildingLevelPanel(true);
+        BuildingInfoShowed?.Invoke();
     }
 
     public void HideBuildingInfo()
