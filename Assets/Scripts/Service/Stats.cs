@@ -108,11 +108,11 @@ public class Stats : MonoBehaviour
     {
         switch (type)
         {
-            case UpgradeType.MoveSpeed: Stats.Instanse.PlayerMovingSpeed = value; break;
-            case UpgradeType.HackingSpeed: Stats.Instanse.TapBonusTimePercents = value; break;
-            case UpgradeType.TheftSpeed: Stats.Instanse.FillSpeedForHoldButton = value; break;
+            case UpgradeType.MoveSpeed: PlayerMovingSpeed = value; break;
+            case UpgradeType.HackingSpeed: TapBonusTimePercents = value; break;
+            case UpgradeType.TheftSpeed: FillSpeedForHoldButton = value; break;
             case UpgradeType.BackpackCapacity:
-                Stats.Instanse.BackpackCapacity = (int)value;
+                BackpackCapacity = (int)value;
                 UpdateCapacity();
                 break;
         }

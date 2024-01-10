@@ -12,6 +12,7 @@ public static class SaveLoad
     public static bool HasUpgradesSave => YandexGame.savesData.UpgradeData.Count > 0;
     public static bool HasBuildingsSave => YandexGame.savesData.BuildingData.Count > 0;
     public static bool HasPlayerPositionSave => YandexGame.savesData.PlayerPosition != null;
+    public static bool HasTaskSave => YandexGame.savesData.TaskType != null;
 
     public static void SaveTutorialDoneBoolean(bool value)
     {
@@ -66,6 +67,16 @@ public static class SaveLoad
     public static void SaveMoney(int value)
     {
         YandexGame.savesData.Money = value;
+        YandexGame.SaveProgress();
+    }
+
+    public static void SaveTask(TaskType taskType, ResourceType requiredResource, int progress, int requirement, int reward)
+    {
+        YandexGame.savesData.TaskType = taskType.ToString();
+        YandexGame.savesData.RequiredResource = requiredResource.ToString();
+        YandexGame.savesData.CurrentTaskProgress = progress;
+        YandexGame.savesData.TaskRequirement = requirement;
+        YandexGame.savesData.TaskReward = reward;
         YandexGame.SaveProgress();
     }
 

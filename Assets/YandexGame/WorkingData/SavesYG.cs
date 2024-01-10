@@ -28,5 +28,11 @@ namespace YG
         public List<string> UpgradeData = new();
         public List<string> BuildingData = new();
         public string PlayerPosition;
+
+        public string TaskType;
+        public string RequiredResource;
+        public int CurrentTaskProgress;
+        public int TaskRequirement;
+        public int TaskReward;
     }
 }

@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 1729073998800785076}
   - component: {fileID: 3431198854266060512}
   - component: {fileID: 6801118557698645789}
+  - component: {fileID: 9022995091534364185}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -333,6 +334,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9022995091534364185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438203932360500362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf61f70e92c74824596c5e0ecfb9a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _translations:
+  - Language: 0
+    Text: Black Market
+  - Language: 1
+    Text: "\u0427\u0451\u0440\u043D\u044B\u0439 \u0440\u044B\u043D\u043E\u043A"
 --- !u!1 &2868442646458338625
 GameObject:
   m_ObjectHideFlags: 0

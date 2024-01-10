@@ -85,6 +85,7 @@ public class MovementController : MonoBehaviour
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
         Door.BuildingInfoShowed += SavePosition;
+        BlackMarketArea.PlayerExit += SavePosition;
     }
 
     private void OnDisable()
@@ -95,6 +96,7 @@ public class MovementController : MonoBehaviour
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
         Door.BuildingInfoShowed -= SavePosition;
+        BlackMarketArea.PlayerExit -= SavePosition;
     }
 
     private void FixedUpdate()
