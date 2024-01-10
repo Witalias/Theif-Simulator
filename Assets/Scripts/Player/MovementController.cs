@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System;
 using System.Collections;
+using YG;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -179,7 +180,7 @@ public class MovementController : MonoBehaviour
 
     private void LoadPosition()
     {
-        if (SaveLoad.HasPlayerPositionSave)
+        if (SaveLoad.HasPlayerPositionSave && YandexGame.savesData.TutorialDone)
             transform.position = SaveLoad.LoadPlayerPosition();
         else
             transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;

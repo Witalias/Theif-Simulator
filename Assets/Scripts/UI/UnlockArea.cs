@@ -69,6 +69,9 @@ public class UnlockArea : MonoBehaviour
             var wait = new WaitForSeconds(Time.deltaTime / _purchaseSpeed);
             while (_cost > 0)
             {
+                if (Stats.Instanse.Money <= 0)
+                    yield break;
+
                 SetCostText(--_cost);
                 Stats.Instanse.AddMoney(-1);
                 yield return wait;

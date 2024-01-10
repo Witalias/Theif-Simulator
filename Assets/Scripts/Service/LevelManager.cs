@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YG;
 
 public class LevelManager : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public class LevelManager : MonoBehaviour
 
     private void Save()
     {
-        SaveLoad.SaveBuildings(_buildings.Select(building => building.Save()));
+        if (YandexGame.savesData.TutorialRobHouseDone)
+            SaveLoad.SaveBuildings(_buildings.Select(building => building.Save()));
     }
 
     private void Load()

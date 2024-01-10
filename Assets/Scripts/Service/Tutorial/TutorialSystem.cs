@@ -114,9 +114,9 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.Instance.StartTask(TaskType.TutorialSellItems, 1, -1);
         TaskManager.TaskCompleted += OnSoldItems;
         BlackMarketArea.PlayerStayed += OnOpenedMarketPopup;
-        CreateArrow(_sellItemsPoint.position);
         _sellWalls.SetActive(true);
         CameraChanger.Instance.TemporarilySwitchCamera(_blackMarketCamera, _switchingCameraDelay);
+        CreateArrow(_sellItemsPoint.position);
     }
 
     private void OnOpenedMarketPopup()
