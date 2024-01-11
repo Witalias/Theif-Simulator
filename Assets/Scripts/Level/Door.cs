@@ -56,7 +56,7 @@ public class Door : MonoBehaviour
         if (_triggered || player == null || player.Busy)
             return;
 
-        if (!_hacked)
+        if (!_hacked && !player.Noticed)
         {
             if (!_isHacking && !player.IsRunning)
             {

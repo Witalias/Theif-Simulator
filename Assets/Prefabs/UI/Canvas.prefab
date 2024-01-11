@@ -2254,6 +2254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4305747831653481545}
   - component: {fileID: 2818811078566274510}
+  - component: {fileID: 1611769520251926218}
   m_Layer: 5
   m_Name: Tutorial Stealth
   m_TagString: Untagged
@@ -2299,6 +2300,20 @@ MonoBehaviour:
   _anticlick: {fileID: 922753656229156952}
   _content: {fileID: 3360748720416157496}
   _closeButton: {fileID: 604076799265851377}
+--- !u!114 &1611769520251926218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881756214665968750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10aae2155f5879c4abfc6dbb8444baa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _phone: {fileID: 6193757084038176169}
+  _wasd: {fileID: 21300000, guid: de9aaca11b865eb45b6705fae121f761, type: 3}
 --- !u!1 &2949318764614972032
 GameObject:
   m_ObjectHideFlags: 0

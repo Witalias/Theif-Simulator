@@ -1,3 +1,4 @@
+using Cinemachine;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -15,6 +16,7 @@ public class UnlockArea : MonoBehaviour
     }
 
     public static event Action CostChanged;
+    public static event Action<CinemachineVirtualCamera> MoveCamera;
 
     [SerializeField] private int _requiredLevel;
     [SerializeField] private int _cost;
@@ -23,11 +25,14 @@ public class UnlockArea : MonoBehaviour
     [SerializeField] private TMP_Text _costText;
     [SerializeField] private GameObject _requiredLevelPanel;
     [SerializeField] private Transform _arrow;
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private UnityEvent _onPurchase;
 
     private bool _triggered;
+    private bool _loaded;
+    private bool _isUnlocked;
     private Coroutine _purchaseCoroutine;
-    private SavedData _savedData = new();
+    private readonly SavedData _savedData = new();
 
     public SavedData Save()
     {
@@ -71,6 +76,7 @@ public class UnlockArea : MonoBehaviour
         SetCostText(_cost);
         SetRequiredLevelText(_requiredLevel);
         CheckLevel(Stats.Instanse.Level);
+        _loaded = true;
     }
 
     private void OnEnable()
@@ -137,10 +143,14 @@ public class UnlockArea : MonoBehaviour
 
     private void CheckLevel(int level)
     {
-        if (level >= _requiredLevel)
+        if (level >= _requiredLevel && !_isUnlocked)
         {
+            _isUnlocked = true;
             _requiredLevelPanel.SetActive(false);
             _costText.gameObject.SetActive(true);
+
+            if (_loaded)
+                MoveCamera?.Invoke(_virtualCamera);
             //ShowArrow();
         }
     }

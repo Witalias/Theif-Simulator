@@ -142,6 +142,12 @@ public class Stats : MonoBehaviour
         UpdateCapacity();
     }
 
+    private void Update()
+    {
+        if (GameSettings.Instanse.DebugMode && Input.GetKeyDown(KeyCode.F2))
+            AddXP(_neededXP - _xpAmount);
+    }
+
     private void Load()
     {
         if (SaveLoad.HasResourcesSave)
@@ -175,7 +181,7 @@ public class Stats : MonoBehaviour
     {
         _xpBar.SetLevel(++Level);
         _neededXP += GameSettings.Instanse.StepXPRequirement;
-        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 1.0f);
+        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f);
         NewLevelReached?.Invoke(Level);
     }
 

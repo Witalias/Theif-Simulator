@@ -94,6 +94,8 @@ public class MovementController : MonoBehaviour
         EnemyAI.PlayerIsNoticed += OnNoticed;
         Door.BuildingInfoShowed += SavePosition;
         BlackMarketArea.PlayerExit += SavePosition;
+        LevelManager.PlayerInBuilding += GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
     }
 
     private void OnDisable()
@@ -105,6 +107,8 @@ public class MovementController : MonoBehaviour
         EnemyAI.PlayerIsNoticed -= OnNoticed;
         Door.BuildingInfoShowed -= SavePosition;
         BlackMarketArea.PlayerExit -= SavePosition;
+        LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
     }
 
     private void FixedUpdate()
@@ -199,4 +203,6 @@ public class MovementController : MonoBehaviour
         else
             transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;
     }
+
+    private bool GetInBuildingBoolean() => InBuilding;
 }
