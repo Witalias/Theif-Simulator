@@ -9,6 +9,7 @@ public class Stats : MonoBehaviour
     public static Stats Instanse { get; private set; } = null;
 
     public static event Action<int> NewLevelReached;
+    public static event Action<string, float> ShowQuickMessage;
 
     [SerializeField] private int _money = 0;
     [SerializeField] private float _playerMovingSpeed;
@@ -174,6 +175,7 @@ public class Stats : MonoBehaviour
     {
         _xpBar.SetLevel(++Level);
         _neededXP += GameSettings.Instanse.StepXPRequirement;
+        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 1.0f);
         NewLevelReached?.Invoke(Level);
     }
 

@@ -80,9 +80,9 @@ public class Upgrade : MonoBehaviour
 
     private void SetIncreaseToText(float value)
     {
-        _increaseTo.text = "INCREASE TO:";
+        _increaseTo.text = $"{Translation.GetIncreaseToName()}:";
         if (IsMaxLevel)
-            _increaseTo.text = "INCREASED TO:";
+            _increaseTo.text = $"{Translation.GetIncreaseToNameInPast()}:";
         _increaseTo.text += $" <color=#{ColorUtility.ToHtmlStringRGB(_highlightColor)}>{value}</color>";
     }
 

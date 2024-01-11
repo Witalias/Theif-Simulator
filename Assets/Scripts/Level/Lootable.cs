@@ -24,8 +24,6 @@ public class Lootable : MonoBehaviour
         public bool IsEmpty;
     }
 
-    private const string FULL_BACKPACK_TEXT = "FULL BACKPACK!";
-
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
     public static event Action<string, float> ShowQuickMessage;
@@ -65,7 +63,7 @@ public class Lootable : MonoBehaviour
     public void OnPlayerEnter()
     {
         if (Stats.Instanse.BackpackIsFull)
-            ShowQuickMessage?.Invoke(FULL_BACKPACK_TEXT, 1.0f);
+            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f);
     }
 
     public void OnPlayerStay(MovementController player)

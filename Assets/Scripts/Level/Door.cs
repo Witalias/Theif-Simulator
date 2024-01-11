@@ -102,7 +102,7 @@ public class Door : MonoBehaviour
         _appearHackingZoneTrigger.SetActive(value);
     }
 
-    public void SetBuildingLevel(int level) => _buildingLevelText.text = $"LVL {level}";
+    public void SetBuildingLevel(int level) => _buildingLevelText.text = $"{Translation.GetLevelNameAbbreviated()} {level}";
 
     public void SetTimerText(int seconds)
     {

@@ -33,7 +33,7 @@ public class SaleSlot : MonoBehaviour
         _countText.text = count.ToString();
 
         _reward = count * GameStorage.Instanse.GetResourcePrice(_type);
-        _rewardText.text = $"REWARD: <color=#{ColorUtility.ToHtmlStringRGB(_rewardColor)}>{_reward}</color> <sprite index=0>";
+        _rewardText.text = $"{Translation.GetRewardName()}: <color=#{ColorUtility.ToHtmlStringRGB(_rewardColor)}>{_reward}</color> <sprite index=0>";
 
         _sellButton.interactable = _reward > 0;
     }

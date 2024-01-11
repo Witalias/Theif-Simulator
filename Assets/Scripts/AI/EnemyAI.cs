@@ -140,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         _view.color = _detectViewColor;
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
-        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
+        ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f);
         _detectTween = DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;

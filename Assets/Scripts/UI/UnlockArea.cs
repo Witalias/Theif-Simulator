@@ -66,14 +66,10 @@ public class UnlockArea : MonoBehaviour
         ProcessPurchase();
     }
 
-    private void Awake()
+    private void Start()
     {
         SetCostText(_cost);
         SetRequiredLevelText(_requiredLevel);
-    }
-
-    private void Start()
-    {
         CheckLevel(Stats.Instanse.Level);
     }
 
@@ -151,5 +147,5 @@ public class UnlockArea : MonoBehaviour
 
     private void SetCostText(int cost) => _costText.text = $"{cost} <sprite=0>";
 
-    private void SetRequiredLevelText(int level) => _requiredLevelText.text = $"LVL {level}";
+    private void SetRequiredLevelText(int level) => _requiredLevelText.text = $"{Translation.GetLevelNameAbbreviated()} {level}";
 }

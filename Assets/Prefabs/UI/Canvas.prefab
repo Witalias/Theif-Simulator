@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1105925350508750251}
   - component: {fileID: 388846254703010958}
   - component: {fileID: 290373574870737196}
+  - component: {fileID: 5753614975199619940}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -135,6 +136,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5753614975199619940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46895815555660507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf61f70e92c74824596c5e0ecfb9a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _translations:
+  - Language: 0
+    Text: Black market
+  - Language: 1
+    Text: "\u0427\u0451\u0440\u043D\u044B\u0439 \u0440\u044B\u043D\u043E\u043A"
 --- !u!1 &130722738271970432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,10 +2676,10 @@ RectTransform:
   m_Father: {fileID: 9108031651843621316}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3767564929367755628
 GameObject:
@@ -3953,6 +3971,7 @@ GameObject:
   - component: {fileID: 2143741566268706818}
   - component: {fileID: 5068042897917510879}
   - component: {fileID: 7043997072044981694}
+  - component: {fileID: 6675278667707986180}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -4077,6 +4096,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6675278667707986180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5329886024062854481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf61f70e92c74824596c5e0ecfb9a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _translations:
+  - Language: 1
+    Text: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u044F"
+  - Language: 0
+    Text: Upgrades
 --- !u!1 &5468584601119030141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5619,7 +5655,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -25
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -5682,10 +5718,10 @@ RectTransform:
   m_Father: {fileID: 4992013226395854936}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 696.427, y: 174.1068}
+  m_SizeDelta: {x: -337.1, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3041616278669924260
 CanvasRenderer:
@@ -5715,7 +5751,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HOLD
+  m_text: TAP TAP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d516bd4df61c2eb459393f6c59bd74de, type: 2}
   m_sharedMaterial: {fileID: -2227429625539768613, guid: d516bd4df61c2eb459393f6c59bd74de, type: 2}
@@ -5742,10 +5778,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.88
+  m_fontSize: 72
   m_fontSizeBase: 70.88
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -6276,10 +6312,10 @@ RectTransform:
   m_Father: {fileID: 8190015202956457480}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 414}
-  m_SizeDelta: {x: 696.427, y: 174.10681}
+  m_SizeDelta: {x: 88.427, y: 174.10681}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!111 &2926861666142461460
 Animation:
@@ -6310,8 +6346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a094f96753c80c48ac8b403e2d97772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tapText: TAP TAP
-  _holdText: HOLD!
   _content: {fileID: 3600389334860885460}
   _actionText: {fileID: 7479804986125325987}
   _titleText: {fileID: 6403899096002029344}
@@ -7035,6 +7069,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 91c9e35898c48764f8fcb16579385b86, type: 3}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[0].Text
+      value: Capacity
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Text
+      value: "\u0412\u043C\u0435\u0441\u0442\u0438\u043C\u043E\u0441\u0442\u044C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Language
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5628308687163032380, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_Name
       value: Backpack Upgrade
@@ -7389,7 +7439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7227513414714407352, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_fontSize
-      value: 19.35
+      value: 26.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7424,6 +7474,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5e92a4b5a11cd91469d3d478b45f3c38, type: 3}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[0].Text
+      value: Hacking speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Text
+      value: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0432\u0437\u043B\u043E\u043C\u0430"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Language
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5628308687163032380, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_Name
       value: Hacking Upgrade
@@ -7926,6 +7992,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a867b86916ff467479603f3565bab945, type: 3}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[0].Text
+      value: Move speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Text
+      value: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0445\u043E\u0434\u044C\u0431\u044B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Language
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5628308687163032380, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_Name
       value: Move Upgrade
@@ -8307,6 +8389,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6888636483235171591}
     m_Modifications:
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[0].Text
+      value: Theft speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Text
+      value: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0432\u043E\u0440\u043E\u0432\u0441\u0442\u0432\u0430"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153020730076919139, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _translations.Array.data[1].Language
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5628308687163032380, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_Name
       value: Theft Upgrade
@@ -8646,6 +8744,14 @@ PrefabInstance:
     - target: {fileID: 6199991160669883166, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7227513414714407352, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: m_text
+      value: Theft speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7227513414714407352, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: m_fontSize
+      value: 26.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

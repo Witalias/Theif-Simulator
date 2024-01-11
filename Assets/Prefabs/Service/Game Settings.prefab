@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3073284cc3887364b915c66a5b42af9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugMode: 1
-  _loadLanguageFromYG: 0
+  _debugMode: 0
+  _loadLanguageFromYG: 1
   language: 0
   _appearHackingZonesRadius: 20
   _stepXPRequirement: 100
