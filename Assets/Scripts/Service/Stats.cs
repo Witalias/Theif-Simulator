@@ -156,6 +156,7 @@ public class Stats : MonoBehaviour
             Level = YandexGame.savesData.Level;
             _xpAmount = YandexGame.savesData.CurrentXP;
             _neededXP = YandexGame.savesData.RequiredXP;
+            NewLevelReached?.Invoke(Level);
         }
         else
         {

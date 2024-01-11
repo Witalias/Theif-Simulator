@@ -7,6 +7,15 @@ using UnityEngine.Events;
 
 public class UnlockArea : MonoBehaviour
 {
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public int Cost;
+    }
+
+    public static event Action CostChanged;
+
     [SerializeField] private int _requiredLevel;
     [SerializeField] private int _cost;
     [SerializeField] private float _purchaseSpeed;
@@ -18,6 +27,23 @@ public class UnlockArea : MonoBehaviour
 
     private bool _triggered;
     private Coroutine _purchaseCoroutine;
+    private SavedData _savedData = new();
+
+    public SavedData Save()
+    {
+        _savedData.ID = GetInstanceID();
+        _savedData.Cost = _cost;
+        return _savedData;
+    }
+
+    public void Load(SavedData data)
+    {
+        _cost = data.Cost;
+        if (_cost <= 0)
+            Purchase();
+        else      
+            SetCostText(_cost);
+    }
 
     public void OnPlayerStay(MovementController player)
     {
@@ -37,7 +63,7 @@ public class UnlockArea : MonoBehaviour
             return;
 
         _triggered = true;
-        Purchase();
+        ProcessPurchase();
     }
 
     private void Awake()
@@ -61,7 +87,7 @@ public class UnlockArea : MonoBehaviour
         Stats.NewLevelReached -= CheckLevel;
     }
 
-    private void Purchase()
+    private void ProcessPurchase()
     {
         _purchaseCoroutine = StartCoroutine(Coroutine());
         IEnumerator Coroutine()
@@ -77,15 +103,22 @@ public class UnlockArea : MonoBehaviour
                 yield return wait;
             }
             TaskManager.Instance.ProcessTask(TaskType.TutorialBuyZone, 1);
-            _onPurchase?.Invoke();
-            Hide();
+            Purchase();
         }
+    }
+
+    private void Purchase()
+    {
+        _onPurchase?.Invoke();
+        CostChanged?.Invoke();
+        Hide();
     }
 
     private void AbortPurchase()
     {
         if (_purchaseCoroutine != null)
             StopCoroutine(_purchaseCoroutine);
+        CostChanged?.Invoke();
     }
 
     private void Hide()

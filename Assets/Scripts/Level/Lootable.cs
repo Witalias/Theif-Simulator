@@ -45,7 +45,7 @@ public class Lootable : MonoBehaviour
 
     public SavedData Save()
     {
-        _savedData.ID = GetHashCode();
+        _savedData.ID = GetInstanceID();
         _savedData.IsEmpty = _isEmpty;
         return _savedData;
     }

@@ -1,5 +1,5 @@
 {
-    "idSave": 201,
+    "idSave": 807,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -10,12 +10,12 @@
     "TutorialBuyUpgradeDone": true,
     "TutorialBuyZoneDone": true,
     "TutorialEnterBuildingWithEnemyDone": true,
-    "Level": 2,
-    "CurrentXP": 175,
-    "RequiredXP": 200,
-    "Money": 80,
+    "Level": 4,
+    "CurrentXP": 270,
+    "RequiredXP": 400,
+    "Money": 330,
     "ResourceData": [
-        "Bottle:1",
+        "Bottle:0",
         "Sneakers:0",
         "Watch:0",
         "Phone:0",
@@ -23,26 +23,31 @@
         "Diamond:0"
     ],
     "UpgradeData": [
-        "TheftSpeed:2",
-        "HackingSpeed:1",
-        "MoveSpeed:1",
-        "BackpackCapacity:1"
+        "TheftSpeed:3",
+        "HackingSpeed:3",
+        "MoveSpeed:3",
+        "BackpackCapacity:3"
     ],
     "BuildingData": [
-        "{\"ID\":1660002,\"Level\":2,\"CurrentXP\":4,\"SecondsBeforeUpdate\":68,\"ShouldBeRefreshed\":true,\"DoorLockStates\":[{\"ID\":-835330,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-834150,\"IsEmpty\":true},{\"ID\":-834284,\"IsEmpty\":true},{\"ID\":-834336,\"IsEmpty\":false},{\"ID\":-834432,\"IsEmpty\":false},{\"ID\":-834202,\"IsEmpty\":false},{\"ID\":-834238,\"IsEmpty\":true},{\"ID\":-834482,\"IsEmpty\":false},{\"ID\":-834384,\"IsEmpty\":true}]}",
-        "{\"ID\":1659998,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-863630,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-862732,\"IsEmpty\":false},{\"ID\":-862660,\"IsEmpty\":false},{\"ID\":-862518,\"IsEmpty\":false},{\"ID\":-862564,\"IsEmpty\":false},{\"ID\":-862606,\"IsEmpty\":false},{\"ID\":-862466,\"IsEmpty\":false},{\"ID\":-862422,\"IsEmpty\":false},{\"ID\":-862782,\"IsEmpty\":false}]}",
-        "{\"ID\":1659966,\"Level\":1,\"CurrentXP\":1,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-860048,\"IsLocked\":false}],\"LootableEmptyStates\":[{\"ID\":-859806,\"IsEmpty\":false},{\"ID\":-859636,\"IsEmpty\":false},{\"ID\":-859560,\"IsEmpty\":false},{\"ID\":-859496,\"IsEmpty\":true},{\"ID\":-859388,\"IsEmpty\":false},{\"ID\":-859450,\"IsEmpty\":false}]}",
-        "{\"ID\":1659980,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-866480,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-865344,\"IsEmpty\":false},{\"ID\":-865378,\"IsEmpty\":false},{\"ID\":-865438,\"IsEmpty\":false},{\"ID\":-865496,\"IsEmpty\":false},{\"ID\":-865540,\"IsEmpty\":false},{\"ID\":-865590,\"IsEmpty\":false},{\"ID\":-865650,\"IsEmpty\":false}]}",
-        "{\"ID\":1659976,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-843934,\"IsLocked\":true},{\"ID\":-845040,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-839804,\"IsEmpty\":false},{\"ID\":-839848,\"IsEmpty\":false},{\"ID\":-839882,\"IsEmpty\":false},{\"ID\":-839942,\"IsEmpty\":false},{\"ID\":-839984,\"IsEmpty\":false},{\"ID\":-840032,\"IsEmpty\":false},{\"ID\":-840080,\"IsEmpty\":false},{\"ID\":-840122,\"IsEmpty\":false},{\"ID\":-840182,\"IsEmpty\":false},{\"ID\":-840232,\"IsEmpty\":false},{\"ID\":-840276,\"IsEmpty\":false},{\"ID\":-840326,\"IsEmpty\":false},{\"ID\":-840380,\"IsEmpty\":false},{\"ID\":-840436,\"IsEmpty\":false},{\"ID\":-840486,\"IsEmpty\":false},{\"ID\":-840536,\"IsEmpty\":false},{\"ID\":-840586,\"IsEmpty\":false},{\"ID\":-840636,\"IsEmpty\":false}]}",
-        "{\"ID\":1659064,\"Level\":1,\"CurrentXP\":2,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-846974,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-845634,\"IsEmpty\":false},{\"ID\":-845464,\"IsEmpty\":false},{\"ID\":-845790,\"IsEmpty\":false},{\"ID\":-845676,\"IsEmpty\":false},{\"ID\":-845520,\"IsEmpty\":false},{\"ID\":-845836,\"IsEmpty\":false},{\"ID\":-845736,\"IsEmpty\":false},{\"ID\":-845570,\"IsEmpty\":false}]}",
-        "{\"ID\":1659994,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-851496,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-850156,\"IsEmpty\":false},{\"ID\":-849986,\"IsEmpty\":false},{\"ID\":-850312,\"IsEmpty\":false},{\"ID\":-850198,\"IsEmpty\":false},{\"ID\":-850042,\"IsEmpty\":false},{\"ID\":-850358,\"IsEmpty\":false},{\"ID\":-850258,\"IsEmpty\":false},{\"ID\":-850092,\"IsEmpty\":false}]}",
-        "{\"ID\":1658130,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-854164,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-853028,\"IsEmpty\":false},{\"ID\":-853062,\"IsEmpty\":false},{\"ID\":-853122,\"IsEmpty\":false},{\"ID\":-853180,\"IsEmpty\":false},{\"ID\":-853224,\"IsEmpty\":false},{\"ID\":-853274,\"IsEmpty\":false},{\"ID\":-853334,\"IsEmpty\":false}]}",
-        "{\"ID\":1658356,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-858224,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-857088,\"IsEmpty\":false},{\"ID\":-857122,\"IsEmpty\":false},{\"ID\":-857182,\"IsEmpty\":false},{\"ID\":-857240,\"IsEmpty\":false},{\"ID\":-857284,\"IsEmpty\":false},{\"ID\":-857334,\"IsEmpty\":false},{\"ID\":-857394,\"IsEmpty\":false}]}"
+        "{\"ID\":26548,\"Level\":3,\"CurrentXP\":6,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-8496,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-7316,\"IsEmpty\":false},{\"ID\":-7450,\"IsEmpty\":false},{\"ID\":-7502,\"IsEmpty\":false},{\"ID\":-7598,\"IsEmpty\":false},{\"ID\":-7368,\"IsEmpty\":false},{\"ID\":-7404,\"IsEmpty\":false},{\"ID\":-7648,\"IsEmpty\":false},{\"ID\":-7550,\"IsEmpty\":false}]}",
+        "{\"ID\":26544,\"Level\":1,\"CurrentXP\":2,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-6172,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-5274,\"IsEmpty\":false},{\"ID\":-5202,\"IsEmpty\":false},{\"ID\":-5060,\"IsEmpty\":false},{\"ID\":-5106,\"IsEmpty\":false},{\"ID\":-5148,\"IsEmpty\":false},{\"ID\":-5008,\"IsEmpty\":false},{\"ID\":-4964,\"IsEmpty\":false},{\"ID\":-5324,\"IsEmpty\":false}]}",
+        "{\"ID\":26512,\"Level\":2,\"CurrentXP\":12,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-34410,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-34168,\"IsEmpty\":false},{\"ID\":-33998,\"IsEmpty\":false},{\"ID\":-33922,\"IsEmpty\":false},{\"ID\":-33858,\"IsEmpty\":false},{\"ID\":-33750,\"IsEmpty\":false},{\"ID\":-33812,\"IsEmpty\":false}]}",
+        "{\"ID\":26526,\"Level\":2,\"CurrentXP\":7,\"SecondsBeforeUpdate\":64,\"ShouldBeRefreshed\":true,\"DoorLockStates\":[{\"ID\":-3954,\"IsLocked\":false}],\"LootableEmptyStates\":[{\"ID\":-2818,\"IsEmpty\":true},{\"ID\":-2852,\"IsEmpty\":false},{\"ID\":-2912,\"IsEmpty\":false},{\"ID\":-2970,\"IsEmpty\":false},{\"ID\":-3014,\"IsEmpty\":false},{\"ID\":-3064,\"IsEmpty\":true},{\"ID\":-3124,\"IsEmpty\":true}]}",
+        "{\"ID\":26522,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-13634,\"IsLocked\":true},{\"ID\":-14740,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-9504,\"IsEmpty\":false},{\"ID\":-9548,\"IsEmpty\":false},{\"ID\":-9582,\"IsEmpty\":false},{\"ID\":-9642,\"IsEmpty\":false},{\"ID\":-9684,\"IsEmpty\":false},{\"ID\":-9732,\"IsEmpty\":false},{\"ID\":-9780,\"IsEmpty\":false},{\"ID\":-9822,\"IsEmpty\":false},{\"ID\":-9882,\"IsEmpty\":false},{\"ID\":-9932,\"IsEmpty\":false},{\"ID\":-9976,\"IsEmpty\":false},{\"ID\":-10026,\"IsEmpty\":false},{\"ID\":-10080,\"IsEmpty\":false},{\"ID\":-10136,\"IsEmpty\":false},{\"ID\":-10186,\"IsEmpty\":false},{\"ID\":-10236,\"IsEmpty\":false},{\"ID\":-10286,\"IsEmpty\":false},{\"ID\":-10336,\"IsEmpty\":false}]}",
+        "{\"ID\":25610,\"Level\":2,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-31278,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-29938,\"IsEmpty\":false},{\"ID\":-29768,\"IsEmpty\":false},{\"ID\":-30094,\"IsEmpty\":false},{\"ID\":-29980,\"IsEmpty\":false},{\"ID\":-29824,\"IsEmpty\":false},{\"ID\":-30140,\"IsEmpty\":false},{\"ID\":-30040,\"IsEmpty\":false},{\"ID\":-29874,\"IsEmpty\":false}]}",
+        "{\"ID\":26540,\"Level\":1,\"CurrentXP\":2,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-23126,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-21786,\"IsEmpty\":false},{\"ID\":-21616,\"IsEmpty\":false},{\"ID\":-21942,\"IsEmpty\":false},{\"ID\":-21828,\"IsEmpty\":false},{\"ID\":-21672,\"IsEmpty\":false},{\"ID\":-21988,\"IsEmpty\":false},{\"ID\":-21888,\"IsEmpty\":false},{\"ID\":-21722,\"IsEmpty\":false}]}",
+        "{\"ID\":24676,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-18516,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-17380,\"IsEmpty\":false},{\"ID\":-17414,\"IsEmpty\":false},{\"ID\":-17474,\"IsEmpty\":false},{\"ID\":-17532,\"IsEmpty\":false},{\"ID\":-17576,\"IsEmpty\":false},{\"ID\":-17626,\"IsEmpty\":false},{\"ID\":-17686,\"IsEmpty\":false}]}",
+        "{\"ID\":24902,\"Level\":1,\"CurrentXP\":0,\"SecondsBeforeUpdate\":121,\"ShouldBeRefreshed\":false,\"DoorLockStates\":[{\"ID\":-20656,\"IsLocked\":true}],\"LootableEmptyStates\":[{\"ID\":-19520,\"IsEmpty\":false},{\"ID\":-19554,\"IsEmpty\":false},{\"ID\":-19614,\"IsEmpty\":false},{\"ID\":-19672,\"IsEmpty\":false},{\"ID\":-19716,\"IsEmpty\":false},{\"ID\":-19766,\"IsEmpty\":false},{\"ID\":-19826,\"IsEmpty\":false}]}"
     ],
-    "PlayerPosition": "{\"x\":-233.66714477539063,\"y\":1.7687065601348878,\"z\":34.006595611572269}",
+    "UnlockAreaData": [
+        "{\"ID\":-16674,\"Cost\":0}",
+        "{\"ID\":-29598,\"Cost\":200}",
+        "{\"ID\":-16572,\"Cost\":500}"
+    ],
+    "PlayerPosition": "{\"x\":-165.1686553955078,\"y\":1.4185738563537598,\"z\":-57.56377029418945}",
     "TaskType": "SellItems",
     "RequiredResource": "Bottle",
-    "CurrentTaskProgress": 0,
+    "CurrentTaskProgress": 17,
     "TaskRequirement": 20,
     "TaskReward": 100
 }

@@ -11,6 +11,7 @@ public static class SaveLoad
     public static bool HasResourcesSave => YandexGame.savesData.ResourceData.Count > 0;
     public static bool HasUpgradesSave => YandexGame.savesData.UpgradeData.Count > 0;
     public static bool HasBuildingsSave => YandexGame.savesData.BuildingData.Count > 0;
+    public static bool HasUnlockAreasSave => YandexGame.savesData.UnlockAreaData.Count > 0;
     public static bool HasPlayerPositionSave => YandexGame.savesData.PlayerPosition != null;
     public static bool HasTaskSave => YandexGame.savesData.TaskType != null;
 
@@ -106,10 +107,15 @@ public static class SaveLoad
     {
         YandexGame.savesData.BuildingData.Clear();
         foreach (var building in buildings)
-        {
-            var data = JsonUtility.ToJson(building);
-            YandexGame.savesData.BuildingData.Add(data);
-        }
+            YandexGame.savesData.BuildingData.Add(JsonUtility.ToJson(building));
+        YandexGame.SaveProgress();
+    }
+
+    public static void SaveUnlockAreas(IEnumerable<UnlockArea.SavedData> unlockAreas)
+    {
+        YandexGame.savesData.UnlockAreaData.Clear();
+        foreach (var unlockArea in unlockAreas)
+            YandexGame.savesData.UnlockAreaData.Add(JsonUtility.ToJson(unlockArea));
         YandexGame.SaveProgress();
     }
 
@@ -137,6 +143,13 @@ public static class SaveLoad
     {
         return YandexGame.savesData.BuildingData
             .Select(data => JsonUtility.FromJson<Building.SavedData>(data))
+            .ToDictionary(data => data.ID);
+    }
+
+    public static Dictionary<int, UnlockArea.SavedData> LoadUnlockAreas()
+    {
+        return YandexGame.savesData.UnlockAreaData
+            .Select(data => JsonUtility.FromJson<UnlockArea.SavedData>(data))
             .ToDictionary(data => data.ID);
     }
 

@@ -6,6 +6,7 @@ using YG;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private Building[] _buildings;
+    [SerializeField] private UnlockArea[] _unlockAreas;
 
     private void Start()
     {
@@ -15,18 +16,25 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Building.StatsChanged += Save;
+        Building.StatsChanged += SaveBuildings;
+        UnlockArea.CostChanged += SaveUnlockAreas;
     }
 
     private void OnDisable()
     {
-        Building.StatsChanged -= Save;
+        Building.StatsChanged -= SaveBuildings;
+        UnlockArea.CostChanged -= SaveUnlockAreas;
     }
 
-    private void Save()
+    private void SaveBuildings()
     {
         if (YandexGame.savesData.TutorialRobHouseDone)
-            SaveLoad.SaveBuildings(_buildings.Select(building => building.Save()));
+            SaveLoad.SaveBuildings(_buildings.Select(building => building.Save()));        
+    }
+
+    private void SaveUnlockAreas()
+    {
+        SaveLoad.SaveUnlockAreas(_unlockAreas.Select(area => area.Save()));
     }
 
     private void Load()
@@ -35,7 +43,21 @@ public class LevelManager : MonoBehaviour
         {
             var loadedBuildings = SaveLoad.LoadBuildings();
             foreach (var building in _buildings)
-                building.Load(loadedBuildings[building.GetHashCode()]);
+            {
+                var hash = building.GetHashCode();
+                if (loadedBuildings.ContainsKey(hash))
+                    building.Load(loadedBuildings[hash]);
+            }    
+        }
+        if (SaveLoad.HasUnlockAreasSave)
+        {
+            var loadedUnlockAreas = SaveLoad.LoadUnlockAreas();
+            foreach (var unlockArea in _unlockAreas)
+            {
+                var hash = unlockArea.GetHashCode();
+                if (loadedUnlockAreas.ContainsKey(hash))
+                    unlockArea.Load(loadedUnlockAreas[hash]);
+            }
         }
     }
 

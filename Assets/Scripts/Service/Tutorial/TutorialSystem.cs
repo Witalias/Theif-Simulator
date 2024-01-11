@@ -13,6 +13,7 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private GameObject _arrow2d;
     [SerializeField] private GameObject _controls;
     [SerializeField] private OpenClosePopup _stealth;
+    [SerializeField] private GameObject _unlockArea2;
 
     [Header("Arrow points")]
     [SerializeField] private Transform _crackDoorArrowPoint;
@@ -65,6 +66,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnCrackedDoor;
         CreateArrow(_crackDoorArrowPoint.position);
         _robWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay, () =>
         {
             _controls.SetActive(true);
@@ -95,6 +97,7 @@ public class TutorialSystem : MonoBehaviour
         foreach (var point in _lootableAreaPoints)
             CreateArrow(point.position);
         _robWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_houseCamera, _switchingCameraDelay);
     }
 
@@ -115,6 +118,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnSoldItems;
         BlackMarketArea.PlayerStayed += OnOpenedMarketPopup;
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_blackMarketCamera, _switchingCameraDelay);
         CreateArrow(_sellItemsPoint.position);
     }
@@ -160,6 +164,7 @@ public class TutorialSystem : MonoBehaviour
         _arrow2d.transform.position = _upgradePanelButton.transform.position;
         _upgradePanelButton.interactable = true;
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
     }
 
     private void OnOpenedUpgradesPopup()
@@ -195,6 +200,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnBoughtZone;
         _unlockArea.gameObject.SetActive(true);
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CreateArrow(_unlockArea.position);
         CameraChanger.Instance.TemporarilySwitchCamera(_unlockAreaCamera, _switchingCameraDelay);
     }
@@ -208,6 +214,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted -= OnBoughtZone;
         ClearArrows();
         _upgradePanelButton.interactable = true;
+        _unlockArea2.SetActive(true);
         DOVirtual.DelayedCall(_startingTaskDelay, TaskManager.Instance.StartRandomTask);
     }
 
