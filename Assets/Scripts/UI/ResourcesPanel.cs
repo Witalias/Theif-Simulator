@@ -58,6 +58,7 @@ public class ResourcesPanel : MonoBehaviour
         Lootable.PlayResourceAnimation += PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp += PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney += PlayResourceAnimationMoney;
+        Safe.PlayResourceAnimationItem += PlayResourceAnimationItem;
     }
 
     private void OnDisable()
@@ -65,6 +66,7 @@ public class ResourcesPanel : MonoBehaviour
         Lootable.PlayResourceAnimation -= PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp -= PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney -= PlayResourceAnimationMoney;
+        Safe.PlayResourceAnimationItem -= PlayResourceAnimationItem;
     }
 
     private void CreateItemCounters()
@@ -111,7 +113,7 @@ public class ResourcesPanel : MonoBehaviour
 
         IEnumerator Coroutine()
         {
-            var wait = new WaitForSeconds(1.0f);
+            var wait = new WaitForSeconds(0.75f);
             while (_resourceAnimationQueue.Count > 0)
             {
                 _resourceAnimationQueue.Dequeue()?.Invoke();

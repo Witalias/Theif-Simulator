@@ -60,8 +60,7 @@ public class Door : MonoBehaviour
         {
             if (!_isHacking && !player.IsRunning)
             {
-                Hack();
-                player.RotateTowards(_appearHackingZoneTrigger.transform.position);
+                Hack(player);
                 SetActiveBuildingLevelPanel(false);
             }
             _hackingArea.SetActive(!_isHacking);
@@ -134,13 +133,16 @@ public class Door : MonoBehaviour
         _buildingLevelPanel.alpha = 0.0f;
     }
 
-    private void Hack()
+    private void Hack(MovementController player)
     {
         _isHacking = true;
+        player.CanHide(false);
+        player.RotateTowards(_appearHackingZoneTrigger.transform.position);
         SoundManager.Instanse.PlayLoop(Sound.DoorMasterKey);
         void ActionDone()
         {
             Lock(false);
+            player.CanHide(true);
             _isHacking = false;
             var xp = GameSettings.Instanse.HackingXPReward;
             Stats.Instanse.AddXP(xp);
@@ -151,6 +153,7 @@ public class Door : MonoBehaviour
         void ActionAbort()
         {
             _isHacking = false;
+            player.CanHide(true);
         }
         WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, Sound.DoorMasterKey, 0f);
     }

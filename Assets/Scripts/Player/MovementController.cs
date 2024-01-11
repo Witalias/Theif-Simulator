@@ -5,6 +5,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using YG;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -19,8 +20,8 @@ public class MovementController : MonoBehaviour
 
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
-    [SerializeField] private LayerMask playerMask;
     [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private UnityEvent _onCaught;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -45,6 +46,7 @@ public class MovementController : MonoBehaviour
     public void Caught(float delay)
     {
         PlayerCaught?.Invoke();
+        _onCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
         InBuildingState(false, null);
@@ -54,8 +56,10 @@ public class MovementController : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             transform.position = GameStorage.Instanse.PrisonSpawnPoint.position;
+            SavePosition();
             Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
+            _stealth.Hide();
         }
     }
 
@@ -65,6 +69,9 @@ public class MovementController : MonoBehaviour
             return;
 
         _canHide = value;
+
+        //if (value == false)
+        //    _stealth.Show();
     }
 
     private void Awake()
@@ -130,8 +137,11 @@ public class MovementController : MonoBehaviour
                 _animator.SetBool(RUN_ANIMATOR_BOOLEAN, true);
                 MovingStarted?.Invoke();
 
-                if (_canHide)
-                    _stealth.Show();
+                DOVirtual.DelayedCall(Time.deltaTime, () => {
+                    if (_canHide)
+                        _stealth.Show();
+                });
+                
             }
         }
         else if (_isMoving)
@@ -139,8 +149,11 @@ public class MovementController : MonoBehaviour
             _isMoving = false;
             _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
 
-            if (_canHide)
-                _stealth.Hide();
+            DOVirtual.DelayedCall(Time.deltaTime, () =>
+            {
+                if (_canHide)
+                    _stealth.Hide();
+            });
         }
     }
 

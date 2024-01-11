@@ -57,6 +57,12 @@ public static class SaveLoad
         YandexGame.SaveProgress();
     }
 
+    public static void SaveTutorialLootSafeDoneBoolean(bool value)
+    {
+        YandexGame.savesData.TutorialLootSafeDone = value;
+        YandexGame.SaveProgress();
+    }
+
     public static void SaveLevel(int value, int currentXP, int requiredXP)
     {
         YandexGame.savesData.Level = value;

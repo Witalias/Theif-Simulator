@@ -43,6 +43,8 @@ public class Lootable : MonoBehaviour
     private bool _isLooting;
     private bool _isEmpty;
 
+    public UnityEvent OnLooted => _onLooted;
+
     public SavedData Save()
     {
         _savedData.ID = GetInstanceID();
@@ -97,6 +99,7 @@ public class Lootable : MonoBehaviour
 
         _isEmpty = value;
         _appearHackingZoneTrigger.SetActive(!value);
+        _hackingArea.SetActive(!value);
 
         if (value == true)
             _movingFurnitureElements.MoveForward();
@@ -119,27 +122,26 @@ public class Lootable : MonoBehaviour
             _isLooting = false;
             player.CanHide(true);
 
-            if (_containedResources.Length == 0)
-                return;
+            if (_containedResources.Length > 0)
+            {
+                var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
+                var randomResource = _containedResources[randomIndex];
+                var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
 
-            var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
-            var randomResource = _containedResources[randomIndex];
-            var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
+                if (randomResource.OnlyMinMaxRange)
+                    count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
+                Stats.Instanse.AddResource(randomResource.Type, count);
 
-            if (randomResource.OnlyMinMaxRange)
-                count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
-            Stats.Instanse.AddResource(randomResource.Type, count);
+                var xp = GameSettings.Instanse.TheftXPReward;
+                Stats.Instanse.AddXP(xp);
 
-            var xp = GameSettings.Instanse.TheftXPReward;
-            Stats.Instanse.AddXP(xp);
+                PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
+                SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
 
-            PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
-            SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
-
-            TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
-            TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
-            TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
-
+                TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
+                TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
+                TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
+            }
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
         }

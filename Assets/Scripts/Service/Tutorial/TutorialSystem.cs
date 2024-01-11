@@ -25,6 +25,7 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private Button _closeUpgradePanelButton;
     [SerializeField] private Transform _buyUpgradeButton;
     [SerializeField] private Transform _unlockArea;
+    [SerializeField] private Transform _safePoint;
 
     [Header("Walls")]
     [SerializeField] private GameObject _robWalls;
@@ -42,6 +43,9 @@ public class TutorialSystem : MonoBehaviour
     {
         if (!YandexGame.savesData.TutorialEnterBuildingWithEnemyDone)
             Building.PlayerInBuildingWithEnemyFirstly += OnEnterBuildingWithEnemy;
+
+        if (!YandexGame.savesData.TutorialLootSafeDone)
+            Safe.Filled += OnSafeFilled;
 
         if (YandexGame.savesData.TutorialDone)
             return;
@@ -223,6 +227,13 @@ public class TutorialSystem : MonoBehaviour
         Building.PlayerInBuildingWithEnemyFirstly -= OnEnterBuildingWithEnemy;
         SaveLoad.SaveTutorialEnterBuildingWithEnemyDoneBoolean(true);
         _stealth.Open();
+    }
+
+    private void OnSafeFilled()
+    {
+        Safe.Filled -= OnSafeFilled;
+        SaveLoad.SaveTutorialLootSafeDoneBoolean(true);
+        CreateArrow(_safePoint.position);
     }
 
     private void CreateArrow(Vector3 position)

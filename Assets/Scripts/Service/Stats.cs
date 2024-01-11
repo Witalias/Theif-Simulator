@@ -30,7 +30,10 @@ public class Stats : MonoBehaviour
     public float TapBonusTimePercents { get => _tapBonusTimePercents; set => _tapBonusTimePercents = value; }
     public float FillSpeedForHoldButton { get => _fillSpeedForHoldButton; set => _fillSpeedForHoldButton = value; }
     public int BackpackCapacity { get => _backpackCapacity; set => _backpackCapacity = value; }
+    public bool BackpackIsEmpty => _backpackFullness <= 0;
     public bool BackpackIsFull => _backpackFullness >= _backpackCapacity;
+
+    public Dictionary<ResourceType, int> GetResources() => new(_resources);
 
     public void AddXP(int value)
     {

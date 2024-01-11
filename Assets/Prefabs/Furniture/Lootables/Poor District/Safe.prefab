@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6268772757397280312}
   - component: {fileID: 7427385838124289904}
   - component: {fileID: 8155930739019958637}
+  - component: {fileID: 490777089573777824}
   m_Layer: 0
   m_Name: Safe
   m_TagString: Untagged
@@ -144,12 +145,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _containedResources: []
-  sound: 10
+  sound: 26
   _hackingArea: {fileID: 712019768800832598}
   _appearHackingZoneTrigger: {fileID: 5549212011532151015}
   _onLooted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5599007992268808695}
+        m_TargetAssemblyTypeName: DeleteArrow, Assembly-CSharp
+        m_MethodName: Delete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &490777089573777824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931756413076753926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ece15b7d7a4a2c4c89d4a29e905ccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootable: {fileID: 8155930739019958637}
 --- !u!1 &1313883302573742087
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,13 +458,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3399198726588191965, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5599007992268808695}
   m_SourcePrefab: {fileID: 100100000, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
 --- !u!1 &712019768800832598 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3399198726588191965, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
   m_PrefabInstance: {fileID: 2796166983284045963}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5599007992268808695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712019768800832598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0704d82a7d1ad5540b0ce1d0cc4d64eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1032312650760378016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2926910864888229419, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}

@@ -19,6 +19,7 @@ namespace YG
         public bool TutorialBuyUpgradeDone;
         public bool TutorialBuyZoneDone;
         public bool TutorialEnterBuildingWithEnemyDone;
+        public bool TutorialLootSafeDone;
 
         public int Level = -1;
         public int CurrentXP;
