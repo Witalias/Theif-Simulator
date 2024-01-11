@@ -75,6 +75,6 @@ MonoBehaviour:
   _money: {fileID: 21300000, guid: 69f66a90b07fc284bb33250998649f81, type: 3}
   _xp: {fileID: 21300000, guid: b98eda24323493e478bb52269dd6be81, type: 3}
   _moneySound: 7
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 4096
+  _prisonSpawnPoint: {fileID: 0}
+  _initialPlayerSpawnPoint: {fileID: 0}
+  _leaderboardName: Sold Items

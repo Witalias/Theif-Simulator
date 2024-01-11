@@ -25,6 +25,7 @@ namespace YG
         public int CurrentXP;
         public int RequiredXP;
         public int Money = -1;
+        public int SoldItemsCount;
         public List<string> ResourceData = new();
         public List<string> UpgradeData = new();
         public List<string> BuildingData = new();

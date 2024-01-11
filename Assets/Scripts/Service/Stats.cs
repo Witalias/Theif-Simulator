@@ -24,6 +24,7 @@ public class Stats : MonoBehaviour
     private Dictionary<ResourceType, int> _resources = new();
     private int _xpAmount;
     private int _backpackFullness;
+    private int _soldItemsCount;
 
     public int Level { get; private set; }
     public int Money => _money;
@@ -35,6 +36,13 @@ public class Stats : MonoBehaviour
     public bool BackpackIsFull => _backpackFullness >= _backpackCapacity;
 
     public Dictionary<ResourceType, int> GetResources() => new(_resources);
+
+    public void AddSoldItemsCount(int value)
+    {
+        _soldItemsCount += value;
+        SaveLoad.SaveSoldItemsCount(_soldItemsCount);
+        YandexGame.NewLeaderboardScores(GameStorage.Instanse.LeaderboardName, _soldItemsCount);
+    }
 
     public void AddXP(int value)
     {
@@ -175,6 +183,8 @@ public class Stats : MonoBehaviour
 
         if (SaveLoad.HasMoneySave)
             _money = YandexGame.savesData.Money;
+
+        _soldItemsCount = YandexGame.savesData.SoldItemsCount;
     }
 
     private void NextLevel()

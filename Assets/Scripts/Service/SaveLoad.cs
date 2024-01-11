@@ -77,6 +77,12 @@ public static class SaveLoad
         YandexGame.SaveProgress();
     }
 
+    public static void SaveSoldItemsCount(int value)
+    {
+        YandexGame.savesData.SoldItemsCount = value;
+        YandexGame.SaveProgress();
+    }
+
     public static void SaveTask(TaskType taskType, ResourceType requiredResource, int progress, int requirement, int reward)
     {
         YandexGame.savesData.TaskType = taskType.ToString();

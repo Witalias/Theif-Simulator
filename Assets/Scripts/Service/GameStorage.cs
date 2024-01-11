@@ -31,6 +31,9 @@ public class GameStorage : MonoBehaviour
     [SerializeField] private Transform _prisonSpawnPoint;
     [SerializeField] private Transform _initialPlayerSpawnPoint;
 
+    [Header("Strings")]
+    [SerializeField] private string _leaderboardName;
+
     private Dictionary<ResourceType, ResourceData> _resources = new();
 
     public GameObject NewResourceAnimatinPrefab => newResourceAnimationPrefab.gameObject;
@@ -44,6 +47,8 @@ public class GameStorage : MonoBehaviour
     public Transform PrisonSpawnPoint => _prisonSpawnPoint;
 
     public Transform InitialPlayerSpawnPoint => _initialPlayerSpawnPoint;
+
+    public string LeaderboardName => _leaderboardName;
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;
 
