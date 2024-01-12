@@ -34,6 +34,13 @@ public class GameSettings : MonoBehaviour
 
         if (_loadLanguageFromYG)
             LoadLanguage();
+
+        if (YandexGame.EnvironmentData.payload == "delete_save")
+        {
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
+        }
+
     }
 
     private void LoadLanguage()

@@ -158,7 +158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666563743713164040}
-  m_LocalRotation: {x: 0.61366487, y: -0.000000014646299, z: 0.000000011383357, w: 0.7895667}
+  m_LocalRotation: {x: 0.6136648, y: 0.00000005038347, z: -0.0000000391589, w: 0.78956676}
   m_LocalPosition: {x: 0, y: 22.5, z: -5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -1658,10 +1658,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controlsLocked: 0
   _stealth: {fileID: 9118138834692433051}
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 1024
   _joystick: {fileID: 0}
+  _onCaught:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7833941796118625320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1682,7 +1682,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5764222128491727568}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

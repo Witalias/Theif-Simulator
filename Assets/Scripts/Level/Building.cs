@@ -51,7 +51,7 @@ public class Building : MonoBehaviour
 
     public SavedData Save()
     {
-        _savedData.ID = GetInstanceID();
+        _savedData.ID = GetHashCode();
         _savedData.Level = _level;
         _savedData.CurrentXP = _currentXp;
         _savedData.SecondsBeforeUpdate = _refreshTimer.RemainSeconds;
@@ -70,11 +70,11 @@ public class Building : MonoBehaviour
 
         var doorLockStates = data.DoorLockStates.ToDictionary(door => door.ID);
         foreach (var door in _doors)
-            door.Load(doorLockStates[door.GetInstanceID()]);
+            door.Load(doorLockStates[door.GetHashCode()]);
 
         var lootableEmptyStates = data.LootableEmptyStates.ToDictionary(lootable => lootable.ID);
         foreach (var lootable in _lootables)
-            lootable.Load(lootableEmptyStates[lootable.GetInstanceID()]);
+            lootable.Load(lootableEmptyStates[lootable.GetHashCode()]);
     }
 
     public void Initialize()

@@ -13,7 +13,9 @@ using UnityEngine.Events;
 public class MovementController : MonoBehaviour
 {
     private const string RUN_ANIMATOR_BOOLEAN = "Run";
-    private const string CAUGHT_ANIMATOR_TRIGGER = "Caught";
+    private const string SNEAK_ANIMATOR_BOOLEAN = "Sneak";
+    private const string HACK_ANIMATOR_BOOLEAN = "Hack";
+    private const string CAUGHT_ANIMATOR_BOOLEAN = "Sit";
 
     public static event Action MovingStarted;
     public static event Action PlayerCaught;
@@ -48,7 +50,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _onCaught?.Invoke();
         _controlsLocked = true;
-        _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
+        _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, true);
         InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
@@ -60,6 +62,7 @@ public class MovementController : MonoBehaviour
             Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
             _stealth.Hide();
+            _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
         }
     }
 
@@ -69,9 +72,6 @@ public class MovementController : MonoBehaviour
             return;
 
         _canHide = value;
-
-        //if (value == false)
-        //    _stealth.Show();
     }
 
     private void Awake()
@@ -87,8 +87,8 @@ public class MovementController : MonoBehaviour
 
     private void OnEnable()
     {
-        WaitingAndAction.TimerActived += OnProcessAction;
-        UIHoldButton.HoldButtonActived += OnProcessAction;
+        WaitingAndAction.TimerActived += OnHack;
+        UIHoldButton.HoldButtonActived += OnHack;
         OpenClosePopup.Opened += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
@@ -100,8 +100,8 @@ public class MovementController : MonoBehaviour
 
     private void OnDisable()
     {
-        WaitingAndAction.TimerActived -= OnProcessAction;
-        UIHoldButton.HoldButtonActived -= OnProcessAction;
+        WaitingAndAction.TimerActived -= OnHack;
+        UIHoldButton.HoldButtonActived -= OnHack;
         OpenClosePopup.Opened -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
@@ -161,21 +161,29 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    private void OnHack(bool value)
+    {
+        OnProcessAction(value);
+        _animator.SetBool(HACK_ANIMATOR_BOOLEAN, value);
+    }
+
     private void OnProcessAction(bool value)
     {
         _controlsLocked = value;
         _joystick.OnPointerUp(null);
-        _joystick.gameObject.SetActive(!value);
+        _joystick.gameObject.SetActive(!value);        
     }
 
     private void OnNoticed()
     {
+        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, false);
         CanHide(false);
         _noticed = true;
     }
 
     private void InBuildingState(bool inBuilding, Building building)
     {
+        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, inBuilding);
         if (inBuilding)
         {
             _currentBuilding = building;

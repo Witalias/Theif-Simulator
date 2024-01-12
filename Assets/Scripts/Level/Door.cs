@@ -41,7 +41,7 @@ public class Door : MonoBehaviour
 
     public SavedData Save()
     {
-        _savedData.ID = GetInstanceID();
+        _savedData.ID = GetHashCode();
         _savedData.IsLocked = !_hacked;
         return _savedData;
     }

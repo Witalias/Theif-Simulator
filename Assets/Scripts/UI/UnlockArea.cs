@@ -36,7 +36,7 @@ public class UnlockArea : MonoBehaviour
 
     public SavedData Save()
     {
-        _savedData.ID = GetInstanceID();
+        _savedData.ID = GetHashCode();
         _savedData.Cost = _cost;
         return _savedData;
     }
