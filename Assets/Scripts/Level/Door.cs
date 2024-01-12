@@ -20,6 +20,7 @@ public class Door : MonoBehaviour
     public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
     public static event Action<int> PlayResourceAnimationXp;
     public static event Action BuildingInfoShowed;
+    public static event Action Hacked;
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private bool _openBackSide;
@@ -56,9 +57,9 @@ public class Door : MonoBehaviour
         if (_triggered || player == null || player.Busy)
             return;
 
-        if (!_hacked && !player.Noticed)
+        if (!_hacked)
         {
-            if (!_isHacking && !player.IsRunning)
+            if (!_isHacking && !player.IsRunning && !player.Noticed)
             {
                 Hack(player);
                 SetActiveBuildingLevelPanel(false);
@@ -149,11 +150,12 @@ public class Door : MonoBehaviour
             PlayResourceAnimationXp?.Invoke(xp);
             TaskManager.Instance.ProcessTask(TaskType.HackHouse, 1);
             TaskManager.Instance.ProcessTask(TaskType.TutorialCrackDoors, 1);
+            Hacked?.Invoke();
         }
         void ActionAbort()
         {
-            _isHacking = false;
             player.CanHide(true);
+            _isHacking = false;
         }
         WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, Sound.DoorMasterKey, 0f);
     }

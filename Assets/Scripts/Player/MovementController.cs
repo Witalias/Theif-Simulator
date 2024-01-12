@@ -23,6 +23,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
     [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private PlayerParticles _particles;
     [SerializeField] private UnityEvent _onCaught;
 
     private Animator _animator;
@@ -51,6 +52,7 @@ public class MovementController : MonoBehaviour
         _onCaught?.Invoke();
         _controlsLocked = true;
         _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, true);
+        _particles.ActivateSmokeParticles(true);
         InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
@@ -63,6 +65,7 @@ public class MovementController : MonoBehaviour
             _controlsLocked = false;
             _stealth.Hide();
             _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
+            _particles.ActivateSmokeParticles(false);
         }
     }
 
@@ -89,7 +92,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived += OnHack;
         UIHoldButton.HoldButtonActived += OnHack;
-        OpenClosePopup.Opened += OnProcessAction;
+        OpenClosePopup.OpenedLate += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
         Door.BuildingInfoShowed += SavePosition;
@@ -102,7 +105,7 @@ public class MovementController : MonoBehaviour
     {
         WaitingAndAction.TimerActived -= OnHack;
         UIHoldButton.HoldButtonActived -= OnHack;
-        OpenClosePopup.Opened -= OnProcessAction;
+        OpenClosePopup.OpenedLate -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
         Door.BuildingInfoShowed -= SavePosition;
@@ -115,6 +118,8 @@ public class MovementController : MonoBehaviour
     {
         Move();
     }
+
+    private bool GetInBuildingBoolean() => InBuilding;
 
     private void Move()
     {
@@ -150,15 +155,20 @@ public class MovementController : MonoBehaviour
         }
         else if (_isMoving)
         {
-            _isMoving = false;
-            _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
-
-            DOVirtual.DelayedCall(Time.deltaTime, () =>
-            {
-                if (_canHide)
-                    _stealth.Hide();
-            });
+            Stop();
         }
+    }
+
+    private void Stop()
+    {
+        _isMoving = false;
+        _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
+
+        DOVirtual.DelayedCall(Time.deltaTime, () =>
+        {
+            if (_canHide)
+                _stealth.Hide();
+        });
     }
 
     private void OnHack(bool value)
@@ -171,7 +181,9 @@ public class MovementController : MonoBehaviour
     {
         _controlsLocked = value;
         _joystick.OnPointerUp(null);
-        _joystick.gameObject.SetActive(!value);        
+        _joystick.gameObject.SetActive(!value);
+        if (value == true)
+            Stop();
     }
 
     private void OnNoticed()
@@ -211,6 +223,4 @@ public class MovementController : MonoBehaviour
         else
             transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;
     }
-
-    private bool GetInBuildingBoolean() => InBuilding;
 }

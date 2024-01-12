@@ -27,6 +27,7 @@ public class Lootable : MonoBehaviour
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
     public static event Action<string, float> ShowQuickMessage;
+    public static event Action Looted;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
     [SerializeField] private ItemsDropChance[] _containedResources;
@@ -142,6 +143,7 @@ public class Lootable : MonoBehaviour
             }
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
+            Looted?.Invoke();
         }
         void ActionAbort()
         {

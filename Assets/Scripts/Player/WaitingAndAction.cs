@@ -112,10 +112,8 @@ public class WaitingAndAction : MonoBehaviour
         Refresh();
     }
 
-    private void Refresh(bool aborted = false)
+    private void Refresh()
     {
-        //reachedTime = 1f;
-        //currentTime = 0f;
         _taskPanel.SetActive(true);
         InProgress = false;
 
@@ -125,9 +123,7 @@ public class WaitingAndAction : MonoBehaviour
             SoundManager.Instanse.Stop(_sound);
         }
         _content.SetActive(false);
-
-        if (!aborted)
-            TimerActived?.Invoke(false);
+        TimerActived?.Invoke(false);
     }
 
     private void Abort()
@@ -137,7 +133,7 @@ public class WaitingAndAction : MonoBehaviour
 
         _actionAbort?.Invoke();
         StopCoroutine(_waitingCoroutine);
-        Refresh(true);
+        Refresh();
     }
 
     private void OnOpenPopup(bool arg)

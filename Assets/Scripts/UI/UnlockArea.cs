@@ -26,6 +26,7 @@ public class UnlockArea : MonoBehaviour
     [SerializeField] private GameObject _requiredLevelPanel;
     [SerializeField] private Transform _arrow;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private ParticleSystem _purchaseParticle;
     [SerializeField] private UnityEvent _onPurchase;
 
     private bool _triggered;
@@ -114,6 +115,14 @@ public class UnlockArea : MonoBehaviour
         _onPurchase?.Invoke();
         CostChanged?.Invoke();
         Hide();
+        ShowPurchaseParticle();
+    }
+
+    private void ShowPurchaseParticle()
+    {
+        _purchaseParticle.transform.parent = null;
+        _purchaseParticle.Play();
+        DOVirtual.DelayedCall(1.0f, () => _purchaseParticle.Stop());
     }
 
     private void AbortPurchase()

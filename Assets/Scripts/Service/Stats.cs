@@ -194,6 +194,7 @@ public class Stats : MonoBehaviour
     private void NextLevel()
     {
         _xpBar.SetLevel(++Level);
+        _xpBar.ActiveConfetti();
         _neededXP += GameSettings.Instanse.StepXPRequirement;
         ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f);
         NewLevelReached?.Invoke(Level);
@@ -207,5 +208,10 @@ public class Stats : MonoBehaviour
             _xpBar.SetMaxLevelState();
     }
 
-    private void UpdateCapacity() => _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+    private void UpdateCapacity()
+    {
+        _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+        if (BackpackIsFull)
+            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f);
+    }
 }

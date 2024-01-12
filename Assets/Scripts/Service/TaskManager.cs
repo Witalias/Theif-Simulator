@@ -157,6 +157,7 @@ public class TaskManager : MonoBehaviour
             SoundManager.Instanse.Play(Sound.GetMoney);
         }
         TaskCompleted?.Invoke(_currentTask);
+        _taskPanel.ActiveConfetti();
         if (YandexGame.savesData.TutorialDone)
             DOVirtual.DelayedCall(1.0f, StartRandomTask);
     }

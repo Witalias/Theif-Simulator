@@ -128,6 +128,7 @@ public class ResourcesPanel : MonoBehaviour
         var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
             _resourceAnimationPoint.position, Quaternion.identity, transform)
             .GetComponent<NewResourceAnimation>();
+        newResource.transform.localEulerAngles = Vector3.zero;
         newResource.SetIcon(icon);
         newResource.SetText(text);
     }
