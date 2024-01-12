@@ -133,13 +133,17 @@ public class Stats : MonoBehaviour
     private void Awake()
     {
         Instanse = this;
-        Load();
-        _resourcesPanel.SetMoney(_money);
-        _xpBar.SetLevel(Level);
+
     }
 
     private void Start()
     {
+        _resourcesPanel.Initialize();
+
+        Load();
+        _resourcesPanel.SetMoney(_money);
+        _xpBar.SetLevel(Level);
+
         foreach (var resource in _resources)
         {
             _resourcesPanel.SetResourceValue(resource.Key, resource.Value);

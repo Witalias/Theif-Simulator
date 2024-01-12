@@ -60,13 +60,7 @@ public class GameStorage : MonoBehaviour
 
     private void Awake()
     {
-        if (Instanse == null)
-            Instanse = this;
-        else
-            Destroy(gameObject);
-
-
-        DontDestroyOnLoad(gameObject);
+        Instanse = this;
 
         var canvas = GameObject.FindGameObjectWithTag(Tags.MainCanvas.ToString());
         if (canvas == null) Debug.LogWarning("The main canvas was not found!");

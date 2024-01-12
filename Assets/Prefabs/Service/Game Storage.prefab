@@ -77,4 +77,4 @@ MonoBehaviour:
   _moneySound: 7
   _prisonSpawnPoint: {fileID: 0}
   _initialPlayerSpawnPoint: {fileID: 0}
-  _leaderboardName: Sold Items
+  _leaderboardName: SoldItems

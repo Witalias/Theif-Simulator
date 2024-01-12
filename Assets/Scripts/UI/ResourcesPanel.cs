@@ -19,6 +19,12 @@ public class ResourcesPanel : MonoBehaviour
     private readonly Queue<Action> _resourceAnimationQueue = new();
     private Coroutine _playResourceAnimationCoroutine;
 
+    public void Initialize()
+    {
+        CreateItemCounters();
+        ClearResources();
+    }
+
     public void SetResourceValue(ResourceType type, int value)
     {
         _itemCounters[type].SetValue(value);
@@ -45,12 +51,6 @@ public class ResourcesPanel : MonoBehaviour
     {
         foreach (var counter in _itemCounters.Values)
             counter.gameObject.SetActive(false);
-    }
-
-    private void Awake()
-    {
-        CreateItemCounters();
-        ClearResources();
     }
 
     private void OnEnable()
