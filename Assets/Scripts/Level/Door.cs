@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Animator))]
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IIdentifiable
 {
     [Serializable]
     public class SavedData
@@ -40,9 +40,11 @@ public class Door : MonoBehaviour
     private bool _isHacking;
     private bool _hacked;
 
+    public int ID { get; set; }
+
     public SavedData Save()
     {
-        _savedData.ID = GetHashCode();
+        _savedData.ID = ID;
         _savedData.IsLocked = !_hacked;
         return _savedData;
     }

@@ -16,7 +16,11 @@ public class LevelManager : MonoBehaviour
 
     private readonly List<CinemachineVirtualCamera> _newAvailableAreaCameras = new();
     private Coroutine _moveCameraToPointsCoroutine;
-    private bool _cameraIsMoving;
+
+    private void Awake()
+    {
+        SetIDs();
+    }
 
     private void Start()
     {
@@ -58,9 +62,8 @@ public class LevelManager : MonoBehaviour
             var loadedBuildings = SaveLoad.LoadBuildings();
             foreach (var building in _buildings)
             {
-                var hash = building.GetHashCode();
-                if (loadedBuildings.ContainsKey(hash))
-                    building.Load(loadedBuildings[hash]);
+                if (loadedBuildings.ContainsKey(building.ID))
+                    building.Load(loadedBuildings[building.ID]);
             }    
         }
         if (SaveLoad.HasUnlockAreasSave)
@@ -68,9 +71,8 @@ public class LevelManager : MonoBehaviour
             var loadedUnlockAreas = SaveLoad.LoadUnlockAreas();
             foreach (var unlockArea in _unlockAreas)
             {
-                var hash = unlockArea.GetHashCode();
-                if (loadedUnlockAreas.ContainsKey(hash))
-                    unlockArea.Load(loadedUnlockAreas[hash]);
+                if (loadedUnlockAreas.ContainsKey(unlockArea.ID))
+                    unlockArea.Load(loadedUnlockAreas[unlockArea.ID]);
             }
         }
     }
@@ -79,6 +81,16 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var building in _buildings)
             building.Initialize();
+    }
+
+    private void SetIDs()
+    {
+        var identifiables = _buildings.Cast<IIdentifiable>()
+            .Concat(_buildings.SelectMany(building => building.GetIdentifiables()))
+            .Concat(_unlockAreas)
+            .ToArray();
+        for (var i = 0; i < identifiables.Count(); i++)
+            identifiables[i].ID = i;
     }
 
     private void MoveCameraToNewAvailableArea(CinemachineVirtualCamera toCamera)

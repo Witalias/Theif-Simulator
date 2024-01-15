@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(MovingFurnitureElements))]
-public class Lootable : MonoBehaviour
+public class Lootable : MonoBehaviour, IIdentifiable
 {
     [Serializable]
     private class ItemsDropChance
@@ -44,9 +44,11 @@ public class Lootable : MonoBehaviour
 
     public UnityEvent OnLooted => _onLooted;
 
+    public int ID { get; set; }
+
     public SavedData Save()
     {
-        _savedData.ID = GetHashCode();
+        _savedData.ID = ID;
         _savedData.IsEmpty = _isEmpty;
         return _savedData;
     }

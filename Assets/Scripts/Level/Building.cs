@@ -5,7 +5,7 @@ using UnityEngine;
 using YG;
 
 [RequireComponent(typeof(RefreshBuildingTimer))]
-public class Building : MonoBehaviour
+public class Building : MonoBehaviour, IIdentifiable
 {
     [Serializable]
     private class LevelState
@@ -49,9 +49,11 @@ public class Building : MonoBehaviour
 
     private bool IsMaxLevel => _level > _levelStates.Length;
 
+    public int ID { get; set; }
+
     public SavedData Save()
     {
-        _savedData.ID = GetHashCode();
+        _savedData.ID = ID;
         _savedData.Level = _level;
         _savedData.CurrentXP = _currentXp;
         _savedData.SecondsBeforeUpdate = _refreshTimer.RemainSeconds;
@@ -70,11 +72,11 @@ public class Building : MonoBehaviour
 
         var doorLockStates = data.DoorLockStates.ToDictionary(door => door.ID);
         foreach (var door in _doors)
-            door.Load(doorLockStates[door.GetHashCode()]);
+            door.Load(doorLockStates[door.ID]);
 
         var lootableEmptyStates = data.LootableEmptyStates.ToDictionary(lootable => lootable.ID);
         foreach (var lootable in _lootables)
-            lootable.Load(lootableEmptyStates[lootable.GetHashCode()]);
+            lootable.Load(lootableEmptyStates[lootable.ID]);
     }
 
     public void Initialize()
@@ -91,6 +93,8 @@ public class Building : MonoBehaviour
         UpdateProgressBar();
         UpdateLevelText();
     }
+
+    public IEnumerable<IIdentifiable> GetIdentifiables() => _lootables.Cast<IIdentifiable>().Concat(_doors);
 
     public void OnPlayerEnter()
     {

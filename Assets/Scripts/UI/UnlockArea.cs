@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UnlockArea : MonoBehaviour
+public class UnlockArea : MonoBehaviour, IIdentifiable
 {
     [Serializable]
     public class SavedData
@@ -35,9 +35,11 @@ public class UnlockArea : MonoBehaviour
     private Coroutine _purchaseCoroutine;
     private readonly SavedData _savedData = new();
 
+    public int ID { get; set; }
+
     public SavedData Save()
     {
-        _savedData.ID = GetHashCode();
+        _savedData.ID = ID;
         _savedData.Cost = _cost;
         return _savedData;
     }
