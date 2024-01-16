@@ -26,7 +26,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
-    public static event Action<string, float> ShowQuickMessage;
+    public static event Action<string, float, bool> ShowQuickMessage;
     public static event Action Looted;
 
     [Tooltip("Counts Changes: индекс+1 - количество предметов")]
@@ -66,7 +66,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     public void OnPlayerEnter()
     {
         if (Stats.Instanse.BackpackIsFull)
-            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f);
+            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 
     public void OnPlayerStay(MovementController player)
@@ -99,8 +99,8 @@ public class Lootable : MonoBehaviour, IIdentifiable
             return;
 
         _isEmpty = value;
+        //_hackingArea.SetActive(!value);
         _appearHackingZoneTrigger.SetActive(!value);
-        _hackingArea.SetActive(!value);
 
         if (value == true)
             _movingFurnitureElements.MoveForward();
@@ -129,6 +129,10 @@ public class Lootable : MonoBehaviour, IIdentifiable
                 var randomResource = _containedResources[randomIndex];
                 var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
 
+                TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
+                TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
+                TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
+
                 if (randomResource.OnlyMinMaxRange)
                     count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
                 Stats.Instanse.AddResource(randomResource.Type, count);
@@ -138,10 +142,6 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
                 PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
                 SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
-
-                TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
-                TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
-                TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
             }
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();

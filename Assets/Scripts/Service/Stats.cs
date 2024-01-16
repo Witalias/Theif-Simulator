@@ -9,7 +9,7 @@ public class Stats : MonoBehaviour
     public static Stats Instanse { get; private set; } = null;
 
     public static event Action<int> NewLevelReached;
-    public static event Action<string, float> ShowQuickMessage;
+    public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private int _money = 0;
     [SerializeField] private float _playerMovingSpeed;
@@ -62,14 +62,16 @@ public class Stats : MonoBehaviour
             return;
 
         if (_backpackFullness + value > _backpackCapacity)
-            value -= _backpackCapacity - _backpackFullness;
+            value = _backpackCapacity - _backpackFullness;
         _backpackFullness += value;
 
         _resources[type] = (int)Mathf.Clamp(_resources[type] + value, 0, Mathf.Infinity);
         _resourcesPanel.SetResourceValue(type, _resources[type]);
         _resourcesPanel.SetActiveCounter(type, _resources[type] > 0);
         UpdateCapacity();
-        SaveLoad.SaveResources(_resources);
+
+        if (YandexGame.savesData.TutorialRobHouseDone)
+            SaveLoad.SaveResources(_resources);
     }
 
     public void AddMoney(int value, bool assignTask = true)
@@ -196,7 +198,7 @@ public class Stats : MonoBehaviour
         _xpBar.SetLevel(++Level);
         _xpBar.ActiveConfetti();
         _neededXP += GameSettings.Instanse.StepXPRequirement;
-        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f);
+        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f, false);
         NewLevelReached?.Invoke(Level);
     }
 
@@ -212,6 +214,6 @@ public class Stats : MonoBehaviour
     {
         _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
         if (BackpackIsFull)
-            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f);
+            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 }

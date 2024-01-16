@@ -8,41 +8,27 @@ public class SoundManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource loopAudioSource;
+    [SerializeField] private AudioSource musicAudioSource;
 
     [Header("Sounds")]
-    [SerializeField] private AudioClip openMenu;
-    [SerializeField] private AudioClip mouseEnterButton;
-    [SerializeField] private AudioClip[] selectButton;
     [SerializeField] private AudioClip[] doorClose;
     [SerializeField] private AudioClip[] doorOpen;
     [SerializeField] private AudioClip[] getResource;
+    [SerializeField] private AudioClip[] getSmallResource;
+    [SerializeField] private AudioClip[] getLoudResource;
     [SerializeField] private AudioClip[] getMoney;
-    [SerializeField] private AudioClip[] fuel;
-    [SerializeField] private AudioClip[] masterKey;
-    [SerializeField] private AudioClip[] tierIron;
-    [SerializeField] private AudioClip[] gadget;
     [SerializeField] private AudioClip[] suspectMan;
     [SerializeField] private AudioClip[] suspectWoman;
     [SerializeField] private AudioClip[] notFindMan;
     [SerializeField] private AudioClip[] notFindWoman;
     [SerializeField] private AudioClip[] screamMan;
     [SerializeField] private AudioClip[] screamWoman;
-    [SerializeField] private AudioClip[] newVisibilityLevel;
-    [SerializeField] private AudioClip[] police;
-    [SerializeField] private AudioClip[] toilet;
-    [SerializeField] private AudioClip[] doorArms;
     [SerializeField] private AudioClip[] doorMasterKey;
-    [SerializeField] private AudioClip[] doorTierIron;
     [SerializeField] private AudioClip[] searchingKitchen;
     [SerializeField] private AudioClip[] searchingWoodFurniture;
-    [SerializeField] private AudioClip[] embientForest;
     [SerializeField] private AudioClip[] refrigeratorDoor;
-    [SerializeField] private AudioClip[] box;
-    [SerializeField] private AudioClip[] windowOpen;
-    [SerializeField] private AudioClip[] windowArms;
-    [SerializeField] private AudioClip[] windowTierIron;
-    [SerializeField] private AudioClip[] newSkill;
-    [SerializeField] private AudioClip[] bookFlip;
+    [SerializeField] private AudioClip[] musicTheme;
+    [SerializeField] private AudioClip[] call;
 
     private Dictionary<Sound, AudioClip[]> sounds;
     private readonly Dictionary<Sound, AudioSource> currentLoopSounds = new Dictionary<Sound, AudioSource>();
@@ -78,6 +64,12 @@ public class SoundManager : MonoBehaviour
         source.PlayOneShot(GetRandomClip(sound));
     }
 
+    public void PlayMusic(Sound sound)
+    {
+        musicAudioSource.clip = GetRandomClip(sound);
+        musicAudioSource.Play();
+    }
+
     public void Stop(Sound sound)
     {
         if (!currentLoopSounds.ContainsKey(sound))
@@ -96,16 +88,11 @@ public class SoundManager : MonoBehaviour
 
         sounds = new Dictionary<Sound, AudioClip[]>
         {
-            [Sound.MouseEnterButton] = new[] { mouseEnterButton },
-            [Sound.OpenMenu] = new[] { openMenu },
-            [Sound.Select] = selectButton,
             [Sound.DoorClose] = doorClose,
             [Sound.DoorOpen] = doorOpen,
-            [Sound.Fuel] = fuel,
-            [Sound.Gadget] = gadget,
             [Sound.GetMoney] = getMoney,
-            [Sound.MasterKey] = masterKey,
-            [Sound.TierIron] = tierIron,
+            [Sound.GetSmallResource] = getSmallResource,
+            [Sound.GetLoudResource] = getLoudResource,
             [Sound.GetResource] = getResource,
             [Sound.NotFindMan] = notFindMan,
             [Sound.NotFindWoman] = notFindWoman,
@@ -113,22 +100,12 @@ public class SoundManager : MonoBehaviour
             [Sound.ScreamWoman] = screamWoman,
             [Sound.SuspectMan] = suspectMan,
             [Sound.SuspectWoman] = suspectWoman,
-            [Sound.NewVisibilityLevel] = newVisibilityLevel,
-            [Sound.Police] = police,
-            [Sound.DoorArms] = doorArms,
-            [Sound.DoorMasterKey] = doorMasterKey,
-            [Sound.DoorTierIron] = doorTierIron,
-            [Sound.Toilet] = toilet,
+            [Sound.HackDoor] = doorMasterKey,
             [Sound.SearchingKitchen] = searchingKitchen,
             [Sound.SearchingWoodFurniture] = searchingWoodFurniture,
-            [Sound.EmbientForest] = embientForest,
             [Sound.RefrigeratorDoor] = refrigeratorDoor,
-            [Sound.Box] = box,
-            [Sound.WindowOpen] = windowOpen,
-            [Sound.WindowArms] = windowArms,
-            [Sound.WindowTierIron] = windowTierIron,
-            [Sound.NewSkill] = newSkill,
-            [Sound.BookFlip] = bookFlip
+            [Sound.MusicTheme] = musicTheme,
+            [Sound.Call] = call,
         };
     }
 

@@ -148,7 +148,10 @@ public class MovementController : MonoBehaviour
 
                 DOVirtual.DelayedCall(Time.deltaTime, () => {
                     if (_canHide)
+                    {
                         _stealth.Show();
+                        //_particles.ActivateFastSmokeParticle();
+                    }
                 });
                 
             }
@@ -167,7 +170,10 @@ public class MovementController : MonoBehaviour
         DOVirtual.DelayedCall(Time.deltaTime, () =>
         {
             if (_canHide)
+            {
                 _stealth.Hide();
+                //_particles.ActivateFastSmokeParticle();
+            }
         });
     }
 

@@ -245,7 +245,6 @@ MonoBehaviour:
     - 10
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  _minMaxXP: {x: 1, y: 2}
   sound: 25
   _hackingArea: {fileID: 4172837680030001898}
   _appearHackingZoneTrigger: {fileID: 1819211723809041394}
@@ -597,35 +596,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6949500339449707223, guid: 6543c0f2c0dbe564793157f32fd642ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3756308238031883237}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6543c0f2c0dbe564793157f32fd642ac, type: 3}
---- !u!1 &302253643850117834 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6949500339449707223, guid: 6543c0f2c0dbe564793157f32fd642ac, type: 3}
-  m_PrefabInstance: {fileID: 7223852603855849501}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3756308238031883237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 302253643850117834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53392039f304f72449cf2a62def9c53c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variants:
-  - {fileID: 6949500339449707223, guid: 6543c0f2c0dbe564793157f32fd642ac, type: 3}
-  - {fileID: 2890598518428965758, guid: dc8adb869c9d9424f9791212211bedf5, type: 3}
-  - {fileID: 4749972197869369344, guid: 4ceeedc28db0311498590b4321529e1e, type: 3}
-  - {fileID: 3451337342296124685, guid: 8e933886bd9dfd94397944fe226dad25, type: 3}
-  - {fileID: 2465587065911263421, guid: b6d033de86bc1cd419bdc4effdd63f7e, type: 3}
-  - {fileID: 5136154054652414611, guid: ab78965db8c2a2e48918ead2af0a8b3f, type: 3}
 --- !u!4 &1115206859564820592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7726564052203954285, guid: 6543c0f2c0dbe564793157f32fd642ac, type: 3}

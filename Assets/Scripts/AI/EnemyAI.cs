@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     private const string CATCH_ANIMATOR_TRIGGER = "Hack";
 
     public static event Action PlayerIsNoticed;
-    public static event Action<string, float> ShowQuickMessage;
+    public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
     [SerializeField] private float _followSpeed;
@@ -150,7 +150,7 @@ public class EnemyAI : MonoBehaviour
         _view.color = _detectViewColor;
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
-        ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f);
+        ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f, true);
         _detectTween = DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;

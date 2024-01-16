@@ -1,11 +1,14 @@
+using DG.Tweening;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerParticles : MonoBehaviour
 {
     [SerializeField] private Transform _bodyTransform;
     [SerializeField] private ParticleSystem _smokeParticle;
-    [SerializeField] private Transform _flashParticlesParent;
-    [SerializeField] private ParticleSystem[] _flashParticles;
+    [SerializeField] private ParticleSystem _fastSmokeParticle;
+    [SerializeField] private Transform _particlesContainer;
+    [SerializeField] private ParticleSystem _confettiParticle;
 
     private Vector3 _smokeParticlesLocalPosition;
 
@@ -24,29 +27,32 @@ public class PlayerParticles : MonoBehaviour
         }
     }
 
-    public void ActivateRandomFlashParticle()
+    public void ActivateConfettiParticle()
     {
-        var particle = _flashParticles[Random.Range(0, _flashParticles.Length)];
-        particle.transform.position = _flashParticlesParent.position;
-        particle.Play();
+        _confettiParticle.transform.position = _particlesContainer.position;
+        _confettiParticle.Play();
+    }
+
+    public void ActivateFastSmokeParticle()
+    {
+        _fastSmokeParticle.Play();
     }
 
     private void Start()
     {
-        foreach (var particle in _flashParticles)
-            particle.transform.parent = null;
         _smokeParticlesLocalPosition = _smokeParticle.transform.localPosition;
+        _confettiParticle.transform.parent = null;
     }
 
     private void OnEnable()
     {
-        Lootable.Looted += ActivateRandomFlashParticle;
-        Door.Hacked += ActivateRandomFlashParticle;
+        Lootable.Looted += ActivateConfettiParticle;
+        Door.Hacked += ActivateConfettiParticle;
     }
 
     private void OnDisable()
     {
-        Lootable.Looted -= ActivateRandomFlashParticle;
-        Door.Hacked -= ActivateRandomFlashParticle;
+        Lootable.Looted -= ActivateConfettiParticle;
+        Door.Hacked -= ActivateConfettiParticle;
     }
 }

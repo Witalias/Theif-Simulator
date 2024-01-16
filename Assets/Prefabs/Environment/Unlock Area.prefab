@@ -525,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _requiredLevel: 2
   _cost: 100
-  _purchaseSpeed: 1
+  _purchaseSpeed: 2
   _requiredLevelText: {fileID: 1725586597748276688}
   _costText: {fileID: 8885980060122737208}
   _requiredLevelPanel: {fileID: 6672350848188472895}
@@ -625,7 +625,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7741099071091366950}
-  m_LocalRotation: {x: -0.3052719, y: -0.000000009097813, z: 0.000000028379716, w: 0.95226526}
+  m_LocalRotation: {x: -0.30527222, y: 1.3695213e-15, z: -4.4970436e-15, w: 0.95226514}
   m_LocalPosition: {x: 0, y: -13.62, z: -19.06}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0

@@ -141,7 +141,7 @@ public class Door : MonoBehaviour, IIdentifiable
         _isHacking = true;
         player.CanHide(false);
         player.RotateTowards(_appearHackingZoneTrigger.transform.position);
-        SoundManager.Instanse.PlayLoop(Sound.DoorMasterKey);
+        SoundManager.Instanse.PlayLoop(Sound.HackDoor);
         void ActionDone()
         {
             Lock(false);
@@ -159,7 +159,7 @@ public class Door : MonoBehaviour, IIdentifiable
             player.CanHide(true);
             _isHacking = false;
         }
-        WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, Sound.DoorMasterKey, 0f);
+        WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, Sound.HackDoor, 0f);
     }
 
     private void SetState(bool open)
