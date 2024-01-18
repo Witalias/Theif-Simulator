@@ -10691,6 +10691,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rugRound
       objectReference: {fileID: 0}
+    - target: {fileID: 8316276528721210446, guid: b637251a13d326a4ba2da88e1977fd18, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8656633013471868660, guid: b637251a13d326a4ba2da88e1977fd18, type: 3}
       propertyPath: m_RootOrder
       value: -1
