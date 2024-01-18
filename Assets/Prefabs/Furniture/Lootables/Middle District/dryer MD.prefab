@@ -52,9 +52,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[0].DropChance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[1].DropChance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[0]
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669048186366563205, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[1]
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 9220449990883242710, guid: 02133b946d430d6478caf6643313e7f9, type: 3}
       propertyPath: m_Name
-      value: dryer
+      value: dryer MD
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
