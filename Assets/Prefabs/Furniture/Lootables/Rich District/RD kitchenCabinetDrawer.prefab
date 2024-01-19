@@ -54,7 +54,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893698901877425364, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
       propertyPath: m_Name
-      value: kitchenCabinetDrawer
+      value: RD kitchenCabinetDrawer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423352286690681423, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423352286690681423, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423352286690681423, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423352286690681423, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423352286690681423, guid: bb8dd2ec431d9094b97b76688738c68c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

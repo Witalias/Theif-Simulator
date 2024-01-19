@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2187724439297654644, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187724439297654644, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187724439297654644, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187724439297654644, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3951670665036714754, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4439695070570482104, guid: 8f07d6ad7b6bdfa408f1743225ba0847, type: 3}
       propertyPath: m_Name
-      value: kitchenStoveElectric
+      value: RD kitchenStoveElectric
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

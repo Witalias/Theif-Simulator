@@ -54,7 +54,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4332797022900473259, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
       propertyPath: m_Name
-      value: kitchenSink
+      value: RD kitchenSink
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121200403437733755, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121200403437733755, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121200403437733755, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121200403437733755, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121200403437733755, guid: 3096be5eba1930a4aabb4633bdff4641, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

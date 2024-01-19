@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3482232698011345615, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
       propertyPath: m_Name
-      value: kitchenCabinet
+      value: RD kitchenCabinet
       objectReference: {fileID: 0}
     - target: {fileID: 4258347635842693237, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
       propertyPath: m_RootOrder
@@ -55,6 +55,26 @@ PrefabInstance:
     - target: {fileID: 4258347635842693237, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391782032325328885, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391782032325328885, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391782032325328885, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391782032325328885, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391782032325328885, guid: 00f04e6ae3750be4487dec925f1ca778, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

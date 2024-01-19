@@ -54,7 +54,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 931756413076753926, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
       propertyPath: m_Name
-      value: kitchenFridgeBuiltIn
+      value: RD kitchenFridgeBuiltIn Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155930739019958637, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155930739019958637, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155930739019958637, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155930739019958637, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155930739019958637, guid: 0dc6760ad489b5d48a00d2b9542f6d76, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

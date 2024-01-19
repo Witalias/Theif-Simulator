@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2515827462774482371, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
       propertyPath: m_Name
-      value: washerDryerStacked
+      value: RD washerDryerStacked Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2999910909128228729, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
       propertyPath: m_RootOrder
@@ -55,6 +55,54 @@ PrefabInstance:
     - target: {fileID: 2999910909128228729, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].DropChance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].DropChance
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504632955884967016, guid: 43450311757f6a44b82e5d6680d81640, type: 3}
+      propertyPath: _containedResources.Array.data[1].CountsChances.Array.data[3]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

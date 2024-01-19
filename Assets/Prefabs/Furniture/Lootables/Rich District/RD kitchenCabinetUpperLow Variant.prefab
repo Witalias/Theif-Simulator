@@ -8,9 +8,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2585289103377130465, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585289103377130465, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585289103377130465, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585289103377130465, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585289103377130465, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8149102650363529820, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
       propertyPath: m_Name
-      value: kitchenCabinetUpperLow
+      value: RD kitchenCabinetUpperLow Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8817129994618441958, guid: a8f69930d7e2b77428b6653b0ab3bb3e, type: 3}
       propertyPath: m_RootOrder

@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1343837029286440906, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343837029286440906, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343837029286440906, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343837029286440906, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343837029286440906, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
+      propertyPath: _containedResources.Array.data[0].CountsChances.Array.data[3]
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2327212762198248229, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3098541422553682335, guid: 9987976b12798e94aa213f34b32ca33c, type: 3}
       propertyPath: m_Name
-      value: kitchenCabinetUpper
+      value: RD kitchenCabinetUpper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
