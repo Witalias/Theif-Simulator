@@ -27,7 +27,7 @@ public class Stealth : MonoBehaviour
         _box.DOScale(Vector3.zero, _animationDuration);
         _body.DOScale(_defaultBodyScale, _animationDuration);
         _collider.isTrigger = false;
-        _rigidbody.useGravity = true;
+        _rigidbody.constraints ^= RigidbodyConstraints.FreezePositionY;
         Hided = false;
     }
 
@@ -36,7 +36,7 @@ public class Stealth : MonoBehaviour
         _box.DOScale(_defaultBoxScale, _animationDuration);
         _body.DOScale(Vector3.zero, _animationDuration);
         _collider.isTrigger = true;
-        _rigidbody.useGravity = false;
+        _rigidbody.constraints |= RigidbodyConstraints.FreezePositionY;
         Hided = true;
     }
 }

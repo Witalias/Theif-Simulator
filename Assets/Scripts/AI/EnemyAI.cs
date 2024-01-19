@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour
     public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
+    [SerializeField] private bool _calmOnTimer;
     [SerializeField] private float _followSpeed;
     [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
@@ -111,6 +112,8 @@ public class EnemyAI : MonoBehaviour
         {
             _lockedControls = false;
             _animator.SetBool(CATCH_ANIMATOR_TRIGGER, false);
+            if (_calmOnTimer)
+                DOVirtual.DelayedCall(_caughtDuration, Calm);
         });
     }
 

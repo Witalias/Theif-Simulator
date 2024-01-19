@@ -24,6 +24,7 @@ public class Door : MonoBehaviour, IIdentifiable
 
     [SerializeField] private float _hackingTime = 10f;
     [SerializeField] private bool _openBackSide;
+    [SerializeField] private bool _lockable = true;
     [SerializeField] private GameObject _hackingArea;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
     [SerializeField] private BoxCollider _collider;
@@ -59,7 +60,7 @@ public class Door : MonoBehaviour, IIdentifiable
         if (_triggered || player == null || player.Busy)
             return;
 
-        if (!_hacked)
+        if (!_hacked && _lockable)
         {
             if (!_isHacking && !player.IsRunning && !player.Noticed)
             {
@@ -101,6 +102,9 @@ public class Door : MonoBehaviour, IIdentifiable
 
     public void Lock(bool value)
     {
+        if (!_lockable)
+            return;
+
         _hacked = !value;
         _appearHackingZoneTrigger.SetActive(value);
     }
@@ -132,8 +136,18 @@ public class Door : MonoBehaviour, IIdentifiable
     {
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         _animator.SetBool(ANIMATOR_BACK_SIDE_BOOLEAN, _openBackSide);
         _buildingLevelPanel.alpha = 0.0f;
+
+        if (!_lockable)
+        {
+            _appearHackingZoneTrigger.SetActive(false);
+            _hackingArea.SetActive(false);
+        }
     }
 
     private void Hack(MovementController player)

@@ -53,7 +53,8 @@ public class MovementController : MonoBehaviour
         _controlsLocked = true;
         _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, true);
         _particles.ActivateSmokeParticles(true);
-        InBuildingState(false, null);
+        _noticed = false;
+        //InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
@@ -63,7 +64,7 @@ public class MovementController : MonoBehaviour
             SavePosition();
             Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
-            _stealth.Hide();
+            CanHide(true);
             _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
             _particles.ActivateSmokeParticles(false);
         }
