@@ -72,7 +72,7 @@ public class Upgrade : MonoBehaviour
 
     private void Refresh()
     {
-        var upgradeValue =  IsMaxLevel ? 0.0f : _effects[_level - 1].Value;
+        var upgradeValue =  IsMaxLevel ? _effects[_level - 2].Value : _effects[_level - 1].Value;
         SetIncreaseToText((float)Math.Round(upgradeValue, 2));
         SetCostText(IsMaxLevel ? Translation.GetMaximumName() : _effects[_level - 1].Cost.ToString());
         SetBarValue(_level - 1, _effects.Length);
