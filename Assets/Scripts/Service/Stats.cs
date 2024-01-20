@@ -195,6 +195,7 @@ public class Stats : MonoBehaviour
 
     private void NextLevel()
     {
+        SoundManager.Instanse.Play(Sound.NewLevel);
         _xpBar.SetLevel(++Level);
         _xpBar.ActiveConfetti();
         _neededXP += GameSettings.Instanse.StepXPRequirement;

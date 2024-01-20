@@ -48,6 +48,10 @@ public class OpenClosePopup : MonoBehaviour
 
     private void Close()
     {
+        if (!_opened)
+            return;
+
+        SoundManager.Instanse.Play(Sound.Tap);
         _opened = false;
         _anticlick.SetActive(false);
         _content.DOScale(Vector3.zero, _animationDuration);

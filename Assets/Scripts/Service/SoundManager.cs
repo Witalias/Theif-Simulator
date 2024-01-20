@@ -29,6 +29,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] refrigeratorDoor;
     [SerializeField] private AudioClip[] musicTheme;
     [SerializeField] private AudioClip[] call;
+    [SerializeField] private AudioClip[] buy;
+    [SerializeField] private AudioClip[] tap;
+    [SerializeField] private AudioClip[] taskCompleted;
+    [SerializeField] private AudioClip[] newLevel;
+    [SerializeField] private AudioClip[] newArea;
 
     private Dictionary<Sound, AudioClip[]> sounds;
     private readonly Dictionary<Sound, AudioSource> currentLoopSounds = new Dictionary<Sound, AudioSource>();
@@ -106,6 +111,11 @@ public class SoundManager : MonoBehaviour
             [Sound.RefrigeratorDoor] = refrigeratorDoor,
             [Sound.MusicTheme] = musicTheme,
             [Sound.Call] = call,
+            [Sound.Tap] = tap,
+            [Sound.Buy] = buy,
+            [Sound.TaskCompleted] = taskCompleted,
+            [Sound.NewArea] = newArea,
+            [Sound.NewLevel] = newLevel
         };
     }
 

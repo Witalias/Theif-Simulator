@@ -37,13 +37,6 @@ public class Upgrade : MonoBehaviour
         _buyButton.onClick.AddListener(OnBuyButtonClick);
     }
 
-    //private void Start()
-    //{
-    //    _level = Mathf.Clamp(_level, 1, _effects.Length + 1);
-    //    //for (var i = 0; i < _level - 1; i++)
-    //    //    Stats.Instanse.SetUpgradableValue(_type, _effects[i].Value);
-    //}
-
     public void Initialize(int level)
     {
         _level = Mathf.Clamp(level, 1, _effects.Length + 1);
@@ -60,7 +53,7 @@ public class Upgrade : MonoBehaviour
         if (IsMaxLevel || Stats.Instanse.Money < _effects[_level - 1].Cost)
             return;
 
-        SoundManager.Instanse.Play(Sound.GetMoney);
+        SoundManager.Instanse.Play(Sound.Buy);
         Stats.Instanse.AddMoney(-_effects[_level - 1].Cost);
         Stats.Instanse.SetUpgradableValue(_type, _effects[_level - 1].Value);
         _level++;

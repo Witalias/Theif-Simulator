@@ -375,6 +375,19 @@ MonoBehaviour:
   musicTheme:
   - {fileID: 8300000, guid: b5b2ccb3502767a46a9857498ed2437d, type: 3}
   call: []
+  buy:
+  - {fileID: 8300000, guid: 482c2f1b44b8c0348846b3b7d45a6407, type: 3}
+  - {fileID: 8300000, guid: 40cc870365e5da3498ddca6f1ba7d42c, type: 3}
+  tap:
+  - {fileID: 8300000, guid: aa5dfa3a4ef937847b2a011386b0cb22, type: 3}
+  taskCompleted:
+  - {fileID: 8300000, guid: 663a5c5cd897edb409dc1f02bbec7563, type: 3}
+  - {fileID: 8300000, guid: a7fd3182b83329649856c888651128a2, type: 3}
+  - {fileID: 8300000, guid: 90201540bc64b8a46868146d21ffc50f, type: 3}
+  newLevel:
+  - {fileID: 8300000, guid: a4e9eb0a4e8d750418cdfa97020abbdc, type: 3}
+  newArea:
+  - {fileID: 8300000, guid: bb2a7b910c3b2714982373dd9b00a78f, type: 3}
 --- !u!1 &5843356304632403146
 GameObject:
   m_ObjectHideFlags: 0

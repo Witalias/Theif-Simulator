@@ -21,6 +21,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
     [SerializeField] private int _requiredLevel;
     [SerializeField] private int _cost;
     [SerializeField] private float _purchaseSpeed;
+    [SerializeField] private ResourceType _newAvailableResources;
     [SerializeField] private TMP_Text _requiredLevelText;
     [SerializeField] private TMP_Text _costText;
     [SerializeField] private GameObject _requiredLevelPanel;
@@ -48,7 +49,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
     {
         _cost = data.Cost;
         if (_cost <= 0)
-            Purchase();
+            Purchase(true);
         else      
             SetCostText(_cost);
     }
@@ -112,12 +113,17 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
         }
     }
 
-    private void Purchase()
+    private void Purchase(bool loaded = false)
     {
         _onPurchase?.Invoke();
         CostChanged?.Invoke();
+        TaskManager.Instance.AddAvailableResources(_newAvailableResources);
         Hide();
-        ShowPurchaseParticle();
+        if (!loaded)
+        {
+            SoundManager.Instanse.Play(Sound.NewArea);
+            ShowPurchaseParticle();
+        }
     }
 
     private void ShowPurchaseParticle()
