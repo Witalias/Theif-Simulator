@@ -8,9 +8,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2365354824102471343, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2506329752593956448, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2506329752593956448, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2506329752593956448, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2506329752593956448, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2997160695225614618, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2997160695225614618, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,7 +74,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4769798794240546949, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
       propertyPath: m_Name
-      value: Big House 1 MD
+      value: Big House 2 MD Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253978601170784409, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253978601170784409, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253978601170784409, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253978601170784409, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

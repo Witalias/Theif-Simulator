@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1885670399649175065, guid: 07273f93ef072034da6884913b508d8a, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1885670399649175065, guid: 07273f93ef072034da6884913b508d8a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,9 +52,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3016103238757967274, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016103238757967274, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016103238757967274, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016103238757967274, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152644970795138405, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089485468096873397, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089485468096873397, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089485468096873397, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089485468096873397, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6266790846940852097, guid: 07273f93ef072034da6884913b508d8a, type: 3}
       propertyPath: m_Name
-      value: Real Big House MD
+      value: Real Big House MD Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762581644062083923, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762581644062083923, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762581644062083923, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762581644062083923, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

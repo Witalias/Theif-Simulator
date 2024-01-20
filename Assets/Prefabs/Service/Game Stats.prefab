@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _money: 0
   _playerMovingSpeed: 20
-  _tapBonusTimePercents: 4
-  _fillSpeedForHoldButton: 0.5
+  _tapBonusTimePercents: 5
+  _fillSpeedForHoldButton: 1
   _initialLevel: 1
   _backpackCapacity: 5
   _neededXP: 100
