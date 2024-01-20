@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &803242633457595264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4253975138403182369}
+  m_Layer: 0
+  m_Name: Point 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4253975138403182369
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803242633457595264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.81, y: 0, z: 4.64}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2923386317965856829}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4431361161106129537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76,6 +107,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big House 2 MD Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5820287160265314039, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: _path.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820287160265314039, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: _path.Array.data[0]
+      value: 
+      objectReference: {fileID: 4253975138403182369}
+    - target: {fileID: 5820287160265314039, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: _path.Array.data[1]
+      value: 
+      objectReference: {fileID: 533297299159697086}
+    - target: {fileID: 5820287160265314039, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: _path.Array.data[2]
+      value: 
+      objectReference: {fileID: 5916106171745352380}
+    - target: {fileID: 6110893438257207152, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_Name
+      value: Point 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6253978601170784409, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -92,8 +143,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9189791742778669106, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      propertyPath: m_Name
+      value: Point 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1580393077278118588, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 4253975138403182369}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+--- !u!4 &533297299159697086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4186654878181311551, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+  m_PrefabInstance: {fileID: 4431361161106129537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2923386317965856829 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1580393077278118588, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+  m_PrefabInstance: {fileID: 4431361161106129537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5916106171745352380 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8026927775414827069, guid: b9d52cd556052f44a9d029fc131d0a4e, type: 3}
+  m_PrefabInstance: {fileID: 4431361161106129537}
+  m_PrefabAsset: {fileID: 0}
