@@ -44,7 +44,7 @@ public class PathTrajectory : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_path == null || _path.Length <= 1 || !_agent.hasPath || _agent.isStopped)
+        if (_path == null || _path.Length <= 1 || _agent.isStopped)
             return;
 
         if (_agent.remainingDistance <= _agent.stoppingDistance)

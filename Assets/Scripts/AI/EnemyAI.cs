@@ -12,13 +12,14 @@ public class EnemyAI : MonoBehaviour
 {
     private const string WALK_ANIMATOR_BOOLEAN = "Walk";
     private const string RUN_ANIAMTOR_BOOLEAN = "Run";
-    private const string REACT_TO_NOISE_ANIMATOR_TRIGGER = "React To Noise";
     private const string SCARY_ANIMATOR_TRIGGER = "Scary";
+    private const string CATCH_ANIMATOR_TRIGGER = "Hack";
 
     public static event Action PlayerIsNoticed;
-    public static event Action<string, float> ShowQuickMessage;
+    public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
+    [SerializeField] private bool _calmOnTimer;
     [SerializeField] private float _followSpeed;
     [SerializeField] private float _caughtDuration;
     [SerializeField] private Color _detectViewColor;
@@ -96,11 +97,24 @@ public class EnemyAI : MonoBehaviour
         if (!_followed || !collision.gameObject.TryGetComponent<MovementController>(out MovementController player))
             return;
 
+        Catch(player);
+    }
+
+    private void Catch(MovementController player)
+    {
         Stop();
         player.Caught(_caughtDuration);
-        _building.LockDoors(true);
+        if (_building != null)
+            _building.LockDoors(true);
         _lockedControls = true;
-        DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () => _lockedControls = false);
+        _animator.SetBool(CATCH_ANIMATOR_TRIGGER, true);
+        DOVirtual.DelayedCall(_caughtDuration + Time.deltaTime, () =>
+        {
+            _lockedControls = false;
+            _animator.SetBool(CATCH_ANIMATOR_TRIGGER, false);
+            if (_calmOnTimer)
+                DOVirtual.DelayedCall(_caughtDuration, Calm);
+        });
     }
 
     private void Patrol()
@@ -135,11 +149,11 @@ public class EnemyAI : MonoBehaviour
         _worried = true;
         //_inSearching = false;
         _agent.speed = _followSpeed;
-        _animator.SetTrigger(REACT_TO_NOISE_ANIMATOR_TRIGGER);
+        _animator.SetTrigger(SCARY_ANIMATOR_TRIGGER);
         _view.color = _detectViewColor;
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
-        ShowQuickMessage?.Invoke("NOTICED!", 1.0f);
+        ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f, true);
         _detectTween = DOVirtual.DelayedCall(1.0f, () =>
         {
             _followed = true;

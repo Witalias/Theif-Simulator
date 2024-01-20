@@ -146,8 +146,7 @@ MonoBehaviour:
     - 100
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  _minMaxXP: {x: 1, y: 2}
-  sound: 28
+  sound: 26
   _hackingArea: {fileID: 2307625135605655369}
   _appearHackingZoneTrigger: {fileID: 2277925668741146566}
   _onLooted:

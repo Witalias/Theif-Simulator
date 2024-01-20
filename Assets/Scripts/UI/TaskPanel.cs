@@ -14,6 +14,7 @@ public class TaskPanel : MonoBehaviour
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private UIBar _progressBar;
     [SerializeField] private GameObject _rewardPanel;
+    [SerializeField] private ParticleSystem _completedParticles;
 
     public void SetBarValue(int value, int maxValue) => _progressBar.SetValue(value, maxValue);
 
@@ -42,6 +43,8 @@ public class TaskPanel : MonoBehaviour
             _panel.DOScale(Vector3.one, _animationDuration);
         }
     }
+
+    public void ActiveConfetti() => _completedParticles.Play();
 
     private void Awake()
     {

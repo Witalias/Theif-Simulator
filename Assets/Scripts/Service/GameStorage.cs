@@ -27,8 +27,12 @@ public class GameStorage : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private Sound _moneySound;
 
-    [Header("Layer Masks")]
-    [SerializeField] private LayerMask enemyMask;
+    [Header("Points")]
+    [SerializeField] private Transform _prisonSpawnPoint;
+    [SerializeField] private Transform _initialPlayerSpawnPoint;
+
+    [Header("Strings")]
+    [SerializeField] private string _leaderboardName;
 
     private Dictionary<ResourceType, ResourceData> _resources = new();
 
@@ -40,7 +44,11 @@ public class GameStorage : MonoBehaviour
 
     public Sprite Money => _money;
 
-    public LayerMask EnemyMask => enemyMask;
+    public Transform PrisonSpawnPoint => _prisonSpawnPoint;
+
+    public Transform InitialPlayerSpawnPoint => _initialPlayerSpawnPoint;
+
+    public string LeaderboardName => _leaderboardName;
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;
 
@@ -52,13 +60,7 @@ public class GameStorage : MonoBehaviour
 
     private void Awake()
     {
-        if (Instanse == null)
-            Instanse = this;
-        else
-            Destroy(gameObject);
-
-
-        DontDestroyOnLoad(gameObject);
+        Instanse = this;
 
         var canvas = GameObject.FindGameObjectWithTag(Tags.MainCanvas.ToString());
         if (canvas == null) Debug.LogWarning("The main canvas was not found!");

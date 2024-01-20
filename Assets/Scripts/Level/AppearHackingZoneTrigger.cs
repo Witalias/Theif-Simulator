@@ -4,8 +4,9 @@ using UnityEngine;
 public class AppearHackingZoneTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject _hackingZone;
+    [SerializeField] private ParticleSystem _appearParticle;
 
-    private void Awake()
+    private void OnEnable()
     {
         _hackingZone.SetActive(false);
     }
@@ -13,6 +14,7 @@ public class AppearHackingZoneTrigger : MonoBehaviour
     private void Start()
     {
         GetComponent<SphereCollider>().radius = GameSettings.Instanse.AppearHackingZonesDistance;
+        _appearParticle.transform.position = _hackingZone.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,6 +23,7 @@ public class AppearHackingZoneTrigger : MonoBehaviour
             return;
 
         _hackingZone.SetActive(true);
+        _appearParticle.Play();
     }
 
     private void OnTriggerExit(Collider other)
@@ -29,5 +32,6 @@ public class AppearHackingZoneTrigger : MonoBehaviour
             return;
 
         _hackingZone.SetActive(false);
+        _appearParticle.Play();
     }
 }

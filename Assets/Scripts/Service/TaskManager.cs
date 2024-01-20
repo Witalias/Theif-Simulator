@@ -45,19 +45,26 @@ public class TaskManager : MonoBehaviour
         ResourceType.Sneakers
     };
 
-    public void StartTask(TaskType type, int requiredCount, int reward = -1)
+    public void StartTask(TaskType type, int requiredCount, int reward = -1, bool resetProgress = true)
+    {
+        var randomRequiredResource = _availableResources[UnityEngine.Random.Range(0, _availableResources.Count)];
+        StartTask(type, requiredCount, randomRequiredResource, reward, resetProgress);
+    }
+
+    public void StartTask(TaskType type, int requiredCount, ResourceType requiredResource, int reward = -1, bool resetProgress = true)
     {
         _currentTask = type;
         _requiredCount = requiredCount;
         _reward = Mathf.Clamp(reward, 0, int.MaxValue);
-        _currentCount = 0;
+        if (resetProgress)
+            _currentCount = 0;
 
         Sprite taskIcon;
         var isResourceTask = (type == TaskType.TheftCertainItems || type == TaskType.SellCertainItems);
         if (isResourceTask)
         {
-            _requiredResource = _availableResources[UnityEngine.Random.Range(0, _availableResources.Count)];
-            taskIcon = GameStorage.Instanse.GetResourceSprite(_requiredResource);
+            _requiredResource = requiredResource;
+            taskIcon = GameStorage.Instanse.GetResourceSprite(requiredResource);
         }
         else
         {
@@ -67,6 +74,8 @@ public class TaskManager : MonoBehaviour
 
         if (_taskPanel != null)
             _taskPanel.Show(taskIcon, GetTaskDescription(), reward);
+
+        Save();
     }
 
     public void StartRandomTask()
@@ -119,13 +128,12 @@ public class TaskManager : MonoBehaviour
 
     private void Start()
     {
-        if (YandexGame.savesData.TutorialDone)
-            StartRandomTask();
+        Load();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (GameSettings.Instanse.DebugMode && Input.GetKeyDown(KeyCode.F1))
             StartRandomTask();
     }
 
@@ -136,6 +144,8 @@ public class TaskManager : MonoBehaviour
 
         if (_currentCount >= _requiredCount)
             Complete();
+        else
+            Save();
     }
 
     private void Complete()
@@ -146,7 +156,9 @@ public class TaskManager : MonoBehaviour
             PlayResourceAnimationMoney?.Invoke(_reward);
             SoundManager.Instanse.Play(Sound.GetMoney);
         }
+        SoundManager.Instanse.Play(Sound.TaskCompleted);
         TaskCompleted?.Invoke(_currentTask);
+        _taskPanel.ActiveConfetti();
         if (YandexGame.savesData.TutorialDone)
             DOVirtual.DelayedCall(1.0f, StartRandomTask);
     }
@@ -173,13 +185,13 @@ public class TaskManager : MonoBehaviour
             },
             Language.Russian => _currentTask switch
             {
-                TaskType.SellItems => $"Продать {_requiredCount} предметов",
-                TaskType.SellCertainItems => $"Продать {_requiredCount} {Translation.GetResourceName(_requiredResource, true).ToLower()}",
-                TaskType.TheftItems => $"Украсть {_requiredCount} предметов",
-                TaskType.TheftCertainItems => $"Украсть {_requiredCount} {Translation.GetResourceName(_requiredResource, true).ToLower()}",
-                TaskType.EarnMoney => $"Заработать {_requiredCount} денег",
-                TaskType.BuyUpgrade => $"Купить {_requiredCount} улучшение",
-                TaskType.HackHouse => $"Взломать {_requiredCount} домов",
+                TaskType.SellItems => $"Продай {_requiredCount} предметов",
+                TaskType.SellCertainItems => $"Продай {_requiredCount} {Translation.GetResourceName(_requiredResource, true).ToLower()}",
+                TaskType.TheftItems => $"Укради {_requiredCount} предметов",
+                TaskType.TheftCertainItems => $"Укради {_requiredCount} {Translation.GetResourceName(_requiredResource, true).ToLower()}",
+                TaskType.EarnMoney => $"Заработай {_requiredCount} денег",
+                TaskType.BuyUpgrade => $"Купи {_requiredCount} улучшение",
+                TaskType.HackHouse => $"Взломай {_requiredCount} дом",
                 TaskType.TutorialCrackDoors => $"Взломай дверь",
                 TaskType.TutorialRobHouse => $"Ограбь дом",
                 TaskType.TutorialSellItems => $"Продай предметы",
@@ -197,5 +209,32 @@ public class TaskManager : MonoBehaviour
             return;
 
         _taskPanel.SetBarValue(_currentCount, _requiredCount);
+    }
+
+    private void Save()
+    {
+        if (!YandexGame.savesData.TutorialDone)
+            return;
+
+        SaveLoad.SaveTask(_currentTask, _requiredResource, _currentCount, _requiredCount, _reward);
+    }
+
+    private void Load()
+    {
+        if (!YandexGame.savesData.TutorialDone)
+            return;
+
+        if (SaveLoad.HasTaskSave)
+        {
+            var saves = YandexGame.savesData;
+            var task = Enum.Parse<TaskType>(saves.TaskType);
+            var requiredResource = Enum.Parse<ResourceType>(saves.RequiredResource);
+            _currentCount = saves.CurrentTaskProgress;
+            StartTask(task, saves.TaskRequirement, requiredResource, saves.TaskReward, false);
+        }
+        else
+        {
+            StartRandomTask();
+        }    
     }
 }

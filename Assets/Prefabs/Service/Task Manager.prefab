@@ -50,20 +50,20 @@ MonoBehaviour:
     RewardMoney: 10
     Sprite: {fileID: 21300000, guid: 46f7cb927a9067e4ab97d22a9b8bc289, type: 3}
   - Type: 1
-    MinMaxRequirenment: {x: 3, y: 5}
+    MinMaxRequirenment: {x: 2, y: 5}
     RewardMoney: 50
     Sprite: {fileID: 21300000, guid: ed2a9819db6e933458ab89be8304d98f, type: 3}
   - Type: 2
-    MinMaxRequirenment: {x: 5, y: 5}
-    RewardMoney: 100
+    MinMaxRequirenment: {x: 2, y: 5}
+    RewardMoney: 50
     Sprite: {fileID: 0}
   - Type: 3
-    MinMaxRequirenment: {x: 20, y: 20}
-    RewardMoney: 100
+    MinMaxRequirenment: {x: 10, y: 10}
+    RewardMoney: 50
     Sprite: {fileID: 21300000, guid: bb0b88ad2aec5124688717966568ea10, type: 3}
   - Type: 4
-    MinMaxRequirenment: {x: 10, y: 10}
-    RewardMoney: 100
+    MinMaxRequirenment: {x: 2, y: 5}
+    RewardMoney: 50
     Sprite: {fileID: 0}
   - Type: 5
     MinMaxRequirenment: {x: 150, y: 150}

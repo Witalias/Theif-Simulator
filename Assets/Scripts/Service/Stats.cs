@@ -9,6 +9,7 @@ public class Stats : MonoBehaviour
     public static Stats Instanse { get; private set; } = null;
 
     public static event Action<int> NewLevelReached;
+    public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private int _money = 0;
     [SerializeField] private float _playerMovingSpeed;
@@ -19,11 +20,11 @@ public class Stats : MonoBehaviour
     [SerializeField] private int _neededXP = 3;
     [SerializeField] private ResourcesPanel _resourcesPanel;
     [SerializeField] private XPBar _xpBar;
-    [SerializeField] private Transform _prisonSpawnPoint;
 
     private Dictionary<ResourceType, int> _resources = new();
     private int _xpAmount;
     private int _backpackFullness;
+    private int _soldItemsCount;
 
     public int Level { get; private set; }
     public int Money => _money;
@@ -31,8 +32,17 @@ public class Stats : MonoBehaviour
     public float TapBonusTimePercents { get => _tapBonusTimePercents; set => _tapBonusTimePercents = value; }
     public float FillSpeedForHoldButton { get => _fillSpeedForHoldButton; set => _fillSpeedForHoldButton = value; }
     public int BackpackCapacity { get => _backpackCapacity; set => _backpackCapacity = value; }
+    public bool BackpackIsEmpty => _backpackFullness <= 0;
     public bool BackpackIsFull => _backpackFullness >= _backpackCapacity;
-    public Transform PrisonSpawnPoint => _prisonSpawnPoint;
+
+    public Dictionary<ResourceType, int> GetResources() => new(_resources);
+
+    public void AddSoldItemsCount(int value)
+    {
+        _soldItemsCount += value;
+        SaveLoad.SaveSoldItemsCount(_soldItemsCount);
+        YandexGame.NewLeaderboardScores(GameStorage.Instanse.LeaderboardName, _soldItemsCount);
+    }
 
     public void AddXP(int value)
     {
@@ -52,14 +62,16 @@ public class Stats : MonoBehaviour
             return;
 
         if (_backpackFullness + value > _backpackCapacity)
-            value -= _backpackCapacity - _backpackFullness;
+            value = _backpackCapacity - _backpackFullness;
         _backpackFullness += value;
 
         _resources[type] = (int)Mathf.Clamp(_resources[type] + value, 0, Mathf.Infinity);
         _resourcesPanel.SetResourceValue(type, _resources[type]);
         _resourcesPanel.SetActiveCounter(type, _resources[type] > 0);
         UpdateCapacity();
-        SaveLoad.SaveResources(_resources);
+
+        if (YandexGame.savesData.TutorialRobHouseDone)
+            SaveLoad.SaveResources(_resources);
     }
 
     public void AddMoney(int value, bool assignTask = true)
@@ -110,11 +122,11 @@ public class Stats : MonoBehaviour
     {
         switch (type)
         {
-            case UpgradeType.MoveSpeed: Stats.Instanse.PlayerMovingSpeed = value; break;
-            case UpgradeType.HackingSpeed: Stats.Instanse.TapBonusTimePercents = value; break;
-            case UpgradeType.TheftSpeed: Stats.Instanse.FillSpeedForHoldButton = value; break;
+            case UpgradeType.MoveSpeed: PlayerMovingSpeed = value; break;
+            case UpgradeType.HackingSpeed: TapBonusTimePercents = value; break;
+            case UpgradeType.TheftSpeed: FillSpeedForHoldButton = value; break;
             case UpgradeType.BackpackCapacity:
-                Stats.Instanse.BackpackCapacity = (int)value;
+                BackpackCapacity = (int)value;
                 UpdateCapacity();
                 break;
         }
@@ -122,11 +134,36 @@ public class Stats : MonoBehaviour
 
     private void Awake()
     {
-        if (Instanse == null)
-            Instanse = this;
-        else
-            Destroy(gameObject);
+        Instanse = this;
 
+    }
+
+    private void Start()
+    {
+        _resourcesPanel.Initialize();
+
+        Load();
+        _resourcesPanel.SetMoney(_money);
+        _xpBar.SetLevel(Level);
+
+        foreach (var resource in _resources)
+        {
+            _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
+            _resourcesPanel.SetActiveCounter(resource.Key, resource.Value > 0);
+        }
+
+        UpdateXPBar();
+        UpdateCapacity();
+    }
+
+    private void Update()
+    {
+        if (GameSettings.Instanse.DebugMode && Input.GetKeyDown(KeyCode.F2))
+            AddXP(_neededXP - _xpAmount);
+    }
+
+    private void Load()
+    {
         if (SaveLoad.HasResourcesSave)
         {
             _resources = SaveLoad.LoadResources();
@@ -143,31 +180,26 @@ public class Stats : MonoBehaviour
             Level = YandexGame.savesData.Level;
             _xpAmount = YandexGame.savesData.CurrentXP;
             _neededXP = YandexGame.savesData.RequiredXP;
+            NewLevelReached?.Invoke(Level);
         }
         else
         {
             Level = _initialLevel;
         }
-        _xpBar.SetLevel(Level);
 
         if (SaveLoad.HasMoneySave)
             _money = YandexGame.savesData.Money;
-        _resourcesPanel.SetMoney(_money);
-    }
 
-    private void Start()
-    {
-        foreach (var resource in _resources)
-            _resourcesPanel.SetResourceValue(resource.Key, resource.Value);
-
-        UpdateXPBar();
-        UpdateCapacity();
+        _soldItemsCount = YandexGame.savesData.SoldItemsCount;
     }
 
     private void NextLevel()
     {
+        SoundManager.Instanse.Play(Sound.NewLevel);
         _xpBar.SetLevel(++Level);
+        _xpBar.ActiveConfetti();
         _neededXP += GameSettings.Instanse.StepXPRequirement;
+        ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f, false);
         NewLevelReached?.Invoke(Level);
     }
 
@@ -179,5 +211,10 @@ public class Stats : MonoBehaviour
             _xpBar.SetMaxLevelState();
     }
 
-    private void UpdateCapacity() => _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+    private void UpdateCapacity()
+    {
+        _resourcesPanel.SetBackpackCapacity(_backpackFullness, _backpackCapacity);
+        if (BackpackIsFull)
+            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
+    }
 }

@@ -50,7 +50,6 @@ MonoBehaviour:
   _fillSpeedForHoldButton: 1
   _initialLevel: 1
   _backpackCapacity: 5
-  _neededXP: 100
+  _neededXP: 50
   _resourcesPanel: {fileID: 0}
   _xpBar: {fileID: 0}
-  _prisonSpawnPoint: {fileID: 0}

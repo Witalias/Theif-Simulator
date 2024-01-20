@@ -19,6 +19,12 @@ public class ResourcesPanel : MonoBehaviour
     private readonly Queue<Action> _resourceAnimationQueue = new();
     private Coroutine _playResourceAnimationCoroutine;
 
+    public void Initialize()
+    {
+        CreateItemCounters();
+        ClearResources();
+    }
+
     public void SetResourceValue(ResourceType type, int value)
     {
         _itemCounters[type].SetValue(value);
@@ -47,17 +53,12 @@ public class ResourcesPanel : MonoBehaviour
             counter.gameObject.SetActive(false);
     }
 
-    private void Awake()
-    {
-        CreateItemCounters();
-        ClearResources();
-    }
-
     private void OnEnable()
     {
         Lootable.PlayResourceAnimation += PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp += PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney += PlayResourceAnimationMoney;
+        Safe.PlayResourceAnimationItem += PlayResourceAnimationItem;
     }
 
     private void OnDisable()
@@ -65,6 +66,7 @@ public class ResourcesPanel : MonoBehaviour
         Lootable.PlayResourceAnimation -= PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp -= PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney -= PlayResourceAnimationMoney;
+        Safe.PlayResourceAnimationItem -= PlayResourceAnimationItem;
     }
 
     private void CreateItemCounters()
@@ -111,7 +113,7 @@ public class ResourcesPanel : MonoBehaviour
 
         IEnumerator Coroutine()
         {
-            var wait = new WaitForSeconds(1.0f);
+            var wait = new WaitForSeconds(0.75f);
             while (_resourceAnimationQueue.Count > 0)
             {
                 _resourceAnimationQueue.Dequeue()?.Invoke();
@@ -126,6 +128,7 @@ public class ResourcesPanel : MonoBehaviour
         var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
             _resourceAnimationPoint.position, Quaternion.identity, transform)
             .GetComponent<NewResourceAnimation>();
+        newResource.transform.localEulerAngles = Vector3.zero;
         newResource.SetIcon(icon);
         newResource.SetText(text);
     }

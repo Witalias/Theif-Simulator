@@ -13,6 +13,7 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private GameObject _arrow2d;
     [SerializeField] private GameObject _controls;
     [SerializeField] private OpenClosePopup _stealth;
+    [SerializeField] private GameObject _unlockArea2;
 
     [Header("Arrow points")]
     [SerializeField] private Transform _crackDoorArrowPoint;
@@ -24,6 +25,7 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private Button _closeUpgradePanelButton;
     [SerializeField] private Transform _buyUpgradeButton;
     [SerializeField] private Transform _unlockArea;
+    [SerializeField] private Transform _safePoint;
 
     [Header("Walls")]
     [SerializeField] private GameObject _robWalls;
@@ -41,6 +43,9 @@ public class TutorialSystem : MonoBehaviour
     {
         if (!YandexGame.savesData.TutorialEnterBuildingWithEnemyDone)
             Building.PlayerInBuildingWithEnemyFirstly += OnEnterBuildingWithEnemy;
+
+        if (!YandexGame.savesData.TutorialLootSafeDone)
+            Safe.Filled += OnSafeFilled;
 
         if (YandexGame.savesData.TutorialDone)
             return;
@@ -65,6 +70,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnCrackedDoor;
         CreateArrow(_crackDoorArrowPoint.position);
         _robWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay, () =>
         {
             _controls.SetActive(true);
@@ -95,6 +101,7 @@ public class TutorialSystem : MonoBehaviour
         foreach (var point in _lootableAreaPoints)
             CreateArrow(point.position);
         _robWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_houseCamera, _switchingCameraDelay);
     }
 
@@ -114,9 +121,10 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.Instance.StartTask(TaskType.TutorialSellItems, 1, -1);
         TaskManager.TaskCompleted += OnSoldItems;
         BlackMarketArea.PlayerStayed += OnOpenedMarketPopup;
-        CreateArrow(_sellItemsPoint.position);
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CameraChanger.Instance.TemporarilySwitchCamera(_blackMarketCamera, _switchingCameraDelay);
+        CreateArrow(_sellItemsPoint.position);
     }
 
     private void OnOpenedMarketPopup()
@@ -160,6 +168,7 @@ public class TutorialSystem : MonoBehaviour
         _arrow2d.transform.position = _upgradePanelButton.transform.position;
         _upgradePanelButton.interactable = true;
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
     }
 
     private void OnOpenedUpgradesPopup()
@@ -195,6 +204,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted += OnBoughtZone;
         _unlockArea.gameObject.SetActive(true);
         _sellWalls.SetActive(true);
+        _unlockArea2.SetActive(false);
         CreateArrow(_unlockArea.position);
         CameraChanger.Instance.TemporarilySwitchCamera(_unlockAreaCamera, _switchingCameraDelay);
     }
@@ -208,6 +218,7 @@ public class TutorialSystem : MonoBehaviour
         TaskManager.TaskCompleted -= OnBoughtZone;
         ClearArrows();
         _upgradePanelButton.interactable = true;
+        _unlockArea2.SetActive(true);
         DOVirtual.DelayedCall(_startingTaskDelay, TaskManager.Instance.StartRandomTask);
     }
 
@@ -216,6 +227,13 @@ public class TutorialSystem : MonoBehaviour
         Building.PlayerInBuildingWithEnemyFirstly -= OnEnterBuildingWithEnemy;
         SaveLoad.SaveTutorialEnterBuildingWithEnemyDoneBoolean(true);
         _stealth.Open();
+    }
+
+    private void OnSafeFilled()
+    {
+        Safe.Filled -= OnSafeFilled;
+        SaveLoad.SaveTutorialLootSafeDoneBoolean(true);
+        CreateArrow(_safePoint.position);
     }
 
     private void CreateArrow(Vector3 position)

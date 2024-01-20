@@ -8,11 +8,7 @@ public class UIHackingAction : MonoBehaviour
 {
     private const string ANIMATION_TAP = "Pulsate";
     private const string ANIMATION_HOLD = "Slow Pulsate";
-    private const string THEFT_ACTION = "Theft";
-    private const string HACKING_ACTION = "Hacking";
 
-    [SerializeField] private string _tapText = "TAP TAP";
-    [SerializeField] private string _holdText = "HOLD";
     [SerializeField] private GameObject _content;
     [SerializeField] private TMP_Text _actionText;
     [SerializeField] private TMP_Text _titleText;
@@ -38,16 +34,16 @@ public class UIHackingAction : MonoBehaviour
 
     private void Tap(bool active)
     {
-        _titleText.text = HACKING_ACTION;
-        _actionText.text = _tapText;
+        _titleText.text = Translation.GetHackingName();
+        _actionText.text = Translation.GetTapTapName();
         _animation.Play(ANIMATION_TAP);
         SetActive(active);
     }
 
     private void Hold(bool active)
     {
-        _titleText.text = THEFT_ACTION;
-        _actionText.text = _holdText;
+        _titleText.text = Translation.GetTheftName();
+        _actionText.text = $"{Translation.GetHoldName()}!";
         _animation.Play(ANIMATION_HOLD);
         SetActive(active);
     }

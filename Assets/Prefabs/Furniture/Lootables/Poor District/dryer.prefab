@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 8669048186366563205}
   - component: {fileID: 8943744418753606704}
   - component: {fileID: 4265090100130291390}
-  - component: {fileID: 4659569460230070355}
   - component: {fileID: 1737914559542759001}
   m_Layer: 0
   m_Name: dryer
@@ -122,7 +121,7 @@ Transform:
   - {fileID: 1929198787466320485}
   - {fileID: 8983002033954566582}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4832808063077853129
 MeshFilter:
@@ -203,8 +202,7 @@ MonoBehaviour:
     - 10
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  _minMaxXP: {x: 1, y: 2}
-  sound: 28
+  sound: 26
   _hackingArea: {fileID: 2123443670518620307}
   _appearHackingZoneTrigger: {fileID: 7383763923881535572}
   _onLooted:
@@ -249,22 +247,6 @@ MonoBehaviour:
     EndLocalPosition: {x: 0, y: 0, z: 0}
     ChangeRotation: 1
     EndLocalRotation: {x: 0, y: 135, z: 0}
---- !u!208 &4659569460230070355
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9220449990883242710}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.95, y: 2.3500001, z: 1.7500001}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 1.95, y: 2.3500001, z: 1.7500001}
-  m_TimeToStationary: 0.5
 --- !u!82 &1737914559542759001
 AudioSource:
   m_ObjectHideFlags: 0

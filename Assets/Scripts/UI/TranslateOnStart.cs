@@ -26,7 +26,17 @@ public class TranslateOnStart : MonoBehaviour
         _text = GetComponent<TMP_Text>();
     }
 
+    private void Start()
+    {
+        Translate();
+    }
+
     private void OnEnable()
+    {
+        Translate();
+    }
+
+    private void Translate()
     {
         if (GameSettings.Instanse == null)
             return;

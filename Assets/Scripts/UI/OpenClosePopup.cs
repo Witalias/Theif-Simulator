@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class OpenClosePopup : MonoBehaviour
 {
     public static event Action<bool> Opened;
+    public static event Action<bool> OpenedLate;
 
     [SerializeField] private float _animationDuration = 0.25f;
     [SerializeField] private GameObject _anticlick;
@@ -25,6 +26,7 @@ public class OpenClosePopup : MonoBehaviour
         _anticlick.SetActive(true);
         _content.DOScale(Vector3.one, _animationDuration);
         Opened?.Invoke(true);
+        OpenedLate?.Invoke(true);
     }
 
     private void Awake()
@@ -46,9 +48,14 @@ public class OpenClosePopup : MonoBehaviour
 
     private void Close()
     {
+        if (!_opened)
+            return;
+
+        SoundManager.Instanse.Play(Sound.Tap);
         _opened = false;
         _anticlick.SetActive(false);
         _content.DOScale(Vector3.zero, _animationDuration);
         Opened?.Invoke(false);
+        OpenedLate?.Invoke(false);
     }
 }

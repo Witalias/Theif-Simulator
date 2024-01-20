@@ -15,6 +15,8 @@ public class SaleSlot : MonoBehaviour
     private ResourceType _type;
     private int _reward;
 
+    private int Count => Stats.Instanse.GetResourceCount(_type);
+
     public void Initialize(ResourceType type)
     {
         _type = type;
@@ -29,11 +31,10 @@ public class SaleSlot : MonoBehaviour
         if (!_initialized)
             return;
 
-        var count = Stats.Instanse.GetResourceCount(_type);
-        _countText.text = count.ToString();
+        _countText.text = Count.ToString();
 
-        _reward = count * GameStorage.Instanse.GetResourcePrice(_type);
-        _rewardText.text = $"REWARD: <color=#{ColorUtility.ToHtmlStringRGB(_rewardColor)}>{_reward}</color> <sprite index=0>";
+        _reward = Count * GameStorage.Instanse.GetResourcePrice(_type);
+        _rewardText.text = $"{Translation.GetRewardName()}: <color=#{ColorUtility.ToHtmlStringRGB(_rewardColor)}>{_reward}</color> <sprite index=0>";
 
         _sellButton.interactable = _reward > 0;
     }
@@ -46,6 +47,7 @@ public class SaleSlot : MonoBehaviour
         TaskManager.Instance.ProcessTask(TaskType.SellItems, Stats.Instanse.GetResourceCount(_type));
         TaskManager.Instance.ProcessTask(TaskType.TutorialSellItems, 1);
         TaskManager.Instance.ProcessTask(TaskType.SellCertainItems, _type, Stats.Instanse.GetResourceCount(_type));
+        Stats.Instanse.AddSoldItemsCount(Count);
         Stats.Instanse.ClearResource(_type);
         Stats.Instanse.AddMoney(_reward);
         SoundManager.Instanse.Play(Sound.GetMoney);

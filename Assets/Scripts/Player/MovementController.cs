@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System;
 using System.Collections;
+using YG;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -11,15 +13,18 @@ using System.Collections;
 public class MovementController : MonoBehaviour
 {
     private const string RUN_ANIMATOR_BOOLEAN = "Run";
-    private const string CAUGHT_ANIMATOR_TRIGGER = "Caught";
+    private const string SNEAK_ANIMATOR_BOOLEAN = "Sneak";
+    private const string HACK_ANIMATOR_BOOLEAN = "Hack";
+    private const string CAUGHT_ANIMATOR_BOOLEAN = "Sit";
 
     public static event Action MovingStarted;
     public static event Action PlayerCaught;
 
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Stealth _stealth;
-    [SerializeField] private LayerMask playerMask;
     [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private PlayerParticles _particles;
+    [SerializeField] private UnityEvent _onCaught;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -44,17 +49,24 @@ public class MovementController : MonoBehaviour
     public void Caught(float delay)
     {
         PlayerCaught?.Invoke();
+        _onCaught?.Invoke();
         _controlsLocked = true;
-        _animator.SetTrigger(CAUGHT_ANIMATOR_TRIGGER);
-        InBuildingState(false, null);
+        _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, true);
+        _particles.ActivateSmokeParticles(true);
+        _noticed = false;
+        //InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
         {
             yield return new WaitForSeconds(delay);
-            transform.position = Stats.Instanse.PrisonSpawnPoint.position;
+            transform.position = GameStorage.Instanse.PrisonSpawnPoint.position;
+            SavePosition();
             Stats.Instanse.ClearBackpack();
             _controlsLocked = false;
+            CanHide(true);
+            _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
+            _particles.ActivateSmokeParticles(false);
         }
     }
 
@@ -72,28 +84,43 @@ public class MovementController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        LoadPosition();
+    }
+
     private void OnEnable()
     {
-        WaitingAndAction.TimerActived += OnProcessAction;
-        UIHoldButton.HoldButtonActived += OnProcessAction;
-        OpenClosePopup.Opened += OnProcessAction;
+        WaitingAndAction.TimerActived += OnHack;
+        UIHoldButton.HoldButtonActived += OnHack;
+        OpenClosePopup.OpenedLate += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         EnemyAI.PlayerIsNoticed += OnNoticed;
+        Door.BuildingInfoShowed += SavePosition;
+        BlackMarketArea.PlayerExit += SavePosition;
+        LevelManager.PlayerInBuilding += GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
     }
 
     private void OnDisable()
     {
-        WaitingAndAction.TimerActived -= OnProcessAction;
-        UIHoldButton.HoldButtonActived -= OnProcessAction;
-        OpenClosePopup.Opened -= OnProcessAction;
+        WaitingAndAction.TimerActived -= OnHack;
+        UIHoldButton.HoldButtonActived -= OnHack;
+        OpenClosePopup.OpenedLate -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         EnemyAI.PlayerIsNoticed -= OnNoticed;
+        Door.BuildingInfoShowed -= SavePosition;
+        BlackMarketArea.PlayerExit -= SavePosition;
+        LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
     }
 
     private void FixedUpdate()
     {
         Move();
     }
+
+    private bool GetInBuildingBoolean() => InBuilding;
 
     private void Move()
     {
@@ -120,34 +147,62 @@ public class MovementController : MonoBehaviour
                 _animator.SetBool(RUN_ANIMATOR_BOOLEAN, true);
                 MovingStarted?.Invoke();
 
-                if (_canHide)
-                    _stealth.Show();
+                DOVirtual.DelayedCall(Time.deltaTime, () => {
+                    if (_canHide)
+                    {
+                        _stealth.Show();
+                        //_particles.ActivateFastSmokeParticle();
+                    }
+                });
+                
             }
         }
         else if (_isMoving)
         {
-            _isMoving = false;
-            _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
-
-            if (_canHide)
-                _stealth.Hide();
+            Stop();
         }
+    }
+
+    private void Stop()
+    {
+        _isMoving = false;
+        _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
+
+        DOVirtual.DelayedCall(Time.deltaTime, () =>
+        {
+            if (_canHide)
+            {
+                _stealth.Hide();
+                //_particles.ActivateFastSmokeParticle();
+            }
+        });
+    }
+
+    private void OnHack(bool value)
+    {
+        OnProcessAction(value);
+        _animator.SetBool(HACK_ANIMATOR_BOOLEAN, value);
     }
 
     private void OnProcessAction(bool value)
     {
         _controlsLocked = value;
+        _joystick.OnPointerUp(null);
         _joystick.gameObject.SetActive(!value);
+        if (value == true)
+            Stop();
     }
 
     private void OnNoticed()
     {
+        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, false);
         CanHide(false);
         _noticed = true;
     }
 
     private void InBuildingState(bool inBuilding, Building building)
     {
+        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, inBuilding);
         if (inBuilding)
         {
             _currentBuilding = building;
@@ -161,5 +216,18 @@ public class MovementController : MonoBehaviour
             CanHide(false);
             CameraChanger.Instance.SwitchToMainCamera();
         }
+    }
+
+    private void SavePosition()
+    {
+        SaveLoad.SavePlayerPosition(transform.position);
+    }
+
+    private void LoadPosition()
+    {
+        if (SaveLoad.HasPlayerPositionSave && YandexGame.savesData.TutorialDone)
+            transform.position = SaveLoad.LoadPlayerPosition();
+        else
+            transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;
     }
 }

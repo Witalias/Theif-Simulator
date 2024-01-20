@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6198210046206808869}
   - component: {fileID: 3646842237659607969}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Vision Area Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
