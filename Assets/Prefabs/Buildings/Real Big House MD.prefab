@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 1885670399649175065}
   - component: {fileID: 5411822399521209766}
   - component: {fileID: 9089846977023633691}
+  - component: {fileID: 5127542871033992573}
   m_Layer: 0
   m_Name: Real Big House MD
   m_TagString: Untagged
@@ -589,6 +590,27 @@ MonoBehaviour:
     - {fileID: 3622379036997724072}
     - {fileID: 4627618618564470589}
     - {fileID: 4774938764600292306}
+--- !u!65 &5127542871033992573
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6266790846940852097}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 62.52588, y: 15.131845, z: 39.31006}
+  m_Center: {x: -178.43706, y: -5.7227125, z: 259.47302}
 --- !u!1 &6592441470366211310
 GameObject:
   m_ObjectHideFlags: 0

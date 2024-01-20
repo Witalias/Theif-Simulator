@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hackingTime: 10
   _openBackSide: 0
+  _lockable: 1
   _hackingArea: {fileID: 3937147670290651463}
   _appearHackingZoneTrigger: {fileID: 4128030732711831117}
   _collider: {fileID: 8212388285335575771}
@@ -1534,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2926910864888229419, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03
+      value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: 2926910864888229419, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
       propertyPath: m_LocalPosition.z
