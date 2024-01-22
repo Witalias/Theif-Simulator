@@ -20,8 +20,8 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
 
     [SerializeField] private int _requiredLevel;
     [SerializeField] private int _cost;
-    [SerializeField] private float _purchaseSpeed;
-    [SerializeField] private ResourceType _newAvailableResources;
+    [SerializeField] private int _purchaseSpeed;
+    [SerializeField] private ResourceType[] _newAvailableResources;
     [SerializeField] private TMP_Text _requiredLevelText;
     [SerializeField] private TMP_Text _costText;
     [SerializeField] private GameObject _requiredLevelPanel;
@@ -98,14 +98,16 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
         _purchaseCoroutine = StartCoroutine(Coroutine());
         IEnumerator Coroutine()
         {
-            var wait = new WaitForSeconds(Time.deltaTime / _purchaseSpeed);
+            var wait = new WaitForEndOfFrame();
             while (_cost > 0)
             {
                 if (Stats.Instanse.Money <= 0)
                     yield break;
 
-                SetCostText(--_cost);
-                Stats.Instanse.AddMoney(-1);
+                var previous = _cost;
+                _cost = Mathf.Clamp(_cost - _purchaseSpeed, 0, int.MaxValue);
+                SetCostText(_cost);
+                Stats.Instanse.AddMoney(_cost - previous);
                 yield return wait;
             }
             TaskManager.Instance.ProcessTask(TaskType.TutorialBuyZone, 1);

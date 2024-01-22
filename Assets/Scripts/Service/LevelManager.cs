@@ -119,7 +119,7 @@ public class LevelManager : MonoBehaviour
     {
         var delay = 3.0f;
         var wait = new WaitForSeconds(delay);
-        NewUnlockAreasIsShowing?.Invoke(true);
+        //NewUnlockAreasIsShowing?.Invoke(true);
         foreach (var camera in _newAvailableAreaCameras)
         {
             CameraChanger.Instance.TemporarilySwitchCamera(camera, delay);
@@ -127,6 +127,6 @@ public class LevelManager : MonoBehaviour
         }
         _newAvailableAreaCameras.Clear();
         _moveCameraToPointsCoroutine = null;
-        NewUnlockAreasIsShowing?.Invoke(false);
+        //NewUnlockAreasIsShowing?.Invoke(false);
     }
 }

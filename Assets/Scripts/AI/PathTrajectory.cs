@@ -44,16 +44,15 @@ public class PathTrajectory : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_path == null || _path.Length <= 1 || _agent.isStopped)
+        if (_path == null || _path.Length <= 1)
             return;
 
-        if (_agent.remainingDistance <= _agent.stoppingDistance)
+        if (!_agent.isStopped && _agent.remainingDistance <= _agent.stoppingDistance)
+        //if (Vector3.Distance(transform.position, _path[_currentIndex].position) < _agent.stoppingDistance)
         {
+            Stop();
             if (_stopPoints.Contains(_path[_currentIndex]))
-            {
-                Stop();
                 DOVirtual.DelayedCall(_stoppingDuration, ChangeIndexAndGo);
-            }
             else
                 ChangeIndexAndGo();
         }
@@ -61,19 +60,33 @@ public class PathTrajectory : MonoBehaviour
 
     private void ChangeIndexAndGo()
     {
-        _currentIndex += _reverse ? -1 : 1;
-        if (_currentIndex == _path.Length || _currentIndex == -1)
+        if (_reverse)
         {
-            if (_loop)
-            {
-                _currentIndex = _reverse ? _path.Length - 1 : 0;
-            }
+            if (_currentIndex == 0)
+                _reverse = false;
             else
-            {
-                _currentIndex = _reverse ? 1 : _path.Length - 2;
-                _reverse = !_reverse;
-            }
+                _currentIndex--;
         }
+        else
+        {
+            if (_currentIndex == _path.Length - 1)
+                _reverse = true;
+            else
+                _currentIndex++;
+        }
+        //_currentIndex += _reverse ? -1 : 1;
+        //if (_currentIndex == _path.Length || _currentIndex == -1)
+        //{
+        //    if (_loop)
+        //    {
+        //        _currentIndex = _reverse ? _path.Length - 1 : 0;
+        //    }
+        //    else
+        //    {
+        //        _currentIndex = _reverse ? 1 : _path.Length - 2;
+        //        _reverse = !_reverse;
+        //    }
+        //}
         Go();
     }
 }
