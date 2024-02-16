@@ -70,6 +70,12 @@ public static class Translation
         [Language.Russian] = "“¿œ “¿œ"
     };
 
+    private readonly static Dictionary<Language, string> _clickClickName = new()
+    {
+        [Language.English] = "CLICK CLICK",
+        [Language.Russian] = " À»   À» "
+    };
+
     private readonly static Dictionary<Language, string> _holdName = new()
     {
         [Language.English] = "HOLD",
@@ -138,6 +144,8 @@ public static class Translation
     public static string GetLevelNameAbbreviated() => _levelNameAbbreviated[GameSettings.Instanse.Language];
 
     public static string GetTapTapName() => _tapTapName[GameSettings.Instanse.Language];
+
+    public static string GetClickClickName() => _clickClickName[GameSettings.Instanse.Language];
 
     public static string GetHoldName() => _holdName[GameSettings.Instanse.Language];
 

@@ -201,6 +201,7 @@ public class Stats : MonoBehaviour
         _neededXP += GameSettings.Instanse.StepXPRequirement;
         ShowQuickMessage?.Invoke($"{Translation.GetNewLevelName()}!", 3.0f, false);
         NewLevelReached?.Invoke(Level);
+        MetricaSender.PlayerLevel(Level);
     }
 
     private void UpdateXPBar()

@@ -8,13 +8,6 @@ using UnityEngine.Events;
 
 public class UnlockArea : MonoBehaviour, IIdentifiable
 {
-    [Serializable]
-    public class SavedData
-    {
-        public int ID;
-        public int Cost;
-    }
-
     public static event Action CostChanged;
     public static event Action<CinemachineVirtualCamera> MoveCamera;
 
@@ -25,11 +18,11 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
     [SerializeField] private TMP_Text _requiredLevelText;
     [SerializeField] private TMP_Text _costText;
     [SerializeField] private GameObject _requiredLevelPanel;
-    [SerializeField] private Transform _arrow;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private ParticleSystem _purchaseParticle;
     [SerializeField] private UnityEvent _onPurchase;
 
+    private int _initialCost;
     private bool _triggered;
     private bool _loaded;
     private bool _isUnlocked;
@@ -73,6 +66,11 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
 
         _triggered = true;
         ProcessPurchase();
+    }
+
+    private void Awake()
+    {
+        _initialCost = _cost;
     }
 
     private void Start()
@@ -123,6 +121,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
         Hide();
         if (!loaded)
         {
+            MetricaSender.UnlockedArea(_initialCost);
             SoundManager.Instanse.Play(Sound.NewArea);
             ShowPurchaseParticle();
         }
@@ -151,15 +150,6 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
             .Play();
     }
 
-    private void ShowArrow()
-    {
-        _arrow.gameObject.SetActive(true);
-        //DOTween.Sequence()
-        //    .Append(_arrow.DOLocalMoveZ(_arrow.position.x - 2.0f, 1.0f))
-        //    .Append(_arrow.DOLocalMoveZ(_arrow.position.x + 2.0f, 1.0f))
-        //    .SetLoops(-1);
-    }
-
     private void CheckLevel(int level)
     {
         if (level >= _requiredLevel && !_isUnlocked)
@@ -177,4 +167,11 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
     private void SetCostText(int cost) => _costText.text = $"{cost} <sprite=0>";
 
     private void SetRequiredLevelText(int level) => _requiredLevelText.text = $"{Translation.GetLevelNameAbbreviated()} {level}";
+
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public int Cost;
+    }
 }

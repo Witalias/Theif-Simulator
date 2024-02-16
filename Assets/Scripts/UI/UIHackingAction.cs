@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using YG;
 
 [RequireComponent(typeof(Animation))]
 public class UIHackingAction : MonoBehaviour
@@ -35,7 +36,9 @@ public class UIHackingAction : MonoBehaviour
     private void Tap(bool active)
     {
         _titleText.text = Translation.GetHackingName();
-        _actionText.text = Translation.GetTapTapName();
+        _actionText.text = YandexGame.EnvironmentData.isDesktop
+            ? Translation.GetClickClickName()
+            : Translation.GetTapTapName();
         _animation.Play(ANIMATION_TAP);
         SetActive(active);
     }

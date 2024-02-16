@@ -34,7 +34,7 @@ public class Upgrade : MonoBehaviour
 
     private void Awake()
     {
-        _buyButton.onClick.AddListener(OnBuyButtonClick);
+        _buyButton.onClick.AddListener(OnBuyButtonPressed);
     }
 
     public void Initialize(int level)
@@ -48,7 +48,7 @@ public class Upgrade : MonoBehaviour
         CheckInteractableBuyButton();
     }
 
-    private void OnBuyButtonClick()
+    private void OnBuyButtonPressed()
     {
         if (IsMaxLevel || Stats.Instanse.Money < _effects[_level - 1].Cost)
             return;
@@ -59,6 +59,7 @@ public class Upgrade : MonoBehaviour
         _level++;
         Refresh();
         Upgraded?.Invoke();
+        MetricaSender.PlayerUpgrade(_type, _level);
         TaskManager.Instance.ProcessTask(TaskType.BuyUpgrade, 1);
         TaskManager.Instance.ProcessTask(TaskType.TutorialBuyUpgrade, 1);
     }

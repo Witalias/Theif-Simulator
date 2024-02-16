@@ -7,27 +7,6 @@ using YG;
 [RequireComponent(typeof(RefreshBuildingTimer))]
 public class Building : MonoBehaviour, IIdentifiable
 {
-    [Serializable]
-    private class LevelState
-    {
-        public int RequiredXp;
-        public GameObject[] ObjectsToActive;
-
-        public bool ObjectsWasActived { get; set; }
-    }
-
-    [Serializable]
-    public class SavedData
-    {
-        public int ID;
-        public int Level;
-        public int CurrentXP;
-        public int SecondsBeforeUpdate;
-        public bool ShouldBeRefreshed;
-        public Door.SavedData[] DoorLockStates;
-        public Lootable.SavedData[] LootableEmptyStates;
-    }
-
     public static event Action<bool, Building> PlayerInBuilding;
     public static event Action PlayerInBuildingWithEnemyFirstly;
     public static event Action StatsChanged;
@@ -242,6 +221,7 @@ public class Building : MonoBehaviour, IIdentifiable
                 _requiredXp = _levelStates[_level - 1].RequiredXp;
             }
             UpdateProgressBar();
+            MetricaSender.BuildingUpgrade(gameObject.name, _level);
         }
     }
 
@@ -265,5 +245,26 @@ public class Building : MonoBehaviour, IIdentifiable
     {
         foreach (var door in _doors)
             door.SetTimerText(seconds);
+    }
+
+    [Serializable]
+    private class LevelState
+    {
+        public int RequiredXp;
+        public GameObject[] ObjectsToActive;
+
+        public bool ObjectsWasActived { get; set; }
+    }
+
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public int Level;
+        public int CurrentXP;
+        public int SecondsBeforeUpdate;
+        public bool ShouldBeRefreshed;
+        public Door.SavedData[] DoorLockStates;
+        public Lootable.SavedData[] LootableEmptyStates;
     }
 }

@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Calm()
     {
-        if (!_worried)
+        if (!_worried || _lockedControls)
             return;
 
         Stop();
