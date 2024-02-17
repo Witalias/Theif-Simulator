@@ -13,7 +13,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
 
     [SerializeField] private int _requiredLevel;
     [SerializeField] private int _cost;
-    [SerializeField] private int _purchaseSpeed;
+    [SerializeField, Range(0, 1)] private float _purchaseSpeed;
     [SerializeField] private ResourceType[] _newAvailableResources;
     [SerializeField] private TMP_Text _requiredLevelText;
     [SerializeField] private TMP_Text _costText;
@@ -103,7 +103,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
                     yield break;
 
                 var previous = _cost;
-                _cost = Mathf.Clamp(_cost - _purchaseSpeed, 0, int.MaxValue);
+                _cost = Mathf.Clamp(_cost - (int)Mathf.Ceil(Mathf.Lerp(0, _cost, _purchaseSpeed)), 0, int.MaxValue);
                 SetCostText(_cost);
                 GameData.Instanse.AddMoney(_cost - previous);
                 yield return wait;

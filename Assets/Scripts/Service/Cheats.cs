@@ -9,5 +9,7 @@ public class Cheats : MonoBehaviour
             GameData.Instanse.PlayerLevel.AddXPToNextLevel();
         else if (Input.GetKeyDown(KeyCode.F2) && YandexGame.savesData.TutorialDone)
             TaskManager.Instance.StartRandomTask();
+        else if (Input.GetKeyDown(KeyCode.F3))
+            GameData.Instanse.AddMoney(100);
     }
 }

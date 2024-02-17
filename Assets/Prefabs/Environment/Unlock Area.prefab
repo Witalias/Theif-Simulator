@@ -525,12 +525,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _requiredLevel: 2
   _cost: 100
-  _purchaseSpeed: 10
+  _purchaseSpeed: 0.1
   _newAvailableResources: 
   _requiredLevelText: {fileID: 1725586597748276688}
   _costText: {fileID: 8885980060122737208}
   _requiredLevelPanel: {fileID: 6672350848188472895}
-  _arrow: {fileID: 4094650706672736284}
   _virtualCamera: {fileID: 9077898933612232590}
   _purchaseParticle: {fileID: 8812117960309883648}
   _onPurchase:
@@ -626,7 +625,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7741099071091366950}
-  m_LocalRotation: {x: -0.3052719, y: -0.000000016660902, z: 0.000000051972023, w: 0.9522652}
+  m_LocalRotation: {x: -0.3052719, y: -0.000000009097814, z: 0.00000002837972, w: 0.95226526}
   m_LocalPosition: {x: 0, y: -13.62, z: -19.06}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0

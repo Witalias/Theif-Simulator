@@ -59,11 +59,11 @@ public class GameData : MonoBehaviour
         Instanse = this;
         _resources = _resourceData.ToDictionary(resource => resource.Type);
         Backpack = new(_resourcesPanel);
-        Backpack.SetMoney(Money);
         PlayerLevel = new(_xpBar, _initialXPRequirement);
 
         if (SaveLoad.HasMoneySave)
             Money = YandexGame.savesData.Money;
+        Backpack.SetMoney(Money);
 
         _soldItemsCount = YandexGame.savesData.SoldItemsCount;
 
