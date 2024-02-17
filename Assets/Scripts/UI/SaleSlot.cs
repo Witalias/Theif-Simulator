@@ -15,13 +15,13 @@ public class SaleSlot : MonoBehaviour
     private ResourceType _type;
     private int _reward;
 
-    private int Count => Stats.Instanse.GetResourceCount(_type);
+    private int Count => GameData.Instanse.Backpack.GetResourceCount(_type);
 
     public void Initialize(ResourceType type)
     {
         _type = type;
         _titleText.text = Translation.GetResourceName(type);
-        _icon.sprite = GameStorage.Instanse.GetResourceSprite(type);
+        _icon.sprite = GameData.Instanse.GetResourceSprite(type);
         _sellButton.onClick.AddListener(Sell);
         _initialized = true;
     }
@@ -33,7 +33,7 @@ public class SaleSlot : MonoBehaviour
 
         _countText.text = Count.ToString();
 
-        _reward = Count * GameStorage.Instanse.GetResourcePrice(_type);
+        _reward = Count * GameData.Instanse.GetResourcePrice(_type);
         _rewardText.text = $"{Translation.GetRewardName()}: <color=#{ColorUtility.ToHtmlStringRGB(_rewardColor)}>{_reward}</color> <sprite index=0>";
 
         _sellButton.interactable = _reward > 0;
@@ -44,12 +44,12 @@ public class SaleSlot : MonoBehaviour
         if (!_initialized)
             return;
 
-        TaskManager.Instance.ProcessTask(TaskType.SellItems, Stats.Instanse.GetResourceCount(_type));
+        TaskManager.Instance.ProcessTask(TaskType.SellItems, GameData.Instanse.Backpack.GetResourceCount(_type));
         TaskManager.Instance.ProcessTask(TaskType.TutorialSellItems, 1);
-        TaskManager.Instance.ProcessTask(TaskType.SellCertainItems, _type, Stats.Instanse.GetResourceCount(_type));
-        Stats.Instanse.AddSoldItemsCount(Count);
-        Stats.Instanse.ClearResource(_type);
-        Stats.Instanse.AddMoney(_reward);
+        TaskManager.Instance.ProcessTask(TaskType.SellCertainItems, _type, GameData.Instanse.Backpack.GetResourceCount(_type));
+        GameData.Instanse.Backpack.ClearResource(_type);
+        GameData.Instanse.AddSoldItemsCount(Count);
+        GameData.Instanse.AddMoney(_reward);
         SoundManager.Instanse.Play(Sound.GetMoney);
         Refresh();
     }

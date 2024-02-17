@@ -64,7 +64,7 @@ public class TaskManager : MonoBehaviour
         if (isResourceTask)
         {
             _requiredResource = requiredResource;
-            taskIcon = GameStorage.Instanse.GetResourceSprite(requiredResource);
+            taskIcon = GameData.Instanse.GetResourceSprite(requiredResource);
         }
         else
         {
@@ -131,12 +131,6 @@ public class TaskManager : MonoBehaviour
         Load();
     }
 
-    private void Update()
-    {
-        if (GameSettings.Instanse.DebugMode && Input.GetKeyDown(KeyCode.F1))
-            StartRandomTask();
-    }
-
     private void AddProgress(int value)
     {
         _currentCount += value;
@@ -152,7 +146,7 @@ public class TaskManager : MonoBehaviour
     {
         if (_reward > 0)
         {
-            Stats.Instanse.AddMoney(_reward, false);
+            GameData.Instanse.AddMoney(_reward, false);
             PlayResourceAnimationMoney?.Invoke(_reward);
             SoundManager.Instanse.Play(Sound.GetMoney);
         }
@@ -165,7 +159,7 @@ public class TaskManager : MonoBehaviour
 
     private string GetTaskDescription()
     {
-        return GameSettings.Instanse.Language switch
+        return GameData.Instanse.Language switch
         {
             Language.English => _currentTask switch
             {

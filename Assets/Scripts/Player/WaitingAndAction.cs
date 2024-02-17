@@ -95,7 +95,7 @@ public class WaitingAndAction : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0))
-            AddProgress(Stats.Instanse.TapBonusTimePercents);
+            AddProgress(GameData.Instanse.TapBonusTimePercents);
     }
 
     private IEnumerator ProcessTicks()

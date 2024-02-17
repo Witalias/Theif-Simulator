@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -15,14 +16,12 @@ public class TranslateOnStart : MonoBehaviour
 
     [SerializeField] private Translation[] _translations;
 
-    private readonly Dictionary<Language, string> _translationDict = new();
+    private Dictionary<Language, string> _translationDict;
     private TMP_Text _text;
 
     private void Awake()
     {
-        foreach (var translation in _translations)
-            _translationDict.Add(translation.Language, translation.Text);
-
+        _translationDict = _translations.ToDictionary(translation => translation.Language, translation => translation.Text);
         _text = GetComponent<TMP_Text>();
     }
 
@@ -38,10 +37,10 @@ public class TranslateOnStart : MonoBehaviour
 
     private void Translate()
     {
-        if (GameSettings.Instanse == null)
+        if (GameData.Instanse == null)
             return;
 
-        var language = GameSettings.Instanse.Language;
+        var language = GameData.Instanse.Language;
         if (_translationDict.ContainsKey(language))
             _text.text = _translationDict[language];
         else

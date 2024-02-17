@@ -64,7 +64,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (!_content.activeSelf)
             return;
 
-        _filledImage.fillAmount += Time.deltaTime * Stats.Instanse.FillSpeedForHoldButton;
+        _filledImage.fillAmount += Time.deltaTime * GameData.Instanse.FillSpeedForHoldButton;
         _filledImage.color = Color.Lerp(_negativeColor, _positiveColor, _filledImage.fillAmount);
 
         if (_filledImage.fillAmount >= 1.0f)

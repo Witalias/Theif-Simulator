@@ -161,8 +161,8 @@ public class Door : MonoBehaviour, IIdentifiable
             Lock(false);
             player.CanHide(true);
             _isHacking = false;
-            var xp = GameSettings.Instanse.HackingXPReward;
-            Stats.Instanse.AddXP(xp);
+            var xp = GameData.Instanse.HackingXPReward;
+            GameData.Instanse.PlayerLevel.AddXP(xp);
             PlayResourceAnimationXp?.Invoke(xp);
             TaskManager.Instance.ProcessTask(TaskType.HackHouse, 1);
             TaskManager.Instance.ProcessTask(TaskType.TutorialCrackDoors, 1);

@@ -14,6 +14,9 @@ public class ResourcesPanel : MonoBehaviour
     [SerializeField] private UICounter _money;
     [SerializeField] private UICounter _backpack;
     [SerializeField] private Transform _resourceAnimationPoint;
+    [SerializeField] private NewResourceAnimation _resourceAnimationPrefab;
+    [SerializeField] private Sprite _moneySprite;
+    [SerializeField] private Sprite _xpSprite;
 
     private readonly Dictionary<ResourceType, UICounter> _itemCounters = new();
     private readonly Queue<Action> _resourceAnimationQueue = new();
@@ -74,7 +77,7 @@ public class ResourcesPanel : MonoBehaviour
         foreach (var resource in Enum.GetValues(typeof(ResourceType)))
         {
             var counter = Instantiate(_itemCounterPrefab, _itemPanel).GetComponent<UICounter>();
-            counter.SetIcon(GameStorage.Instanse.GetResourceSprite((ResourceType)resource));
+            counter.SetIcon(GameData.Instanse.GetResourceSprite((ResourceType)resource));
             _itemCounters.Add((ResourceType)resource, counter);
         }
     }
@@ -91,19 +94,19 @@ public class ResourcesPanel : MonoBehaviour
 
     private void PlayResourceAnimationItem(ResourceType type, int count)
     {
-        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.GetResourceSprite(type)));
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameData.Instanse.GetResourceSprite(type)));
         PlayResourceAnimation();
     }
 
     private void PlayResourceAnimationXp(int count)
     {
-        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.Star));
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), _xpSprite));
         PlayResourceAnimation();
     }
 
     private void PlayResourceAnimationMoney(int count)
     {
-        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), GameStorage.Instanse.Money));
+        _resourceAnimationQueue.Enqueue(() => CreateResourceAnimation(count.ToString(), _moneySprite));
         PlayResourceAnimation();
     }
 
@@ -125,9 +128,8 @@ public class ResourcesPanel : MonoBehaviour
 
     private void CreateResourceAnimation(string text, Sprite icon)
     {
-        var newResource = Instantiate(GameStorage.Instanse.NewResourceAnimatinPrefab,
-            _resourceAnimationPoint.position, Quaternion.identity, transform)
-            .GetComponent<NewResourceAnimation>();
+        var newResource = Instantiate(_resourceAnimationPrefab,
+            _resourceAnimationPoint.position, Quaternion.identity, transform);
         newResource.transform.localEulerAngles = Vector3.zero;
         newResource.SetIcon(icon);
         newResource.SetText(text);

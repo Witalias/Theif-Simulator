@@ -60,9 +60,9 @@ public class MovementController : MonoBehaviour
         IEnumerator Coroutine()
         {
             yield return new WaitForSeconds(delay);
-            transform.position = GameStorage.Instanse.PrisonSpawnPoint.position;
+            transform.position = GameData.Instanse.PrisonSpawnPoint.position;
             SavePosition();
-            Stats.Instanse.ClearBackpack();
+            GameData.Instanse.Backpack.ClearBackpack();
             _controlsLocked = false;
             CanHide(true);
             _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
@@ -135,7 +135,7 @@ public class MovementController : MonoBehaviour
         if (direction.magnitude > 1)
             direction.Normalize();
 
-        _rigidbody.velocity = direction * Stats.Instanse.PlayerMovingSpeed;
+        _rigidbody.velocity = direction * GameData.Instanse.PlayerMovingSpeed;
 
         if (movementVector != Vector3.zero)
         {
@@ -228,6 +228,6 @@ public class MovementController : MonoBehaviour
         if (SaveLoad.HasPlayerPositionSave && YandexGame.savesData.TutorialDone)
             transform.position = SaveLoad.LoadPlayerPosition();
         else
-            transform.position = GameStorage.Instanse.InitialPlayerSpawnPoint.position;
+            transform.position = GameData.Instanse.InitialPlayerSpawnPoint.position;
     }
 }

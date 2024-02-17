@@ -112,8 +112,7 @@ public class EnemyAI : MonoBehaviour
         {
             _lockedControls = false;
             _animator.SetBool(CATCH_ANIMATOR_TRIGGER, false);
-            if (_calmOnTimer)
-                DOVirtual.DelayedCall(_caughtDuration, Calm);
+            Calm();
         });
     }
 

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6805234156384896894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4059653332226656645}
+  - component: {fileID: 8280207394263037430}
+  m_Layer: 0
+  m_Name: Game Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4059653332226656645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805234156384896894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8280207394263037430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805234156384896894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868ce37f960f79946a224e556b53e78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resourceData:
+  - {fileID: 11400000, guid: 2f01b5418faea6942be21cb238514bab, type: 2}
+  - {fileID: 11400000, guid: e873400f979e4434e99edcff309a26bd, type: 2}
+  - {fileID: 11400000, guid: dc68949707248ff42bf604d22c12de11, type: 2}
+  - {fileID: 11400000, guid: bd8ef016f0826704bb334f86d4843209, type: 2}
+  - {fileID: 11400000, guid: a0aa5a91779dcf64ba35edabe240ea0e, type: 2}
+  - {fileID: 11400000, guid: 5b8698e358a26bf4c92722244a894998, type: 2}
+  _loadLanguageFromYG: 0
+  _language: 1
+  _appearHackingZonesRadius: 20
+  _stepXPRequirement: 2
+  _maxLevel: 30
+  _hackingXPReward: 5
+  _theftXPReward: 10
+  _prisonSpawnPoint: {fileID: 0}
+  _initialPlayerSpawnPoint: {fileID: 0}
+  _leaderboardName: SoldItems

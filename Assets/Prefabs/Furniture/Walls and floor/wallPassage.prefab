@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3558778961292820048}
   - component: {fileID: 1623448528291170970}
   - component: {fileID: 26366941069739659}
+  - component: {fileID: 3480424676921673321}
   m_Layer: 7
   m_Name: wallPassage
   m_TagString: Untagged
@@ -105,5 +106,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 2.9140167, z: 0.5961914}
-  m_Center: {x: 5, y: 11.438313, z: 0.23246002}
+  m_Size: {x: 2.6276424, y: 13.19618, z: 0.5961914}
+  m_Center: {x: 8.686178, y: 6.2972307, z: 0.23246}
+--- !u!65 &3480424676921673321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974846413601155919}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6460865, y: 12.89532, z: 0.89100045}
+  m_Center: {x: 1.3230432, y: 6.44766, z: 0.24999249}

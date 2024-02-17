@@ -34,10 +34,10 @@ public class Safe : MonoBehaviour
 
     private void Fill()
     {
-        _containedResources = Stats.Instanse.GetResources();
-        _lootable.SetEmpty(Stats.Instanse.BackpackIsEmpty);
+        _containedResources = GameData.Instanse.Backpack.GetResources();
+        _lootable.SetEmpty(GameData.Instanse.Backpack.IsEmpty);
 
-        if (!Stats.Instanse.BackpackIsEmpty)
+        if (!GameData.Instanse.Backpack.IsEmpty)
             Filled?.Invoke();
     }
 
@@ -51,7 +51,7 @@ public class Safe : MonoBehaviour
         {
             if (resource.Value <= 0)
                 continue;
-            Stats.Instanse.AddResource(resource.Key, resource.Value);
+            GameData.Instanse.Backpack.AddResource(resource.Key, resource.Value);
             PlayResourceAnimationItem?.Invoke(resource.Key, resource.Value);
         }
         _containedResources = null;

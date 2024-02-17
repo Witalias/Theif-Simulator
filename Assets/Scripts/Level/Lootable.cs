@@ -46,6 +46,11 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public int ID { get; set; }
 
+    private void Awake()
+    {
+        _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
+    }
+
     public SavedData Save()
     {
         _savedData.ID = ID;
@@ -65,13 +70,13 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public void OnPlayerEnter()
     {
-        if (Stats.Instanse.BackpackIsFull)
+        if (GameData.Instanse.Backpack.IsFull)
             ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_isEmpty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
+        if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(false);
@@ -87,7 +92,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public void OnPlayerExit(MovementController player)
     {
-        if (_isEmpty || Stats.Instanse.BackpackIsFull || player.Noticed || player.Busy)
+        if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
 
         player.CanHide(true);
@@ -106,11 +111,6 @@ public class Lootable : MonoBehaviour, IIdentifiable
             _movingFurnitureElements.MoveForward();
         else
             _movingFurnitureElements.MoveBack();
-    }
-
-    private void Awake()
-    {
-        _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
     }
 
     private void TakeResource(MovementController player)
@@ -135,13 +135,13 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
                 if (randomResource.OnlyMinMaxRange)
                     count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
-                Stats.Instanse.AddResource(randomResource.Type, count);
+                GameData.Instanse.Backpack.AddResource(randomResource.Type, count);
 
-                var xp = GameSettings.Instanse.TheftXPReward;
-                Stats.Instanse.AddXP(xp);
+                var xp = GameData.Instanse.TheftXPReward;
+                GameData.Instanse.PlayerLevel.AddXP(xp);
 
                 PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
-                SoundManager.Instanse.Play(GameStorage.Instanse.GetResourceSound(randomResource.Type));
+                SoundManager.Instanse.Play(GameData.Instanse.GetResourceSound(randomResource.Type));
             }
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();

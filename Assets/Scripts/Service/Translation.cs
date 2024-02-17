@@ -133,35 +133,35 @@ public static class Translation
     public static string GetResourceName(ResourceType type, bool plural = false)
     {
         return plural
-            ? _resourceNamesPlural[GameSettings.Instanse.Language][type]
-            : _resourceNames[GameSettings.Instanse.Language][type];
+            ? _resourceNamesPlural[GameData.Instanse.Language][type]
+            : _resourceNames[GameData.Instanse.Language][type];
     }
 
-    public static string GetMaximumName() => _maximumName[GameSettings.Instanse.Language];
+    public static string GetMaximumName() => _maximumName[GameData.Instanse.Language];
 
-    public static string GetCompleteName() => _completeName[GameSettings.Instanse.Language];
+    public static string GetCompleteName() => _completeName[GameData.Instanse.Language];
 
-    public static string GetLevelNameAbbreviated() => _levelNameAbbreviated[GameSettings.Instanse.Language];
+    public static string GetLevelNameAbbreviated() => _levelNameAbbreviated[GameData.Instanse.Language];
 
-    public static string GetTapTapName() => _tapTapName[GameSettings.Instanse.Language];
+    public static string GetTapTapName() => _tapTapName[GameData.Instanse.Language];
 
-    public static string GetClickClickName() => _clickClickName[GameSettings.Instanse.Language];
+    public static string GetClickClickName() => _clickClickName[GameData.Instanse.Language];
 
-    public static string GetHoldName() => _holdName[GameSettings.Instanse.Language];
+    public static string GetHoldName() => _holdName[GameData.Instanse.Language];
 
-    public static string GetTheftName() => _theftName[GameSettings.Instanse.Language];
+    public static string GetTheftName() => _theftName[GameData.Instanse.Language];
 
-    public static string GetHackingName() => _hackingName[GameSettings.Instanse.Language];
+    public static string GetHackingName() => _hackingName[GameData.Instanse.Language];
 
-    public static string GetIncreaseToName() => _increaseToName[GameSettings.Instanse.Language];
+    public static string GetIncreaseToName() => _increaseToName[GameData.Instanse.Language];
 
-    public static string GetIncreaseToNameInPast() => _increaseToNameInPast[GameSettings.Instanse.Language];
+    public static string GetIncreaseToNameInPast() => _increaseToNameInPast[GameData.Instanse.Language];
 
-    public static string GetRewardName() => _rewardName[GameSettings.Instanse.Language];
+    public static string GetRewardName() => _rewardName[GameData.Instanse.Language];
 
-    public static string GetNoticedName() => _noticedName[GameSettings.Instanse.Language];
+    public static string GetNoticedName() => _noticedName[GameData.Instanse.Language];
 
-    public static string GetFullBackpackName() => _fullBackpackName[GameSettings.Instanse.Language];
+    public static string GetFullBackpackName() => _fullBackpackName[GameData.Instanse.Language];
 
-    public static string GetNewLevelName() => _newLevelName[GameSettings.Instanse.Language];
+    public static string GetNewLevelName() => _newLevelName[GameData.Instanse.Language];
 }

@@ -4689,6 +4689,9 @@ MonoBehaviour:
   _money: {fileID: 3998561780669569817}
   _backpack: {fileID: 625765740815345268}
   _resourceAnimationPoint: {fileID: 7887006692205523339}
+  _resourceAnimationPrefab: {fileID: 3968714428361785677, guid: 188ce89e10a5c224b835ecabf425d2d5, type: 3}
+  _moneySprite: {fileID: 21300000, guid: 69f66a90b07fc284bb33250998649f81, type: 3}
+  _xpSprite: {fileID: 21300000, guid: b98eda24323493e478bb52269dd6be81, type: 3}
 --- !u!1 &6549116565829534665
 GameObject:
   m_ObjectHideFlags: 0
@@ -7286,6 +7289,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _values
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d0d42cba224aff4b925bf2371a163d6, type: 2}
+    - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: _costs.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7690,6 +7697,10 @@ PrefabInstance:
       propertyPath: _type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _values
+      value: 
+      objectReference: {fileID: 11400000, guid: a353112ecc776134cb78d1096a379a6d, type: 2}
     - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: _costs.Array.size
       value: 1
@@ -8209,6 +8220,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _values
+      value: 
+      objectReference: {fileID: 11400000, guid: 0699d5f4fa44fc147977b8f56a2981db, type: 2}
+    - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: _costs.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -8716,6 +8731,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Theft Upgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
+      propertyPath: _values
+      value: 
+      objectReference: {fileID: 11400000, guid: f2aaaea88799aef4e841ba0ebc475c4b, type: 2}
     - target: {fileID: 6145190595070271354, guid: 296237059463a654cb3d8f936f200fb5, type: 3}
       propertyPath: _costs.Array.size
       value: 1

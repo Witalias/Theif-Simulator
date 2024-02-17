@@ -49,7 +49,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
 
     public void OnPlayerStay(MovementController player)
     {
-        if (_cost <= 0 || _requiredLevel > Stats.Instanse.Level)
+        if (_cost <= 0 || _requiredLevel > GameData.Instanse.PlayerLevel.Level)
             return;
 
         if (player.IsRunning)
@@ -77,18 +77,18 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
     {
         SetCostText(_cost);
         SetRequiredLevelText(_requiredLevel);
-        CheckLevel(Stats.Instanse.Level);
+        CheckLevel(GameData.Instanse.PlayerLevel.Level);
         _loaded = true;
     }
 
     private void OnEnable()
     {
-        Stats.NewLevelReached += CheckLevel;
+        PlayerLevelController.NewLevelReached += CheckLevel;
     }
 
     private void OnDisable()
     {
-        Stats.NewLevelReached -= CheckLevel;
+        PlayerLevelController.NewLevelReached -= CheckLevel;
     }
 
     private void ProcessPurchase()
@@ -99,13 +99,13 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
             var wait = new WaitForEndOfFrame();
             while (_cost > 0)
             {
-                if (Stats.Instanse.Money <= 0)
+                if (GameData.Instanse.Money <= 0)
                     yield break;
 
                 var previous = _cost;
                 _cost = Mathf.Clamp(_cost - _purchaseSpeed, 0, int.MaxValue);
                 SetCostText(_cost);
-                Stats.Instanse.AddMoney(_cost - previous);
+                GameData.Instanse.AddMoney(_cost - previous);
                 yield return wait;
             }
             TaskManager.Instance.ProcessTask(TaskType.TutorialBuyZone, 1);

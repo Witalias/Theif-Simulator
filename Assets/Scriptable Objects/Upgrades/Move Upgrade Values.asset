@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80516ed65816644cb87c0eb5b6c6b8d, type: 3}
+  m_Name: Move Upgrade Values
+  m_EditorClassIdentifier: 
+  Data:
+  - Value: 20
+    Cost: 0
+  - Value: 20.5
+    Cost: 20
+  - Value: 21
+    Cost: 40
+  - Value: 21.5
+    Cost: 80
+  - Value: 22
+    Cost: 180
+  - Value: 22.5
+    Cost: 220
+  - Value: 23
+    Cost: 320
+  - Value: 23.5
+    Cost: 320
+  - Value: 24
+    Cost: 580
+  - Value: 24.5
+    Cost: 740
+  - Value: 25
+    Cost: 920

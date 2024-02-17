@@ -13,7 +13,7 @@ public class AppearHackingZoneTrigger : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<SphereCollider>().radius = GameSettings.Instanse.AppearHackingZonesDistance;
+        GetComponent<SphereCollider>().radius = GameData.Instanse.AppearHackingZonesDistance;
         _appearParticle.transform.position = _hackingZone.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
     }
 
