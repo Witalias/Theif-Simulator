@@ -57,6 +57,13 @@ public class GameData : MonoBehaviour
     private void Awake()
     {
         Instanse = this;
+
+        if (YandexGame.EnvironmentData.payload == "delete_save")
+        {
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
+        }
+
         _resources = _resourceData.ToDictionary(resource => resource.Type);
         Backpack = new(_resourcesPanel);
         PlayerLevel = new(_xpBar, _initialXPRequirement);
@@ -69,12 +76,6 @@ public class GameData : MonoBehaviour
 
         if (_loadLanguageFromYG)
             LoadLanguage();
-
-        if (YandexGame.EnvironmentData.payload == "delete_save")
-        {
-            YandexGame.ResetSaveProgress();
-            YandexGame.SaveProgress();
-        }
     }
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;

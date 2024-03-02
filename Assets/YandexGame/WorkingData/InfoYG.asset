@@ -292,7 +292,7 @@ MonoBehaviour:
     priceValue: 30
     consumed: 1
   metricaEnable: 1
-  metricaCounterID: 0
+  metricaCounterID: 96597029
   debug: 1
   archivingBuild: 1
   logoImageFormat: 1

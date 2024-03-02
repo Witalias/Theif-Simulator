@@ -90,6 +90,7 @@ public class TutorialSystem : MonoBehaviour
             return;
         SaveLoad.SaveTutorialCrackDoorDoneBoolean(true);
         TaskManager.TaskCompleted -= OnCrackedDoor;
+        MetricaSender.TutorialStep("Взломать дверь");
         ClearArrows();
         DOVirtual.DelayedCall(_startingTaskDelay, StartRobHouseTutorial);
     }
@@ -111,6 +112,7 @@ public class TutorialSystem : MonoBehaviour
             return;
         SaveLoad.SaveTutorialRobHouseDoneBoolean(true);
         TaskManager.TaskCompleted -= OnRobbedHouse;
+        MetricaSender.TutorialStep("Ограбить дом");
         ClearArrows();
         _robWalls.SetActive(false);
         DOVirtual.DelayedCall(_startingTaskDelay, StartSellItemsTutorial);
@@ -144,6 +146,7 @@ public class TutorialSystem : MonoBehaviour
             return;
         TaskManager.TaskCompleted -= OnSoldItems;
         OpenClosePopup.Opened += OnClosedMarketPanel;
+        MetricaSender.TutorialStep("Продать предметы");
         _closeMarketPanelButton.interactable = true;
         _arrow2d.transform.position = _closeMarketPanelButton.transform.position;
         ClearArrows();
@@ -184,6 +187,7 @@ public class TutorialSystem : MonoBehaviour
             return;
         TaskManager.TaskCompleted -= OnBoughtUpgrade;
         OpenClosePopup.Opened += OnClosedUpgradesPopup;
+        MetricaSender.TutorialStep("Купить улучшение");
         _closeUpgradePanelButton.interactable = true;
         _arrow2d.transform.position = _closeUpgradePanelButton.transform.position;
     }
@@ -216,6 +220,7 @@ public class TutorialSystem : MonoBehaviour
         SaveLoad.SaveTutorialBuyZoneDoneBoolean(true);
         SaveLoad.SaveTutorialDoneBoolean(true);
         TaskManager.TaskCompleted -= OnBoughtZone;
+        MetricaSender.TutorialStep("Открыть зону");
         ClearArrows();
         _upgradePanelButton.interactable = true;
         _unlockArea2.SetActive(true);
@@ -226,6 +231,7 @@ public class TutorialSystem : MonoBehaviour
     {
         Building.PlayerInBuildingWithEnemyFirstly -= OnEnterBuildingWithEnemy;
         SaveLoad.SaveTutorialEnterBuildingWithEnemyDoneBoolean(true);
+        MetricaSender.TutorialStep("Окно со стелсом");
         _stealth.Open();
     }
 

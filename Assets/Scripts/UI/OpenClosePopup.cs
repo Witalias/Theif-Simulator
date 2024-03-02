@@ -15,22 +15,13 @@ public class OpenClosePopup : MonoBehaviour
     [SerializeField] private Transform _content;
     [SerializeField] private Button _closeButton;
 
+    private Tween _tween;
+    private float _defaultScale;
     private bool _opened;
-
-    public void Open()
-    {
-        if (_opened)
-            return;
-
-        _opened = true;
-        _anticlick.SetActive(true);
-        _content.DOScale(Vector3.one, _animationDuration);
-        Opened?.Invoke(true);
-        OpenedLate?.Invoke(true);
-    }
 
     private void Awake()
     {
+        _defaultScale = _content.localScale.x;
         _content.localScale = Vector3.zero;
         _content.gameObject.SetActive(true);
         _closeButton.onClick.AddListener(Close);
@@ -46,6 +37,23 @@ public class OpenClosePopup : MonoBehaviour
         EnemyAI.PlayerIsNoticed -= Close;
     }
 
+    public void Open()
+    {
+        if (_opened)
+            return;
+
+        _opened = true;
+        _anticlick.SetActive(true);
+        _tween.Kill();
+        _tween = DOTween.Sequence()
+            .Append(_content.DOScale(_defaultScale + 0.1f, _animationDuration))
+            .Append(_content.DOScale(_defaultScale, 0.2f))
+            .Play();
+        //_content.DOScale(_defaultScale, _animationDuration);
+        Opened?.Invoke(true);
+        OpenedLate?.Invoke(true);
+    }
+
     private void Close()
     {
         if (!_opened)
@@ -54,7 +62,12 @@ public class OpenClosePopup : MonoBehaviour
         SoundManager.Instanse.Play(Sound.Tap);
         _opened = false;
         _anticlick.SetActive(false);
-        _content.DOScale(Vector3.zero, _animationDuration);
+        _tween.Kill();
+        _tween = DOTween.Sequence()
+            .Append(_content.DOScale(_defaultScale + 0.1f, 0.2f))
+            .Append(_content.DOScale(Vector3.zero, _animationDuration))
+            .Play();
+        //_content.DOScale(Vector3.zero, _animationDuration);
         Opened?.Invoke(false);
         OpenedLate?.Invoke(false);
     }

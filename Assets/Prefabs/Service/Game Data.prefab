@@ -51,13 +51,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd8ef016f0826704bb334f86d4843209, type: 2}
   - {fileID: 11400000, guid: a0aa5a91779dcf64ba35edabe240ea0e, type: 2}
   - {fileID: 11400000, guid: 5b8698e358a26bf4c92722244a894998, type: 2}
-  _loadLanguageFromYG: 0
+  _loadLanguageFromYG: 1
   _language: 1
   _appearHackingZonesRadius: 20
-  _stepXPRequirement: 2
+  _stepXPRequirement: 50
+  _initialXPRequirement: 50
   _maxLevel: 30
   _hackingXPReward: 5
   _theftXPReward: 10
+  _leaderboardName: SoldItems
   _prisonSpawnPoint: {fileID: 0}
   _initialPlayerSpawnPoint: {fileID: 0}
-  _leaderboardName: SoldItems
+  _resourcesPanel: {fileID: 0}
+  _xpBar: {fileID: 0}
