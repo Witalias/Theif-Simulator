@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4454842400996729450, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
+      propertyPath: _pathPointsContainer
+      value: 
+      objectReference: {fileID: 9150322381147013418}
     - target: {fileID: 5145234623750209469, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
       propertyPath: m_Name
       value: Big House 1 MD
@@ -401,6 +405,10 @@ PrefabInstance:
       propertyPath: _path.Array.data[2]
       value: 
       objectReference: {fileID: 8026927775414827069}
+    - target: {fileID: 8318046012971186625, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
+      propertyPath: _pathPointsContainer
+      value: 
+      objectReference: {fileID: 1580393077278118588}
     - target: {fileID: 8402934696465469540, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.88
@@ -486,6 +494,11 @@ GameObject:
 --- !u!4 &8026927775414827069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7652549608441224965, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
+  m_PrefabInstance: {fileID: 384548807777494840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9150322381147013418 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8911014681027782162, guid: 8e23aaa4e3f52934cae501f17cae3a1c, type: 3}
   m_PrefabInstance: {fileID: 384548807777494840}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &454985567683632698

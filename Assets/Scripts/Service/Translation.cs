@@ -130,6 +130,12 @@ public static class Translation
         [Language.Russian] = "мнбши спнбемэ"
     };
 
+    private readonly static Dictionary<Language, string> _dogName = new()
+    {
+        [Language.English] = "ANGRY DOG",
+        [Language.Russian] = "гкюъ янаюйю"
+    };
+
     public static string GetResourceName(ResourceType type, bool plural = false)
     {
         return plural
@@ -164,4 +170,6 @@ public static class Translation
     public static string GetFullBackpackName() => _fullBackpackName[GameData.Instanse.Language];
 
     public static string GetNewLevelName() => _newLevelName[GameData.Instanse.Language];
+
+    public static string GetAngryDogName() => _dogName[GameData.Instanse.Language];
 }

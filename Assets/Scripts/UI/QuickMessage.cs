@@ -17,18 +17,20 @@ public class QuickMessage : MonoBehaviour
 
     private void OnEnable()
     {
-        EnemyAI.ShowQuickMessage += Process;
+        HumanAI.ShowQuickMessage += Process;
         Lootable.ShowQuickMessage += Process;
         PlayerLevelController.ShowQuickMessage += Process;
         BackpackController.ShowQuickMessage += Process;
+        Doghouse.ShowQuickMessage += Process;
     }
 
     private void OnDisable()
     {
-        EnemyAI.ShowQuickMessage -= Process;
+        HumanAI.ShowQuickMessage -= Process;
         Lootable.ShowQuickMessage -= Process;
-        PlayerLevelController.ShowQuickMessage += Process;
+        PlayerLevelController.ShowQuickMessage -= Process;
         BackpackController.ShowQuickMessage -= Process;
+        Doghouse.ShowQuickMessage -= Process;
     }
 
     private void Process(string message, float delay, bool isNegative)

@@ -6,11 +6,12 @@ using DG.Tweening;
 public class UIBar : MonoBehaviour
 {
     [SerializeField] private bool _allowMaxText;
+    [SerializeField] private bool _smooth = true;
     [SerializeField] private Image bar;
     [SerializeField] private Image differenceBar;
     [SerializeField] private TextMeshProUGUI valueText;
 
-    public bool Filled { get => bar.fillAmount >= 0.99f; }
+    public bool Filled => bar.fillAmount >= 0.99f;
 
     public void SetValue(float value, float maxValue)
     {
@@ -26,7 +27,10 @@ public class UIBar : MonoBehaviour
         }
         else
         {
-            DOVirtual.DelayedCall(0.25f, () => bar.DOFillAmount(value / maxValue, 1.0f));
+            if (_smooth)
+                DOVirtual.DelayedCall(0.25f, () => bar.DOFillAmount(value / maxValue, 1.0f));
+            else
+                bar.fillAmount = value / maxValue;
         }
 
         if (valueText != null)

@@ -5,30 +5,28 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float radius;
-    [Range(0,360)]
-    public float angle;
+    [SerializeField] private float radius;
+    [SerializeField, Range(0, 360)] private float angle;
 
-    public GameObject playerRef;
+    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private LayerMask obstructionMask;
 
-    public LayerMask targetMask;
-    public LayerMask obstructionMask;
-
-    public bool canSeePlayer;
+    public bool CanSeePlayer { get; private set; }
+    public float Radius => radius;
+    public float Angle => angle;
 
     public void Detect()
     {
-        canSeePlayer = true;
+        CanSeePlayer = true;
     }
 
     public void NotDetect()
     {
-        canSeePlayer = false;
+        CanSeePlayer = false;
     }
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
     }
 
@@ -57,14 +55,14 @@ public class FieldOfView : MonoBehaviour
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
-                    canSeePlayer = true;
+                    CanSeePlayer = true;
                 else
-                    canSeePlayer = false;
+                    CanSeePlayer = false;
             }
             else
-                canSeePlayer = false;
+                CanSeePlayer = false;
         }
-        else if (canSeePlayer)
-            canSeePlayer = false;
+        else if (CanSeePlayer)
+            CanSeePlayer = false;
     }
 }

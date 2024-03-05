@@ -158,7 +158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666563743713164040}
-  m_LocalRotation: {x: 0.6136648, y: 0.000000050344937, z: -0.00000003912895, w: 0.78956676}
+  m_LocalRotation: {x: 0.61366487, y: -0.000000014696059, z: 0.000000011422032, w: 0.7895667}
   m_LocalPosition: {x: 0, y: 22.5, z: -5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -1595,6 +1595,7 @@ GameObject:
   - component: {fileID: 9118138834692433051}
   - component: {fileID: 3964534993610104179}
   - component: {fileID: 9017083787685029916}
+  - component: {fileID: 2434247523574711209}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1660,7 +1661,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controlsLocked: 0
+  _rigidbody: {fileID: 30854329}
   _stealth: {fileID: 9118138834692433051}
+  _animatorController: {fileID: 2434247523574711209}
   _joystick: {fileID: 0}
   _particles: {fileID: 9017083787685029916}
   _onCaught:
@@ -1770,6 +1773,19 @@ MonoBehaviour:
   _fastSmokeParticle: {fileID: 6480899265933747849}
   _particlesContainer: {fileID: 1571525242135438936}
   _confettiParticle: {fileID: 8567662746996198337}
+--- !u!114 &2434247523574711209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764222128491727568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f62089e65a2c0c46a6d3393c6d8a341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5764222128499161360}
 --- !u!1 &5764222128491727570
 GameObject:
   m_ObjectHideFlags: 0

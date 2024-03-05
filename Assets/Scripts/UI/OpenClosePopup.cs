@@ -29,12 +29,12 @@ public class OpenClosePopup : MonoBehaviour
 
     private void OnEnable()
     {
-        EnemyAI.PlayerIsNoticed += Close;
+        HumanAI.PlayerIsNoticed += Close;
     }
 
     private void OnDisable()
     {
-        EnemyAI.PlayerIsNoticed -= Close;
+        HumanAI.PlayerIsNoticed -= Close;
     }
 
     public void Open()

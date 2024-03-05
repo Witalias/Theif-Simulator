@@ -1794,6 +1794,10 @@ PrefabInstance:
       propertyPath: _calmOnTimer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2102709877019701409, guid: 28ba09a1a3de95f448e916d4ef926f8a, type: 3}
+      propertyPath: _pathPointsContainer
+      value: 
+      objectReference: {fileID: 943380791178319227}
     - target: {fileID: 4310526444678127791, guid: 28ba09a1a3de95f448e916d4ef926f8a, type: 3}
       propertyPath: _path.Array.size
       value: 3

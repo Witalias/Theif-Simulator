@@ -11,6 +11,7 @@ public class TutorialSystem : MonoBehaviour
     [SerializeField] private float _switchingCameraDelay;
     [SerializeField] private GameObject _arrow3dPrefab;
     [SerializeField] private GameObject _arrow2d;
+    [SerializeField] private MovementController _player;
     [SerializeField] private GameObject _controls;
     [SerializeField] private OpenClosePopup _stealth;
     [SerializeField] private GameObject _unlockArea2;
@@ -74,14 +75,17 @@ public class TutorialSystem : MonoBehaviour
         CameraChanger.Instance.TemporarilySwitchCamera(_doorCamera, _switchingCameraDelay, () =>
         {
             _controls.SetActive(true);
-            MovementController.MovingStarted += OnMovingStarted;
+            _player.SubscribeOnMove(OnPlayerMove);
         });
     }
 
-    private void OnMovingStarted()
+    private void OnPlayerMove(bool value)
     {
-        MovementController.MovingStarted -= OnMovingStarted;
-        _controls.SetActive(false);
+        if (value == true)
+        {
+            _player.UnsubscribeOnMove(OnPlayerMove);
+            _controls.SetActive(false);
+        }
     }
 
     private void OnCrackedDoor(TaskType type)

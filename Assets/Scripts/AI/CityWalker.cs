@@ -1,26 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CityWalker : MonoBehaviour
+public class CityWalker : PathTrajectory
 {
-    private const string WALK_ANIMATOR_BOOL = "Walk";
+    [SerializeField] private HumanAnimatorController _animatorController;
 
-    [SerializeField] private Animator _animator;
-    [SerializeField] private NavMeshAgent _agent;
-
-    private bool _isWalk;
-
-    private void Update()
+    public override void FollowTrajectory()
     {
-        if (!_agent.isStopped && !_isWalk)
-        {
-            _animator.SetBool(WALK_ANIMATOR_BOOL, true);
-            _isWalk = true;
-        }
-        else if (_agent.isStopped)
-        {
-            _animator.SetBool(WALK_ANIMATOR_BOOL, false);
-            _isWalk = false;
-        }
+        _animatorController.WalkBoolean(true);
+        base.FollowTrajectory();
+    }
+
+    protected override void Stop()
+    {
+        _animatorController.WalkBoolean(false);
+        base.Stop();
     }
 }

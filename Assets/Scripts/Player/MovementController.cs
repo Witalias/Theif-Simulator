@@ -1,33 +1,23 @@
 using UnityEngine;
-using UnityEngine.AI;
-using System.Collections.Generic;
+using UnityEngine.Events;
 using DG.Tweening;
 using System;
 using System.Collections;
 using YG;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
 public class MovementController : MonoBehaviour
 {
-    private const string RUN_ANIMATOR_BOOLEAN = "Run";
-    private const string SNEAK_ANIMATOR_BOOLEAN = "Sneak";
-    private const string HACK_ANIMATOR_BOOLEAN = "Hack";
-    private const string CAUGHT_ANIMATOR_BOOLEAN = "Sit";
-
-    public static event Action MovingStarted;
     public static event Action PlayerCaught;
 
     [SerializeField] private bool _controlsLocked;
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Stealth _stealth;
+    [SerializeField] private HumanAnimatorController _animatorController;
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private PlayerParticles _particles;
     [SerializeField] private UnityEvent _onCaught;
 
-    private Animator _animator;
-    private Rigidbody _rigidbody;
+    private event Action<bool> OnMove;
     private Building _currentBuilding;
     private bool _isMoving;
     private bool _canHide;
@@ -38,6 +28,45 @@ public class MovementController : MonoBehaviour
     public bool Noticed => _noticed;
     public bool Busy => _controlsLocked;
     public bool Hided => _stealth.Hided;
+    public bool IsMoving => _isMoving;
+
+    private void Start()
+    {
+        LoadPosition();
+    }
+
+    private void OnEnable()
+    {
+        WaitingAndAction.TimerActived += OnHack;
+        UIHoldButton.HoldButtonActived += OnHack;
+        OpenClosePopup.OpenedLate += OnProcessAction;
+        Building.PlayerInBuilding += InBuildingState;
+        HumanAI.PlayerIsNoticed += OnNoticed;
+        Doghouse.GPlayerIsNoticed += OnNoticed;
+        Door.BuildingInfoShowed += SavePosition;
+        BlackMarketArea.PlayerExit += SavePosition;
+        LevelManager.PlayerInBuilding += GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
+    }
+
+    private void OnDisable()
+    {
+        WaitingAndAction.TimerActived -= OnHack;
+        UIHoldButton.HoldButtonActived -= OnHack;
+        OpenClosePopup.OpenedLate -= OnProcessAction;
+        Building.PlayerInBuilding -= InBuildingState;
+        HumanAI.PlayerIsNoticed -= OnNoticed;
+        Doghouse.GPlayerIsNoticed -= OnNoticed;
+        Door.BuildingInfoShowed -= SavePosition;
+        BlackMarketArea.PlayerExit -= SavePosition;
+        LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
+        LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
 
     public void RotateTowards(Vector3 point)
     {
@@ -51,7 +80,7 @@ public class MovementController : MonoBehaviour
         PlayerCaught?.Invoke();
         _onCaught?.Invoke();
         _controlsLocked = true;
-        _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, true);
+        _animatorController.SitBoolean(true);
         _particles.ActivateSmokeParticles(true);
         _noticed = false;
         //InBuildingState(false, null);
@@ -65,7 +94,7 @@ public class MovementController : MonoBehaviour
             GameData.Instanse.Backpack.ClearBackpack();
             _controlsLocked = false;
             CanHide(true);
-            _animator.SetBool(CAUGHT_ANIMATOR_BOOLEAN, false);
+            _animatorController.SitBoolean(false);
             _particles.ActivateSmokeParticles(false);
         }
     }
@@ -78,47 +107,9 @@ public class MovementController : MonoBehaviour
         _canHide = value;
     }
 
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+    public void SubscribeOnMove(Action<bool> action) => OnMove += action;
 
-    private void Start()
-    {
-        LoadPosition();
-    }
-
-    private void OnEnable()
-    {
-        WaitingAndAction.TimerActived += OnHack;
-        UIHoldButton.HoldButtonActived += OnHack;
-        OpenClosePopup.OpenedLate += OnProcessAction;
-        Building.PlayerInBuilding += InBuildingState;
-        EnemyAI.PlayerIsNoticed += OnNoticed;
-        Door.BuildingInfoShowed += SavePosition;
-        BlackMarketArea.PlayerExit += SavePosition;
-        LevelManager.PlayerInBuilding += GetInBuildingBoolean;
-        LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
-    }
-
-    private void OnDisable()
-    {
-        WaitingAndAction.TimerActived -= OnHack;
-        UIHoldButton.HoldButtonActived -= OnHack;
-        OpenClosePopup.OpenedLate -= OnProcessAction;
-        Building.PlayerInBuilding -= InBuildingState;
-        EnemyAI.PlayerIsNoticed -= OnNoticed;
-        Door.BuildingInfoShowed -= SavePosition;
-        BlackMarketArea.PlayerExit -= SavePosition;
-        LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
-        LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
+    public void UnsubscribeOnMove(Action<bool> action) => OnMove -= action;
 
     private bool GetInBuildingBoolean() => InBuilding;
 
@@ -144,8 +135,8 @@ public class MovementController : MonoBehaviour
             if (!_isMoving)
             {
                 _isMoving = true;
-                _animator.SetBool(RUN_ANIMATOR_BOOLEAN, true);
-                MovingStarted?.Invoke();
+                _animatorController.RunBoolean(true);
+                OnMove?.Invoke(true);
 
                 DOVirtual.DelayedCall(Time.deltaTime, () => {
                     if (_canHide)
@@ -166,7 +157,8 @@ public class MovementController : MonoBehaviour
     private void Stop()
     {
         _isMoving = false;
-        _animator.SetBool(RUN_ANIMATOR_BOOLEAN, false);
+        _animatorController.RunBoolean(false);
+        OnMove?.Invoke(false);
 
         DOVirtual.DelayedCall(Time.deltaTime, () =>
         {
@@ -181,7 +173,7 @@ public class MovementController : MonoBehaviour
     private void OnHack(bool value)
     {
         OnProcessAction(value);
-        _animator.SetBool(HACK_ANIMATOR_BOOLEAN, value);
+        _animatorController.TakeBoolean(value);
     }
 
     private void OnProcessAction(bool value)
@@ -195,19 +187,20 @@ public class MovementController : MonoBehaviour
 
     private void OnNoticed()
     {
-        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, false);
+        _animatorController.SneakBoolean(false);
         CanHide(false);
         _noticed = true;
     }
 
     private void InBuildingState(bool inBuilding, Building building)
     {
-        _animator.SetBool(SNEAK_ANIMATOR_BOOLEAN, inBuilding);
+        _animatorController.SneakBoolean(inBuilding);
         if (inBuilding)
         {
             _currentBuilding = building;
             CanHide(building.ContainsEnemies());
-            CameraChanger.Instance.SwitchToIndoorCamera();
+            if (building.IndoorCameraEnabled)
+                CameraChanger.Instance.SwitchToIndoorCamera();
         }
         else
         {

@@ -41,7 +41,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Lootable.ShowHoldButton += Show;
         MovementController.PlayerCaught += Abort;
-        EnemyAI.PlayerIsNoticed += Abort;
+        HumanAI.PlayerIsNoticed += Abort;
         OpenClosePopup.Opened += OnOpenPopup;
     }
 
@@ -49,7 +49,7 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Lootable.ShowHoldButton -= Show;
         MovementController.PlayerCaught -= Abort;
-        EnemyAI.PlayerIsNoticed -= Abort;
+        HumanAI.PlayerIsNoticed -= Abort;
         OpenClosePopup.Opened -= OnOpenPopup;
     }
 

@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3306201757709276786, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: _pathPointsContainer
+      value: 
+      objectReference: {fileID: 4280161930478479083}
     - target: {fileID: 4089485468096873397, guid: 07273f93ef072034da6884913b508d8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -104,6 +108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Real Big House MD Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6475894884519644991, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+      propertyPath: _pathPointsContainer
+      value: 
+      objectReference: {fileID: 4986590680977454948}
     - target: {fileID: 6762581644062083923, guid: 07273f93ef072034da6884913b508d8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -131,6 +139,16 @@ PrefabInstance:
 --- !u!4 &10286299561242921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1885670399649175065, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+  m_PrefabInstance: {fileID: 1877917934343972656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4280161930478479083 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2407601643588256219, guid: 07273f93ef072034da6884913b508d8a, type: 3}
+  m_PrefabInstance: {fileID: 1877917934343972656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4986590680977454948 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6862458495296819284, guid: 07273f93ef072034da6884913b508d8a, type: 3}
   m_PrefabInstance: {fileID: 1877917934343972656}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8164284094283764918

@@ -12,7 +12,8 @@ public class Building : MonoBehaviour, IIdentifiable
     public static event Action StatsChanged;
 
     [SerializeField] private bool _enableUpdates = true;
-    [SerializeField] private EnemyAI[] _enemies;
+    [SerializeField] private bool _enableIndoorCamera = true;
+    [SerializeField] private HumanAI[] _enemies;
     [SerializeField] private Door[] _doors;
     [SerializeField] private Lootable[] _lootables;
     [SerializeField] private LevelState[] _levelStates;
@@ -28,6 +29,7 @@ public class Building : MonoBehaviour, IIdentifiable
 
     private bool IsMaxLevel => _level > _levelStates.Length;
 
+    public bool IndoorCameraEnabled => _enableIndoorCamera;
     public int ID { get; set; }
 
     public SavedData Save()
