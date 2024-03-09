@@ -188,20 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _containedResources:
-  - Type: 0
-    DropChance: 90
-    CountsChances:
-    - 90
-    - 10
-    OnlyMinMaxRange: 0
-    MinMaxCount: {x: 0, y: 0}
-  - Type: 1
-    DropChance: 10
-    CountsChances:
-    - 90
-    - 10
-    OnlyMinMaxRange: 0
-    MinMaxCount: {x: 0, y: 0}
+  - {fileID: 11400000, guid: e94fb9997d1ce544fb3a940c66910844, type: 2}
   sound: 26
   _hackingArea: {fileID: 2123443670518620307}
   _appearHackingZoneTrigger: {fileID: 7383763923881535572}

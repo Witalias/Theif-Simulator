@@ -46,13 +46,13 @@ public class PlayerParticles : MonoBehaviour
 
     private void OnEnable()
     {
-        Lootable.Looted += ActivateConfettiParticle;
+        Lootable.GOnLooted += ActivateConfettiParticle;
         Door.Hacked += ActivateConfettiParticle;
     }
 
     private void OnDisable()
     {
-        Lootable.Looted -= ActivateConfettiParticle;
+        Lootable.GOnLooted -= ActivateConfettiParticle;
         Door.Hacked -= ActivateConfettiParticle;
     }
 }

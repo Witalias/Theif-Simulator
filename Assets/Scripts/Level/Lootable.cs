@@ -4,51 +4,43 @@ using System;
 using DG.Tweening;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MovingFurnitureElements))]
 public class Lootable : MonoBehaviour, IIdentifiable
 {
-    [Serializable]
-    private class ItemsDropChance
-    {
-        public ResourceType Type;
-        public float DropChance;
-        public float[] CountsChances;
-        public bool OnlyMinMaxRange;
-        public Vector2 MinMaxCount;
-    }
-
-    [Serializable]
-    public class SavedData
-    {
-        public int ID;
-        public bool IsEmpty;
-    }
-
     public static event Action<Action, Action> ShowHoldButton;
     public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
     public static event Action<string, float, bool> ShowQuickMessage;
-    public static event Action Looted;
+    public static event Action GOnLooted;
 
-    [Tooltip("Counts Changes: индекс+1 - количество предметов")]
-    [SerializeField] private ItemsDropChance[] _containedResources;
+    [SerializeField] private bool _enabled = true;
+    [SerializeField] private ContainedResource[] _containedResources;
     [SerializeField] private Sound sound;
-    [SerializeField] private GameObject _hackingArea;
+    [SerializeField] private MovingFurnitureElements _movingFurnitureElements;
+    [SerializeField] private TriggerZone _triggerZone;
     [SerializeField] private GameObject _appearHackingZoneTrigger;
     [SerializeField] private UnityEvent _onLooted;
 
-    private MovingFurnitureElements _movingFurnitureElements;
-    private Action _afterLootingAction;
     private readonly SavedData _savedData = new();
+    private Action _afterLootingAction;
     private bool _isLooting;
     private bool _isEmpty;
 
     public UnityEvent OnLooted => _onLooted;
+    public bool Enabled => _enabled;
 
     public int ID { get; set; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        _movingFurnitureElements = GetComponent<MovingFurnitureElements>();
+        _triggerZone.SubscribeOnEnter(OnPlayerEnter);
+        _triggerZone.SubscribeOnExit(OnPlayerExit);
+        _triggerZone.SubscribeOnStay(OnPlayerStay);
+    }
+
+    private void OnDisable()
+    {
+        _triggerZone.UnsubscribeOnEnter(OnPlayerEnter);
+        _triggerZone.UnsubscribeOnExit(OnPlayerExit);
+        _triggerZone.UnsubscribeOnStay(OnPlayerStay);
     }
 
     public SavedData Save()
@@ -68,13 +60,19 @@ public class Lootable : MonoBehaviour, IIdentifiable
         _afterLootingAction = afterLootingAction;
     }
 
-    public void OnPlayerEnter()
+    public void SetActiveTriggerZone(bool value)
+    {
+        _triggerZone.gameObject.SetActive(value);
+        _appearHackingZoneTrigger.SetActive(value);
+    }
+
+    private void OnPlayerEnter(MovementController player)
     {
         if (GameData.Instanse.Backpack.IsFull)
             ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 
-    public void OnPlayerStay(MovementController player)
+    private void OnPlayerStay(MovementController player)
     {
         if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
@@ -87,10 +85,10 @@ public class Lootable : MonoBehaviour, IIdentifiable
             TakeResource(player);
         }
 
-        _hackingArea.SetActive(!_isLooting);
+        _triggerZone.gameObject.SetActive(!_isLooting);
     }
 
-    public void OnPlayerExit(MovementController player)
+    private void OnPlayerExit(MovementController player)
     {
         if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
@@ -145,14 +143,21 @@ public class Lootable : MonoBehaviour, IIdentifiable
             }
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
-            Looted?.Invoke();
+            GOnLooted?.Invoke();
         }
         void ActionAbort()
         {
             _isLooting = false;
             _appearHackingZoneTrigger.SetActive(true);
-            _hackingArea.SetActive(true);
+            _triggerZone.gameObject.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
+    }
+
+    [Serializable]
+    public class SavedData
+    {
+        public int ID;
+        public bool IsEmpty;
     }
 }
