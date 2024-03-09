@@ -113,7 +113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3673819538377822854}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -50.97, y: 0, z: 43.49}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -238,7 +238,6 @@ MonoBehaviour:
     - 10
     OnlyMinMaxRange: 0
     MinMaxCount: {x: 0, y: 0}
-  _minMaxXP: {x: 1, y: 2}
   sound: 25
   _hackingArea: {fileID: 2967013927035699653}
   _appearHackingZoneTrigger: {fileID: 4088781167833659755}
