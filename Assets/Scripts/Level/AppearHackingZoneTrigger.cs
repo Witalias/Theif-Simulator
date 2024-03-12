@@ -4,12 +4,10 @@ using UnityEngine;
 public class AppearHackingZoneTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject _hackingZone;
+    [SerializeField] private TriggerZone _triggerZone;
     [SerializeField] private ParticleSystem _appearParticle;
 
-    private void OnEnable()
-    {
-        _hackingZone.SetActive(false);
-    }
+    public bool Enabled { get; set; } = true;
 
     private void Start()
     {
@@ -17,21 +15,34 @@ public class AppearHackingZoneTrigger : MonoBehaviour
         _appearParticle.transform.position = _hackingZone.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.GetComponent<MovementController>() == null)
-            return;
-
-        _hackingZone.SetActive(true);
-        _appearParticle.Play();
+        _hackingZone.SetActive(false);
+        _triggerZone.SubscribeOnEnter(OnEnter);
+        _triggerZone.SubscribeOnExit(OnExit);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnDisable()
     {
-        if (other.GetComponent<MovementController>() == null)
-            return;
+        _triggerZone.UnsubscribeOnEnter(OnEnter);
+        _triggerZone.UnsubscribeOnExit(OnExit);
+    }
 
-        _hackingZone.SetActive(false);
-        _appearParticle.Play();
+    private void OnEnter(MovementController player)
+    {
+        if (Enabled)
+        {
+            _hackingZone.SetActive(true);
+            _appearParticle.Play();
+        }
+    }
+
+    private void OnExit(MovementController player)
+    {
+        if (Enabled)
+        {
+            _hackingZone.SetActive(false);
+            _appearParticle.Play();
+        }
     }
 }

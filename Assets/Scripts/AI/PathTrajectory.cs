@@ -67,21 +67,28 @@ public class PathTrajectory : Pathfinder
 
     private void ChangeIndexAndGo()
     {
+        //if (_reverse)
+        //{
+        //    if (_currentIndex == 0)
+        //        _reverse = false;
+        //    else
+        //        _currentIndex--;
+        //}
+        //else
+        //{
+        //    if (_currentIndex == _path.Length - 1)
+        //        _reverse = true;
+        //    else
+        //        _currentIndex++;
+        //}
         if (_reverse)
         {
             if (_currentIndex == 0)
                 _reverse = false;
-            else
-                _currentIndex--;
         }
-        else
-        {
-            if (_currentIndex == _path.Length - 1)
-                _reverse = true;
-            else
-                _currentIndex++;
-        }
-        //_currentIndex += _reverse ? -1 : 1;
+        else if (_currentIndex == _path.Length - 1)
+            _reverse = true;
+        _currentIndex += _reverse ? -1 : 1;
         //if (_currentIndex == _path.Length || _currentIndex == -1)
         //{
         //    if (_loop)

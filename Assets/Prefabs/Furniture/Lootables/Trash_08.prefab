@@ -40,6 +40,18 @@ PrefabInstance:
       propertyPath: _movingObjects.Array.data[0].EndLocalRotation.z
       value: 67.28
       objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4999963
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4999847
+      objectReference: {fileID: 0}
     - target: {fileID: 2541828870599521414, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5000019
@@ -58,11 +70,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e94fb9997d1ce544fb3a940c66910844, type: 2}
     - target: {fileID: 4845876165754412170, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_Name
-      value: Trash_08 Variant
+      value: Trash_08
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x

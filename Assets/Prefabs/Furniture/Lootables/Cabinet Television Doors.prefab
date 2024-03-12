@@ -141,6 +141,18 @@ PrefabInstance:
       propertyPath: _movingObjects.Array.data[1].EndLocalRotation.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.999954
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.0000002
+      objectReference: {fileID: 0}
     - target: {fileID: 2541828870599521414, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -163,11 +175,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: a883a91decaefa1419d9c7530c5f1afb, type: 2}
     - target: {fileID: 4845876165754412170, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_Name
-      value: Cabinet Television Doors Variant
+      value: Cabinet Television Doors
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x

@@ -10,6 +10,7 @@ public class HumanAI : PathTrajectory
     public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
+    [SerializeField] private bool _alwaysRun;
     [SerializeField] private bool _calmOnTimer;
     [SerializeField] private float _followSpeed;
     [SerializeField] private float _caughtDuration;
@@ -91,7 +92,7 @@ public class HumanAI : PathTrajectory
     protected override void GoTo(Vector3 position)
     {
         base.GoTo(position);
-        if (_worried)
+        if (_worried || _alwaysRun)
             _animatorController.RunBoolean(true);
         else
             _animatorController.WalkBoolean(true);

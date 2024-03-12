@@ -20,6 +20,7 @@ public class GameData : MonoBehaviour
     [SerializeField] private int _maxLevel = 30;
     [SerializeField] private int _hackingXPReward;
     [SerializeField] private int _theftXPReward;
+    [SerializeField] private int _theftValuableXPReward;
 
     [Header("Leaderboard")]
     [SerializeField] private string _leaderboardName;
@@ -47,6 +48,7 @@ public class GameData : MonoBehaviour
     public int MaxLevel => _maxLevel;
     public int HackingXPReward => _hackingXPReward;
     public int TheftXPReward => _theftXPReward;
+    public int TheftValuableXPReward => _theftValuableXPReward;
     public Transform PrisonSpawnPoint => _prisonSpawnPoint;
     public Transform InitialPlayerSpawnPoint => _initialPlayerSpawnPoint;
     public string LeaderboardName => _leaderboardName;

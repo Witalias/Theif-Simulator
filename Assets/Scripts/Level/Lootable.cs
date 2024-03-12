@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using DG.Tweening;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class Lootable : MonoBehaviour, IIdentifiable
 {
@@ -12,35 +13,57 @@ public class Lootable : MonoBehaviour, IIdentifiable
     public static event Action GOnLooted;
 
     [SerializeField] private bool _enabled = true;
-    [SerializeField] private ContainedResource[] _containedResources;
+    [SerializeField] private bool _regenerative;
+    [SerializeField] private bool _valuable;
     [SerializeField] private Sound sound;
+    [SerializeField, Tooltip("Количество открытий: индекс + 1\nПри превышении лимита берётся последнее значение.")]
+    private int[] _moneyValues;
+    [SerializeField] private ContainedResource[] _containedResources;
+    [Space(30)]
     [SerializeField] private MovingFurnitureElements _movingFurnitureElements;
-    [SerializeField] private TriggerZone _triggerZone;
-    [SerializeField] private GameObject _appearHackingZoneTrigger;
+    [SerializeField] private TriggerZone _hackingZone;
+    [SerializeField] private TriggerZone _appearHackingZone;
+    [SerializeField] private CustomTimer _refillTimer;
+    [SerializeField] private GameObject _shineParticle;
+    [SerializeField] private GameObject _goldShineParticle;
     [SerializeField] private UnityEvent _onLooted;
 
     private readonly SavedData _savedData = new();
+    private Queue<int> _moneyValuesQueue;
     private Action _afterLootingAction;
     private bool _isLooting;
     private bool _isEmpty;
 
     public UnityEvent OnLooted => _onLooted;
     public bool Enabled => _enabled;
+    public bool Regenerative => _regenerative;
+    public bool Valuable => _valuable;
 
     public int ID { get; set; }
 
+    private void Awake()
+    {
+        _moneyValuesQueue = new(_moneyValues);
+    }
+
     private void OnEnable()
     {
-        _triggerZone.SubscribeOnEnter(OnPlayerEnter);
-        _triggerZone.SubscribeOnExit(OnPlayerExit);
-        _triggerZone.SubscribeOnStay(OnPlayerStay);
+        _hackingZone.SubscribeOnEnter(OnHackingZoneEnter);
+        _hackingZone.SubscribeOnExit(OnHackingZoneExit);
+        _hackingZone.SubscribeOnStay(OnHackingZoneStay);
+        _appearHackingZone.SubscribeOnEnter(OnAppearHackingZoneEnter);
+        _appearHackingZone.SubscribeOnExit(OnAppearHackingZoneExit);
+        _refillTimer.SubscribeOnComplete(OnRefillTimerComplete);
     }
 
     private void OnDisable()
     {
-        _triggerZone.UnsubscribeOnEnter(OnPlayerEnter);
-        _triggerZone.UnsubscribeOnExit(OnPlayerExit);
-        _triggerZone.UnsubscribeOnStay(OnPlayerStay);
+        _hackingZone.UnsubscribeOnEnter(OnHackingZoneEnter);
+        _hackingZone.UnsubscribeOnExit(OnHackingZoneExit);
+        _hackingZone.UnsubscribeOnStay(OnHackingZoneStay);
+        _appearHackingZone.UnsubscribeOnEnter(OnAppearHackingZoneEnter);
+        _appearHackingZone.UnsubscribeOnExit(OnAppearHackingZoneExit);
+        _refillTimer.UnsubscribeOnComplete(OnRefillTimerComplete);
     }
 
     public SavedData Save()
@@ -53,6 +76,9 @@ public class Lootable : MonoBehaviour, IIdentifiable
     public void Load(SavedData data)
     {
         SetEmpty(data.IsEmpty);
+
+        if (_regenerative && data.IsEmpty)
+            _refillTimer.Run();
     }
 
     public void Initialize(Action afterLootingAction)
@@ -62,17 +88,42 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public void SetActiveTriggerZone(bool value)
     {
-        _triggerZone.gameObject.SetActive(value);
-        _appearHackingZoneTrigger.SetActive(value);
+        _hackingZone.gameObject.SetActive(value);
+        _appearHackingZone.gameObject.SetActive(value);
     }
 
-    private void OnPlayerEnter(MovementController player)
+    public void SetActiveRefillTimer(bool value) => _refillTimer.gameObject.SetActive(value);
+
+    public void SetActiveShine(bool value) => _shineParticle.SetActive(value);
+
+    public void SetActiveGoldShine(bool value) => _goldShineParticle.SetActive(value);
+
+    public void SetEmpty(bool value)
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        _isEmpty = value;
+        _appearHackingZone.GetComponent<AppearHackingZoneTrigger>().Enabled = !value;
+
+        if (_valuable)
+            SetActiveGoldShine(!value);
+        else
+            SetActiveShine(!value);
+
+        if (value == true)
+            _movingFurnitureElements.MoveForward();
+        else
+            _movingFurnitureElements.MoveBack();
+    }
+
+    private void OnHackingZoneEnter(MovementController player)
     {
         if (GameData.Instanse.Backpack.IsFull)
             ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 
-    private void OnPlayerStay(MovementController player)
+    private void OnHackingZoneStay(MovementController player)
     {
         if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
@@ -81,14 +132,14 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
         if (!player.IsRunning && !_isLooting)
         {
-            player.RotateTowards(_appearHackingZoneTrigger.transform.position);
+            player.RotateTowards(_appearHackingZone.transform.position);
             TakeResource(player);
         }
 
-        _triggerZone.gameObject.SetActive(!_isLooting);
+        _hackingZone.gameObject.SetActive(!_isLooting);
     }
 
-    private void OnPlayerExit(MovementController player)
+    private void OnHackingZoneExit(MovementController player)
     {
         if (_isEmpty || GameData.Instanse.Backpack.IsFull || player.Noticed || player.Busy)
             return;
@@ -96,19 +147,22 @@ public class Lootable : MonoBehaviour, IIdentifiable
         player.CanHide(true);
     }
 
-    public void SetEmpty(bool value)
+    private void OnAppearHackingZoneEnter(MovementController player)
     {
-        if (!gameObject.activeSelf)
-            return;
+        if (_regenerative && _refillTimer.IsOn)
+            _refillTimer.SetContentActive(true);
+    }
 
-        _isEmpty = value;
-        //_hackingArea.SetActive(!value);
-        _appearHackingZoneTrigger.SetActive(!value);
+    private void OnAppearHackingZoneExit(MovementController player)
+    {
+        if (_regenerative)
+            _refillTimer.SetContentActive(false);
+    }
 
-        if (value == true)
-            _movingFurnitureElements.MoveForward();
-        else
-            _movingFurnitureElements.MoveBack();
+    private void OnRefillTimerComplete()
+    {
+        SetEmpty(false);
+        _refillTimer.SetContentActive(false);
     }
 
     private void TakeResource(MovementController player)
@@ -121,26 +175,43 @@ public class Lootable : MonoBehaviour, IIdentifiable
             _isLooting = false;
             player.CanHide(true);
 
+            ResourceType resource = 0;
+            var count = 0;
+            var money = 0;
+            var xp = _valuable ? GameData.Instanse.TheftValuableXPReward : GameData.Instanse.TheftXPReward;
+
             if (_containedResources.Length > 0)
             {
                 var randomIndex = Randomizator.GetRandomIndexByChances(_containedResources.Select(item => item.DropChance).ToArray());
-                var randomResource = _containedResources[randomIndex];
-                var count = Randomizator.GetRandomIndexByChances(randomResource.CountsChances) + 1;
+                var containedResource = _containedResources[randomIndex];
+                resource = containedResource.Type;
+                count = Randomizator.GetRandomIndexByChances(containedResource.CountsChances) + 1;
 
                 TaskManager.Instance.ProcessTask(TaskType.TheftItems, count);
                 TaskManager.Instance.ProcessTask(TaskType.TutorialRobHouse, 1);
-                TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, randomResource.Type, count);
+                TaskManager.Instance.ProcessTask(TaskType.TheftCertainItems, containedResource.Type, count);
 
-                if (randomResource.OnlyMinMaxRange)
-                    count = (int)UnityEngine.Random.Range(randomResource.MinMaxCount.x, randomResource.MinMaxCount.y);
-                GameData.Instanse.Backpack.AddResource(randomResource.Type, count);
+                if (containedResource.OnlyMinMaxRange)
+                    count = (int)UnityEngine.Random.Range(containedResource.MinMaxCount.x, containedResource.MinMaxCount.y);
+                GameData.Instanse.Backpack.AddResource(containedResource.Type, count);
 
-                var xp = GameData.Instanse.TheftXPReward;
-                GameData.Instanse.PlayerLevel.AddXP(xp);
+                SoundManager.Instanse.Play(GameData.Instanse.GetResourceSound(containedResource.Type));
 
-                PlayResourceAnimation?.Invoke(randomResource.Type, count, xp, 0);
-                SoundManager.Instanse.Play(GameData.Instanse.GetResourceSound(randomResource.Type));
+                if (_regenerative)
+                {
+                    _refillTimer.SetContentActive(true);
+                    _refillTimer.Run();
+                }
             }
+            if (_moneyValuesQueue.Count > 0)
+            {
+                money = GetMoneyValue();
+                GameData.Instanse.AddMoney(money);
+                SoundManager.Instanse.Play(Sound.GetMoney);
+            }
+            GameData.Instanse.PlayerLevel.AddXP(xp);
+            PlayResourceAnimation?.Invoke(resource, count, xp, money);
+
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
             GOnLooted?.Invoke();
@@ -148,10 +219,17 @@ public class Lootable : MonoBehaviour, IIdentifiable
         void ActionAbort()
         {
             _isLooting = false;
-            _appearHackingZoneTrigger.SetActive(true);
-            _triggerZone.gameObject.SetActive(true);
+            _appearHackingZone.GetComponent<AppearHackingZoneTrigger>().Enabled = true;
+            _hackingZone.gameObject.SetActive(true);
         }
         ShowHoldButton?.Invoke(ActionDone, ActionAbort);
+    }
+
+    private int GetMoneyValue()
+    {
+        if (_moneyValuesQueue.Count > 1)
+            return _moneyValuesQueue.Dequeue();
+        return _moneyValuesQueue.Peek();
     }
 
     [Serializable]

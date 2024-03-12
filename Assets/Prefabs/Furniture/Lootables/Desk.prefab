@@ -32,6 +32,18 @@ PrefabInstance:
       propertyPath: _movingObjects.Array.data[0].EndLocalPosition.z
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4999886
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4999847
+      objectReference: {fileID: 0}
     - target: {fileID: 2541828870599521414, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5000038
@@ -50,11 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: a883a91decaefa1419d9c7530c5f1afb, type: 2}
     - target: {fileID: 4845876165754412170, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_Name
-      value: Desk Variant
+      value: Desk
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x

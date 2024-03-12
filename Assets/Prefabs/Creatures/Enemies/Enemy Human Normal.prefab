@@ -193,7 +193,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy Human Normal
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_Layer
@@ -449,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
       propertyPath: m_LocalScale.x
@@ -511,6 +511,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 084f687b1770c41459d0b4baed969bc0, type: 2}
+    - target: {fileID: 13700000, guid: c63a0f262481f1841881031595ba98cb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 91ee6e9d91daf1c40b116e8f3fc7cad0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

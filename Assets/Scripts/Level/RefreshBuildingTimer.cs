@@ -3,11 +3,10 @@ using System.Collections;
 using UnityEngine;
 using YG;
 
-[RequireComponent(typeof(Building))]
 public class RefreshBuildingTimer : MonoBehaviour
 {
-    [SerializeField] private int _secondsForRefresh;
     [SerializeField] private bool _enabled = true;
+    [SerializeField] private int _secondsForRefresh = 120;
 
     private Coroutine _tickCoroutine;
     private Action _outAction;

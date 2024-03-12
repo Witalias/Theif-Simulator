@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using YG;
 
-[RequireComponent(typeof(RefreshBuildingTimer))]
+[RequireComponent(typeof(RefreshBuildingTimer), typeof(TriggerZone), typeof(BoxCollider))]
 public class Building : MonoBehaviour, IIdentifiable
 {
     public static event Action<bool, Building> PlayerInBuilding;
@@ -13,11 +13,12 @@ public class Building : MonoBehaviour, IIdentifiable
 
     [SerializeField] private bool _enableUpdates = true;
     [SerializeField] private bool _enableIndoorCamera = true;
-    [SerializeField] private HumanAI[] _enemies;
-    [SerializeField] private Door[] _doors;
-    [SerializeField] private Lootable[] _lootables;
     [SerializeField] private LevelState[] _levelStates;
 
+    private HumanAI[] _enemies;
+    private Door[] _doors;
+    private Lootable[] _lootables;
+    private TriggerZone _triggerZone;
     private int _level = 1;
     private int _currentXp;
     private int _requiredXp;
@@ -31,6 +32,41 @@ public class Building : MonoBehaviour, IIdentifiable
 
     public bool IndoorCameraEnabled => _enableIndoorCamera;
     public int ID { get; set; }
+
+    private void Awake()
+    {
+        if (TryGetComponent<RefreshBuildingTimer>(out _refreshTimer))
+            _refreshTimer.Initialize(Refresh, UpdateTimerText);
+
+        _lootables = GetComponentsInChildren<Lootable>();
+        _doors = GetComponentsInChildren<Door>();
+        _enemies = GetComponentsInChildren<HumanAI>();
+        _triggerZone = GetComponent<TriggerZone>();
+
+        void OnLooted()
+        {
+            AddXp();
+            _shouldBeRefreshed = true;
+        }
+
+        foreach (var lootable in _lootables)
+            lootable.Initialize(OnLooted);
+
+        foreach (var enemy in _enemies)
+            enemy.Initialize(this);
+    }
+
+    private void OnEnable()
+    {
+        _triggerZone.SubscribeOnEnter(OnPlayerEnter);
+        _triggerZone.SubscribeOnExit(OnPlayerExit);
+    }
+
+    private void OnDisable()
+    {
+        _triggerZone.UnsubscribeOnEnter(OnPlayerEnter);
+        _triggerZone.UnsubscribeOnExit(OnPlayerExit);
+    }
 
     public SavedData Save()
     {
@@ -77,7 +113,7 @@ public class Building : MonoBehaviour, IIdentifiable
 
     public IEnumerable<IIdentifiable> GetIdentifiables() => _lootables.Cast<IIdentifiable>().Concat(_doors);
 
-    public void OnPlayerEnter()
+    public void OnPlayerEnter(MovementController player)
     {
         if (_triggered)
         {
@@ -95,7 +131,7 @@ public class Building : MonoBehaviour, IIdentifiable
             _refreshTimer.StopTimer();
     }
 
-    public void OnPlayerExit()
+    public void OnPlayerExit(MovementController player)
     {
         if (_isIntersectTriggers)
         {
@@ -146,33 +182,11 @@ public class Building : MonoBehaviour, IIdentifiable
         return false;
     }
 
-    private void Awake()
+    public void NextLevelDebug()
     {
-        if (TryGetComponent<RefreshBuildingTimer>(out _refreshTimer))
-            _refreshTimer.Initialize(Refresh, UpdateTimerText);
-
-        void OnLooted()
-        {
-            AddXp();
-            _shouldBeRefreshed = true;
-        }
-        foreach (var lootable in _lootables)
-            lootable.Initialize(OnLooted);
-
-        foreach (var enemy in _enemies)
-            enemy.Initialize(this);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<MovementController>(out MovementController player))
-            OnPlayerEnter();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<MovementController>(out MovementController player))
-            OnPlayerExit();
+        NextLevel();
+        if (_level > 1 && !_levelStates[_level - 2].ObjectsWasActived)
+            ApplyLevelChanges(_levelStates[_level - 2]);
     }
 
     private void Refresh()
@@ -194,6 +208,8 @@ public class Building : MonoBehaviour, IIdentifiable
     {
         foreach (var obj in levelState.ObjectsToActive)
             obj.SetActive(true);
+        foreach (var obj in levelState.ObjectsToInactive)
+            obj.SetActive(false);
         levelState.ObjectsWasActived = true;
     }
 
@@ -254,6 +270,7 @@ public class Building : MonoBehaviour, IIdentifiable
     {
         public int RequiredXp;
         public GameObject[] ObjectsToActive;
+        public GameObject[] ObjectsToInactive;
 
         public bool ObjectsWasActived { get; set; }
     }

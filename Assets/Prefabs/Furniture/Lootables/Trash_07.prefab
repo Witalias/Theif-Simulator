@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.000014543533
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 2541828870599521414, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -30,11 +42,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e94fb9997d1ce544fb3a940c66910844, type: 2}
     - target: {fileID: 4845876165754412170, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_Name
-      value: Trash_07 Variant
+      value: Trash_07
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -81,7 +93,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       insertIndex: 0
-      addedObject: {fileID: 5157004516887951393}
+      addedObject: {fileID: 6832265936146616156}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
 --- !u!4 &7872608900330301140 stripped
@@ -150,7 +162,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3085412f66bf6fc44821b5020ccb775b, type: 3}
---- !u!4 &5157004516887951393 stripped
+--- !u!4 &6832265936146616156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7871003305283971982, guid: 3085412f66bf6fc44821b5020ccb775b, type: 3}
   m_PrefabInstance: {fileID: 3740941418150307026}

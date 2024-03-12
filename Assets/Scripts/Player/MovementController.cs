@@ -47,6 +47,7 @@ public class MovementController : MonoBehaviour
         BlackMarketArea.PlayerExit += SavePosition;
         LevelManager.PlayerInBuilding += GetInBuildingBoolean;
         LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
+        Cheats.GBuildingUpgraded += UpgrageCurrentBuildingDebug;
     }
 
     private void OnDisable()
@@ -61,6 +62,7 @@ public class MovementController : MonoBehaviour
         BlackMarketArea.PlayerExit -= SavePosition;
         LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
         LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
+        Cheats.GBuildingUpgraded -= UpgrageCurrentBuildingDebug;
     }
 
     private void FixedUpdate()
@@ -209,6 +211,12 @@ public class MovementController : MonoBehaviour
             CanHide(false);
             CameraChanger.Instance.SwitchToMainCamera();
         }
+    }
+
+    private void UpgrageCurrentBuildingDebug()
+    {
+        if (_currentBuilding != null)
+            _currentBuilding.NextLevelDebug();
     }
 
     private void SavePosition()

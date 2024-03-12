@@ -141,6 +141,10 @@ PrefabInstance:
       propertyPath: _movingObjects.Array.data[1].EndLocalRotation.y
       value: 135
       objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3051792635313686642, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: _containedResources.Array.size
       value: 1
@@ -151,11 +155,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 407cf1bc036acfd4d9e20095af765cbc, type: 2}
     - target: {fileID: 4845876165754412170, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_Name
-      value: Washer Dryer Stacked Variant
+      value: Washer Dryer Stacked
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182261704613213563, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: m_LocalPosition.x

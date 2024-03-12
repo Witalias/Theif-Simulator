@@ -28,6 +28,14 @@ PrefabInstance:
       propertyPath: _movingObjects.Array.data[0].EndLocalRotation.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 962501134514378601, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.99998486
+      objectReference: {fileID: 0}
     - target: {fileID: 3051792635313686642, guid: 78e6670a7af76234ca6b1630ea73a6cb, type: 3}
       propertyPath: sound
       value: 24

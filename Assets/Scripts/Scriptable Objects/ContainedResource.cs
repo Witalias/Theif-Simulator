@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Resource", menuName = "Scriptable Objects/Contained Resource", order = 1)]
