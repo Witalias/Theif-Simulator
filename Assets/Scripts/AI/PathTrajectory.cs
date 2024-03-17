@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,11 +7,10 @@ using UnityEngine.AI;
 public class PathTrajectory : Pathfinder
 {
     [SerializeField] private Transform _pathPointsContainer;
-    [SerializeField] private Transform[] _stopPoints;
+    [SerializeField] private StopablePoint[] _stopPoints;
     [SerializeField] private bool _loop;
     [SerializeField] private bool _reverse;
     [SerializeField] private bool _goOnStart = true;
-    [SerializeField] private float _stoppingDuration = 3.0f;
     
     private Transform[] _path;
     private int _currentIndex;
@@ -32,7 +32,7 @@ public class PathTrajectory : Pathfinder
 
     protected override void Update()
     {
-        if (_path == null || _path.Length <= 1)
+        if (_path == null || _path.Length == 0)
             return;
 
         base.Update(); 
@@ -56,11 +56,12 @@ public class PathTrajectory : Pathfinder
     {
         base.Stop();
 
-        if (!_goNextPointAfterStopping)
+        if (!_goNextPointAfterStopping || _path.Length <= 1)
             return;
 
-        if (_stopPoints.Contains(_path[_currentIndex]))
-            DOVirtual.DelayedCall(_stoppingDuration, ChangeIndexAndGo);
+        var stopPoint = _stopPoints.Where(stopPoint => stopPoint.Point == _path[_currentIndex]);
+        if (stopPoint.Count() > 0)
+            DOVirtual.DelayedCall(stopPoint.First().Duration, ChangeIndexAndGo);
         else
             ChangeIndexAndGo();
     }
@@ -103,4 +104,11 @@ public class PathTrajectory : Pathfinder
         //}
         FollowTrajectory();
     }
+
+    [Serializable]
+    private class StopablePoint
+    {
+        public Transform Point;
+        public float Duration;
+    }    
 }

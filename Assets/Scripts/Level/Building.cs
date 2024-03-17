@@ -38,9 +38,9 @@ public class Building : MonoBehaviour, IIdentifiable
         if (TryGetComponent<RefreshBuildingTimer>(out _refreshTimer))
             _refreshTimer.Initialize(Refresh, UpdateTimerText);
 
-        _lootables = GetComponentsInChildren<Lootable>();
-        _doors = GetComponentsInChildren<Door>();
-        _enemies = GetComponentsInChildren<HumanAI>();
+        _lootables = GetComponentsInChildren<Lootable>(true);
+        _doors = GetComponentsInChildren<Door>(true);
+        _enemies = GetComponentsInChildren<HumanAI>(true);
         _triggerZone = GetComponent<TriggerZone>();
 
         void OnLooted()
@@ -178,6 +178,16 @@ public class Building : MonoBehaviour, IIdentifiable
                     PlayerInBuildingWithEnemyFirstly?.Invoke();
                 return true;
             }
+        }
+        return false;
+    }
+
+    public bool ContainsWorriedEnemies()
+    {
+        foreach (var enemy in _enemies)
+        {
+            if (enemy.Worried)
+                return true;
         }
         return false;
     }

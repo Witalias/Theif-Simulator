@@ -12,6 +12,7 @@ public class Doghouse : MonoBehaviour
     [SerializeField] private UIBar _visibilityBar;
     [SerializeField] private Animation _visibilityAnimation;
     [SerializeField] private Transform _entrancePoint;
+    [SerializeField] private DogAI _dogPrefab;
 
     private event Action OnVisibilityBarFilled;
     private event Action<MovementController> OnPlayerEnterTrigger;
@@ -48,6 +49,7 @@ public class Doghouse : MonoBehaviour
             return;
 
         player.UnsubscribeOnMove(OnPlayerMove);
+        player.NotNotice();
         OnPlayerExitTrigger?.Invoke(player);
         StopAllCoroutines();
         StartCoroutine(ProccessDecreaseVisibility());

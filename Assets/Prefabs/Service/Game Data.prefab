@@ -59,6 +59,7 @@ MonoBehaviour:
   _maxLevel: 30
   _hackingXPReward: 5
   _theftXPReward: 10
+  _theftValuableXPReward: 30
   _leaderboardName: SoldItems
   _prisonSpawnPoint: {fileID: 0}
   _initialPlayerSpawnPoint: {fileID: 0}

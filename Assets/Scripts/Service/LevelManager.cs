@@ -17,13 +17,9 @@ public class LevelManager : MonoBehaviour
     private readonly List<CinemachineVirtualCamera> _newAvailableAreaCameras = new();
     private Coroutine _moveCameraToPointsCoroutine;
 
-    private void Awake()
-    {
-        SetIDs();
-    }
-
     private void Start()
     {
+        SetIDs();
         Load();
         Initialize();
     }

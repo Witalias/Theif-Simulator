@@ -7,7 +7,7 @@ public class Pathfinder : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!_agent.isStopped && _agent.remainingDistance <= _agent.stoppingDistance)
+        if (!_agent.isStopped && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
             Stop();
     }
 

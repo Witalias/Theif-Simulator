@@ -36,7 +36,7 @@ Transform:
   - {fileID: 8663353359270193525}
   - {fileID: 1319066565507521331}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7608191435649314210
 MonoBehaviour:
@@ -106,7 +106,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.25
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -306,15 +306,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 687ded31de29dc049a192e45842c7bd8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.47998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 687ded31de29dc049a192e45842c7bd8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 687ded31de29dc049a192e45842c7bd8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.0200043
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 687ded31de29dc049a192e45842c7bd8, type: 3}
       propertyPath: m_LocalRotation.w

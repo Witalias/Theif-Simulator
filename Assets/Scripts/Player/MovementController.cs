@@ -41,8 +41,8 @@ public class MovementController : MonoBehaviour
         UIHoldButton.HoldButtonActived += OnHack;
         OpenClosePopup.OpenedLate += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
-        HumanAI.PlayerIsNoticed += OnNoticed;
-        Doghouse.GPlayerIsNoticed += OnNoticed;
+        HumanAI.PlayerIsNoticed += Notice;
+        Doghouse.GPlayerIsNoticed += Notice;
         Door.BuildingInfoShowed += SavePosition;
         BlackMarketArea.PlayerExit += SavePosition;
         LevelManager.PlayerInBuilding += GetInBuildingBoolean;
@@ -56,8 +56,8 @@ public class MovementController : MonoBehaviour
         UIHoldButton.HoldButtonActived -= OnHack;
         OpenClosePopup.OpenedLate -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
-        HumanAI.PlayerIsNoticed -= OnNoticed;
-        Doghouse.GPlayerIsNoticed -= OnNoticed;
+        HumanAI.PlayerIsNoticed -= Notice;
+        Doghouse.GPlayerIsNoticed -= Notice;
         Door.BuildingInfoShowed -= SavePosition;
         BlackMarketArea.PlayerExit -= SavePosition;
         LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
@@ -85,7 +85,6 @@ public class MovementController : MonoBehaviour
         _animatorController.SitBoolean(true);
         _particles.ActivateSmokeParticles(true);
         _noticed = false;
-        //InBuildingState(false, null);
         StartCoroutine(Coroutine());
 
         IEnumerator Coroutine()
@@ -107,6 +106,17 @@ public class MovementController : MonoBehaviour
             return;
 
         _canHide = value;
+    }
+
+    public void Notice()
+    {
+        SetNotice(true);
+    }
+
+    public void NotNotice()
+    {
+        if (_currentBuilding != null && !_currentBuilding.ContainsWorriedEnemies())
+            SetNotice(false);
     }
 
     public void SubscribeOnMove(Action<bool> action) => OnMove += action;
@@ -187,11 +197,11 @@ public class MovementController : MonoBehaviour
             Stop();
     }
 
-    private void OnNoticed()
+    private void SetNotice(bool value)
     {
-        _animatorController.SneakBoolean(false);
-        CanHide(false);
-        _noticed = true;
+        _animatorController.SneakBoolean(!value);
+        CanHide(!value);
+        _noticed = value;
     }
 
     private void InBuildingState(bool inBuilding, Building building)

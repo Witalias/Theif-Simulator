@@ -200,7 +200,8 @@ MonoBehaviour:
   _hackingZone: {fileID: 7036749340248130102}
   _appearHackingZone: {fileID: 590386165918674197}
   _refillTimer: {fileID: 5981928153781890184}
-  _shineParticle: {fileID: 6027329629728796852}
+  _shineContainer: {fileID: 1614617088307017411}
+  _normalShineParticle: {fileID: 6027329629728796852}
   _goldShineParticle: {fileID: 8888416526930112805}
   _onLooted:
     m_PersistentCalls:

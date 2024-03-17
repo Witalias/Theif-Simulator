@@ -24,7 +24,8 @@ public class Lootable : MonoBehaviour, IIdentifiable
     [SerializeField] private TriggerZone _hackingZone;
     [SerializeField] private TriggerZone _appearHackingZone;
     [SerializeField] private CustomTimer _refillTimer;
-    [SerializeField] private GameObject _shineParticle;
+    [SerializeField] private GameObject _shineContainer;
+    [SerializeField] private GameObject _normalShineParticle;
     [SerializeField] private GameObject _goldShineParticle;
     [SerializeField] private UnityEvent _onLooted;
 
@@ -94,9 +95,11 @@ public class Lootable : MonoBehaviour, IIdentifiable
 
     public void SetActiveRefillTimer(bool value) => _refillTimer.gameObject.SetActive(value);
 
-    public void SetActiveShine(bool value) => _shineParticle.SetActive(value);
+    public void SetActiveNormalShine(bool value) => _normalShineParticle.SetActive(value);
 
     public void SetActiveGoldShine(bool value) => _goldShineParticle.SetActive(value);
+
+    public void SetActiveShineContainer(bool value) => _shineContainer.SetActive(value);
 
     public void SetEmpty(bool value)
     {
@@ -109,7 +112,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
         if (_valuable)
             SetActiveGoldShine(!value);
         else
-            SetActiveShine(!value);
+            SetActiveNormalShine(!value);
 
         if (value == true)
             _movingFurnitureElements.MoveForward();
