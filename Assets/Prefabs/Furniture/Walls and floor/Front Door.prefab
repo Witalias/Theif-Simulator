@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4880760726134456769}
   - component: {fileID: 3019462004031250428}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Progress Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 1898714775270354798}
   - component: {fileID: 1667166992915107497}
   - component: {fileID: 1109314976485366585}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 6176332191869954423}
   - component: {fileID: 2721545052006331191}
   - component: {fileID: 5887029298540763876}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Difference Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 5953880421572257758}
   - component: {fileID: 217619330983719033}
   - component: {fileID: 3931299170462228380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 7568999946554200803}
   - component: {fileID: 6735963233283725961}
   - component: {fileID: 6549418940281220359}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Building Info Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 4909728025024407610}
   - component: {fileID: 5455576862994320195}
   - component: {fileID: 5850456613742641327}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 8714519399828847475}
   - component: {fileID: 356557676955635586}
   - component: {fileID: 1576694002888654075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 4015293061505167160}
   - component: {fileID: 6672749382772070212}
   - component: {fileID: 5003482531806082464}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -968,7 +968,7 @@ GameObject:
   - component: {fileID: 2369509201946214740}
   - component: {fileID: 8355270751179451631}
   - component: {fileID: 4148565481065690345}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1115,7 +1115,7 @@ GameObject:
   - component: {fileID: 6131703807711339101}
   - component: {fileID: 9160006286622103811}
   - component: {fileID: 761186419480485992}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1229,7 @@ GameObject:
   - component: {fileID: 6994107794587935045}
   - component: {fileID: 4907416881888767571}
   - component: {fileID: 2896552644392189250}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,7 +1364,7 @@ GameObject:
   - component: {fileID: 3418040542332057725}
   - component: {fileID: 3810922827461835534}
   - component: {fileID: 8315127343889222345}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1464,7 +1464,7 @@ GameObject:
   - component: {fileID: 7959052019713995817}
   - component: {fileID: 5588239465327672285}
   - component: {fileID: 6145753465191626123}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1539,6 +1539,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1403397041142590198}
     m_Modifications:
+    - target: {fileID: 1080224352895064848, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1221704578781969907, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420688147523005039, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2926910864888229419, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1583,9 +1595,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3254027643890181041, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3399198726588191965, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
       propertyPath: m_Name
       value: Hacking Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399198726588191965, guid: 19cdd98ae7222de4da21a02b2e4c1aec, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1616,7 +1636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 324925879025689999, guid: 53af00f786cd9c44b8d88ea812255bdf, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 392860735809954866, guid: 53af00f786cd9c44b8d88ea812255bdf, type: 3}
       propertyPath: m_Mesh
@@ -1680,11 +1700,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703753897915425870, guid: 53af00f786cd9c44b8d88ea812255bdf, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3292634727812753360, guid: 53af00f786cd9c44b8d88ea812255bdf, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3292634727812753360, guid: 53af00f786cd9c44b8d88ea812255bdf, type: 3}
       propertyPath: m_IsActive
@@ -1751,6 +1771,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Appear Hacking Zone Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 619286201724448727, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1317948783390275125, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -1794,6 +1818,26 @@ PrefabInstance:
     - target: {fileID: 1317948783390275125, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719145796924517853, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719286479941508621, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591891799176969776, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722291083642740462, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722291084609568926, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8722889570937912585, guid: 75c68b720b163454ea8798a5e06e8c72, type: 3}
       propertyPath: _hackingZone

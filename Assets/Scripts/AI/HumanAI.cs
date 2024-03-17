@@ -14,14 +14,14 @@ public class HumanAI : PathTrajectory
     [SerializeField] private bool _calmOnTimer;
     [SerializeField] private float _followSpeed;
     [SerializeField] private float _caughtDuration;
-    [SerializeField] private Color _detectViewColor;
-    [SerializeField] private SpriteRenderer _view;
+    [SerializeField] private Material _detectViewMaterial;
+    [SerializeField] private DrawFieldOfView _visionCone;
+    [SerializeField] private FieldOfView _fieldOfView;
     [SerializeField] private HumanAnimatorController _animatorController;
-    [SerializeField] private FieldOfView _vision;
     [SerializeField] private AudioSource _audioSource;
 
     private MovementController _player;
-    private Color _defaultViewColor;
+    private Material _defaultViewMaterial;
     private Building _building;
     private Tween _detectTween;
     private float _defaultSpeed;
@@ -34,13 +34,13 @@ public class HumanAI : PathTrajectory
     protected override void Awake()
     {
         base.Awake();
-        _defaultViewColor = _view.color;
         _defaultSpeed = _agent.speed;
     }
 
     protected override void Start()
     {
         base.Start();
+        _defaultViewMaterial = _visionCone.Material;
         _player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
     }
 
@@ -79,7 +79,7 @@ public class HumanAI : PathTrajectory
         _followed = false;
         _worried = false;
         _agent.speed = _defaultSpeed;
-        _view.color = _defaultViewColor;
+        _visionCone.SetMaterial(_defaultViewMaterial);
         _animatorController.ScaryTrigger();
         PlayNotFindSound();
         DOVirtual.DelayedCall(2.0f, () =>
@@ -123,7 +123,7 @@ public class HumanAI : PathTrajectory
 
     private void TryDetect()
     {
-        if (!_vision.CanSeePlayer || _worried || !_player.InBuilding || _player.Hided)
+        if (!_fieldOfView.CanSeePlayer || _worried || !_player.InBuilding || _player.Hided)
             return;
 
         _goNextPointAfterStopping = false;
@@ -131,7 +131,7 @@ public class HumanAI : PathTrajectory
         _worried = true;
         _agent.speed = _followSpeed;
         _animatorController.ScaryTrigger();
-        _view.color = _detectViewColor;
+        _visionCone.SetMaterial(_detectViewMaterial);
         PlayScreamSound();
         PlayerIsNoticed?.Invoke();
         ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f, true);

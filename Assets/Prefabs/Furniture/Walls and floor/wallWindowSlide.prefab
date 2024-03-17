@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2183722602138711639}
   - component: {fileID: 4155366062422540957}
   - component: {fileID: 8448106519549538926}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: wallWindowSlide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8997825207681507231}
   - component: {fileID: 6924447141627947008}
   - component: {fileID: 2243066679675641005}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: windowBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 5346224362696060613}
   - component: {fileID: 6024164719499042240}
   - component: {fileID: 8278718794435045820}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: windowTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
