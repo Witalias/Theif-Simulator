@@ -22,6 +22,7 @@ public class QuickMessage : MonoBehaviour
         PlayerLevelController.ShowQuickMessage += Process;
         BackpackController.ShowQuickMessage += Process;
         Doghouse.ShowQuickMessage += Process;
+        Cheats.GShowQuickMessage += Process;
     }
 
     private void OnDisable()
@@ -31,6 +32,7 @@ public class QuickMessage : MonoBehaviour
         PlayerLevelController.ShowQuickMessage -= Process;
         BackpackController.ShowQuickMessage -= Process;
         Doghouse.ShowQuickMessage -= Process;
+        Cheats.GShowQuickMessage -= Process;
     }
 
     private void Process(string message, float delay, bool isNegative)

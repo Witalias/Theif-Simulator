@@ -12,8 +12,9 @@ public static class SaveLoad
     public static bool HasUpgradesSave => YandexGame.savesData.UpgradeData.Count > 0;
     public static bool HasBuildingsSave => YandexGame.savesData.BuildingData.Count > 0;
     public static bool HasUnlockAreasSave => YandexGame.savesData.UnlockAreaData.Count > 0;
-    public static bool HasPlayerPositionSave => YandexGame.savesData.PlayerPosition != null;
-    public static bool HasTaskSave => YandexGame.savesData.TaskType != null;
+    public static bool HasPlayerPositionSave => YandexGame.savesData.PlayerPosition != "";
+    public static bool HasTaskSave => YandexGame.savesData.TaskType != "";
+    public static bool HasDayPhaseSave => YandexGame.savesData.DayPhase != "";
 
     public static void SaveTutorialDoneBoolean(bool value)
     {
@@ -80,6 +81,12 @@ public static class SaveLoad
     public static void SaveSoldItemsCount(int value)
     {
         YandexGame.savesData.SoldItemsCount = value;
+        YandexGame.SaveProgress();
+    }
+
+    public static void SaveDayPhase(DayCycleType value)
+    {
+        YandexGame.savesData.DayPhase = value.ToString();
         YandexGame.SaveProgress();
     }
 

@@ -5,6 +5,7 @@ using YG;
 public class Cheats : MonoBehaviour
 {
     public static event Action GBuildingUpgraded;
+    public static event Action<string, float, bool> GShowQuickMessage;
 
     private void Update()
     {
@@ -18,5 +19,10 @@ public class Cheats : MonoBehaviour
             GameData.Instanse.SetUpgradableValue(UpgradeType.BackpackCapacity, 999);
         else if (Input.GetKeyDown(KeyCode.F5))
             GBuildingUpgraded?.Invoke();
+        else if (Input.GetKeyDown(KeyCode.F6))
+        {
+            DayCycle.Instance.NextPhase();
+            GShowQuickMessage?.Invoke(DayCycle.Instance.CurrentPhase.ToString(), 1.0f, false);
+        }
     }
 }

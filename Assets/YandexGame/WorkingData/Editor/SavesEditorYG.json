@@ -1,9 +1,9 @@
 {
-    "idSave": 128,
+    "idSave": 535,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "TutorialDone": false,
+    "TutorialDone": true,
     "TutorialCrackDoorDone": false,
     "TutorialRobHouseDone": false,
     "TutorialSellItemsDone": false,
@@ -11,10 +11,10 @@
     "TutorialBuyZoneDone": false,
     "TutorialEnterBuildingWithEnemyDone": false,
     "TutorialLootSafeDone": false,
-    "Level": 4,
-    "CurrentXP": 70,
-    "RequiredXP": 200,
-    "Money": 120,
+    "Level": 8,
+    "CurrentXP": 295,
+    "RequiredXP": 400,
+    "Money": 620,
     "SoldItemsCount": 0,
     "ResourceData": [
         "Bottle:0",
@@ -27,10 +27,11 @@
     "UpgradeData": [],
     "BuildingData": [],
     "UnlockAreaData": [],
-    "PlayerPosition": "{\"x\":5.3260040283203129,\"y\":0.4138326644897461,\"z\":-49.043418884277347}",
-    "TaskType": "",
-    "RequiredResource": "",
+    "PlayerPosition": "{\"x\":14.908480644226075,\"y\":0.4653177261352539,\"z\":-40.743778228759769}",
+    "DayPhase": "Day",
+    "TaskType": "SellCertainItems",
+    "RequiredResource": "Sneakers",
     "CurrentTaskProgress": 0,
-    "TaskRequirement": 0,
-    "TaskReward": 0
+    "TaskRequirement": 5,
+    "TaskReward": 50
 }

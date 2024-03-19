@@ -228,6 +228,7 @@ public class TutorialSystem : MonoBehaviour
         ClearArrows();
         _upgradePanelButton.interactable = true;
         _unlockArea2.SetActive(true);
+        DayCycle.Instance.RunPhase(DayCycleType.Day);
         DOVirtual.DelayedCall(_startingTaskDelay, TaskManager.Instance.StartRandomTask);
     }
 
