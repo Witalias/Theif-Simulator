@@ -24,7 +24,7 @@ public class BackpackController
         if (SaveLoad.HasResourcesSave)
         {
             _resources = SaveLoad.LoadResources();
-            Capacity = _resources.Values.Sum();
+            Fullness = _resources.Values.Sum();
         }
         else
         {

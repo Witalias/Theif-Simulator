@@ -67,7 +67,7 @@ public class VisibilitySlider : MonoBehaviour
 
     public void UnsubscribeOnPlayerExitTrigger(Action<MovementController> action) => OnPlayerExitTrigger -= action;
 
-    public void SetVisibilityBar(bool value) => _visibilityBar.gameObject.SetActive(value);
+    public void SetActiveVisibilityBar(bool value) => _visibilityBar.gameObject.SetActive(value);
 
     public void SetLockBar(bool value) => _lockedBar = value;
 

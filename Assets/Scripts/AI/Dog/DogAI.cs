@@ -7,23 +7,38 @@ public class DogAI : Pathfinder
     public static event Action<string, float, bool> GShowQuickMessage;
 
     [SerializeField] private float _caughtDuration;
+    [SerializeField] private ActivityPhase _activityTime;
     [SerializeField] private VisibilitySlider _visibilityArea;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private ParticleSystem _dustParticle;
+    [SerializeField] private GameObject _ZZZParticle;
     [SerializeField] private MovableAnimatorController _animatorController;
 
     private Tween _currentTween;
     private MovementController _player;
     private Vector3 _dustPosition;
-    private bool _isSleeping = true;
-    private bool _isGoingSleeping;
+    private bool _isWatching = true;
+    private bool _isGoingToHouse;
+    private bool _isGoingSleep;
+    private bool _isSleeping;
     private bool _lockedControls;
+
+    private bool Followed => _player != null;
 
     private void Awake()
     {
         transform.position = _visibilityArea.EntrancePoint.position;
         _dustPosition = _dustParticle.transform.localPosition;
         _mesh.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (_activityTime is not ActivityPhase.Always)
+        {
+            DayCycle.Instance.SubscribeOnPhaseChanged(CheckActivity);
+            CheckActivity(DayCycle.Instance.CurrentPhase);
+        }
     }
 
     private void OnEnable()
@@ -57,7 +72,7 @@ public class DogAI : Pathfinder
     protected override void GoTo(Vector3 position)
     {
         base.GoTo(position);
-        if (_player == null)
+        if (!Followed)
             _animatorController.WalkBoolean(true);
         else
             _animatorController.RunBoolean(true);
@@ -69,30 +84,38 @@ public class DogAI : Pathfinder
         _animatorController.WalkBoolean(false);
         _animatorController.RunBoolean(false);
 
-        if (_isGoingSleeping)
+        if (_isGoingToHouse)
+        {
             Hide();
+            if (_isGoingSleep)
+            {
+                _isGoingSleep = false;
+                SetSleepState(true);
+            }
+        }
     }
 
     private void OnPlayerEnterDoghouseTrigger(MovementController player)
     {
         _player = player;
-        if (_isSleeping)
+        if (_isWatching || _isSleeping)
             return;
 
         _currentTween.Kill();
-        _isGoingSleeping = false;
+        _isGoingToHouse = false;
+        //_isGoingSleep = false;
         Stop();
     }
 
     private void OnPlayerExitDoghouseTrigger(MovementController player)
     {
         _player = null;
+        if (_isWatching || _isSleeping)
+            return;
+
         Stop();
         _currentTween.Kill();
-        _currentTween = DOVirtual.DelayedCall(2.0f, () =>
-        {
-            GoSleep();
-        });
+        _currentTween = DOVirtual.DelayedCall(2.0f, GoToHouse);
     }
 
     private void ShowAndRun()
@@ -102,31 +125,33 @@ public class DogAI : Pathfinder
         SoundManager.Instanse.Play(Sound.DogBarking);
         GShowQuickMessage?.Invoke($"{Translation.GetAngryDogName()}!", 1.0f, true);
         _lockedControls = false;
-        _currentTween = DOVirtual.DelayedCall(0.5f, () => _isSleeping = false);
+        _currentTween = DOVirtual.DelayedCall(0.5f, () => _isWatching = false);
     }
 
     private void Hide()
     {
-        _isGoingSleeping = false;
-        _isSleeping = true;
+        _isGoingToHouse = false;
+        _isWatching = true;
         _lockedControls = true;
         _mesh.SetActive(false);
-        _visibilityArea.SetLockBar(false);
         PlayDustParticle();
+
+        if (!_isGoingSleep)
+            _visibilityArea.SetLockBar(false);
     }
 
-    private void GoSleep()
+    private void GoToHouse()
     {
         if (_lockedControls)
             return;
 
         GoTo(_visibilityArea.EntrancePoint.position);
-        _isGoingSleeping = true;
+        _isGoingToHouse = true;
     }
 
     private bool TryFollow()
     {
-        if (_isSleeping || _player == null || _lockedControls)
+        if (_isWatching || !Followed || _lockedControls)
             return false;
 
         GoTo(_player.transform.position);
@@ -135,7 +160,7 @@ public class DogAI : Pathfinder
 
     private void Catch(MovementController player)
     {
-        if (_isSleeping)
+        if (_isWatching)
             return;
 
         Stop();
@@ -144,6 +169,40 @@ public class DogAI : Pathfinder
         transform.DORotate(new Vector3(0.0f, targetAngle.y, 0.0f), 0.5f);
         _lockedControls = true;
         DOVirtual.DelayedCall(_caughtDuration, () => _lockedControls = false);
+    }
+
+    private void CheckActivity(DayCycleType dayPhase)
+    {
+        if (_activityTime is ActivityPhase.Always ||
+            (dayPhase is DayCycleType.Day && _activityTime is ActivityPhase.Day) ||
+            (dayPhase is DayCycleType.Night && _activityTime is ActivityPhase.Night))
+        {
+            _isGoingSleep = false;
+            SetSleepState(false);
+        }
+        else
+        {
+            if (_isWatching)
+            {
+                if (!_isSleeping)
+                    SetSleepState(true);
+            }
+            else
+            {
+                _isGoingSleep = true;
+            }
+        }    
+    }
+
+    private void SetSleepState(bool value)
+    {
+        _isSleeping = value;
+        _ZZZParticle.SetActive(value);
+        _visibilityArea.Refresh();
+        _visibilityArea.SetLockBar(value);
+
+        if (value)
+            _visibilityArea.SetActiveVisibilityBar(false);
     }
 
     private void PlayDustParticle()

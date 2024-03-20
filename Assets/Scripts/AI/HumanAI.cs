@@ -52,27 +52,31 @@ public class HumanAI : PathTrajectory
         {
             _visibilityArea.SetLockBar(true);
             if (_activityTime != ActivityPhase.Always)
+            {
+                DayCycle.Instance.SubscribeOnPhaseChanged(CheckActivity);
+                _visibilityArea.SubscribeOnBarFilled(WakeUpAndDetect);
                 CheckActivity(DayCycle.Instance.CurrentPhase);
+            }
         }
     }
 
-    private void OnEnable()
-    {
-        if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
-        {
-            DayCycle.Instance.SubscribeOnPhaseChanged(CheckActivity);
-            _visibilityArea.SubscribeOnBarFilled(WakeUpAndDetect);
-        }
-    }
+    //private void OnEnable()
+    //{
+    //    if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
+    //    {
+    //        DayCycle.Instance.SubscribeOnPhaseChanged(CheckActivity);
+    //        _visibilityArea.SubscribeOnBarFilled(WakeUpAndDetect);
+    //    }
+    //}
 
-    private void OnDisable()
-    {
-        if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
-        {
-            DayCycle.Instance.UnsubscribeOnPhaseChanged(CheckActivity);
-            _visibilityArea.UnsubscribeOnBarFilled(WakeUpAndDetect);
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
+    //    {
+    //        DayCycle.Instance.UnsubscribeOnPhaseChanged(CheckActivity);
+    //        _visibilityArea.UnsubscribeOnBarFilled(WakeUpAndDetect);
+    //    }
+    //}
 
     protected override void Update()
     {
@@ -226,7 +230,7 @@ public class HumanAI : PathTrajectory
         else
         {
             _animatorController.StopSleepTrigger();
-            _visibilityArea.SetVisibilityBar(false);
+            _visibilityArea.SetActiveVisibilityBar(false);
             SoundManager.Instanse.Stop(Sound.Snore);
         }
 
