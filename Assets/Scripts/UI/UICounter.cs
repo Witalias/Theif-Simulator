@@ -9,6 +9,11 @@ public class UICounter : MonoBehaviour
 
     private Color _defaultColor;
 
+    public void Initialize()
+    {
+        _defaultColor = valueText.color;
+    }
+
     public void SetValue(float value, float maxValue = -1.0f) => SetValue(value, maxValue);
 
     public void SetValue(int value, int maxValue = -1)
@@ -23,9 +28,4 @@ public class UICounter : MonoBehaviour
     public void SetColor(Color value) => valueText.color = value;
 
     public void SetIcon(Sprite value) => _icon.sprite = value;
-
-    private void Awake()
-    {
-        _defaultColor = valueText.color;
-    }
 }

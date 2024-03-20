@@ -24,6 +24,8 @@ public class ResourcesPanel : MonoBehaviour
 
     public void Initialize()
     {
+        _money.Initialize();
+        _backpack.Initialize();
         CreateItemCounters();
         ClearResources();
     }
@@ -77,6 +79,7 @@ public class ResourcesPanel : MonoBehaviour
         foreach (var resource in Enum.GetValues(typeof(ResourceType)))
         {
             var counter = Instantiate(_itemCounterPrefab, _itemPanel).GetComponent<UICounter>();
+            counter.Initialize();
             counter.SetIcon(GameData.Instanse.GetResourceSprite((ResourceType)resource));
             _itemCounters.Add((ResourceType)resource, counter);
         }
