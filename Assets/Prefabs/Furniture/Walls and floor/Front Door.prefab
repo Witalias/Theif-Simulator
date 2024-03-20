@@ -97,7 +97,7 @@ Transform:
   - {fileID: 7568999946554200803}
   - {fileID: 2565883006658789295}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2654315323081909587
 MeshFilter:
@@ -1218,6 +1218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1dbd044230d044681525c74bb186d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _offset: {x: 0, y: 0, z: -20}
 --- !u!1 &8994854901383811167
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,4 +15,4 @@ MonoBehaviour:
   _type: 0
   _sunColor: {r: 1, g: 0.9996381, b: 0.88113207, a: 1}
   _phaseDuration: 30
-  _transitionDuration: 10
+  _transitionDuration: 5

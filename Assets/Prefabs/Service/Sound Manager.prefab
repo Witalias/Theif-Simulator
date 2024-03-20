@@ -388,6 +388,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a4e9eb0a4e8d750418cdfa97020abbdc, type: 3}
   newArea:
   - {fileID: 8300000, guid: bb2a7b910c3b2714982373dd9b00a78f, type: 3}
+  dogBarking:
+  - {fileID: 8300000, guid: 568fa03804bc17d43848f54d0dcb7cd3, type: 3}
+  snore:
+  - {fileID: 8300000, guid: 1fb2c78de20b88b4f9c60899dba444dd, type: 3}
 --- !u!1 &5843356304632403146
 GameObject:
   m_ObjectHideFlags: 0

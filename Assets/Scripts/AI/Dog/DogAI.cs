@@ -1,10 +1,13 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class DogAI : Pathfinder
 {
+    public static event Action<string, float, bool> GShowQuickMessage;
+
     [SerializeField] private float _caughtDuration;
-    [SerializeField] private Doghouse _doghouse;
+    [SerializeField] private VisibilitySlider _visibilityArea;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private ParticleSystem _dustParticle;
     [SerializeField] private MovableAnimatorController _animatorController;
@@ -18,23 +21,23 @@ public class DogAI : Pathfinder
 
     private void Awake()
     {
-        transform.position = _doghouse.EntrancePosition;
+        transform.position = _visibilityArea.EntrancePoint.position;
         _dustPosition = _dustParticle.transform.localPosition;
         _mesh.SetActive(false);
     }
 
     private void OnEnable()
     {
-        _doghouse.SubscribeOnBarFilled(ShowAndRun);
-        _doghouse.SubscribeOnPlayerEnterTrigger(OnPlayerEnterDoghouseTrigger);
-        _doghouse.SubscribeOnPlayerExitTrigger(OnPlayerExitDoghouseTrigger);
+        _visibilityArea.SubscribeOnBarFilled(ShowAndRun);
+        _visibilityArea.SubscribeOnPlayerEnterTrigger(OnPlayerEnterDoghouseTrigger);
+        _visibilityArea.SubscribeOnPlayerExitTrigger(OnPlayerExitDoghouseTrigger);
     }
 
     private void OnDisable()
     {
-        _doghouse.UnsubscribeOnBarFilled(ShowAndRun);
-        _doghouse.UnsubscribeOnPlayerEnterTrigger(OnPlayerEnterDoghouseTrigger);
-        _doghouse.UnsubscribeOnPlayerExitTrigger(OnPlayerExitDoghouseTrigger);
+        _visibilityArea.UnsubscribeOnBarFilled(ShowAndRun);
+        _visibilityArea.UnsubscribeOnPlayerEnterTrigger(OnPlayerEnterDoghouseTrigger);
+        _visibilityArea.UnsubscribeOnPlayerExitTrigger(OnPlayerExitDoghouseTrigger);
     }
 
     protected override void Update()
@@ -96,6 +99,8 @@ public class DogAI : Pathfinder
     {
         _mesh.SetActive(true);
         PlayDustParticle();
+        SoundManager.Instanse.Play(Sound.DogBarking);
+        GShowQuickMessage?.Invoke($"{Translation.GetAngryDogName()}!", 1.0f, true);
         _lockedControls = false;
         _currentTween = DOVirtual.DelayedCall(0.5f, () => _isSleeping = false);
     }
@@ -106,7 +111,7 @@ public class DogAI : Pathfinder
         _isSleeping = true;
         _lockedControls = true;
         _mesh.SetActive(false);
-        _doghouse.SetLockBar(false);
+        _visibilityArea.SetLockBar(false);
         PlayDustParticle();
     }
 
@@ -115,7 +120,7 @@ public class DogAI : Pathfinder
         if (_lockedControls)
             return;
 
-        GoTo(_doghouse.EntrancePosition);
+        GoTo(_visibilityArea.EntrancePoint.position);
         _isGoingSleeping = true;
     }
 
@@ -137,7 +142,8 @@ public class DogAI : Pathfinder
         player.Caught(_caughtDuration);
         var targetAngle = Quaternion.LookRotation(player.transform.position - transform.position).eulerAngles;
         transform.DORotate(new Vector3(0.0f, targetAngle.y, 0.0f), 0.5f);
-       // _lockedControls = true;
+        _lockedControls = true;
+        DOVirtual.DelayedCall(_caughtDuration, () => _lockedControls = false);
     }
 
     private void PlayDustParticle()

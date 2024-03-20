@@ -21,7 +21,7 @@ public class QuickMessage : MonoBehaviour
         Lootable.ShowQuickMessage += Process;
         PlayerLevelController.ShowQuickMessage += Process;
         BackpackController.ShowQuickMessage += Process;
-        Doghouse.ShowQuickMessage += Process;
+        DogAI.GShowQuickMessage += Process;
         Cheats.GShowQuickMessage += Process;
     }
 
@@ -31,7 +31,7 @@ public class QuickMessage : MonoBehaviour
         Lootable.ShowQuickMessage -= Process;
         PlayerLevelController.ShowQuickMessage -= Process;
         BackpackController.ShowQuickMessage -= Process;
-        Doghouse.ShowQuickMessage -= Process;
+        DogAI.GShowQuickMessage -= Process;
         Cheats.GShowQuickMessage -= Process;
     }
 

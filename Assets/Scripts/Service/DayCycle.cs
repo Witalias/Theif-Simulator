@@ -56,6 +56,11 @@ public class DayCycle : MonoBehaviour
     private void ProcessPhase(DayCyclePhaseInfo phase)
     {
         CurrentPhase = phase.Type;
+        if (phase.SkipPhase)
+        {
+            NextPhase();
+            return;
+        }
         SaveLoad.SaveDayPhase(phase.Type);
         _currentTween?.Kill();
         _currentTween = _sun.DOColor(phase.SunColor, phase.TransitionDuration)

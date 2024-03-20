@@ -15,25 +15,21 @@ public class FieldOfView : MonoBehaviour
     public float Radius => radius;
     public float Angle => angle;
 
-    public void Detect()
+    public void SetEnable(bool value)
     {
-        CanSeePlayer = true;
-    }
-
-    public void NotDetect()
-    {
-        CanSeePlayer = false;
+        StopAllCoroutines();
+        if (value)
+            StartCoroutine(FOVRoutine());
     }
 
     private void Start()
     {
-        StartCoroutine(FOVRoutine());
+        SetEnable(true);
     }
 
     private IEnumerator FOVRoutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
-
+        var wait = new WaitForSeconds(0.2f);
         while (true)
         {
             yield return wait;

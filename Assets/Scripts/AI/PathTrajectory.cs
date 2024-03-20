@@ -10,9 +10,10 @@ public class PathTrajectory : Pathfinder
     [SerializeField] private StopablePoint[] _stopPoints;
     [SerializeField] private bool _loop;
     [SerializeField] private bool _reverse;
-    [SerializeField] private bool _goOnStart = true;
+    [SerializeField] protected bool _goOnStart = true;
     
     private Transform[] _path;
+    private Tween _currentTween;
     private int _currentIndex;
     protected bool _goNextPointAfterStopping = true;
 
@@ -55,33 +56,22 @@ public class PathTrajectory : Pathfinder
     protected override void Stop()
     {
         base.Stop();
+        _currentTween?.Kill();
 
         if (!_goNextPointAfterStopping || _path.Length <= 1)
             return;
 
         var stopPoint = _stopPoints.Where(stopPoint => stopPoint.Point == _path[_currentIndex]);
         if (stopPoint.Count() > 0)
-            DOVirtual.DelayedCall(stopPoint.First().Duration, ChangeIndexAndGo);
+            _currentTween = DOVirtual.DelayedCall(stopPoint.First().Duration, ChangeIndexAndGo);
         else
             ChangeIndexAndGo();
     }
 
+    protected void SetActivePath(bool value) => _pathPointsContainer.gameObject.SetActive(value);
+
     private void ChangeIndexAndGo()
     {
-        //if (_reverse)
-        //{
-        //    if (_currentIndex == 0)
-        //        _reverse = false;
-        //    else
-        //        _currentIndex--;
-        //}
-        //else
-        //{
-        //    if (_currentIndex == _path.Length - 1)
-        //        _reverse = true;
-        //    else
-        //        _currentIndex++;
-        //}
         if (_reverse)
         {
             if (_currentIndex == 0)
@@ -90,18 +80,6 @@ public class PathTrajectory : Pathfinder
         else if (_currentIndex == _path.Length - 1)
             _reverse = true;
         _currentIndex += _reverse ? -1 : 1;
-        //if (_currentIndex == _path.Length || _currentIndex == -1)
-        //{
-        //    if (_loop)
-        //    {
-        //        _currentIndex = _reverse ? _path.Length - 1 : 0;
-        //    }
-        //    else
-        //    {
-        //        _currentIndex = _reverse ? 1 : _path.Length - 2;
-        //        _reverse = !_reverse;
-        //    }
-        //}
         FollowTrajectory();
     }
 

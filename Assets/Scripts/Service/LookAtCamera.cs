@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class LookAtCamera : MonoBehaviour
 {
+    [SerializeField] private Vector3 _offset;
+
     private Transform _mainCamera;
 
     private void Awake()
@@ -11,6 +13,6 @@ public class LookAtCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.rotation = Quaternion.LookRotation(_mainCamera.position - transform.position);
+        transform.rotation = Quaternion.LookRotation(_mainCamera.position + _offset - transform.position);
     }
 }

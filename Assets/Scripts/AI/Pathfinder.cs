@@ -7,14 +7,17 @@ public class Pathfinder : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!_agent.isStopped && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+        if (_agent.enabled && !_agent.isStopped && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
             Stop();
     }
 
     protected virtual void GoTo(Vector3 position)
     {
-        _agent.isStopped = false;
-        _agent.SetDestination(position);
+        if (_agent.enabled)
+        {
+            _agent.isStopped = false;
+            _agent.SetDestination(position);
+        }
     }
 
     protected virtual void GoTo(Transform point)
@@ -24,6 +27,7 @@ public class Pathfinder : MonoBehaviour
 
     protected virtual void Stop()
     {
-        _agent.isStopped = true;
+        if (_agent.enabled)
+            _agent.isStopped = true;
     }
 }

@@ -7,9 +7,11 @@ public class DayCyclePhaseInfo : ScriptableObject
     [SerializeField] private Color _sunColor;
     [SerializeField] private float _phaseDuration;
     [SerializeField] private float _transitionDuration;
+    [SerializeField] private bool _skipPhase;
 
     public DayCycleType Type => _type;
     public Color SunColor => _sunColor;
     public float PhaseDuration => _phaseDuration;
     public float TransitionDuration => _transitionDuration;
+    public bool SkipPhase => _skipPhase;
 }

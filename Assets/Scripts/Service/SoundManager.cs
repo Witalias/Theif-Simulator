@@ -34,6 +34,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] taskCompleted;
     [SerializeField] private AudioClip[] newLevel;
     [SerializeField] private AudioClip[] newArea;
+    [SerializeField] private AudioClip[] dogBarking;
+    [SerializeField] private AudioClip[] snore;
 
     private Dictionary<Sound, AudioClip[]> sounds;
     private readonly Dictionary<Sound, AudioSource> currentLoopSounds = new Dictionary<Sound, AudioSource>();
@@ -115,7 +117,9 @@ public class SoundManager : MonoBehaviour
             [Sound.Buy] = buy,
             [Sound.TaskCompleted] = taskCompleted,
             [Sound.NewArea] = newArea,
-            [Sound.NewLevel] = newLevel
+            [Sound.NewLevel] = newLevel,
+            [Sound.DogBarking] = dogBarking,
+            [Sound.Snore] = snore
         };
     }
 

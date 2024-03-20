@@ -14,11 +14,14 @@ public class HumanAI : PathTrajectory
     [SerializeField] private bool _calmOnTimer;
     [SerializeField] private float _followSpeed;
     [SerializeField] private float _caughtDuration;
+    [SerializeField] private ActivityPhase _activityTime;
+    [SerializeField] private VisibilitySlider _visibilityArea;
     [SerializeField] private Material _detectViewMaterial;
     [SerializeField] private DrawFieldOfView _visionCone;
     [SerializeField] private FieldOfView _fieldOfView;
     [SerializeField] private HumanAnimatorController _animatorController;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private GameObject _ZZZParticle;
 
     private MovementController _player;
     private Material _defaultViewMaterial;
@@ -28,6 +31,8 @@ public class HumanAI : PathTrajectory
     private bool _worried;
     private bool _followed;
     private bool _lockedControls;
+    private bool _isGoingSleeping;
+    private bool _isSleeping;
 
     public bool Worried => _worried;
 
@@ -42,6 +47,31 @@ public class HumanAI : PathTrajectory
         base.Start();
         _defaultViewMaterial = _visionCone.Material;
         _player = GameObject.FindGameObjectWithTag(Tags.Player.ToString()).GetComponent<MovementController>();
+
+        if (_visibilityArea != null)
+        {
+            _visibilityArea.SetLockBar(true);
+            if (_activityTime != ActivityPhase.Always)
+                CheckActivity(DayCycle.Instance.CurrentPhase);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
+        {
+            DayCycle.Instance.SubscribeOnPhaseChanged(CheckActivity);
+            _visibilityArea.SubscribeOnBarFilled(WakeUpAndDetect);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_activityTime != ActivityPhase.Always && _visibilityArea != null)
+        {
+            DayCycle.Instance.UnsubscribeOnPhaseChanged(CheckActivity);
+            _visibilityArea.UnsubscribeOnBarFilled(WakeUpAndDetect);
+        }
     }
 
     protected override void Update()
@@ -85,7 +115,7 @@ public class HumanAI : PathTrajectory
         DOVirtual.DelayedCall(2.0f, () =>
         {
             if (!_worried)
-                FollowTrajectory();
+                CheckActivity(DayCycle.Instance.CurrentPhase);
         });
     }
 
@@ -102,7 +132,14 @@ public class HumanAI : PathTrajectory
     {
         _animatorController.RunBoolean(false);
         _animatorController.WalkBoolean(false);
+
         base.Stop();
+
+        if (_isGoingSleeping)
+        {
+            _isGoingSleeping = false;
+            SetSleepState(true);
+        }
     }
 
     private void Catch(MovementController player)
@@ -126,7 +163,13 @@ public class HumanAI : PathTrajectory
         if (!_fieldOfView.CanSeePlayer || _worried || !_player.InBuilding || _player.Hided)
             return;
 
+        Detect();
+    }
+
+    private void Detect()
+    {
         _goNextPointAfterStopping = false;
+        _isGoingSleeping = false;
         Stop();
         _worried = true;
         _agent.speed = _followSpeed;
@@ -144,6 +187,72 @@ public class HumanAI : PathTrajectory
             return;
 
         GoTo(_player.transform.position);
+    }
+
+    private void CheckActivity(DayCycleType dayPhase)
+    {
+        if (_activityTime == ActivityPhase.Always || _visibilityArea == null ||
+            (dayPhase == DayCycleType.Day && _activityTime == ActivityPhase.Day) ||
+            (dayPhase == DayCycleType.Night && _activityTime == ActivityPhase.Night))
+        {
+            if (_isSleeping)
+                SetSleepState(false);
+            _isGoingSleeping = false;
+            FollowTrajectory();
+            SetActivePath(true);
+        }
+        else if (!_isSleeping)
+        {
+            GoSleep();
+        }
+    }
+
+    private void SetSleepState(bool value)
+    {
+        _isSleeping = value;
+        _goNextPointAfterStopping = !value;
+        _fieldOfView.SetEnable(!value);
+        _visionCone.gameObject.SetActive(!value);
+        _ZZZParticle.SetActive(value);
+        _visibilityArea.Refresh();
+        _visibilityArea.SetLockBar(!value);
+
+        if (value)
+        {
+            _agent.enabled = false;
+            _animatorController.SleepTrigger();
+            SoundManager.Instanse.PlayLoop(Sound.Snore, _audioSource);
+        }
+        else
+        {
+            _animatorController.StopSleepTrigger();
+            _visibilityArea.SetVisibilityBar(false);
+            SoundManager.Instanse.Stop(Sound.Snore);
+        }
+
+        transform.DORotate(value ? _visibilityArea.LocationPoint.localEulerAngles : new Vector3(0.0f, transform.rotation.y, 0.0f), 0.25f);
+        transform.DOMove(value ? _visibilityArea.LocationPoint.position : _visibilityArea.EntrancePoint.position, 0.25f)
+            .OnComplete(() =>
+            {
+                if (!value)
+                    _agent.enabled = true;
+            });
+    }
+
+    private void GoSleep()
+    {
+        _goNextPointAfterStopping = false;
+        _goOnStart = false;
+        SetActivePath(false);
+        Stop();
+        _isGoingSleeping = true;
+        GoTo(_visibilityArea.EntrancePoint.position);
+    }
+
+    private void WakeUpAndDetect()
+    {
+        SetSleepState(false);
+        Detect();
     }
 
     private void PlaySuspectSound()

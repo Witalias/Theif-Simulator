@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 2359310772532617794}
   - component: {fileID: 3001341551141527100}
   - component: {fileID: 7115370649436384463}
+  - component: {fileID: 5487500987593119854}
   m_Layer: 0
   m_Name: Yard
   m_TagString: Untagged
@@ -74,7 +75,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7585659592171172213}
   - {fileID: 5654332444093474020}
   - {fileID: 6396140865640255406}
   - {fileID: 9074257671814978440}
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06484d0f097e0924fb6ba0562b928ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _secondsForRefresh: 0
   _enabled: 0
+  _secondsForRefresh: 0
 --- !u!114 &3001341551141527100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,9 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enableUpdates: 0
   _enableIndoorCamera: 0
-  _enemies: []
-  _doors: []
-  _lootables: []
   _levelStates: []
 --- !u!65 &7115370649436384463
 BoxCollider:
@@ -134,6 +131,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 24.0318, y: 9.000256, z: 37.478218}
   m_Center: {x: -20.603577, y: 19.530142, z: -12.681828}
+--- !u!114 &5487500987593119854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655575750996083772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740a92af7b85ed143a437a605364a614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1215032973308693686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,115 +489,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7770184700659620654, guid: 3c01b49945c94854e9bfdace31385018, type: 3}
   m_PrefabInstance: {fileID: 2714831335705657290}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3067354857991528800
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4014857879582849542}
-    m_Modifications:
-    - target: {fileID: 171593396138105300, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Size.x
-      value: 4.187312
-      objectReference: {fileID: 0}
-    - target: {fileID: 171593396138105300, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Size.z
-      value: 6.2161636
-      objectReference: {fileID: 0}
-    - target: {fileID: 171593396138105300, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Center.x
-      value: 1.4379553
-      objectReference: {fileID: 0}
-    - target: {fileID: 171593396138105300, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Center.z
-      value: 2.0596695
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -29.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 16.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -25.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887746761592228917, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Name
-      value: Doghouse_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560116683688841702, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Size.x
-      value: 4.371877
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560116683688841702, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Size.z
-      value: 6.193797
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560116683688841702, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Center.x
-      value: 1.2581381
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560116683688841702, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-      propertyPath: m_Center.z
-      value: 1.957283
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
---- !u!114 &701291058180858098 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2533858070872736146, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-  m_PrefabInstance: {fileID: 3067354857991528800}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9cb43af7f6444498a689d06cdceeee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &7585659592171172213 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4887746761592066069, guid: 6077db695343092498fe3e4e5e7b6675, type: 3}
-  m_PrefabInstance: {fileID: 3067354857991528800}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3156438368220004451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -623,7 +523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3586320856502842902, guid: 093a9f3f71e389246bb5d237b2bb2be7, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3586320856502842902, guid: 093a9f3f71e389246bb5d237b2bb2be7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -820,10 +720,6 @@ PrefabInstance:
       propertyPath: _animator
       value: 
       objectReference: {fileID: 4652887691709011477}
-    - target: {fileID: 7608191435649314210, guid: 3106b6e31fd42cd45b4748e21705a0c1, type: 3}
-      propertyPath: _doghouse
-      value: 
-      objectReference: {fileID: 701291058180858098}
     - target: {fileID: 8663353359270193525, guid: 3106b6e31fd42cd45b4748e21705a0c1, type: 3}
       propertyPath: m_LocalScale.x
       value: 6

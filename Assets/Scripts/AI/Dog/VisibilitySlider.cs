@@ -2,17 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Doghouse : MonoBehaviour
+public class VisibilitySlider : MonoBehaviour
 {
     public static event Action GPlayerIsNoticed;
-    public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private float _increaseSpeed;
     [SerializeField] private float _decreaseSpeed;
     [SerializeField] private UIBar _visibilityBar;
     [SerializeField] private Animation _visibilityAnimation;
     [SerializeField] private Transform _entrancePoint;
-    [SerializeField] private DogAI _dogPrefab;
+    [SerializeField] private Transform _locationPoint;
 
     private event Action OnVisibilityBarFilled;
     private event Action<MovementController> OnPlayerEnterTrigger;
@@ -20,7 +19,8 @@ public class Doghouse : MonoBehaviour
     private float _currentValue;
     private bool _lockedBar;
 
-    public Vector3 EntrancePosition => _entrancePoint.position;
+    public Transform EntrancePoint => _entrancePoint;
+    public Transform LocationPoint => _locationPoint;
 
     private void Awake()
     {
@@ -36,11 +36,11 @@ public class Doghouse : MonoBehaviour
         OnPlayerEnterTrigger?.Invoke(player);
         StopAllCoroutines();
 
-        if (_lockedBar)
-            DetectPlayer();
+        //if (_lockedBar)
+        //    DetectPlayer();
 
         if (player.IsMoving)
-            StartCoroutine(ProccessIncreaseVisibility());
+            StartCoroutine(ProcessIncreaseVisibility());
     }
 
     private void OnTriggerExit(Collider other)
@@ -52,7 +52,7 @@ public class Doghouse : MonoBehaviour
         player.NotNotice();
         OnPlayerExitTrigger?.Invoke(player);
         StopAllCoroutines();
-        StartCoroutine(ProccessDecreaseVisibility());
+        StartCoroutine(ProcessDecreaseVisibility());
     }
 
     public void SubscribeOnBarFilled(Action action) => OnVisibilityBarFilled += action;
@@ -67,24 +67,38 @@ public class Doghouse : MonoBehaviour
 
     public void UnsubscribeOnPlayerExitTrigger(Action<MovementController> action) => OnPlayerExitTrigger -= action;
 
+    public void SetVisibilityBar(bool value) => _visibilityBar.gameObject.SetActive(value);
+
     public void SetLockBar(bool value) => _lockedBar = value;
+
+    public void Refresh()
+    {
+        SetValue(0.0f);
+        SetLockBar(false);
+    }
 
     private void OnPlayerMove(bool value)
     {
         StopAllCoroutines();
-        if (value == true)
-            StartCoroutine(ProccessIncreaseVisibility());
-        else
-            StartCoroutine(ProccessDecreaseVisibility());
+        if (gameObject.activeInHierarchy)
+        {
+            if (value == true)
+                StartCoroutine(ProcessIncreaseVisibility());
+            else
+                StartCoroutine(ProcessDecreaseVisibility());
+        }
     }
 
-    private IEnumerator ProccessIncreaseVisibility()
+    private IEnumerator ProcessIncreaseVisibility()
     {
         if (_currentValue >= 1.0f)
             yield break;
 
-        _visibilityBar.gameObject.SetActive(true);
-        _visibilityAnimation.Play();
+        if (!_lockedBar)
+        {
+            _visibilityBar.gameObject.SetActive(true);
+            _visibilityAnimation.Play();
+        }
         var wait = new WaitForEndOfFrame();
         while (_currentValue <= 1.0f)
         {
@@ -93,8 +107,7 @@ public class Doghouse : MonoBehaviour
                 yield return new WaitForSeconds(2.0f);
                 continue;
             }
-            _currentValue += Time.deltaTime * _increaseSpeed;
-            _visibilityBar.SetValue(_currentValue, 1.0f);
+            SetValue(_currentValue + Time.deltaTime * _increaseSpeed);
             yield return wait;
         }
         OnVisibilityBarFilled?.Invoke();
@@ -102,7 +115,7 @@ public class Doghouse : MonoBehaviour
         SetLockBar(true);
     }
 
-    private IEnumerator ProccessDecreaseVisibility()
+    private IEnumerator ProcessDecreaseVisibility()
     {
         if (_currentValue <= 0.0f)
             yield break;
@@ -116,16 +129,20 @@ public class Doghouse : MonoBehaviour
                 yield return new WaitForSeconds(2.0f);
                 continue;
             }
-            _currentValue -= Time.deltaTime * _decreaseSpeed;
-            _visibilityBar.SetValue(_currentValue, 1.0f);
+            SetValue(_currentValue - Time.deltaTime * _decreaseSpeed);
             yield return wait;
         }
         _visibilityBar.gameObject.SetActive(false);
     }
 
+    private void SetValue(float value)
+    {
+        _currentValue = value;
+        _visibilityBar.SetValue(value, 1.0f);
+    }
+
     private void DetectPlayer()
     {
         GPlayerIsNoticed?.Invoke();
-        ShowQuickMessage?.Invoke($"{Translation.GetAngryDogName()}!", 1.0f, true);
     }
 }

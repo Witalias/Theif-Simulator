@@ -42,7 +42,7 @@ public class MovementController : MonoBehaviour
         OpenClosePopup.OpenedLate += OnProcessAction;
         Building.PlayerInBuilding += InBuildingState;
         HumanAI.PlayerIsNoticed += Notice;
-        Doghouse.GPlayerIsNoticed += Notice;
+        VisibilitySlider.GPlayerIsNoticed += Notice;
         Door.BuildingInfoShowed += SavePosition;
         BlackMarketArea.PlayerExit += SavePosition;
         LevelManager.PlayerInBuilding += GetInBuildingBoolean;
@@ -57,7 +57,7 @@ public class MovementController : MonoBehaviour
         OpenClosePopup.OpenedLate -= OnProcessAction;
         Building.PlayerInBuilding -= InBuildingState;
         HumanAI.PlayerIsNoticed -= Notice;
-        Doghouse.GPlayerIsNoticed -= Notice;
+        VisibilitySlider.GPlayerIsNoticed -= Notice;
         Door.BuildingInfoShowed -= SavePosition;
         BlackMarketArea.PlayerExit -= SavePosition;
         LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
