@@ -1,7 +1,7 @@
-public enum Sound
+public enum AudioType
 {
     MusicTheme,
-    Call,
+    NaN1,
     Buy,
     DoorClose,
     DoorOpen,
@@ -21,7 +21,7 @@ public enum Sound
     NewArea,
     DogBarking,
     Snore,
-    HackDoor,
+    Hack,
     NaN9,
     NaN10,
     SearchingKitchen,

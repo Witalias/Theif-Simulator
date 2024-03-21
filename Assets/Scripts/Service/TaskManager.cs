@@ -148,9 +148,9 @@ public class TaskManager : MonoBehaviour
         {
             GameData.Instanse.AddMoney(_reward, false);
             PlayResourceAnimationMoney?.Invoke(_reward);
-            SoundManager.Instanse.Play(Sound.GetMoney);
+            AudioManager.Instanse.Play(AudioType.GetMoney);
         }
-        SoundManager.Instanse.Play(Sound.TaskCompleted);
+        AudioManager.Instanse.Play(AudioType.TaskCompleted);
         TaskCompleted?.Invoke(_currentTask);
         _taskPanel.ActiveConfetti();
         if (YandexGame.savesData.TutorialDone)

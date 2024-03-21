@@ -49,7 +49,7 @@ public class PlayerLevelController
 
     private void NextLevel()
     {
-        SoundManager.Instanse.Play(Sound.NewLevel);
+        AudioManager.Instanse.Play(AudioType.NewLevel);
         _xpBar.SetLevel(++Level);
         _xpBar.ActiveConfetti();
         _neededXP += GameData.Instanse.StepXPRequirement;

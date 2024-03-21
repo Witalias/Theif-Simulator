@@ -15,7 +15,7 @@ public class UpgradesPopupButton : MonoBehaviour
 
     private void OnClick()
     {
-        SoundManager.Instanse.Play(Sound.Tap);
+        AudioManager.Instanse.Play(AudioType.Tap);
         Clicked?.Invoke();
     }
 }

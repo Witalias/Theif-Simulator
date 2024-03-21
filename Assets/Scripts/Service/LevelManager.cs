@@ -78,7 +78,7 @@ public class LevelManager : MonoBehaviour
         foreach (var building in _buildings)
             building.Initialize();
 
-        SoundManager.Instanse.PlayMusic(Sound.MusicTheme);
+        AudioManager.Instanse.PlayMusic(AudioType.MusicTheme);
     }
 
     private void SetIDs()

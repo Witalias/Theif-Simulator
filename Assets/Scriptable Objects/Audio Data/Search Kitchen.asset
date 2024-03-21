@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ca8bb7552a15d45b1a0492fa6be851, type: 3}
+  m_Name: Search Kitchen
+  m_EditorClassIdentifier: 
+  _type: 24
+  _clips:
+  - {fileID: 8300000, guid: b68d6533436a3df4783014e478d62996, type: 3}
+  - {fileID: 8300000, guid: 54a89277ad831b441a265c829f619a27, type: 3}
+  - {fileID: 8300000, guid: c58894235fac21345b9e237dd58d64f8, type: 3}

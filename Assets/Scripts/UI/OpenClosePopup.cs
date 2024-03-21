@@ -59,7 +59,7 @@ public class OpenClosePopup : MonoBehaviour
         if (!_opened)
             return;
 
-        SoundManager.Instanse.Play(Sound.Tap);
+        AudioManager.Instanse.Play(AudioType.Tap);
         _opened = false;
         _anticlick.SetActive(false);
         _tween.Kill();

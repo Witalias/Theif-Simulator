@@ -24,7 +24,7 @@ public class WaitingAndAction : MonoBehaviour
     private float _reachedTime = 1.0f;
     private float _currentTime = 0.0f;
     private bool _playSound = false;
-    private Sound _sound;
+    private AudioType _sound;
     private Action _actionDone;
     private Action _actionAbort;
 
@@ -55,7 +55,7 @@ public class WaitingAndAction : MonoBehaviour
         _taskPanel.SetActive(false);
     }
     
-    public void WaitAndExecuteWithSound(float reachedTime, Action actionDone, Action actionAbort, Sound sound, float currentTime = 0f)
+    public void WaitAndExecuteWithSound(float reachedTime, Action actionDone, Action actionAbort, AudioType sound, float currentTime = 0f)
     {
         _sound = sound;
         _playSound = true;
@@ -122,7 +122,7 @@ public class WaitingAndAction : MonoBehaviour
         if (_playSound)
         {
             _playSound = false;
-            SoundManager.Instanse.Stop(_sound);
+            AudioManager.Instanse.Stop(_sound);
         }
         _content.SetActive(false);
         TimerActived?.Invoke(false);

@@ -17,7 +17,7 @@ public class Door : MonoBehaviour, IIdentifiable
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
     private const string ANIMATOR_BACK_SIDE_BOOLEAN = "Back Side";
 
-    public static event Action<float, Action, Action, Sound, float> WaitAndExecuteWithSound;
+    public static event Action<float, Action, Action, AudioType, float> WaitAndExecuteWithSound;
     public static event Action<int> PlayResourceAnimationXp;
     public static event Action BuildingInfoShowed;
     public static event Action Hacked;
@@ -155,7 +155,7 @@ public class Door : MonoBehaviour, IIdentifiable
         _isHacking = true;
         player.CanHide(false);
         player.RotateTowards(_appearHackingZoneTrigger.transform.position);
-        SoundManager.Instanse.PlayLoop(Sound.HackDoor);
+        AudioManager.Instanse.PlayLoop(AudioType.Hack);
         void ActionDone()
         {
             Lock(false);
@@ -173,7 +173,7 @@ public class Door : MonoBehaviour, IIdentifiable
             player.CanHide(true);
             _isHacking = false;
         }
-        WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, Sound.HackDoor, 0f);
+        WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, AudioType.Hack, 0f);
     }
 
     private void SetState(bool open)
@@ -181,7 +181,7 @@ public class Door : MonoBehaviour, IIdentifiable
         _triggered = open;
         _collider.enabled = !open;
         _animator.SetBool(ANIMATOR_OPEN_BOOLEAN, open);
-        SoundManager.Instanse.PlayOneStream(open ? Sound.DoorOpen : Sound.DoorClose, _audioSource);
+        AudioManager.Instanse.PlayOneStream(open ? AudioType.DoorOpen : AudioType.DoorClose, _audioSource);
     }
 
     private void SetActiveBuildingLevelPanel(bool value)

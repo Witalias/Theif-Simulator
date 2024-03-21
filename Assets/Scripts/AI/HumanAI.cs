@@ -225,13 +225,13 @@ public class HumanAI : PathTrajectory
         {
             _agent.enabled = false;
             _animatorController.SleepTrigger();
-            SoundManager.Instanse.PlayLoop(Sound.Snore, _audioSource);
+            AudioManager.Instanse.PlayLoop(AudioType.Snore, _audioSource);
         }
         else
         {
             _animatorController.StopSleepTrigger();
             _visibilityArea.SetActiveVisibilityBar(false);
-            SoundManager.Instanse.Stop(Sound.Snore);
+            AudioManager.Instanse.Stop(AudioType.Snore);
         }
 
         transform.DORotate(value ? _visibilityArea.LocationPoint.localEulerAngles : new Vector3(0.0f, transform.rotation.y, 0.0f), 0.25f);
@@ -262,24 +262,24 @@ public class HumanAI : PathTrajectory
     private void PlaySuspectSound()
     {
         if (_isWoman)
-            SoundManager.Instanse.Play(Sound.SuspectWoman, _audioSource);
+            AudioManager.Instanse.Play(AudioType.SuspectWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.SuspectMan, _audioSource);
+            AudioManager.Instanse.Play(AudioType.SuspectMan, _audioSource);
     }
 
     private void PlayNotFindSound()
     {
         if (_isWoman)
-            SoundManager.Instanse.Play(Sound.NotFindWoman, _audioSource);
+            AudioManager.Instanse.Play(AudioType.NotFindWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.NotFindMan, _audioSource);
+            AudioManager.Instanse.Play(AudioType.NotFindMan, _audioSource);
     }
 
     private void PlayScreamSound()
     {
         if (_isWoman)
-            SoundManager.Instanse.Play(Sound.ScreamWoman, _audioSource);
+            AudioManager.Instanse.Play(AudioType.ScreamWoman, _audioSource);
         else
-            SoundManager.Instanse.Play(Sound.ScreamMan, _audioSource);
+            AudioManager.Instanse.Play(AudioType.ScreamMan, _audioSource);
     }
 }

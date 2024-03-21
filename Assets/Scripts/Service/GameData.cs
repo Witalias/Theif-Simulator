@@ -82,7 +82,7 @@ public class GameData : MonoBehaviour
 
     public Sprite GetResourceSprite(ResourceType type) => _resources[type].Sprite;
 
-    public Sound GetResourceSound(ResourceType type) => _resources[type].Sound;
+    public AudioType GetResourceSound(ResourceType type) => _resources[type].Sound;
 
     public int GetResourcePrice(ResourceType type) => _resources[type].Price;
 

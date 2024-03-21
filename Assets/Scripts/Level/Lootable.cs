@@ -15,7 +15,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     [SerializeField] private bool _enabled = true;
     [SerializeField] private bool _regenerative;
     [SerializeField] private bool _valuable;
-    [SerializeField] private Sound sound;
+    [SerializeField] private AudioType sound;
     [SerializeField, Tooltip("Количество открытий: индекс + 1\nПри превышении лимита берётся последнее значение.")]
     private int[] _moneyValues;
     [SerializeField] private ContainedResource[] _containedResources;
@@ -171,7 +171,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     private void TakeResource(MovementController player)
     {
         _isLooting = true;
-        SoundManager.Instanse.Play(sound);
+        AudioManager.Instanse.Play(sound);
         void ActionDone()
         {
             SetEmpty(true);
@@ -198,7 +198,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
                     count = (int)UnityEngine.Random.Range(containedResource.MinMaxCount.x, containedResource.MinMaxCount.y);
                 GameData.Instanse.Backpack.AddResource(containedResource.Type, count);
 
-                SoundManager.Instanse.Play(GameData.Instanse.GetResourceSound(containedResource.Type));
+                AudioManager.Instanse.Play(GameData.Instanse.GetResourceSound(containedResource.Type));
 
                 if (_regenerative)
                 {
@@ -210,7 +210,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
             {
                 money = GetMoneyValue();
                 GameData.Instanse.AddMoney(money);
-                SoundManager.Instanse.Play(Sound.GetMoney);
+                AudioManager.Instanse.Play(AudioType.GetMoney);
             }
             GameData.Instanse.PlayerLevel.AddXP(xp);
             PlayResourceAnimation?.Invoke(resource, count, xp, money);

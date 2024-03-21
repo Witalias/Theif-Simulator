@@ -122,7 +122,7 @@ public class UnlockArea : MonoBehaviour, IIdentifiable
         if (!loaded)
         {
             MetricaSender.UnlockedArea(_initialCost);
-            SoundManager.Instanse.Play(Sound.NewArea);
+            AudioManager.Instanse.Play(AudioType.NewArea);
             ShowPurchaseParticle();
         }
     }

@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 6084939767105504064}
   - component: {fileID: 2351506645946715731}
   m_Layer: 0
-  m_Name: Sound Manager
+  m_Name: Audio Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +289,7 @@ Transform:
   - {fileID: 8600075102938285430}
   - {fileID: 1572043374338815464}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2351506645946715731
 MonoBehaviour:
@@ -306,92 +306,31 @@ MonoBehaviour:
   audioSource: {fileID: 468285380894386243}
   loopAudioSource: {fileID: 3383652153921526326}
   musicAudioSource: {fileID: 2359361548979895081}
-  doorClose:
-  - {fileID: 8300000, guid: a807a8d66b73bab4a9a833983dfa3409, type: 3}
-  - {fileID: 8300000, guid: 7b5f33c5fdf463448bc179b85679347f, type: 3}
-  - {fileID: 8300000, guid: 0e0703809344d654e984ea0feff975df, type: 3}
-  - {fileID: 8300000, guid: 12a072c19c2929d4dbb8588e0e2382a9, type: 3}
-  doorOpen:
-  - {fileID: 8300000, guid: 3c7fb8047c07f534c87f244f25f705ca, type: 3}
-  - {fileID: 8300000, guid: adde85b18b29f6a41beedd941b20288a, type: 3}
-  getResource:
-  - {fileID: 8300000, guid: 79840d5c56ddab94bbebf977226957d0, type: 3}
-  - {fileID: 8300000, guid: 3aff50dc5752ef748a025fa555023875, type: 3}
-  - {fileID: 8300000, guid: 0d099da3ee3092a4f9e37ff76c51e0d5, type: 3}
-  - {fileID: 8300000, guid: 0c5fb23ca4a96f241b3480480081c67b, type: 3}
-  - {fileID: 8300000, guid: 0ab0dd89678e8e24ead9a044c8cc4e5b, type: 3}
-  getSmallResource:
-  - {fileID: 8300000, guid: b401b5a69f7597743b6ebd6a96381a96, type: 3}
-  - {fileID: 8300000, guid: 863cccc69dd901d4599bb4056a26de00, type: 3}
-  - {fileID: 8300000, guid: 35e7107bbf9089640b0a82344c186966, type: 3}
-  - {fileID: 8300000, guid: 40e5209017978994ba9d5360bc1d649c, type: 3}
-  getLoudResource:
-  - {fileID: 8300000, guid: f0f6a1318c46c0e498682ce84286107a, type: 3}
-  - {fileID: 8300000, guid: a8595e83a4d22d846a2e77ea53c4abc0, type: 3}
-  getMoney:
-  - {fileID: 8300000, guid: 6f69ecf60941b924bacc038ea0ee7bc1, type: 3}
-  - {fileID: 8300000, guid: 4999ac796a7f2c74db5ffde633f00d32, type: 3}
-  suspectMan:
-  - {fileID: 8300000, guid: a58567ea4a42a6c4e9d079f37c644e82, type: 3}
-  - {fileID: 8300000, guid: 3f5b9c2239431e24d9ebd8b554c4a85b, type: 3}
-  - {fileID: 8300000, guid: 4bd8b8933e6aeb941bbc6735c457f31d, type: 3}
-  - {fileID: 8300000, guid: be73fbb5151085c4ca61e22ccf2e679d, type: 3}
-  suspectWoman:
-  - {fileID: 8300000, guid: 3857aa65a2634e14fb2f19966081bd4d, type: 3}
-  - {fileID: 8300000, guid: 78bc125b80cd1ee46850e0545f0b9eaf, type: 3}
-  - {fileID: 8300000, guid: a7fa6cb775270c24cb0bb2e13dba4a95, type: 3}
-  - {fileID: 8300000, guid: 9b8461c2c724a9542868d26c5ae7b6aa, type: 3}
-  - {fileID: 8300000, guid: 527982ce83e1e094d9ae8dfe53a732e4, type: 3}
-  - {fileID: 8300000, guid: ba269c9c1cd2517409edc9ca33569674, type: 3}
-  notFindMan:
-  - {fileID: 8300000, guid: 967370db49596a54dab0b1e5197af4c6, type: 3}
-  - {fileID: 8300000, guid: 0577d8e8551fa6a4daba9a31c909a4cb, type: 3}
-  notFindWoman:
-  - {fileID: 8300000, guid: 69da24da879be574da847f34107f60bd, type: 3}
-  - {fileID: 8300000, guid: d65ed6599b34ff440b041c90c8f73f2b, type: 3}
-  screamMan:
-  - {fileID: 8300000, guid: da8fc3f5f9191064a9939afdfead87aa, type: 3}
-  - {fileID: 8300000, guid: 303cd7f1f72743545a3db8066ef39054, type: 3}
-  screamWoman:
-  - {fileID: 8300000, guid: 305876a21f61fa742b9bc18168b6c141, type: 3}
-  - {fileID: 8300000, guid: 3a89b3b9578e1ac4d9d82e956deda312, type: 3}
-  - {fileID: 8300000, guid: 3616f7983f5e91d448d1206017e9322d, type: 3}
-  - {fileID: 8300000, guid: 627283ca73136fb4f9e9184a070afcee, type: 3}
-  doorMasterKey:
-  - {fileID: 8300000, guid: 208314aac72083447a17086fa7ac2ecf, type: 3}
-  searchingKitchen:
-  - {fileID: 8300000, guid: b68d6533436a3df4783014e478d62996, type: 3}
-  - {fileID: 8300000, guid: 54a89277ad831b441a265c829f619a27, type: 3}
-  - {fileID: 8300000, guid: c58894235fac21345b9e237dd58d64f8, type: 3}
-  searchingWoodFurniture:
-  - {fileID: 8300000, guid: 04b4abe0bd61db3419ac1eb9f022d5ec, type: 3}
-  - {fileID: 8300000, guid: 1aff8d41a7cf32445aa8935f7c386c34, type: 3}
-  - {fileID: 8300000, guid: 8940a9bf3eeb0ba478ffb7e87f398c25, type: 3}
-  - {fileID: 8300000, guid: 082a9f1a666981e41b1e20a7966adc72, type: 3}
-  refrigeratorDoor:
-  - {fileID: 8300000, guid: 0e84ba0ebe64b8a4a8d92a20470cdea1, type: 3}
-  - {fileID: 8300000, guid: 8eccbadc3720e6749ba24abec0ef8bc7, type: 3}
-  - {fileID: 8300000, guid: fc073b30605a04f49a1ace8ef6046c39, type: 3}
-  musicTheme:
-  - {fileID: 8300000, guid: b5b2ccb3502767a46a9857498ed2437d, type: 3}
-  call: []
-  buy:
-  - {fileID: 8300000, guid: 482c2f1b44b8c0348846b3b7d45a6407, type: 3}
-  - {fileID: 8300000, guid: 40cc870365e5da3498ddca6f1ba7d42c, type: 3}
-  tap:
-  - {fileID: 8300000, guid: aa5dfa3a4ef937847b2a011386b0cb22, type: 3}
-  taskCompleted:
-  - {fileID: 8300000, guid: 663a5c5cd897edb409dc1f02bbec7563, type: 3}
-  - {fileID: 8300000, guid: a7fd3182b83329649856c888651128a2, type: 3}
-  - {fileID: 8300000, guid: 90201540bc64b8a46868146d21ffc50f, type: 3}
-  newLevel:
-  - {fileID: 8300000, guid: a4e9eb0a4e8d750418cdfa97020abbdc, type: 3}
-  newArea:
-  - {fileID: 8300000, guid: bb2a7b910c3b2714982373dd9b00a78f, type: 3}
-  dogBarking:
-  - {fileID: 8300000, guid: 568fa03804bc17d43848f54d0dcb7cd3, type: 3}
-  snore:
-  - {fileID: 8300000, guid: 1fb2c78de20b88b4f9c60899dba444dd, type: 3}
+  _audioData:
+  - {fileID: 11400000, guid: eadf1b9a6cea3d144a6be3ce10a16405, type: 2}
+  - {fileID: 11400000, guid: c76f1e2db3c9d8e428fb3b5e00b0c91d, type: 2}
+  - {fileID: 11400000, guid: 51d14821356f23743a891d148a7b9a09, type: 2}
+  - {fileID: 11400000, guid: 8520f8bc9268c844e8dc093a1f964291, type: 2}
+  - {fileID: 11400000, guid: d4005fee6fb1b1644bb1bcc90810dd8d, type: 2}
+  - {fileID: 11400000, guid: 5785cb09ef917c84ea4941ba5369c41a, type: 2}
+  - {fileID: 11400000, guid: ef151c3f309bece4ca3f33012f0a53be, type: 2}
+  - {fileID: 11400000, guid: 409960c9f11810d44ba3a4b95513256d, type: 2}
+  - {fileID: 11400000, guid: 7fe153ec344e1bd499287a964458d1c6, type: 2}
+  - {fileID: 11400000, guid: ee1aa1f7b579671408ecbe642b9c3288, type: 2}
+  - {fileID: 11400000, guid: 79c8f96e68039ac438fc81dff33b8737, type: 2}
+  - {fileID: 11400000, guid: 661b5d02914f1314e837122f23f71ece, type: 2}
+  - {fileID: 11400000, guid: 0dd2523f7ff2faa4da3cab7289a802be, type: 2}
+  - {fileID: 11400000, guid: 31037c8950e6cf349b4c62a550f1a72c, type: 2}
+  - {fileID: 11400000, guid: d92e1c7c12c2089459ec6293e8aee0dd, type: 2}
+  - {fileID: 11400000, guid: 69478e1636cdbbc42aa72f8917ffa095, type: 2}
+  - {fileID: 11400000, guid: 9775cc91cc416524996f78ac7a798589, type: 2}
+  - {fileID: 11400000, guid: fbb39b991cae30a47be19d271a65af82, type: 2}
+  - {fileID: 11400000, guid: ded2c8d5b3feaeb48b0f0292c9efe6a9, type: 2}
+  - {fileID: 11400000, guid: 9cabe546a2f1df44683cbbf63be05019, type: 2}
+  - {fileID: 11400000, guid: d386bbc3a43ac224ea3b91a04006e3be, type: 2}
+  - {fileID: 11400000, guid: ead283615efa4c14391ef3129e34f431, type: 2}
+  - {fileID: 11400000, guid: b0ce6ad16fdb0854f94445346b4b84e4, type: 2}
+  - {fileID: 11400000, guid: b2d378739e1a47146924b42f87bff4c6, type: 2}
 --- !u!1 &5843356304632403146
 GameObject:
   m_ObjectHideFlags: 0

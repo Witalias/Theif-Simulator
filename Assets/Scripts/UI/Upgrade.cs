@@ -46,7 +46,7 @@ public class Upgrade : MonoBehaviour
         if (IsMaxLevel || GameData.Instanse.Money < _values.Data[_level].Cost)
             return;
 
-        SoundManager.Instanse.Play(Sound.Buy);
+        AudioManager.Instanse.Play(AudioType.Buy);
         GameData.Instanse.AddMoney(-_values.Data[_level].Cost);
         GameData.Instanse.SetUpgradableValue(_type, _values.Data[_level].Value);
         _level++;

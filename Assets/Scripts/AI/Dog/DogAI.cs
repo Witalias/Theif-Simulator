@@ -122,7 +122,7 @@ public class DogAI : Pathfinder
     {
         _mesh.SetActive(true);
         PlayDustParticle();
-        SoundManager.Instanse.Play(Sound.DogBarking);
+        AudioManager.Instanse.Play(AudioType.DogBarking);
         GShowQuickMessage?.Invoke($"{Translation.GetAngryDogName()}!", 1.0f, true);
         _lockedControls = false;
         _currentTween = DOVirtual.DelayedCall(0.5f, () => _isWatching = false);

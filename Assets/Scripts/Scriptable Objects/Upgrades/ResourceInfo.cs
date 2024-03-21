@@ -5,6 +5,6 @@ public class ResourceInfo : ScriptableObject
 {
     public ResourceType Type;
     public Sprite Sprite;
-    public Sound Sound;
+    public AudioType Sound;
     public int Price;
 }

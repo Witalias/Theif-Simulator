@@ -50,7 +50,7 @@ public class SaleSlot : MonoBehaviour
         GameData.Instanse.Backpack.ClearResource(_type);
         GameData.Instanse.AddSoldItemsCount(Count);
         GameData.Instanse.AddMoney(_reward);
-        SoundManager.Instanse.Play(Sound.GetMoney);
+        AudioManager.Instanse.Play(AudioType.GetMoney);
         Refresh();
     }
 }

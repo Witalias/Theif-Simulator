@@ -46,7 +46,7 @@ public class Safe : MonoBehaviour
         if (_containedResources == null)
             return;
 
-        SoundManager.Instanse.Play(Sound.GetLoudResource);
+        AudioManager.Instanse.Play(AudioType.GetLoudResource);
         foreach (var resource in _containedResources)
         {
             if (resource.Value <= 0)
