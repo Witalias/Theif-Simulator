@@ -4,7 +4,7 @@ using UnityEngine;
 public class BlackMarketArea : MonoBehaviour
 {
     public static event Action PlayerStayed;
-    public static event Action PlayerExit;
+    public static event Action GPlayerExit;
 
     private bool _triggered;
 
@@ -25,6 +25,6 @@ public class BlackMarketArea : MonoBehaviour
     public void OnPlayExit()
     {
         _triggered = false;
-        PlayerExit?.Invoke();
+        GPlayerExit?.Invoke();
     }
 }

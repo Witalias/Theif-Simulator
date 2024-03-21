@@ -7,7 +7,7 @@ using YG;
 
 public class MovementController : MonoBehaviour
 {
-    public static event Action PlayerCaught;
+    public static event Action GPlayerCaught;
 
     [SerializeField] private bool _controlsLocked;
     [SerializeField] private Rigidbody _rigidbody;
@@ -37,31 +37,31 @@ public class MovementController : MonoBehaviour
 
     private void OnEnable()
     {
-        WaitingAndAction.TimerActived += OnHack;
-        UIHoldButton.HoldButtonActived += OnHack;
-        OpenClosePopup.OpenedLate += OnProcessAction;
-        Building.PlayerInBuilding += InBuildingState;
-        HumanAI.PlayerIsNoticed += Notice;
+        TapTapAction.GTimerActived += OnHack;
+        UIHoldButton.GHoldButtonActived += OnHack;
+        OpenClosePopup.GOpenedLate += OnProcessAction;
+        Building.GPlayerInBuilding += InBuildingState;
+        HumanAI.GPlayerIsNoticed += Notice;
         VisibilitySlider.GPlayerIsNoticed += Notice;
-        Door.BuildingInfoShowed += SavePosition;
-        BlackMarketArea.PlayerExit += SavePosition;
-        LevelManager.PlayerInBuilding += GetInBuildingBoolean;
-        LevelManager.NewUnlockAreasIsShowing += OnProcessAction;
+        Door.GBuildingInfoShowed += SavePosition;
+        BlackMarketArea.GPlayerExit += SavePosition;
+        LevelManager.GPlayerInBuilding += GetInBuildingBoolean;
+        LevelManager.GNewUnlockAreasIsShowing += OnProcessAction;
         Cheats.GBuildingUpgraded += UpgrageCurrentBuildingDebug;
     }
 
     private void OnDisable()
     {
-        WaitingAndAction.TimerActived -= OnHack;
-        UIHoldButton.HoldButtonActived -= OnHack;
-        OpenClosePopup.OpenedLate -= OnProcessAction;
-        Building.PlayerInBuilding -= InBuildingState;
-        HumanAI.PlayerIsNoticed -= Notice;
+        TapTapAction.GTimerActived -= OnHack;
+        UIHoldButton.GHoldButtonActived -= OnHack;
+        OpenClosePopup.GOpenedLate -= OnProcessAction;
+        Building.GPlayerInBuilding -= InBuildingState;
+        HumanAI.GPlayerIsNoticed -= Notice;
         VisibilitySlider.GPlayerIsNoticed -= Notice;
-        Door.BuildingInfoShowed -= SavePosition;
-        BlackMarketArea.PlayerExit -= SavePosition;
-        LevelManager.PlayerInBuilding -= GetInBuildingBoolean;
-        LevelManager.NewUnlockAreasIsShowing -= OnProcessAction;
+        Door.GBuildingInfoShowed -= SavePosition;
+        BlackMarketArea.GPlayerExit -= SavePosition;
+        LevelManager.GPlayerInBuilding -= GetInBuildingBoolean;
+        LevelManager.GNewUnlockAreasIsShowing -= OnProcessAction;
         Cheats.GBuildingUpgraded -= UpgrageCurrentBuildingDebug;
     }
 
@@ -79,7 +79,7 @@ public class MovementController : MonoBehaviour
 
     public void Caught(float delay)
     {
-        PlayerCaught?.Invoke();
+        GPlayerCaught?.Invoke();
         _onCaught?.Invoke();
         _controlsLocked = true;
         _animatorController.SitBoolean(true);

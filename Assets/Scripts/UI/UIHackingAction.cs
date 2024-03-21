@@ -23,14 +23,14 @@ public class UIHackingAction : MonoBehaviour
 
     private void OnEnable()
     {
-        WaitingAndAction.TimerActived += Tap;
-        UIHoldButton.HoldButtonActived += Hold;
+        TapTapAction.GTimerActived += Tap;
+        UIHoldButton.GHoldButtonActived += Hold;
     }
 
     private void OnDisable()
     {
-        WaitingAndAction.TimerActived -= Tap;
-        UIHoldButton.HoldButtonActived -= Hold;
+        TapTapAction.GTimerActived -= Tap;
+        UIHoldButton.GHoldButtonActived -= Hold;
     }
 
     private void Tap(bool active)

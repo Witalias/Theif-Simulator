@@ -60,7 +60,7 @@ public class ResourcesPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        Lootable.PlayResourceAnimation += PlayResourceAnimationUniversal;
+        Lootable.GPlayResourceAnimation += PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp += PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney += PlayResourceAnimationMoney;
         Safe.PlayResourceAnimationItem += PlayResourceAnimationItem;
@@ -68,7 +68,7 @@ public class ResourcesPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        Lootable.PlayResourceAnimation -= PlayResourceAnimationUniversal;
+        Lootable.GPlayResourceAnimation -= PlayResourceAnimationUniversal;
         Door.PlayResourceAnimationXp -= PlayResourceAnimationXp;
         TaskManager.PlayResourceAnimationMoney -= PlayResourceAnimationMoney;
         Safe.PlayResourceAnimationItem -= PlayResourceAnimationItem;

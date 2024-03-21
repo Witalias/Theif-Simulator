@@ -149,7 +149,7 @@ public class TutorialSystem : MonoBehaviour
         if (type != TaskType.TutorialSellItems)
             return;
         TaskManager.TaskCompleted -= OnSoldItems;
-        OpenClosePopup.Opened += OnClosedMarketPanel;
+        OpenClosePopup.GOpened += OnClosedMarketPanel;
         MetricaSender.TutorialStep("Продать предметы");
         _closeMarketPanelButton.interactable = true;
         _arrow2d.transform.position = _closeMarketPanelButton.transform.position;
@@ -160,7 +160,7 @@ public class TutorialSystem : MonoBehaviour
     {
         if (opened)
             return;
-        OpenClosePopup.Opened -= OnClosedMarketPanel;
+        OpenClosePopup.GOpened -= OnClosedMarketPanel;
         SaveLoad.SaveTutorialSellItemsDoneBoolean(true);
         _arrow2d.SetActive(false);
         DOVirtual.DelayedCall(_startingTaskDelay, StartBuyUpgradeTutorial);
@@ -190,7 +190,7 @@ public class TutorialSystem : MonoBehaviour
         if (type != TaskType.TutorialBuyUpgrade)
             return;
         TaskManager.TaskCompleted -= OnBoughtUpgrade;
-        OpenClosePopup.Opened += OnClosedUpgradesPopup;
+        OpenClosePopup.GOpened += OnClosedUpgradesPopup;
         MetricaSender.TutorialStep("Купить улучшение");
         _closeUpgradePanelButton.interactable = true;
         _arrow2d.transform.position = _closeUpgradePanelButton.transform.position;
@@ -201,7 +201,7 @@ public class TutorialSystem : MonoBehaviour
         if (opened)
             return;
         _arrow2d.SetActive(false);
-        OpenClosePopup.Opened -= OnClosedUpgradesPopup;
+        OpenClosePopup.GOpened -= OnClosedUpgradesPopup;
         SaveLoad.SaveTutorialBuyUpgradeDoneBoolean(true);
         DOVirtual.DelayedCall(_startingTaskDelay, StartBuyZoneTutorial);
     }

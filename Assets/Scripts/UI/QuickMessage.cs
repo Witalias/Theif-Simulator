@@ -18,7 +18,7 @@ public class QuickMessage : MonoBehaviour
     private void OnEnable()
     {
         HumanAI.ShowQuickMessage += Process;
-        Lootable.ShowQuickMessage += Process;
+        Lootable.GShowQuickMessage += Process;
         PlayerLevelController.ShowQuickMessage += Process;
         BackpackController.ShowQuickMessage += Process;
         DogAI.GShowQuickMessage += Process;
@@ -28,7 +28,7 @@ public class QuickMessage : MonoBehaviour
     private void OnDisable()
     {
         HumanAI.ShowQuickMessage -= Process;
-        Lootable.ShowQuickMessage -= Process;
+        Lootable.GShowQuickMessage -= Process;
         PlayerLevelController.ShowQuickMessage -= Process;
         BackpackController.ShowQuickMessage -= Process;
         DogAI.GShowQuickMessage -= Process;

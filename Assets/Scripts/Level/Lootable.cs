@@ -7,14 +7,17 @@ using System.Collections.Generic;
 
 public class Lootable : MonoBehaviour, IIdentifiable
 {
-    public static event Action<Action, Action> ShowHoldButton;
-    public static event Action<ResourceType, int, int, int> PlayResourceAnimation;
-    public static event Action<string, float, bool> ShowQuickMessage;
+    public static event Action<Action, Action> GShowHoldButton;
+    public static event Action<float, Action, Action, float> GShowTapAction;
+    public static event Action<ResourceType, int, int, int> GPlayResourceAnimation;
+    public static event Action<string, float, bool> GShowQuickMessage;
     public static event Action GOnLooted;
 
     [SerializeField] private bool _enabled = true;
     [SerializeField] private bool _regenerative;
     [SerializeField] private bool _valuable;
+    [SerializeField] private HackingType _hackingType;
+    [SerializeField, Tooltip("Если Hacking Type == Tap")] private float _tapTimer = 10.0f;
     [SerializeField] private AudioType sound;
     [SerializeField, Tooltip("Количество открытий: индекс + 1\nПри превышении лимита берётся последнее значение.")]
     private int[] _moneyValues;
@@ -39,6 +42,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     public bool Enabled => _enabled;
     public bool Regenerative => _regenerative;
     public bool Valuable => _valuable;
+    public HackingType HackingType => _hackingType;
 
     public int ID { get; set; }
 
@@ -123,7 +127,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     private void OnHackingZoneEnter(MovementController player)
     {
         if (GameData.Instanse.Backpack.IsFull)
-            ShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
+            GShowQuickMessage?.Invoke($"{Translation.GetFullBackpackName()}!", 1.0f, true);
     }
 
     private void OnHackingZoneStay(MovementController player)
@@ -171,7 +175,7 @@ public class Lootable : MonoBehaviour, IIdentifiable
     private void TakeResource(MovementController player)
     {
         _isLooting = true;
-        AudioManager.Instanse.Play(sound);
+
         void ActionDone()
         {
             SetEmpty(true);
@@ -213,19 +217,30 @@ public class Lootable : MonoBehaviour, IIdentifiable
                 AudioManager.Instanse.Play(AudioType.GetMoney);
             }
             GameData.Instanse.PlayerLevel.AddXP(xp);
-            PlayResourceAnimation?.Invoke(resource, count, xp, money);
+            GPlayResourceAnimation?.Invoke(resource, count, xp, money);
 
             _afterLootingAction?.Invoke();
             _onLooted?.Invoke();
             GOnLooted?.Invoke();
         }
+
         void ActionAbort()
         {
             _isLooting = false;
             _appearHackingZone.GetComponent<AppearHackingZoneTrigger>().Enabled = true;
             _hackingZone.gameObject.SetActive(true);
         }
-        ShowHoldButton?.Invoke(ActionDone, ActionAbort);
+
+        if (_hackingType is HackingType.Hold)
+        {
+            GShowHoldButton?.Invoke(ActionDone, ActionAbort);
+            AudioManager.Instanse.Play(sound);
+        }
+        else
+        {
+            GShowTapAction?.Invoke(_tapTimer, ActionDone, ActionAbort, 0.0f);
+            AudioManager.Instanse.Play(AudioType.MasterKey);
+        }
     }
 
     private int GetMoneyValue()

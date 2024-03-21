@@ -24,12 +24,12 @@ public class Safe : MonoBehaviour
 
     private void OnEnable()
     {
-        MovementController.PlayerCaught += Fill;
+        MovementController.GPlayerCaught += Fill;
     }
 
     private void OnDisable()
     {
-        MovementController.PlayerCaught -= Fill;
+        MovementController.GPlayerCaught -= Fill;
     }
 
     private void Fill()

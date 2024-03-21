@@ -8,8 +8,8 @@ using YG;
 
 public class LevelManager : MonoBehaviour
 {
-    public static event Func<bool> PlayerInBuilding;
-    public static event Action<bool> NewUnlockAreasIsShowing;
+    public static event Func<bool> GPlayerInBuilding;
+    public static event Action<bool> GNewUnlockAreasIsShowing;
 
     [SerializeField] private Building[] _buildings;
     [SerializeField] private UnlockArea[] _unlockAreas;
@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
         Building.StatsChanged += SaveBuildings;
         UnlockArea.CostChanged += SaveUnlockAreas;
         UnlockArea.MoveCamera += MoveCameraToNewAvailableArea;
-        Building.PlayerInBuilding += PlayerInBuildingState;
+        Building.GPlayerInBuilding += PlayerInBuildingState;
     }
 
     private void OnDisable()
@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
         Building.StatsChanged -= SaveBuildings;
         UnlockArea.CostChanged -= SaveUnlockAreas;
         UnlockArea.MoveCamera -= MoveCameraToNewAvailableArea;
-        Building.PlayerInBuilding -= PlayerInBuildingState;
+        Building.GPlayerInBuilding -= PlayerInBuildingState;
     }
 
     private void SaveBuildings()
@@ -97,7 +97,7 @@ public class LevelManager : MonoBehaviour
             return;
 
         _newAvailableAreaCameras.Add(toCamera);
-        var playerInBuilding = PlayerInBuilding?.Invoke();
+        var playerInBuilding = GPlayerInBuilding?.Invoke();
         if (!playerInBuilding.GetValueOrDefault())
         {
             StopAllCoroutines();

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public static event Action<bool> HoldButtonActived;
+    public static event Action<bool> GHoldButtonActived;
 
     [SerializeField] private Color _negativeColor;
     [SerializeField] private Color _positiveColor;
@@ -39,18 +39,18 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private void OnEnable()
     {
-        Lootable.ShowHoldButton += Show;
-        MovementController.PlayerCaught += Abort;
-        HumanAI.PlayerIsNoticed += Abort;
-        OpenClosePopup.Opened += OnOpenPopup;
+        Lootable.GShowHoldButton += Show;
+        MovementController.GPlayerCaught += Abort;
+        HumanAI.GPlayerIsNoticed += Abort;
+        OpenClosePopup.GOpened += OnOpenPopup;
     }
 
     private void OnDisable()
     {
-        Lootable.ShowHoldButton -= Show;
-        MovementController.PlayerCaught -= Abort;
-        HumanAI.PlayerIsNoticed -= Abort;
-        OpenClosePopup.Opened -= OnOpenPopup;
+        Lootable.GShowHoldButton -= Show;
+        MovementController.GPlayerCaught -= Abort;
+        HumanAI.GPlayerIsNoticed -= Abort;
+        OpenClosePopup.GOpened -= OnOpenPopup;
     }
 
     private void Update()
@@ -110,6 +110,6 @@ public class UIHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             _actionAbort = null;
             _actionDone = null;
         }
-        HoldButtonActived?.Invoke(value);
+        GHoldButtonActived?.Invoke(value);
     }
 }

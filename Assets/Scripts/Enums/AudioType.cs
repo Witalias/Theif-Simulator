@@ -1,7 +1,7 @@
 public enum AudioType
 {
     MusicTheme,
-    NaN1,
+    MasterKey,
     Buy,
     DoorClose,
     DoorOpen,

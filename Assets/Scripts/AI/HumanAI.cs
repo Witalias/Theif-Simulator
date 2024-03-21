@@ -6,7 +6,7 @@ using System;
 
 public class HumanAI : PathTrajectory
 {
-    public static event Action PlayerIsNoticed;
+    public static event Action GPlayerIsNoticed;
     public static event Action<string, float, bool> ShowQuickMessage;
 
     [SerializeField] private bool _isWoman;
@@ -180,7 +180,7 @@ public class HumanAI : PathTrajectory
         _animatorController.ScaryTrigger();
         _visionCone.SetMaterial(_detectViewMaterial);
         PlayScreamSound();
-        PlayerIsNoticed?.Invoke();
+        GPlayerIsNoticed?.Invoke();
         ShowQuickMessage?.Invoke($"{Translation.GetNoticedName()}!", 1.0f, true);
         _detectTween = DOVirtual.DelayedCall(1.0f, () => _followed = true);
     }

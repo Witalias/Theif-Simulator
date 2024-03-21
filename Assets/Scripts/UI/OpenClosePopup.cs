@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class OpenClosePopup : MonoBehaviour
 {
-    public static event Action<bool> Opened;
-    public static event Action<bool> OpenedLate;
+    public static event Action<bool> GOpened;
+    public static event Action<bool> GOpenedLate;
 
     [SerializeField] private float _animationDuration = 0.25f;
     [SerializeField] private GameObject _anticlick;
@@ -29,12 +29,12 @@ public class OpenClosePopup : MonoBehaviour
 
     private void OnEnable()
     {
-        HumanAI.PlayerIsNoticed += Close;
+        HumanAI.GPlayerIsNoticed += Close;
     }
 
     private void OnDisable()
     {
-        HumanAI.PlayerIsNoticed -= Close;
+        HumanAI.GPlayerIsNoticed -= Close;
     }
 
     public void Open()
@@ -50,8 +50,8 @@ public class OpenClosePopup : MonoBehaviour
             .Append(_content.DOScale(_defaultScale, 0.2f))
             .Play();
         //_content.DOScale(_defaultScale, _animationDuration);
-        Opened?.Invoke(true);
-        OpenedLate?.Invoke(true);
+        GOpened?.Invoke(true);
+        GOpenedLate?.Invoke(true);
     }
 
     private void Close()
@@ -68,7 +68,7 @@ public class OpenClosePopup : MonoBehaviour
             .Append(_content.DOScale(Vector3.zero, _animationDuration))
             .Play();
         //_content.DOScale(Vector3.zero, _animationDuration);
-        Opened?.Invoke(false);
-        OpenedLate?.Invoke(false);
+        GOpened?.Invoke(false);
+        GOpenedLate?.Invoke(false);
     }
 }

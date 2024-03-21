@@ -17,9 +17,9 @@ public class Door : MonoBehaviour, IIdentifiable
     private const string ANIMATOR_OPEN_BOOLEAN = "Open";
     private const string ANIMATOR_BACK_SIDE_BOOLEAN = "Back Side";
 
-    public static event Action<float, Action, Action, AudioType, float> WaitAndExecuteWithSound;
+    public static event Action<float, Action, Action, AudioType, float> GShowTapActionWithSound;
     public static event Action<int> PlayResourceAnimationXp;
-    public static event Action BuildingInfoShowed;
+    public static event Action GBuildingInfoShowed;
     public static event Action Hacked;
 
     [SerializeField] private float _hackingTime = 10f;
@@ -92,7 +92,7 @@ public class Door : MonoBehaviour, IIdentifiable
     public void ShowBuildingInfo()
     {
         SetActiveBuildingLevelPanel(true);
-        BuildingInfoShowed?.Invoke();
+        GBuildingInfoShowed?.Invoke();
     }
 
     public void HideBuildingInfo()
@@ -173,7 +173,7 @@ public class Door : MonoBehaviour, IIdentifiable
             player.CanHide(true);
             _isHacking = false;
         }
-        WaitAndExecuteWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, AudioType.Hack, 0f);
+        GShowTapActionWithSound?.Invoke(_hackingTime, ActionDone, ActionAbort, AudioType.Hack, 0f);
     }
 
     private void SetState(bool open)

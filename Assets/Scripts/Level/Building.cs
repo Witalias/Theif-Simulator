@@ -7,7 +7,7 @@ using YG;
 [RequireComponent(typeof(RefreshBuildingTimer), typeof(TriggerZone), typeof(BoxCollider))]
 public class Building : MonoBehaviour, IIdentifiable
 {
-    public static event Action<bool, Building> PlayerInBuilding;
+    public static event Action<bool, Building> GPlayerInBuilding;
     public static event Action PlayerInBuildingWithEnemyFirstly;
     public static event Action StatsChanged;
 
@@ -122,7 +122,7 @@ public class Building : MonoBehaviour, IIdentifiable
         }
         _triggered = true;
 
-        PlayerInBuilding?.Invoke(true, this);
+        GPlayerInBuilding?.Invoke(true, this);
 
         if (_enableUpdates)
             LockDoors(false);
@@ -140,7 +140,7 @@ public class Building : MonoBehaviour, IIdentifiable
         }
         _triggered = false;
 
-        PlayerInBuilding?.Invoke(false, this);
+        GPlayerInBuilding?.Invoke(false, this);
 
 
         var doorsLocked = false;
